@@ -1,0 +1,4 @@
+
+//= require TPanel
+
+alert( 'ok' );
