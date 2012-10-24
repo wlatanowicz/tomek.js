@@ -1,3 +1,5 @@
+//= require Base
+
 var TControl = Base.extend( {
 	
 	_childControls : [],

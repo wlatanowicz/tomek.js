@@ -1,3 +1,5 @@
+//= require TControl
+
 var TPanel = TControl.extend( {
 	
 	renderContents : function( placeholder ){

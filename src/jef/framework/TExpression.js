@@ -1,3 +1,5 @@
+//= require TControl
+
 var TExpression = TControl.extend( {
 	
 	constructor : function(){
