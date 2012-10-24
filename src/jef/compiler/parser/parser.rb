@@ -1,0 +1,54 @@
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+
+require 'rubygems'
+require 'nokogiri'
+
+require 'template/template'
+
+class Parser
+  def initialize
+    
+  end
+	
+	def parse_recursive( parent, node )
+		
+		node.children.each do |ch|
+			
+			tplnode = create_node ch
+			
+			if ( tplnode != nil ) then
+				parent.add_child tplnode
+
+				parse_recursive tplnode, ch
+			end
+			
+		end
+		
+	end
+	
+	def parse( str )
+		doc = Nokogiri::XML( str )
+		node = DocumentNode.new
+		parse_recursive( node, doc.at( "template" ) )
+		return node
+	end
+	
+	def create_node ( node )
+		if ( node.type == Nokogiri::XML::Node::TEXT_NODE ) then
+			if ( node.text.strip.length > 0 )then
+				return TextNode.new node
+			end
+		end
+		if ( node.type == Nokogiri::XML::Node::ELEMENT_NODE ) then
+			if ( node.namespace == nil ) then
+				return HtmlNode.new node
+			end
+			if ( node.namespace.href == 'component' ) then
+				return ComponentNode.new node
+			end
+		end
+		return nil
+	end
+	
+end
