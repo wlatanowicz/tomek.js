@@ -53,7 +53,8 @@ class Renderer
 	end
 	
 	def output
-		txt = "//= compat\n"
+#		txt = "//= compat\n"
+		txt = ""
 		
 		@dependencies.each do |c|
 			txt += "//= require \""+c+"\"\n"

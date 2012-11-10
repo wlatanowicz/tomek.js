@@ -1,6 +1,10 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 
+$LOAD_PATH << File.dirname(__FILE__) 
+
+require 'compiler'
+
 module JefHelper
 	
   ROOT_DIR      = File.expand_path(File.join( File.dirname(__FILE__), '..' ) )
@@ -9,7 +13,8 @@ module JefHelper
   DOC_DIR       = File.join(ROOT_DIR, 'doc')
   BUILD_DIR     = File.join(ROOT_DIR, 'build')
   EXTERNAL_DIR  = File.join(ROOT_DIR, 'external')
-	
+	TEMP_DEST_DIR = File.join(ROOT_DIR, 'tmp', 'templates')
+
   TEST_DIR      = File.join(ROOT_DIR, 'test')
   TEST_UNIT_DIR = File.join(TEST_DIR, 'unit')
   TMP_DIR       = File.join(TEST_UNIT_DIR, 'tmp')
@@ -39,7 +44,20 @@ module JefHelper
     puts "  http://book.git-scm.com/2_installing_git.html"
     exit
   end
-    
+  
+	def self.compile_templates
+		c = Compiler.new TEMP_DEST_DIR 
+		basedir = APP_DIR
+		templates = YAML.load(IO.read(File.join(APP_DIR, APP_YML)))['TEMPLATES']
+		templates.each do |r|
+			pat = File.join( basedir, r )
+			Dir[pat].each do |p|
+				c.compile p
+			end
+		end
+		
+	end
+  
   def self.sprocketize
 
     require_sprockets
@@ -48,6 +66,7 @@ module JefHelper
 		mains.each do |m|
 			env = Sprockets::Environment.new
 			env.prepend_path APP_DIR
+			env.prepend_path TEMP_DEST_DIR
 			env.prepend_path FRAMEWORK_DIR
 			js = env[ m ].to_s
 			file = File.new( File.join( BUILD_DIR, m ), "w")
