@@ -15,6 +15,7 @@ task :default => [:dist]
 
 desc "Builds the distribution."
 task :dist do
+  JefHelper.compile_templates
   JefHelper.sprocketize
 	JefHelper.copy_resources
 end
