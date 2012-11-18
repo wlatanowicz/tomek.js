@@ -28,28 +28,44 @@ class Renderer
 	end
 	
 	def render_html_node node
-		add_render_command "var "+node.variable_name+" = document.createElement( '"+node.tag+"' );"
-		node.attributes.each do |a|
-			add_render_command node.variable_name+".setAttribute( '"+a.name+"', "+a.value.js_expression+" );"
+		@dependencies.push( 'THtmlElement' ) unless @dependencies.include?( 'THtmlElement' )
+		
+		init_in = "this"
+		if ( node.parent != nil )then
+			init_in = node.parent.variable_name
 		end
-		add_render_command node.parent.variable_name+".appendChild( "+node.variable_name+" );"
+		add_init_command "var "+node.variable_name+" = new THtmlElement(\""+node.tag+"\", "+node.attributes_json+");"
+		add_init_command init_in+".addChildControl( "+node.variable_name+" );"
+		
 		render_contents node
 	end
 	
 	def render_component_node node
 		@dependencies.push( node.classname ) unless @dependencies.include?( node.classname )
 		
+		init_in = "this"
+		if ( node.parent != nil )then
+			init_in = node.parent.variable_name
+		end
 		add_init_command "var "+node.variable_name+" = new "+node.classname+"("+node.attributes_json+");"
-		add_init_command "this.addChildControl( '"+node.variable_name+"', "+node.variable_name+" );"
-		
-		add_render_command "var "+node.variable_name+" = this.getChildControl( '"+node.variable_name+"' );"
-		add_render_command "this.renderChildControl( "+node.variable_name+", "+node.parent.variable_name+" );"
+		add_init_command init_in+".addChildControl( "+node.variable_name+" );"
 		
 		render_contents node
 	end
 	
+	def render_stencil_node node
+		
+	end
+	
 	def render_text_node node
-		add_render_command node.parent.variable_name+".appendChild( document.createTextNode( "+node.get_js_expression+" ) );"
+		@dependencies.push( 'TTextElement' ) unless @dependencies.include?( 'TTextElement' )
+		
+		init_in = "this"
+		if ( node.parent != nil )then
+			init_in = node.parent.variable_name
+		end
+		add_init_command "var "+node.variable_name+" = new TTextElement("+node.get_js_expression+");"
+		add_init_command init_in+".addChildControl( "+node.variable_name+" );"
 	end
 	
 	def output
@@ -66,12 +82,9 @@ class Renderer
 		txt += "\n"
 		
 		txt += @control+".prototype.createChildControls = function(){\n" +
+				"var placeholder = this;\n"+
 				@init +
-				"};\n" +
-				"\n\n" +
-				@control+".prototype.renderContents = function( placeholder ){\n" +
-				@render +
-				"};\n"
+				"};\n";
 		return txt
 	end
 	
@@ -82,6 +95,8 @@ class Renderer
 				render_html_node n
 			elsif ( n.instance_of? ComponentNode ) then
 				render_component_node n
+			elsif ( n.instance_of? StencilNode ) then
+				render_stencil_node n
 			elsif ( n.instance_of? TextNode ) then
 				render_text_node n
 			else

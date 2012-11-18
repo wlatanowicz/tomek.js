@@ -1,9 +1,14 @@
 var THtmlElement = TControl.extend( {
 	
-	tagName : 'div',
-
+	_tagName : 'div',
+	
+	constructor : function( tagName, attributes ){
+		this.base( [] );
+		this._tagName = tagName;
+	},
+	
 	renderContents : function( placeholder ){
-		var d = new Element( this.tagName );
+		var d = document.createElement( this._tagName );
 		this.renderChildControls( d );
 		placeholder.appendChild( d );
 	}

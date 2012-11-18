@@ -47,6 +47,9 @@ class Parser
 			if ( node.namespace.href == 'component' ) then
 				return ComponentNode.new node
 			end
+			if ( node.namespace.href == 'stencil' ) then
+				return StencilNode.new node
+			end
 		end
 		return nil
 	end

@@ -1,19 +1,17 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 
-require 'template/template_node'
-
-class ComponentNode < TemplateNode
-  
-	@classname
+class StencilNode < TemplateNode
+	
+	@property_name
 	
 	def classname
-		@classname
+		@property_name
 	end
 	
 	def initialize node
     super
-		@classname = node.name.to_s
+		@property_name = node.name.to_s
   end
-		
+	
 end

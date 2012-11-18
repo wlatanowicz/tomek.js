@@ -21,8 +21,15 @@ var TControl = Base.extend( {
 		}
 	},
 	
+	setID : function( id ){
+		if ( this._ID != null ){
+			throw new Exception( 'Cannot change ID' )
+		}
+		this._ID = id;
+	},
+	
 	getPublicProperties : function(){
-		return ['RootNode','Parent'];
+		return ['ID','RootNode','Parent'];
 	},
 	
 	registerPublicProperties : function(){
@@ -102,11 +109,12 @@ var TControl = Base.extend( {
 	},
 	
 	preRenderCleanUp : function(){
-		for ( var i=0; i<this._childControls.length; i++ ){
+		var i;
+		for ( i=0; i<this._childControls.length; i++ ){
 			this._childControls[i].preRenderCleanUp();
 		}
 		var x_el = document.createElement( "div" );
-		for ( var i=0; i<this._renderedNodes.length; i++ ){
+		for ( i=0; i<this._renderedNodes.length; i++ ){
 			var n = this._renderedNodes[ i ];
 			if ( n.remove ){
 				n.remove();
@@ -136,7 +144,7 @@ var TControl = Base.extend( {
 	},
 	
 	renderContents : function( placeholder ){
-		this.renderChildControls( placeholder );		
+		this.renderChildControls( placeholder );
 	},
 
 	renderChildControls : function( placeholder ){
@@ -145,25 +153,36 @@ var TControl = Base.extend( {
 		}
 	},
 	
-	renderChildControl : function( c, placeholder ){
-		c.renderContents( placeholder );	
-	},
-	
 	appendChild : function( el ){
 		this._renderedNodes.push( el );
 		this.getRootNode().appendChild( el );
 	},
 	
-	addChildControl : function( i, c ){
-		c.Parent = this;
+	addChildControl : function( c ){
+		c.setParent( this );
 		this._childControls.push( c );
-		if ( i ){
-			this._childControlsHash[ i ] = c;
+		if ( c.getID() ){
+			this._childControlsHash[ c.getID() ] = c;
 		}
 	},
 	
 	getChildControl : function( i ){
 		return this._childControlsHash[ i ];
+	},
+	
+	findChildControlByID : function( id ){
+		var i;
+		if( this._childControlsHash[ id ]
+			&& this._childControlsHash[ id ].getID() == id ){
+			return this._childControlsHash[ id ];
+		}
+		for ( i=0; i<this._childControls.length; i++ ){
+			var ctrl = this._childControls[i].findChildControlByID( id );
+			if( ctrl != null ){
+				return ctrl;
+			}
+		}
+		return null;
 	}
 	
 } );

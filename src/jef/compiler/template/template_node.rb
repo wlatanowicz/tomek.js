@@ -59,7 +59,7 @@ class TemplateNode
 	
 	def attributes_json
 		if @attributes.length <= 0
-			return ""
+			return "[]"
 		end
 		
 		attrs = []
