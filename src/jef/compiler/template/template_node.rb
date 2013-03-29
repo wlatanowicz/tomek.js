@@ -72,7 +72,7 @@ class TemplateNode
 	def ensure_id
 		if @id == nil
 			@@last_auto_id = @@last_auto_id + 1
-			@id = "v"+@@last_auto_id.to_s
+			@id = "c"+@@last_auto_id.to_s
 		end
 	end
 	

@@ -1,71 +1,48 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 
-class Renderer
+require 'renderer/base_renderer'
+require 'renderer/stencil_renderer'
+
+class Renderer < BaseRenderer
 	
 	@dependencies
 	@control
-	@render
-	@init
 	
 	def initialize control
-		@render = ""
-		@init = ""
+		@output = ""
 		@control = control
 		@dependencies = []
 	end
 	
-	def add_render_command str
-		@render = @render + "\t" + str + "\n"
-	end
-	
-	def add_init_command str
-		@init = @init + "\t" + str + "\n"
-	end
-	
 	def render doc
-		render_contents doc
+		render_initializers doc
 	end
 	
-	def render_html_node node
-		@dependencies.push( 'THtmlElement' ) unless @dependencies.include?( 'THtmlElement' )
-		
-		init_in = "this"
-		if ( node.parent != nil )then
-			init_in = node.parent.variable_name
-		end
-		add_init_command "var "+node.variable_name+" = new THtmlElement(\""+node.tag+"\", "+node.attributes_json+");"
-		add_init_command init_in+".addChildControl( "+node.variable_name+" );"
-		
-		render_contents node
-	end
-	
-	def render_component_node node
+	def render_initializer node
 		@dependencies.push( node.classname ) unless @dependencies.include?( node.classname )
 		
 		init_in = "this"
-		if ( node.parent != nil )then
-			init_in = node.parent.variable_name
+		parent_component = node.parent;
+		while ( parent_component != nil and ! parent_component.instance_of? ComponentNode ) do
+			parent_component = parent_component.parent
 		end
-		add_init_command "var "+node.variable_name+" = new "+node.classname+"("+node.attributes_json+");"
-		add_init_command init_in+".addChildControl( "+node.variable_name+" );"
-		
-		render_contents node
-	end
-	
-	def render_stencil_node node
-		
-	end
-	
-	def render_text_node node
-		@dependencies.push( 'TTextElement' ) unless @dependencies.include?( 'TTextElement' )
-		
-		init_in = "this"
-		if ( node.parent != nil )then
-			init_in = node.parent.variable_name
+
+		if ( parent_component != nil && parent_component.variable_name != 'placeholder' )then
+			init_in = varname( parent_component )
 		end
-		add_init_command "var "+node.variable_name+" = new TTextElement("+node.get_js_expression+");"
-		add_init_command init_in+".addChildControl( "+node.variable_name+" );"
+		add_output varname( node )+" = new "+node.classname+"("+node.attributes_json+");"
+		add_output init_in+".addTemplateChildControl( \""+varname( node )+"\", "+varname( node )+" );"
+		add_output init_in+".addChildControl( "+varname( node )+" );"
+		
+		r = StencilRenderer.new node
+		r.render
+		add_output varname( node )+".renderChildControls = function(){"
+		add_output "\tvar placeholder = this.getContainer();";
+		add_output r.output
+		add_output "}"
+		
+		render_initializers node
 	end
 	
 	def output
@@ -82,25 +59,19 @@ class Renderer
 		txt += "\n"
 		
 		txt += @control+".prototype.createChildControls = function(){\n" +
-				"var placeholder = this;\n"+
-				@init +
+				@output +
 				"};\n";
+			
 		return txt
 	end
 	
-	def render_contents node
+	def render_initializers node
 		node.children.each do |n|
 			
-			if ( n.instance_of? HtmlNode ) then
-				render_html_node n
-			elsif ( n.instance_of? ComponentNode ) then
-				render_component_node n
-			elsif ( n.instance_of? StencilNode ) then
-				render_stencil_node n
-			elsif ( n.instance_of? TextNode ) then
-				render_text_node n
+			if ( n.instance_of? ComponentNode ) then
+				render_initializer n
 			else
-				#error
+				render_initializers n
 			end
 			
 		end
