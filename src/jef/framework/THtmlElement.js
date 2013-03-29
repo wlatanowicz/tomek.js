@@ -9,9 +9,9 @@ var THtmlElement = TControl.extend( {
 	
 	renderContents : function( placeholder ){
 		var d = document.createElement( this._tagName );
-		this.setContainer( d );
-		this.renderChildControls();
-		placeholder.appendChild( d );
+		//this.setContainer( d );
+		this.renderChildControls( d );
+		this.appendChild( placeholder, d );
 	}
 	
 });

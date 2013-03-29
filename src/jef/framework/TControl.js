@@ -11,7 +11,7 @@ var TControl = Base.extend( {
 	
 	/**
 	 * Element
-	 * Controlor is rendered inside this element
+	 * Control is rendered inside this element
 	 */
 	_placeholder : null,
 	
@@ -21,11 +21,6 @@ var TControl = Base.extend( {
 	 */
 	_positionMarker : null,
 	
-	/**
-	 * Element or null
-	 * Element to render child controls in
-	 */
-	_container : null,
 	
 	constructor : function( options ){
 		this._childControls = [];
@@ -130,15 +125,7 @@ var TControl = Base.extend( {
 	getPlaceholder : function(){
 		return this._placeholder ? this._placeholder : ( this.getParent() ? this.getParent().getPlaceholder() : document.body );
 	},
-	
-	setContainer : function( node ){
-		this._container = node;
-	},
-
-	getContainer : function(){
-		return this._container ? this._container : this.getPlaceholder();
-	},
-	
+		
 	preRenderCleanUp : function(){
 		var i;
 		for ( i=0; i<this._childControls.length; i++ ){
@@ -171,30 +158,52 @@ var TControl = Base.extend( {
 	render : function(){
 		this.ensureChildControls();
 		this.preRenderCleanUp();
-		this.renderContents( this );
+		this.renderContents( this.getPlaceholder() );
+	},
+	
+	renderContentsInPlaceholder : function( placeholder ){
+		this.setPlaceholder( placeholder );
+		this.renderContents( placeholder );
 	},
 	
 	renderContents : function( placeholder ){
-		this.renderChildControls();
+		this.renderChildControls( placeholder );
 	},
 
-	renderChildControls : function(){
+	renderChildControls : function( placeholder ){
 		for ( var i=0; i<this._childControls.length; i++ ){
-			this._childControls[ i ].renderContents( this.getContainer() );
+			this._childControls[ i ].renderContentsInPlaceholder( placeholder );
 		}
 	},
 	
-	appendChild : function( el ){
-		this._renderedNodes.push( el );
+	appendChild : function( arg1, arg2 ){
 		
-		var root = this.getContainer();
+		var root = null;
+		var el = null;
+		var ph = this.getPlaceholder();
 		
-		if ( this._positionMarker == null || this._positionMarker.parentNode != root ){
-			this._positionMarker = document.createComment( "-" );
-			root.appendChild( this._positionMarker );
+		if ( arg2 ){
+			root = arg1;
+			el = arg2;
+		}else{
+			el = arg1;
+			root = ph;
 		}
 		
-		root.insertBefore( el, this._positionMarker );
+		this._renderedNodes.push( el );
+		
+		if ( root == ph ){
+		
+			if ( this._positionMarker == null || this._positionMarker.parentNode != root ){
+				this._positionMarker = document.createComment( "-" );
+				//this._positionMarker = document.createElement( "span" );
+				root.appendChild( this._positionMarker );
+			}
+
+			root.insertBefore( el, this._positionMarker );
+		}else{
+			root.appendChild( el );
+		}
 		
 	},
 	

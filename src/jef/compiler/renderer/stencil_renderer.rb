@@ -25,32 +25,32 @@ class StencilRenderer < BaseRenderer
 	end
 	
 	def render_html_node node
-		init_in = "this"
+		render_in = "placeholder";
 		if ( node.parent != @root )then
-			init_in = varname( node.parent )
+			render_in = varname( node.parent )
 		end
 		add_output "var "+varname( node )+" = document.createElement( \""+node.tag+"\" );"
 		render_renderers node
-		add_output init_in+".appendChild( "+varname( node )+" );"
+		add_output "this.appendChild( "+render_in+", "+varname( node )+" );"
 		
 	end
 	
 	def render_component_node node
-		init_in = "this"
+		render_in = "placeholder"
 		if ( node.parent != @root )then
-			init_in = varname( node.parent )
+			render_in = varname( node.parent )
 		end
-		add_output "this._templateControls[\""+varname( node )+"\"].renderContents( "+init_in+" );"
+		add_output "this._templateControls[\""+varname( node )+"\"].renderContentsInPlaceholder( "+render_in+" );"
 		
 	end
 	
 	def render_text_node node
-		init_in = "this"
+		render_in = "placeholder";
 		if ( node.parent != @root )then
-			init_in = varname( node.parent )
+			render_in = varname( node.parent )
 		end
 		add_output "var "+varname( node )+" = document.createTextNode( "+node.get_js_expression+" );"
-		add_output init_in+".appendChild( "+varname( node )+" );"		
+		add_output "this.appendChild( "+render_in+", "+varname( node )+" );"
 	end
 	
 	def render_renderers node

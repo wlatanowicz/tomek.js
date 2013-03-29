@@ -37,8 +37,8 @@ class Renderer < BaseRenderer
 		
 		r = StencilRenderer.new node
 		r.render
-		add_output varname( node )+".renderChildControls = function(){"
-		add_output "\tvar placeholder = this.getContainer();";
+		add_output varname( node )+".renderChildControls = function( placeholder ){"
+		#add_output "\tvar placeholder = this.getContainer();";
 		add_output r.output
 		add_output "}"
 		

@@ -1,5 +1,5 @@
 
 //= require TMyControl-tpl
 
-var c = new TMyControl( { 'RootNode' : 'container' } );
+var c = new TMyControl( { 'Placeholder' : 'container' } );
 c.render();
