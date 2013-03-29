@@ -4,16 +4,37 @@ var TControl = Base.extend( {
 	
 	_childControls : [],
 	_childControlsHash : {},
-	_renderedNodes : [],
 	_childControlsCreated : false,
+	_templateControls : {},
+	
+	_renderedNodes : [],
+	
+	/**
+	 * Element
+	 * Controlor is rendered inside this element
+	 */
+	_placeholder : null,
+	
+	/**
+	 * Node
+	 * Keeps position of this control inside _placeholder
+	 */
 	_positionMarker : null,
+	
+	/**
+	 * Element or null
+	 * Element to render child controls in
+	 */
+	_container : null,
 	
 	constructor : function( options ){
 		this._childControls = [];
 		this._renderedNodes = [];
+		this._childControlsHash = {};
 		this._childControlsCreated = false;
 		this._positionMarker = null;
-		
+		this._templateControls = {};
+
 		this.registerPublicProperties();
 		
 		if ( options ){
@@ -31,7 +52,7 @@ var TControl = Base.extend( {
 	},
 	
 	getPublicProperties : function(){
-		return ['ID','RootNode','Parent'];
+		return ['ID','Placeholder','Parent'];
 	},
 	
 	registerPublicProperties : function(){
@@ -96,18 +117,26 @@ var TControl = Base.extend( {
 		return this[key];
 	},
 	
-	setRootNode : function( root_node ){
+	setPlaceholder : function( root_node ){
 		if ( typeof root_node == 'string' ){
 			root_node = document.getElementById( root_node );
 		}
 		if ( ! root_node ){
-			throw new Exception( 'Invalid RootNode' )
+			throw new Exception( 'Invalid Placeholder' )
 		}
-		this._RootNode = root_node;
+		this._placeholder = root_node;
 	},
 	
-	getRootNode : function(){
-		return this._RootNode ? this._RootNode : ( this.getParent() ? this.getParent().getRootNode() : document.body );
+	getPlaceholder : function(){
+		return this._placeholder ? this._placeholder : ( this.getParent() ? this.getParent().getPlaceholder() : document.body );
+	},
+	
+	setContainer : function( node ){
+		this._container = node;
+	},
+
+	getContainer : function(){
+		return this._container ? this._container : this.getPlaceholder();
 	},
 	
 	preRenderCleanUp : function(){
@@ -142,23 +171,23 @@ var TControl = Base.extend( {
 	render : function(){
 		this.ensureChildControls();
 		this.preRenderCleanUp();
-		this.renderContents( this.getParent() );
+		this.renderContents( this );
 	},
 	
 	renderContents : function( placeholder ){
 		this.renderChildControls();
 	},
 
-	renderChildControls : function( placeholder ){
+	renderChildControls : function(){
 		for ( var i=0; i<this._childControls.length; i++ ){
-			this._childControls[ i ].renderContents( this );
+			this._childControls[ i ].renderContents( this.getContainer() );
 		}
 	},
 	
 	appendChild : function( el ){
 		this._renderedNodes.push( el );
 		
-		var root = this.getRootNode();
+		var root = this.getContainer();
 		
 		if ( this._positionMarker == null || this._positionMarker.parentNode != root ){
 			this._positionMarker = document.createComment( "-" );
@@ -175,6 +204,10 @@ var TControl = Base.extend( {
 		if ( c.getID() ){
 			this._childControlsHash[ c.getID() ] = c;
 		}
+	},
+	
+	addTemplateChildControl : function( k, c ){
+		this._templateControls[ k ] = c;
 	},
 	
 	getChildControl : function( i ){
