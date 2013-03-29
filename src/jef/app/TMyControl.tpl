@@ -19,7 +19,7 @@
 		<com:TPanel ID="p2" />
 		<com:TPanel ID="panelik">
 			<p>testowty paragraf</p>
-			<com:TLiteral ID="xxx" Text="xxx" />
+			<com:TLiteral ID="xxx" Text="xxx1" />
 			<p>drugi paragraf</p>
 		</com:TPanel>
 	</p>

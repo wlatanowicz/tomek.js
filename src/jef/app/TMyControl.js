@@ -1,3 +1,5 @@
-var TMyControl = TControl.extend( {
+//= require TTemplateControl
+
+var TMyControl = TTemplateControl.extend( {
 	
 } );
