@@ -1,6 +1,4 @@
 //= require "TContent"
-//= require "THtmlElement"
-//= require "TTextElement"
 //= require "TPanel"
 //= require "TLiteral"
 //= require "TRepeater"
@@ -8,46 +6,70 @@
 //= require "TMyControl"
 
 TMyControl.prototype.createChildControls = function(){
-var placeholder = this;
-	var v1 = new TContent( {
+	c1 = new TContent( {
 				"OnClick" : "<a>alert( 'ok' );</a>"
 				} );
-	placeholder.addChildControl( v1 );
-	var v2 = new THtmlElement("p",  {
-				"class" : "paragraph"
-				} );
-	v1.addChildControl( v2 );
-	var v3 = new TTextElement("ąćół akkkkka");
-	v2.addChildControl( v3 );
-	var v4 = new TPanel( {
+	this.addTemplateChildControl( "c1", c1 );
+	this.addChildControl( c1 );
+	c1.renderChildControls = function( placeholder ){
+			var h_c2 = document.createElement( "p" );
+		var t_c3 = document.createTextNode( "ąćół akkkkka" );
+		this.appendChild( h_c2, t_c3 );
+		this._templateControls["c4"].renderContentsInPlaceholder( h_c2 );
+		this._templateControls["c5"].renderContentsInPlaceholder( h_c2 );
+		this.appendChild( placeholder, h_c2 );
+		this._templateControls["c6"].renderContentsInPlaceholder( placeholder );
+		var h_c7 = document.createElement( "a" );
+		var t_c8 = document.createTextNode( "aaA" );
+		this.appendChild( h_c7, t_c8 );
+		this.appendChild( placeholder, h_c7 );
+		this._templateControls["c9"].renderContentsInPlaceholder( placeholder );
+
+	}
+	c4 = new TPanel( {
 				"ID" : "p2"
 				} );
-	v2.addChildControl( v4 );
-	var v5 = new TPanel( {
+	c1.addTemplateChildControl( "c4", c4 );
+	c1.addChildControl( c4 );
+	c4.renderChildControls = function( placeholder ){
+	
+	}
+	c5 = new TPanel( {
 				"ID" : "panelik"
 				} );
-	v2.addChildControl( v5 );
-	var v6 = new THtmlElement("p", []);
-	v5.addChildControl( v6 );
-	var v7 = new TTextElement("testowty paragraf");
-	v6.addChildControl( v7 );
-	var v8 = new TLiteral( {
+	c1.addTemplateChildControl( "c5", c5 );
+	c1.addChildControl( c5 );
+	c5.renderChildControls = function( placeholder ){
+			var h_c10 = document.createElement( "p" );
+		var t_c11 = document.createTextNode( "testowty paragraf" );
+		this.appendChild( h_c10, t_c11 );
+		this.appendChild( placeholder, h_c10 );
+		this._templateControls["c12"].renderContentsInPlaceholder( placeholder );
+		var h_c13 = document.createElement( "p" );
+		var t_c14 = document.createTextNode( "drugi paragraf" );
+		this.appendChild( h_c13, t_c14 );
+		this.appendChild( placeholder, h_c13 );
+
+	}
+	c12 = new TLiteral( {
 				"ID" : "xxx",
-				"Text" : "xxx"
+				"Text" : "xxx1"
 				} );
-	v5.addChildControl( v8 );
-	var v9 = new THtmlElement("p", []);
-	v5.addChildControl( v9 );
-	var v10 = new TTextElement("drugi paragraf");
-	v9.addChildControl( v10 );
-	var v11 = new TPanel([]);
-	v1.addChildControl( v11 );
-	var v12 = new THtmlElement("a",  {
-				"href" : "[%= this.getText() %]"
-				} );
-	v1.addChildControl( v12 );
-	var v13 = new TTextElement("aaA");
-	v12.addChildControl( v13 );
-	var v14 = new TRepeater([]);
-	v1.addChildControl( v14 );
+	c5.addTemplateChildControl( "c12", c12 );
+	c5.addChildControl( c12 );
+	c12.renderChildControls = function( placeholder ){
+	
+	}
+	c6 = new TPanel([]);
+	c1.addTemplateChildControl( "c6", c6 );
+	c1.addChildControl( c6 );
+	c6.renderChildControls = function( placeholder ){
+	
+	}
+	c9 = new TRepeater([]);
+	c1.addTemplateChildControl( "c9", c9 );
+	c1.addChildControl( c9 );
+	c9.renderChildControls = function( placeholder ){
+	
+	}
 };
