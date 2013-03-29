@@ -6,7 +6,7 @@ var TPanel = TControl.extend( {
 		var d = document.createElement( "div" );
 		d.setAttribute( 'id', this.getID() );
 		this.setRootNode( d );
-		this.renderChildControls( d );
+		this.renderChildControls();
 		placeholder.appendChild( d );
 	}
 	

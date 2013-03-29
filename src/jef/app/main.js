@@ -1,4 +1,5 @@
 
-//= require TPanel
+//= require TMyControl-tpl
 
-alert( 'ok' );
+var c = new TMyControl( { 'RootNode' : 'container' } );
+c.render();

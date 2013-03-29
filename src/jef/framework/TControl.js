@@ -6,11 +6,13 @@ var TControl = Base.extend( {
 	_childControlsHash : {},
 	_renderedNodes : [],
 	_childControlsCreated : false,
+	_positionMarker : null,
 	
 	constructor : function( options ){
 		this._childControls = [];
 		this._renderedNodes = [];
 		this._childControlsCreated = false;
+		this._positionMarker = null;
 		
 		this.registerPublicProperties();
 		
@@ -140,22 +142,31 @@ var TControl = Base.extend( {
 	render : function(){
 		this.ensureChildControls();
 		this.preRenderCleanUp();
-		this.renderContents( this );
+		this.renderContents( this.getParent() );
 	},
 	
 	renderContents : function( placeholder ){
-		this.renderChildControls( placeholder );
+		this.renderChildControls();
 	},
 
 	renderChildControls : function( placeholder ){
 		for ( var i=0; i<this._childControls.length; i++ ){
-			this._childControls[ i ].renderContents( placeholder );
+			this._childControls[ i ].renderContents( this );
 		}
 	},
 	
 	appendChild : function( el ){
 		this._renderedNodes.push( el );
-		this.getRootNode().appendChild( el );
+		
+		var root = this.getRootNode();
+		
+		if ( this._positionMarker == null || this._positionMarker.parentNode != root ){
+			this._positionMarker = document.createComment( "-" );
+			root.appendChild( this._positionMarker );
+		}
+		
+		root.insertBefore( el, this._positionMarker );
+		
 	},
 	
 	addChildControl : function( c ){

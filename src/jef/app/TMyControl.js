@@ -1,0 +1,3 @@
+var TMyControl = TControl.extend( {
+	
+} );
