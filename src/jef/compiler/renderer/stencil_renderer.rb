@@ -30,6 +30,11 @@ class StencilRenderer < BaseRenderer
 			render_in = varname( node.parent )
 		end
 		add_output "var "+varname( node )+" = document.createElement( \""+node.tag+"\" );"
+		node.attributes.each do |a|
+			puts a
+			add_output varname( node ) + ".setAttribute( \"" + a.name + "\", " + a.value.js_expression + " );";
+		end
+		
 		render_renderers node
 		add_output "this.appendChild( "+render_in+", "+varname( node )+" );"
 		

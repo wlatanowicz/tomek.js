@@ -1,4 +1,5 @@
 //= require Base
+//= require TExpression
 
 var TControl = Base.extend( {
 	

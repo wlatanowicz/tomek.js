@@ -1,18 +1,19 @@
-//= require TControl
+//= require Base
 
-var TExpression = TControl.extend( {
+var TExpression = Base.extend( {
 	
-	constructor : function(){
-		this.base();
-		this._expression = function(){return null};
+	_expressionFunction : function(){return null},
+	
+	constructor : function( fun ){
+		this._expressionFunction = fun;
 	},
 	
-	renderContents : function( placeholder ){
-		var txt = this._expression();
-		
-		var tn = document.createTextNode( txt );
-		placeholder.appendChild( tn );
-	}
+	valueOf : function(){
+		return this._expressionFunction().valueOf();
+	},
 	
+	toString : function(){
+		return this._expressionFunction().toString();
+	}
 	
 });

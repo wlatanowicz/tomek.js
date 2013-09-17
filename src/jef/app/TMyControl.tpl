@@ -11,8 +11,11 @@
 <template xmlns:prop='property' xmlns:com='component' xmlns:temp='stencil'>
 
 <com:TContent>
+	<prop:Visible>
+		[%= Date() > '2012-01-01' %]
+	</prop:Visible>
 	<prop:OnClick>
-		<![CDATA[ <a>alert( 'ok' );</a> ]]>
+		<![CDATA[ alert( 'ok' ); ]]>
 	</prop:OnClick>
 	<p class="paragraph">
 		ąćół akkkkka
@@ -23,9 +26,17 @@
 			<p>drugi paragraf</p>
 		</com:TPanel>
 	</p>
-	<com:TPanel />
-	<a href="[%= this.getText() %]" >aaA</a>
-	<com:TRepeater>
+	<com:TPanel >
+		xx 3
+	</com:TPanel>
+	<com:TPanel ID="xxx">
+		[%= Date() %] 1
+	</com:TPanel>
+	<div style="background: yellow;">
+		<com:TLiteral Text="[%= Date()+' 2' %]" />
+	</div>
+	<a href="[%= '#'+Math.random() %]" >aaA</a>
+	<com:TRepeater ID="Rep">
 		<temp:Item>
 			helo [%= this.DataItem.text %]
 		</temp:Item>

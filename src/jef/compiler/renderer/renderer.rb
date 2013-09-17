@@ -31,7 +31,7 @@ class Renderer < BaseRenderer
 		if ( parent_component != nil && parent_component.variable_name != 'placeholder' )then
 			init_in = varname( parent_component )
 		end
-		add_output varname( node )+" = new "+node.classname+"("+node.attributes_json+");"
+		add_output "var "+varname( node )+" = new "+node.classname+"("+node.attributes_json+");"
 		add_output init_in+".addTemplateChildControl( \""+varname( node )+"\", "+varname( node )+" );"
 		add_output init_in+".addChildControl( "+varname( node )+" );"
 		
