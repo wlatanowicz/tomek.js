@@ -177,18 +177,13 @@ var TControl = Base.extend( {
 		}
 	},
 	
-	appendChild : function( arg1, arg2 ){
+	appendChild : function( el, root ){
 		
-		var root = null;
-		var el = null;
 		var ph = this.getPlaceholder();
 		
-		if ( arg2 ){
-			root = arg1;
-			el = arg2;
-		}else{
-			el = arg1;
+		if ( ! root ){
 			root = ph;
+			el = arg2;
 		}
 		
 		this._renderedNodes.push( el );

@@ -11,7 +11,7 @@ var THtmlElement = TControl.extend( {
 		var d = document.createElement( this._tagName );
 		//this.setContainer( d );
 		this.renderChildControls( d );
-		this.appendChild( placeholder, d );
+		this.appendChild( d, placeholder );
 	}
 	
 });

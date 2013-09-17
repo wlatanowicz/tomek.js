@@ -36,7 +36,7 @@ class StencilRenderer < BaseRenderer
 		end
 		
 		render_renderers node
-		add_output "this.appendChild( "+render_in+", "+varname( node )+" );"
+		add_output render_in+".appendChild( "+varname( node )+" );"
 		
 	end
 	
@@ -55,7 +55,7 @@ class StencilRenderer < BaseRenderer
 			render_in = varname( node.parent )
 		end
 		add_output "var "+varname( node )+" = document.createTextNode( "+node.get_js_expression+" );"
-		add_output "this.appendChild( "+render_in+", "+varname( node )+" );"
+		add_output render_in+".appendChild( "+varname( node )+" );"
 	end
 	
 	def render_renderers node

@@ -7,7 +7,7 @@ var TPanel = TControl.extend( {
 		d.setAttribute( 'id', this.getID() );
 		//this.setContainer( d );
 		this.renderChildControls( d );
-		this.appendChild( placeholder, d );
+		this.appendChild( d, placeholder );
 	}
 	
 });
