@@ -23,6 +23,12 @@ var THtmlElement = TControl.extend( {
 			d.setAttribute( 'id', id );
 		}
 		
+		var attrs = this.getAttributes();
+		
+		for ( var attr in attrs ){
+			d.setAttribute( attr, attrs[attr] );
+		}
+		
 		return d;
 	},
 
