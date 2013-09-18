@@ -31,7 +31,6 @@ class StencilRenderer < BaseRenderer
 		end
 		add_output "var "+varname( node )+" = document.createElement( \""+node.tag+"\" );"
 		node.attributes.each do |a|
-			puts a
 			add_output varname( node ) + ".setAttribute( \"" + a.name + "\", " + a.value.js_expression + " );";
 		end
 		
