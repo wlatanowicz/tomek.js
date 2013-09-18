@@ -35,7 +35,28 @@ var TControl = Base.extend( {
 		
 		if ( options ){
 			for ( var opt in options ){
-				this[opt] = options[ opt ];
+				
+				if ( opt.indexOf( '.' ) > -1 ){
+					//handle nested properties like Attributes.Options.Color
+					var opts = opt.split( '.' );
+					
+					var obj = this;
+					var i;
+					
+					for ( i=0; i<(opts.length-1); i++ ){
+						if ( ! obj[ opts[i] ] ){
+							obj[ opts[i] ] = {};
+						}
+						obj = obj[ opts[i] ];
+					}
+					
+					obj[ opts[i] ] = options[ opt ];
+					
+				}else{
+					//handle simple properties
+					this[opt] = options[ opt ];
+				}
+				
 			}
 		}
 	},
