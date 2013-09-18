@@ -1,7 +1,8 @@
 
 //= require TMyControl-tpl
+//= require TMyForm-tpl
 
-var c = new TMyControl( { 'Placeholder' : 'container' } );
+var c = new TMyForm( { 'Placeholder' : 'container' } );
 c.render();
 
-var r = c.findControlById( 'Rep' );
+//var r = c.findControlById( 'Rep' );

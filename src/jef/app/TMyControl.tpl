@@ -17,6 +17,18 @@
 	<prop:OnClick>
 		<![CDATA[ alert( 'ok' ); ]]>
 	</prop:OnClick>
+	<div>
+		1
+	</div>
+	<com:TPanel ID="ddd">
+		2 [%= '#'+Math.random() %]
+	</com:TPanel>
+	<div>
+		3
+	</div>
+	<com:TPanel>
+		4
+	</com:TPanel>
 	<p class="paragraph">
 		ąćół akkkkka
 		<com:TPanel ID="p2" />

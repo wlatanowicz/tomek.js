@@ -1,13 +1,8 @@
-//= require TControl
+//= require THtmlElement
 
-var TPanel = TControl.extend( {
+var TPanel = THtmlElement.extend( {
+
+	_tagName : 'div'
 	
-	renderContents : function( placeholder ){
-		var d = document.createElement( "div" );
-		d.setAttribute( 'id', this.getID() );
-		//this.setContainer( d );
-		this.renderChildControls( d );
-		this.appendChild( d, placeholder );
-	}
-	
+
 });
