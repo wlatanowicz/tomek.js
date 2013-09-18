@@ -1,6 +1,6 @@
-//= require THtmlElement
+//= require TWebControl
 
-var TPanel = THtmlElement.extend( {
+var TPanel = TWebControl.extend( {
 
 	_tagName : 'div'
 	

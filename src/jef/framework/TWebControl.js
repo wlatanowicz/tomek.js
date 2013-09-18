@@ -1,26 +1,34 @@
 //= require TControl
 
-var THtmlElement = TControl.extend( {
+var TWebControl = TControl.extend( {
 
 	_tagName : 'span',
 	_rendersChildControls : true,
 
-	_attributes : {},
+	_Attributes : {},
 	
 	_renderedMainElement : null,
 	
 	getPublicProperties : function(){
 		var arr = this.base()
-		arr.push( 'Attributes' );
+		arr.push( 'CssClass', 'Attributes' );
 		return arr;
+	},
+	
+	getClientID : function(){
+		return this.getID();
 	},
 
 	createMainElement : function(){
 		var d = document.createElement( this._tagName );
 		
-		var id = this.getID();
+		var id = this.getClientID();
 		if ( id ){
 			d.setAttribute( 'id', id );
+		}
+		
+		if ( this._CssClass ){
+			d.setAttribute( 'class', this._CssClass );
 		}
 		
 		var attrs = this.getAttributes();

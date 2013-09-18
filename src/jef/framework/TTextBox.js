@@ -1,6 +1,6 @@
-//= require THtmlElement
+//= require TWebControl
 
-var TTextBox = THtmlElement.extend( {
+var TTextBox = TWebControl.extend( {
 	
 	_tagName : 'input',
 	_rendersChildControls : false,
