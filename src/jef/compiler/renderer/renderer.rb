@@ -39,7 +39,7 @@ class Renderer < BaseRenderer
 		r.render
 		if ( r.output.length > 0 ) then
 			add_output varname( node )+".renderChildControls = function( placeholder ){"
-			add_output r.output
+			add_output_no_ident r.output
 			add_output "}"
 		end
 		

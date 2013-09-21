@@ -10,7 +10,11 @@ class BaseRenderer
   end
 	
 	def add_output str
-		@output = @output + "\t" + str + "\n"
+		add_output_no_ident "\t" + str
+	end
+	
+	def add_output_no_ident str
+		@output = @output + str + "\n"
 	end
 	
 	def varname n
