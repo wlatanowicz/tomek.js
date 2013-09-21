@@ -1,10 +1,12 @@
 //= require TWebControl
 //= require TEventResponder
 
-var TTextBox = TWebControl.extend( TEventResponderMixin ).extend( {
+var TButton = TWebControl.extend( TEventResponderMixin ).extend( {
 	
 	_tagName : 'input',
 	_rendersChildControls : false,
+	
+	_triggersEvents : ['Click'],
 	
 	setText : function( v ){
 		if ( this._renderedMainElement ){
@@ -29,8 +31,10 @@ var TTextBox = TWebControl.extend( TEventResponderMixin ).extend( {
 	createMainElement : function(){
 		var d = this.base();
 		
-		d.setAttribute( 'type', 'text' );
+		d.setAttribute( 'type', 'button' );
 		d.value = this.getText();
+		
+		this.registerTriggerElement( d, 'click', 'Click' );
 		
 		return d;
 	}

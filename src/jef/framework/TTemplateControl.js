@@ -3,4 +3,4 @@
 var TTemplateControl = TControl.extend( {
 
 		
-});
+} );
