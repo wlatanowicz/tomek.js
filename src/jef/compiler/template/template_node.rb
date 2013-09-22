@@ -7,6 +7,7 @@ require 'nokogiri'
 class TemplateNode
 	
 	@attributes
+	@events
 	@children
 	@parent
 	
@@ -18,18 +19,26 @@ class TemplateNode
   def initialize node
     @children = []
 		@attributes = []
+		@events = []
 		
 		if ( node != nil ) then
 			
 			node.children.each do |i|
-				if ( i.namespace != nil &&
-							i.namespace.href == 'property' ) then
-					@attributes.push Attribute.new i
+				if ( i.namespace != nil ) then
+					if ( i.namespace.href == 'property' ) then
+						@attributes.push Attribute.new i
+					elsif( i.namespace.href == 'event' ) then
+						@events.push Event.new i
+					end
 				end
 			end
 			
 			node.attribute_nodes.each do |a|
+				if ( a.namespace == nil ) then
 					@attributes.push Attribute.new a
+				elsif ( a.namespace.href == 'event' ) then
+					@events.push Event.new a
+				end
 			end
 			
 		end
@@ -55,6 +64,10 @@ class TemplateNode
 	
 	def attributes
 		@attributes
+	end
+	
+	def events
+		@events
 	end
 	
 	def attributes_json

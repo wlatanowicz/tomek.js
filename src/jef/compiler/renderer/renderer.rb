@@ -35,6 +35,10 @@ class Renderer < BaseRenderer
 		add_output init_in+".addTemplateChildControl( \""+varname( node )+"\", "+varname( node )+" );"
 		add_output init_in+".addChildControl( "+varname( node )+" );"
 		
+		node.events.each do |e|
+			add_output varname( node )+".attachEvent( '"+e.event+"', "+e.bound_function+" );"
+		end
+		
 		r = StencilRenderer.new node
 		r.render
 		if ( r.output.length > 0 ) then

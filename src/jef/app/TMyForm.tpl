@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<template xmlns:prop='property' xmlns:com='component' xmlns:temp='stencil'>
+<template xmlns:prop='property' xmlns:com='component' xmlns:temp='stencil' xmlns:on='event'>
 
 <com:TContent>
 
@@ -8,8 +8,13 @@
 	<div>
 		<p>
 			<com:TTextBox CssClass="form"
-						  ID="TextBox"
+						  ID="TextBox1"
 						  Text="[%= 'Treść ' + Date() %]" />
+		</p>
+		<p>
+			<com:TTextBox CssClass="form"
+						  ID="TextBox2"
+						  Text="aaa" />
 		</p>
 		<p>
 			<com:TCheckBox CssClass="form"
@@ -19,7 +24,8 @@
 		<p>
 			<com:TButton CssClass="form"
 						  ID="Btn"
-						  Text="Kliknij" />
+						  Text="Kliknij"
+						  on:Click="this.buttonClicked" />
 		</p>
 	</div>
 </com:TPanel>
