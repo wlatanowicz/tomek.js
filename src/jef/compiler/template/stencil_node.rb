@@ -5,7 +5,7 @@ class StencilNode < TemplateNode
 	
 	@property_name
 	
-	def classname
+	def property_name
 		@property_name
 	end
 	

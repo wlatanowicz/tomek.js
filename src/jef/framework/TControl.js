@@ -205,7 +205,6 @@ var TControl = Base.extend( {
 		
 		if ( ! root ){
 			root = ph;
-			el = arg2;
 		}
 		
 		this._renderedNodes.push( el );
@@ -235,6 +234,7 @@ var TControl = Base.extend( {
 	
 	addTemplateChildControl : function( k, c ){
 		this._templateControls[ k ] = c;
+		this.addChildControl( c );
 	},
 	
 	getChildControl : function( i ){

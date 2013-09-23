@@ -10,7 +10,7 @@ class Renderer < BaseRenderer
 	@control
 	
 	def initialize control
-		@output = ""
+		super
 		@control = control
 		@dependencies = []
 	end
@@ -33,7 +33,6 @@ class Renderer < BaseRenderer
 		end
 		add_output "var "+varname( node )+" = new "+node.classname+"("+node.attributes_json+");"
 		add_output init_in+".addTemplateChildControl( \""+varname( node )+"\", "+varname( node )+" );"
-		add_output init_in+".addChildControl( "+varname( node )+" );"
 		
 		node.events.each do |e|
 			add_output varname( node )+".attachEvent( '"+e.event+"', "+e.bound_function+" );"
@@ -43,10 +42,22 @@ class Renderer < BaseRenderer
 		r.render
 		if ( r.output.length > 0 ) then
 			add_output varname( node )+".renderChildControls = function( placeholder ){"
-			add_output_no_ident r.output
+			add_output r.output
 			add_output "}"
 		end
 		
+		node.children.each do |n|
+			
+			if ( n.instance_of? StencilNode ) then
+				add_output varname( node )+".set"+n.property_name+"( function( placeholder ){"
+				push_indent
+				render_initializers n
+				pop_indent
+				add_output "} );"
+			end
+			
+		end
+
 		render_initializers node
 	end
 	
@@ -75,6 +86,8 @@ class Renderer < BaseRenderer
 			
 			if ( n.instance_of? ComponentNode ) then
 				render_initializer n
+			elsif ( n.instance_of? StencilNode ) then
+				#skip
 			else
 				render_initializers n
 			end

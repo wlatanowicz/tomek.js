@@ -4,16 +4,29 @@
 class BaseRenderer
   
 	@output
+	@indent
 
-	def initialize
+	def initialize junk
+		@indent = 1
     @output = ""
   end
 	
-	def add_output str
-		add_output_no_ident "\t" + str
+	def push_indent
+		@indent = @indent+1
 	end
 	
-	def add_output_no_ident str
+	def pop_indent
+		@indent = @indent-1 unless @indent <= 0
+	end
+	
+	def add_output str
+		indent = "\t" * @indent.to_i
+		str.split("\n").each do |line|
+			add_output_no_indent indent + line
+		end
+	end
+	
+	def add_output_no_indent str
 		@output = @output + str + "\n"
 	end
 	

@@ -8,16 +8,12 @@ class StencilRenderer < BaseRenderer
 	@root
 	
   def initialize root
-		@output = ""
+		super
     @root = root
   end
 	
 	def render
 		render_renderers @root
-	end
-	
-	def add_output str
-		super "\t"+str
 	end
 	
 	def output
@@ -65,7 +61,7 @@ class StencilRenderer < BaseRenderer
 			elsif ( n.instance_of? ComponentNode ) then
 				render_component_node n
 			elsif ( n.instance_of? StencilNode ) then
-			#	render_stencil_node n
+			#	skip
 			elsif ( n.instance_of? TextNode ) then
 				render_text_node n
 			else
