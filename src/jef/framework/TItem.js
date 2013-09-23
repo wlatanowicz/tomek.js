@@ -1,10 +1,5 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 //= require TControl
+//= require TItem
 
 var TItem = TControl.extend( {
 
@@ -12,6 +7,10 @@ var TItem = TControl.extend( {
 		var arr = this.base()
 		arr.push( 'DataItem', 'ItemIndex' );
 		return arr;
+	},
+	
+	useTemplate : function( template ){
+		this.createChildControls = template.bind( this, this );
 	}
 	
 } );

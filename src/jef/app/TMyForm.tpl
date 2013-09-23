@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<template xmlns:prop='property' xmlns:com='component' xmlns:temp='stencil' xmlns:on='event'>
+<template xmlns:com='component' xmlns:prop='property' xmlns:on='event' xmlns:temp='stencil'>
 
 <com:TContent>
 
@@ -29,7 +29,15 @@
 		</p>
 	</div>
 </com:TPanel>
-	
+
+	<com:TRepeater ID="Rep" >
+		<temp:Item>
+			<com:TPanel>
+				helo [%= this.Parent.DataItem %]
+			</com:TPanel>
+		</temp:Item>
+	</com:TRepeater>
+
 </com:TContent>
 
 </template>

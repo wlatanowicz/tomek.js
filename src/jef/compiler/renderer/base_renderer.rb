@@ -38,7 +38,7 @@ class BaseRenderer
 		elsif ( n.instance_of? ComponentNode ) then
 			return n.variable_name
 		elsif ( n.instance_of? StencilNode ) then
-			render_stencil_node n
+			return "item"
 		elsif ( n.instance_of? TextNode ) then
 			return "t_"+n.variable_name
 		else

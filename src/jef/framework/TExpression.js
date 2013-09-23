@@ -9,11 +9,19 @@ var TExpression = Base.extend( {
 	},
 	
 	valueOf : function(){
-		return this._expressionFunction().valueOf();
+		var exp = this._expressionFunction();
+		if ( exp == null ){
+			return '!NULL!';
+		}
+		return exp.valueOf();
 	},
 	
 	toString : function(){
-		return this._expressionFunction().toString();
+		var exp = this._expressionFunction();
+		if ( exp == null ){
+			return '!NULL!';
+		}
+		return exp.toString();
 	}
 	
 });

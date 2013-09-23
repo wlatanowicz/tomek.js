@@ -24,7 +24,8 @@ class Renderer < BaseRenderer
 		
 		init_in = "this"
 		parent_component = node.parent;
-		while ( parent_component != nil and ! parent_component.instance_of? ComponentNode ) do
+		while ( parent_component != nil and
+					! ( parent_component.instance_of? ComponentNode or parent_component.instance_of? StencilNode ) ) do
 			parent_component = parent_component.parent
 		end
 
@@ -49,7 +50,7 @@ class Renderer < BaseRenderer
 		node.children.each do |n|
 			
 			if ( n.instance_of? StencilNode ) then
-				add_output varname( node )+".set"+n.property_name+"( function( placeholder ){"
+				add_output varname( node )+".set"+n.property_name+"Template( function( item ){"
 				push_indent
 				render_initializers n
 				pop_indent

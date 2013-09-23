@@ -46,7 +46,7 @@ class TextExpression
 				
 				part = part.strip
 				if part.length > 0 then
-					part = "( new TExpression( function(){ return ("+part+"); } ) )"
+					part = "( new TExpression( function(){ return ("+part+"); }.bind( this ) ) )"
 					parts.push part
 				end
 				

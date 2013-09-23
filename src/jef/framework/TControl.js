@@ -189,6 +189,7 @@ var TControl = Base.extend( {
 	},
 	
 	renderContents : function( placeholder ){
+		this.ensureChildControls();
 		this.renderChildControls( placeholder );
 	},
 
