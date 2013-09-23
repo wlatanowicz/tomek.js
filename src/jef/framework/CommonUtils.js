@@ -1,3 +1,5 @@
+//= require Base
+
 function parseBool( v ){
 	return v === true
 			|| v === 1
