@@ -15,17 +15,8 @@ var TWebControl = TControl.extend( {
 		return arr;
 	},
 	
-	getClientID : function(){
-		return this.getID();
-	},
-
 	createMainElement : function(){
 		var d = document.createElement( this._tagName );
-		
-		var id = this.getClientID();
-		if ( id ){
-			d.setAttribute( 'id', id );
-		}
 		
 		if ( this._CssClass ){
 			d.setAttribute( 'class', this._CssClass );
@@ -42,6 +33,7 @@ var TWebControl = TControl.extend( {
 
 	renderContents : function( placeholder ){
 		var d = this.createMainElement();
+		d.JefControlObject = this;
 		this._renderedMainElement = d;
 		if ( this._rendersChildControls ){
 			this.renderChildControls( d );
