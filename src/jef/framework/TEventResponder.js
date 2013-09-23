@@ -6,6 +6,12 @@ var TEventResponderMixin = {
 	
 	_triggerElements : [], 
 	
+	constructor : function( options ){
+		this.base( options );
+		this._eventResponders = {};
+		this._triggerElements = []; 
+	},
+	
 	triggersEvent : function( e ){
 		return this._triggersEvents.indexOf( e ) >= 0
 				? true
