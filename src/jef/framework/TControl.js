@@ -3,15 +3,40 @@
 
 var TControl = Base.extend( {
 	
+	/**
+	 * Array of TControl
+	 * Keeps all direct child controls
+	 */
 	_childControls : [],
+	
+	/**
+	 * Hash of TControl
+	 * Keeps track of child controls based on ID
+	 */
 	_childControlsHash : {},
+	
+	/**
+	 * Boolean
+	 * True when child controls have been initialized
+	 * afer running createChildControls()
+	 */
 	_childControlsCreated : false,
+	
+	/**
+	 * Hash of TControl
+	 * Keeps track of controls initialized using XML template
+	 */
 	_templateControls : {},
 	
+	/**
+	 * Array of DOMElement
+	 * Keeps track of rendered DOMElements
+	 * that should be removed on rerender
+	 */
 	_renderedNodes : [],
 	
 	/**
-	 * Element
+	 * DOMElement
 	 * Control is rendered inside this element
 	 */
 	_placeholder : null,
@@ -61,6 +86,11 @@ var TControl = Base.extend( {
 		}
 	},
 	
+	/**
+	 * Setter for control ID
+	 * 
+	 * @param id String new control ID
+	 */
 	setID : function( id ){
 		if ( this._ID != null ){
 			throw new Exception( 'Cannot change ID' )
@@ -68,10 +98,19 @@ var TControl = Base.extend( {
 		this._ID = id;
 	},
 	
+	/**
+	 * Defines list of public properties
+	 * 
+	 * @returns Array of String
+	 */
 	getPublicProperties : function(){
 		return ['ID','Placeholder','Parent'];
 	},
 	
+	/**
+	 * Registers all public properties
+	 * defined by getPublicProperties()
+	 */
 	registerPublicProperties : function(){
 		var props = this.getPublicProperties();
 		var i;
@@ -80,6 +119,13 @@ var TControl = Base.extend( {
 		}
 	},
 	
+	/**
+	 * Registers public property
+	 * by creating object property,
+	 * setter and getter functions if necessary
+	 * 
+	 * @param name String property name
+	 */
 	registerPublicProperty : function( name ){
 		//http://johndyer.name/native-browser-get-set-properties-in-javascript/
 		
@@ -126,14 +172,22 @@ var TControl = Base.extend( {
 		
 	},
 	
-	setAttribute : function( key, value ){
-		this[key] = value;
-	},
-
-	getAttribute : function( key ){
-		return this[key];
-	},
+	//@TODO TODEL
+//	setAttribute : function( key, value ){
+//		this[key] = value;
+//	},
+//
+//	getAttribute : function( key ){
+//		return this[key];
+//	},
 	
+	
+	/**
+	 * Sets placholder for control
+	 * to be rendered in
+	 * 
+	 * @param root_node String|DOMElement placeholder
+	 */
 	setPlaceholder : function( root_node ){
 		if ( typeof root_node == 'string' ){
 			root_node = document.getElementById( root_node );
@@ -144,10 +198,20 @@ var TControl = Base.extend( {
 		this._placeholder = root_node;
 	},
 	
+	/**
+	 * Returns placeholder for control
+	 * fallbacks to parent control if required
+	 * 
+	 * @returns DOMElement node to render control in
+	 */
 	getPlaceholder : function(){
 		return this._placeholder ? this._placeholder : ( this.getParent() ? this.getParent().getPlaceholder() : document.body );
 	},
-		
+	
+	/**
+	 * Removes all DOMElements created while rendering the control
+	 * before next render
+	 */
 	preRenderCleanUp : function(){
 		var i;
 		for ( i=0; i<this._childControls.length; i++ ){
@@ -166,6 +230,9 @@ var TControl = Base.extend( {
 		this._renderedNodes = [];
 	},
 	
+	/**
+	 * Initializes child controls if required
+	 */
 	ensureChildControls : function(){
 		if ( ! this._childControlsCreated ){
 			this.createChildControls();
@@ -173,32 +240,60 @@ var TControl = Base.extend( {
 		}
 	},
 	
+	/**
+	 * Initializes child controls
+	 * should be overloaded
+	 */
 	createChildControls : function(){
 		
 	},
 	
+	/**
+	 * Renders the control
+	 * and all its child controls
+	 */
 	render : function(){
 		this.ensureChildControls();
 		this.preRenderCleanUp();
 		this.renderContents( this.getPlaceholder() );
 	},
 	
+	/**
+	 * Sets placeholder and renders contents of control
+	 * Should not be called directly
+	 */
 	renderContentsInPlaceholder : function( placeholder ){
 		this.setPlaceholder( placeholder );
 		this.renderContents( placeholder );
 	},
 	
+	/**
+	 * Renders contents of control
+	 * Should not be called directly
+	 */
 	renderContents : function( placeholder ){
 		this.ensureChildControls();
 		this.renderChildControls( placeholder );
 	},
 
+	/**
+	 * Renders contents of child controls
+	 * Should not be called directly
+	 */
 	renderChildControls : function( placeholder ){
 		for ( var i=0; i<this._childControls.length; i++ ){
 			this._childControls[ i ].renderContentsInPlaceholder( placeholder );
 		}
 	},
 	
+	/**
+	 * Appends DOMElement to control
+	 * Used on render to add DOMElement to control's placeholder,
+	 * keeps track it in _renderedNodes and adds position marker
+	 * 
+	 * @param el DOMElement element to be added
+	 * @param root DOMElement optional, placeholder for element
+	 */
 	appendChild : function( el, root ){
 		
 		var ph = this.getPlaceholder();
@@ -224,6 +319,12 @@ var TControl = Base.extend( {
 		
 	},
 	
+	/**
+	 * Adds child control
+	 * and sets relationship between controls
+	 * 
+	 * @param c TControl control
+	 */
 	addChildControl : function( c ){
 		c.setParent( this );
 		this._childControls.push( c );
@@ -232,15 +333,40 @@ var TControl = Base.extend( {
 		}
 	},
 	
+	/**
+	 * Adds child control defined in template
+	 * sets relationship between controls and
+	 * adds control to _templateControls hash
+	 * 
+	 * @param k String name of variable defined by template compiler
+	 * @param c TControl control
+	 */
 	addTemplateChildControl : function( k, c ){
 		this._templateControls[ k ] = c;
 		this.addChildControl( c );
 	},
 	
-	getChildControl : function( i ){
-		return this._childControlsHash[ i ];
+	/**
+	 * Returns direct child control by ID
+	 * 
+	 * @param i String control ID
+	 * 
+	 * @returns TControl|null child control with particualar ID if found or null if not found
+	 */
+	getChildControl : function( id ){
+		return this._childControlsHash[ id ]
+				? this._childControlsHash[ id ]
+				: null;
 	},
 	
+	/**
+	 * Returns child control by ID
+	 * searches recursively all child controls
+	 * 
+	 * @param i String control ID
+	 * 
+	 * @returns TControl|null child control with particualar ID if found or null if not found
+	 */
 	findChildControlByID : function( id ){
 		var i;
 		if( this._childControlsHash[ id ]
