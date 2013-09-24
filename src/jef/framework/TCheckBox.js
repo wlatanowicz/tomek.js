@@ -11,6 +11,11 @@ var TCheckBox = TWebControl.extend( {
 	//@Override
 	_rendersChildControls : false,
 	
+	/**
+	 * Set state of control
+	 * 
+	 * @param v Boolean true if checked
+	 */
 	setChecked : function( v ){
 		v = parseBool( v );
 			
@@ -20,6 +25,11 @@ var TCheckBox = TWebControl.extend( {
 		this._Checked = v;
 	},
 	
+	/**
+	 * Get state of control
+	 * 
+	 * @returns Boolean true if checked
+	 */
 	getChecked : function(){
 		if ( this._renderedMainElement ){
 			return this._renderedMainElement.checked;
@@ -27,12 +37,14 @@ var TCheckBox = TWebControl.extend( {
 		return this._Checked;
 	},
 	
+	//@Override
 	getPublicProperties : function(){
 		var arr = this.base()
 		arr.push( 'Checked' );
 		return arr;
 	},
 
+	//@Override
 	createMainElement : function(){
 		var d = this.base();
 		
