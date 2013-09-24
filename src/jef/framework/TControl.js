@@ -1,6 +1,10 @@
 //= require CommonUtils
 //= require TExpression
 
+/**
+ * Base control class
+ * handles all common dependency and rendering routines
+ */
 var TControl = Base.extend( {
 	
 	/**
