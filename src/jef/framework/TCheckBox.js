@@ -1,8 +1,14 @@
 //= require TWebControl
 
+/**
+ * Control renders a checkbox input
+ */
 var TCheckBox = TWebControl.extend( {
 	
+	//@Override
 	_tagName : 'input',
+	
+	//@Override
 	_rendersChildControls : false,
 	
 	setChecked : function( v ){

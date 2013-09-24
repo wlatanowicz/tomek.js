@@ -51,7 +51,11 @@ var TControl = Base.extend( {
 	 */
 	_positionMarker : null,
 	
-	
+	/**
+	 * Default control constructor
+	 * 
+	 * @param options Hash of properties to be set
+	 */
 	constructor : function( options ){
 		this._childControls = [];
 		this._renderedNodes = [];

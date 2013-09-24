@@ -1,7 +1,13 @@
 //= require Base
 
+/**
+ * Stores an expriession to be rendered
+ */
 var TExpression = Base.extend( {
 	
+	/**
+	 * Function
+	 */
 	_expressionFunction : function(){return null},
 	
 	constructor : function( fun ){

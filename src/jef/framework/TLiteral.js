@@ -1,13 +1,18 @@
 //= require TControl
 
+/**
+ * Simple control rendering text
+ */
 var TLiteral = TControl.extend( {
 
+	//@Override
 	getPublicProperties : function(){
 		var arr = this.base()
 		arr.push( 'Text' );
 		return arr;
 	},
 		
+	//@Override
 	renderContents : function( placeholder ){
 		var t = document.createTextNode( this.getText() );
 		placeholder.appendChild( t );

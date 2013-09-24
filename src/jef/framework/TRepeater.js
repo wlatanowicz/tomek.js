@@ -1,25 +1,75 @@
 //= require TControl
 //= require TItem
 
+/**
+ * Control renders it's contents multiple times
+ * based on data source
+ */
 var TRepeater = TControl.extend( {
 	
+	/**
+	 * Array
+	 * Datasource for repeater
+	 */
 	_DataSource : [],
 	
+	/**
+	 * Array of TItem
+	 */
 	_Items : [],
+	
+	/**
+	 * TItem
+	 */
 	_HeaderItem : null,
+	
+	/**
+	 * TItem
+	 */
 	_FooterItem : null,
+	
+	/**
+	 * TItem
+	 */
 	_EmptyItem : null,
 	
+	/**
+	 * Function
+	 */
 	_ItemTemplate : null,
+	
+	/**
+	 * Function
+	 */
 	_HeaderTemplate : null,
+	
+	/**
+	 * Function
+	 */
 	_FooterTemplate : null,
 	
-	constructor : function( a ){
-		this.base( a );
-		this._Items = [];
+	/**
+	 * Function
+	 */
+	_EmptyTemplate : null,
+	
+	//@Override
+	constructor : function( options ){
+		this.base( options );
 		this._DataSource = [];
+		
+		this._Items = [];
+		this._HeaderItem = null;
+		this._FooterItem = null;
+		this._EmptyItem = null;
+		
+		this._ItemTemplate = null;
+		this._HeaderTemplate = null;
+		this._FooterTemplate = null;
+		this._EmptyTemplate = null;
 	},
 	
+	//@Override
 	getPublicProperties : function(){
 		var arr = this.base()
 		arr.push( 'ItemTemplate', 'HeaderTemplate', 'FooterTemplate', 'EmptyTemplate' );
@@ -28,6 +78,10 @@ var TRepeater = TControl.extend( {
 		return arr;
 	},	
 	
+	/**
+	 * Sets the datasource
+	 * and clean ups the repeater for next rendering
+	 */
 	setDataSource : function( _ds ){
 		this._DataSource = _ds;
 		
@@ -43,6 +97,10 @@ var TRepeater = TControl.extend( {
 		this._EmptyItem = null;
 	},
 	
+	/**
+	 * Creates child controls based on contents of DataSource
+	 */
+	//@Override
 	createChildControls : function(){
 		var data_source = this._DataSource;
 		if ( data_source.length > 0 ){
