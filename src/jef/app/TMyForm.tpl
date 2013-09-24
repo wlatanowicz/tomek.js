@@ -33,7 +33,12 @@
 	<com:TRepeater ID="Rep" >
 		<temp:Item>
 			<com:TPanel>
-				helo [%= this.Parent.DataItem %]
+				<p>
+					helo [%= this.DataItem %]
+				</p>
+				<p>
+					<com:TButton on:Click="c.innerButtonClicked" Text="Button [%= this.DataItem %]" />
+				</p>
 			</com:TPanel>
 		</temp:Item>
 	</com:TRepeater>

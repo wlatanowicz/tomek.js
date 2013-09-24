@@ -51,6 +51,10 @@
 	<com:TRepeater ID="Rep">
 		<temp:Item>
 			helo [%= this.DataItem.text %]
+			<com:TButton ID="RptBtn" />
+			<com:TPanel>
+				helo2 [%= this.DataItem.text2 %]
+			</com:TPanel>
 		</temp:Item>
 	</com:TRepeater>
 </com:TContent>
