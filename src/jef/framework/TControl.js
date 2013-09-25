@@ -182,16 +182,6 @@ var TControl = Base.extend( {
 		
 	},
 	
-	//@TODO TODEL
-//	setAttribute : function( key, value ){
-//		this[key] = value;
-//	},
-//
-//	getAttribute : function( key ){
-//		return this[key];
-//	},
-	
-	
 	/**
 	 * Sets placholder for control
 	 * to be rendered in
@@ -205,7 +195,7 @@ var TControl = Base.extend( {
 		if ( ! root_node ){
 			throw new Exception( 'Invalid Placeholder' )
 		}
-		this._placeholder = root_node;
+		this._Placeholder = root_node;
 	},
 	
 	/**
@@ -215,7 +205,7 @@ var TControl = Base.extend( {
 	 * @returns DOMElement node to render control in
 	 */
 	getPlaceholder : function(){
-		return this._placeholder ? this._placeholder : ( this.getParent() ? this.getParent().getPlaceholder() : document.body );
+		return this._Placeholder ? this._Placeholder : ( this.getParent() ? this.getParent().getPlaceholder() : document.body );
 	},
 	
 	/**
