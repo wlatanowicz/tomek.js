@@ -2,14 +2,30 @@
 
 var TMyForm = TTemplateControl.extend( {
 	
-	buttonClicked : function( sender ){
-		//console.log( sender );
-		//console.log( this );
-		this.findChildControlByID('TextBox2').Text = this.findChildControlByID('TextBox1').Text;
+	iteration : 0,
+	
+	copyClicked : function( sender ){
+		this.findChildControlByID('TargetTB').Text = this.findChildControlByID('SourceTB').Text;
+	},
+	
+	fillClicked : function( sender ){
 		
-		this.findChildControlByID( 'Rep' ).setDataSource( [1,2,3,5] );
-		this.render();
+		this.iteration++;
 		
+		var a = [];
+		
+		var num = parseInt( this.findChildControlByID( 'NumberTB' ).Text );
+		var step = parseFloat( this.findChildControlByID( 'StepTB' ).Text );
+		
+		for ( var i=0; i<num; i++ ){
+			a.push( {
+					i : i,
+					n : i*step
+				} );
+		}
+		
+		this.findChildControlByID( 'Rep' ).setDataSource( a );
+		this.findChildControlByID( 'Panel3' ).render();
 	},
 	
 	innerButtonClicked : function( sender ){

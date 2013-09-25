@@ -1,5 +1,4 @@
 
-//= require TMyControl-tpl
 //= require TMyForm-tpl
 
 var c = new TMyForm( { 'Placeholder' : 'container' } );

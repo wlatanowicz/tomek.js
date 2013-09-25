@@ -4,44 +4,70 @@
 
 <com:TContent>
 
-<com:TPanel ID="p" Attributes.class="xxx">
+<com:TPanel ID="Panel1" Attributes.style="background: #FFCCFF;">
 	<div>
+		<h3>
+			Kontrolka z danymi z wyrażenia
+		</h3>
 		<p>
-			<com:TTextBox CssClass="form"
-						  ID="TextBox1"
-						  Text="[%= 'Treść ' + Date() %]" />
-		</p>
-		<p>
-			<com:TTextBox CssClass="form"
-						  ID="TextBox2"
-						  Text="aaa" />
-		</p>
-		<p>
-			<com:TCheckBox CssClass="form"
-						  ID="CheckBox"
-						  Checked="false" />
-		</p>
-		<p>
-			<com:TButton CssClass="form"
-						  ID="Btn"
-						  Text="Kliknij"
-						  on:Click="this.buttonClicked" />
+			Dzisiaj ( [%= (new Date()).getFullYear() + '-' + ((new Date()).getMonth()+1) + '-' + (new Date()).getDate() %] ) jest
+			<com:TTextBox ID="DateTB"
+						  Text="[%= (new Date()).getTime() %]" />
 		</p>
 	</div>
 </com:TPanel>
 
+<com:TPanel ID="Panel2">
+	<div>
+		<h3>
+			Odczyt i zapis z kontrolki
+		</h3>
+		<p>
+			Źródło
+			<com:TTextBox ID="SourceTB" />
+		</p>
+		<p>
+			Cel
+			<com:TTextBox ID="TargetTB" />
+		</p>
+		<p>
+			<com:TButton Text="Przepisz"
+						 on:Click="c.copyClicked" />
+		</p>
+	</div>
+</com:TPanel>
+	
+<com:TPanel ID="Panel3">
+	<div>
+		<h2>
+			Generowanie ciągu #[%= this.iteration %]
+		</h2>
+		<p>
+			Liczba liczb
+			<com:TTextBox ID="NumberTB" />
+		</p>
+		<p>
+			Krok
+			<com:TTextBox ID="StepTB" />
+		</p>
+		<p>
+			<com:TButton Text="Generuj"
+						 on:Click="c.fillClicked" />
+		</p>
+	</div>
 	<com:TRepeater ID="Rep" >
 		<temp:Item>
-			<com:TPanel>
+			<com:TPanel Attributes.style="background: [%= this.DataItem.i % 2 ? '#CCFFFF' : '#FFFFCC' %]; ">
 				<p>
-					helo [%= this.DataItem %]
+					Liczba #[%= this.DataItem.i %] = [%= this.DataItem.n %]
 				</p>
 				<p>
-					<com:TButton on:Click="c.innerButtonClicked" Text="Button [%= this.DataItem %]" />
+					<com:TButton on:Click="c.innerButtonClicked" Text="Button [%= ' ' + (this.DataItem.i + 1) %]" />
 				</p>
 			</com:TPanel>
 		</temp:Item>
 	</com:TRepeater>
+</com:TPanel>
 
 </com:TContent>
 
