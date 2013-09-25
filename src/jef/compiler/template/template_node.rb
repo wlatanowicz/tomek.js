@@ -16,6 +16,8 @@ class TemplateNode
 	
 	@id
 	
+	# Creates a template node from document node
+	# and parses properties and events
   def initialize node
     @children = []
 		@attributes = []
@@ -45,31 +47,38 @@ class TemplateNode
 		
   end
 	
+	# Adds child node and assigns self to it as parent
 	def add_child c
 		c.parent= self
 		@children.push c 
 	end
 	
+	# Gets list of child nodes
 	def children
 		@children
 	end
 	
+	# Gets parent node
 	def parent
 		@parent
 	end
 	
+	# Sets parent node
 	def parent= p
 		@parent = p
 	end
 	
+	# Gets attribute list
 	def attributes
 		@attributes
 	end
 	
+	# Gets event list
 	def events
 		@events
 	end
 	
+	# Renders attributes as JSON hash-object
 	def attributes_json
 		if @attributes.length <= 0
 			return "[]"
@@ -82,6 +91,7 @@ class TemplateNode
 		" {\n\t\t\t\t"+( attrs.join ",\n\t\t\t\t" )+"\n\t\t\t\t} "
 	end
 	
+	# Ensures the node has a template variable name
 	def ensure_id
 		if @id == nil
 			@@last_auto_id = @@last_auto_id + 1
@@ -89,6 +99,7 @@ class TemplateNode
 		end
 	end
 	
+	# Returns template variable name
 	def variable_name
 		ensure_id
 		@id
