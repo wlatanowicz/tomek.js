@@ -63,8 +63,10 @@ var TControl = Base.extend( {
 		this._childControlsCreated = false;
 		this._positionMarker = null;
 		this._templateControls = {};
-
+		
 		this.registerPublicProperties();
+		
+		this._Visible = true;
 		
 		if ( options ){
 			for ( var opt in options ){
@@ -112,7 +114,7 @@ var TControl = Base.extend( {
 	 * @returns Array of String
 	 */
 	getPublicProperties : function(){
-		return ['ID','Placeholder','Parent'];
+		return ['ID','Placeholder','Parent','Visible'];
 	},
 	
 	/**
@@ -263,7 +265,9 @@ var TControl = Base.extend( {
 	render : function(){
 		this.ensureChildControls();
 		this.preRenderCleanUp();
-		this.renderContents( this.getPlaceholder() );
+		if ( this._Visible ){
+			this.renderContents( this.getPlaceholder() );
+		}
 	},
 	
 	/**
@@ -272,7 +276,9 @@ var TControl = Base.extend( {
 	 */
 	renderContentsInPlaceholder : function( placeholder ){
 		this.setPlaceholder( placeholder );
-		this.renderContents( placeholder );
+		if ( this._Visible ){
+			this.renderContents( placeholder );
+		}
 	},
 	
 	/**
