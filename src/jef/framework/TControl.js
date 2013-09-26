@@ -186,16 +186,26 @@ var TControl = Base.extend( {
 	 * Sets placholder for control
 	 * to be rendered in
 	 * 
-	 * @param root_node String|DOMElement placeholder
+	 * @param root_node String|DOMElement|TControl|null placeholder
 	 */
 	setPlaceholder : function( root_node ){
+		if ( ! root_node ){
+			this._Placeholder = null;
+		}else
 		if ( typeof root_node == 'string' ){
 			root_node = document.getElementById( root_node );
-		}
-		if ( ! root_node ){
+			this._Placeholder = root_node;
+		}else
+		if ( root_node.nodeType
+				&& root_node.nodeType == Element.ELEMENT_NODE ){
+			this._Placeholder = root_node;
+		}else
+		if ( root_node.getPlaceholder ){
+			this._Placeholder = null;
+		}else
+		{
 			throw new Exception( 'Invalid Placeholder' )
 		}
-		this._Placeholder = root_node;
 	},
 	
 	/**
@@ -205,7 +215,11 @@ var TControl = Base.extend( {
 	 * @returns DOMElement node to render control in
 	 */
 	getPlaceholder : function(){
-		return this._Placeholder ? this._Placeholder : ( this.getParent() ? this.getParent().getPlaceholder() : document.body );
+		return this._Placeholder
+			? this._Placeholder
+			: ( this.getParent()
+				? this.getParent().getPlaceholder()
+				: document.body );
 	},
 	
 	/**
@@ -256,7 +270,7 @@ var TControl = Base.extend( {
 		this.ensureChildControls();
 		this.preRenderCleanUp();
 		if ( this._Visible ){
-			this.renderContents( this.getPlaceholder() );
+			this.renderContents();
 		}
 	},
 	
@@ -266,8 +280,10 @@ var TControl = Base.extend( {
 	 */
 	renderContentsInPlaceholder : function( placeholder ){
 		this.setPlaceholder( placeholder );
+		
+		this.ensureChildControls();
 		if ( this._Visible ){
-			this.renderContents( placeholder );
+			this.renderContents();
 		}
 	},
 	
@@ -275,9 +291,8 @@ var TControl = Base.extend( {
 	 * Renders contents of control
 	 * Should not be called directly
 	 */
-	renderContents : function( placeholder ){
-		this.ensureChildControls();
-		this.renderChildControls( placeholder );
+	renderContents : function(){
+		this.renderChildControls( this );
 	},
 
 	/**
@@ -298,28 +313,22 @@ var TControl = Base.extend( {
 	 * @param el DOMElement element to be added
 	 * @param root DOMElement optional, placeholder for element
 	 */
-	appendChild : function( el, root ){
+	appendChild : function( el ){
 		
-		var ph = this.getPlaceholder();
-		
-		if ( ! root ){
-			root = ph;
-		}
+		var root = this.getPlaceholder();
 		
 		this._renderedNodes.push( el );
 		
-		if ( root == ph ){
-		
-			if ( this._positionMarker == null || this._positionMarker.parentNode != root ){
-				this._positionMarker = document.createComment( "-" );
-				//this._positionMarker = document.createElement( "span" );
-				root.appendChild( this._positionMarker );
-			}
-
-			root.insertBefore( el, this._positionMarker );
-		}else{
-			root.appendChild( el );
+		if ( this._positionMarker == null || this._positionMarker.parentNode != root ){
+			//this._positionMarker = document.createComment( "-" );
+			this._positionMarker = document.createElement( "span" );
+			this._positionMarker.appendChild( document.createTextNode("x"));
+			this._positionMarker.style.color = 'red';
+			this._positionMarker.positionMarkerForControl = this;
+			root.appendChild( this._positionMarker );
 		}
+
+		root.insertBefore( el, this._positionMarker );
 		
 	},
 	

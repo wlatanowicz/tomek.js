@@ -62,14 +62,14 @@ var TWebControl = TControl.extend( {
 	},
 
 	//@Override
-	renderContents : function( placeholder ){
+	renderContents : function(){
 		var d = this.createMainElement();
 		d.JefControlObject = this;
 		this._renderedMainElement = d;
 		if ( this._rendersChildControls ){
 			this.renderChildControls( d );
 		}
-		this.appendChild( d, placeholder );
+		this.appendChild( d );
 	}
 	
 });

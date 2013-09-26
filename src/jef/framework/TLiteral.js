@@ -13,9 +13,9 @@ var TLiteral = TControl.extend( {
 	},
 		
 	//@Override
-	renderContents : function( placeholder ){
+	renderContents : function(){
 		var t = document.createTextNode( this.getText() );
-		placeholder.appendChild( t );
+		this.appendChild( t );
 	}
 
 });
