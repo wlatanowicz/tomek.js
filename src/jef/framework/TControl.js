@@ -386,6 +386,23 @@ var TControl = Base.extend( {
 	},
 	
 	/**
+	 * Removes position marker
+	 * from document tree
+	 */
+	removePositionMarker : function(){
+		if ( this._positionMarker ){
+			if ( this._positionMarker.remove ){
+				this._positionMarker.remove();
+			}else{
+				var x_el = document.createElement( "div" );
+				x_el.appendChild( this._positionMarker );
+				x_el = null;
+			}
+			this._positionMarker = null;
+		}
+	},
+	
+	/**
 	 * Destroys control
 	 * and cleans up
 	 * 
@@ -396,16 +413,12 @@ var TControl = Base.extend( {
 			this.getParent().removeChildControl( this );
 		}
 		
-		if ( this._positionMarker ){
-			this._positionMarker.remove();
-			this._positionMarker = null;
-		}
-		
 		for ( var i=0; i<this._childControls.length; i++ ){
 			this._childControls[i].destroy();
 		}
 		
 		this.removeRenderedNodes();
+		this.removePositionMarker();
 		
 	},
 	
