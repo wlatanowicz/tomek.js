@@ -81,9 +81,11 @@ var TRepeater = TControl.extend( {
 	/**
 	 * Sets the datasource
 	 * and clean ups the repeater for next rendering
+	 * 
+	 * @param ds Array new data source
 	 */
-	setDataSource : function( _ds ){
-		this._DataSource = _ds;
+	setDataSource : function( ds ){
+		this._DataSource = ds;
 		
 		for ( var i=0; i<this._Items.length; i++ ){
 			this._Items[i].destroy();
