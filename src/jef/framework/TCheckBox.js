@@ -3,13 +3,16 @@
 /**
  * Control renders a checkbox input
  */
-var TCheckBox = TWebControl.extend( {
+var TRadioButton = TWebControl.extend( TEventResponderMixin ).extend( {
 	
 	//@Override
 	_tagName : 'input',
 	
 	//@Override
 	_rendersChildControls : false,
+	
+	//@Override
+	_triggersEvents : ['Click','Change'],
 	
 	/**
 	 * Set state of control
@@ -40,7 +43,7 @@ var TCheckBox = TWebControl.extend( {
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base()
-		arr.push( 'Checked' );
+		arr.push( 'Checked','Group' );
 		return arr;
 	},
 
@@ -48,8 +51,12 @@ var TCheckBox = TWebControl.extend( {
 	createMainElement : function(){
 		var d = this.base();
 		
-		d.setAttribute( 'type', 'checkbox' );
+		d.setAttribute( 'type', 'radio' );
+		d.setAttribute( 'name', this.getGroup() );
 		d.checked = this.getChecked();
+		
+		this.registerTriggerElement( d, 'click', 'Click' );
+		this.registerTriggerElement( d, 'change', 'Change' );
 		
 		return d;
 	}

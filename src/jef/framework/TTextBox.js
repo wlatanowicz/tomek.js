@@ -12,6 +12,9 @@ var TTextBox = TWebControl.extend( TEventResponderMixin ).extend( {
 	//@Override
 	_rendersChildControls : false,
 	
+	//@Override
+	_triggersEvents : ['Change','KeyUp','KeyDown','Blur','Focus'],
+	
 	/**
 	 * Sets text to input area
 	 * 
@@ -49,6 +52,12 @@ var TTextBox = TWebControl.extend( TEventResponderMixin ).extend( {
 		
 		d.setAttribute( 'type', 'text' );
 		d.value = this.getText();
+		
+		this.registerTriggerElement( d, 'change', 'Change' );
+		this.registerTriggerElement( d, 'keyup', 'KeyUp' );
+		this.registerTriggerElement( d, 'keydown', 'KeyDown' );
+		this.registerTriggerElement( d, 'blur', 'Blur' );
+		this.registerTriggerElement( d, 'focus', 'Focus' );
 		
 		return d;
 	}
