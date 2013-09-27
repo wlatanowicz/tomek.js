@@ -106,6 +106,9 @@ var TControl = Base.extend( {
 			throw new Exception( 'Cannot change ID' )
 		}
 		this._ID = id;
+		if ( this.getParent() ){
+			this.getParent()._childControlsHash[ this._ID ] = this;
+		}
 	},
 	
 	/**
@@ -226,10 +229,10 @@ var TControl = Base.extend( {
 	 * Removes all DOMElements created while rendering the control
 	 * before next render
 	 */
-	preRenderCleanUp : function(){
+	removeRenderedNodes : function(){
 		var i;
 		for ( i=0; i<this._childControls.length; i++ ){
-			this._childControls[i].preRenderCleanUp();
+			this._childControls[i].removeRenderedNodes();
 		}
 		var x_el = document.createElement( "div" );
 		for ( i=0; i<this._renderedNodes.length; i++ ){
@@ -268,7 +271,7 @@ var TControl = Base.extend( {
 	 */
 	render : function(){
 		this.ensureChildControls();
-		this.preRenderCleanUp();
+		this.removeRenderedNodes();
 		if ( this._Visible ){
 			this.renderContents();
 		}
@@ -357,6 +360,53 @@ var TControl = Base.extend( {
 	addTemplateChildControl : function( k, c ){
 		this._templateControls[ k ] = c;
 		this.addChildControl( c );
+	},
+	
+	/**
+	 * Removes child control
+	 * 
+	 * @param c TControl control to be removed
+	 */
+	removeChildControl : function( c ){
+		var idx = this._childControls.indexOf( c );
+		
+		if ( idx > -1 ){
+			
+			this._childControls.splice( idx, 1 );
+			
+			var id = c.getID();
+			if ( id ){
+				delete this._childControlsHash[ id ];
+			}
+			
+		}else{
+			throw new Exception( 'No such control' );
+		}
+		
+	},
+	
+	/**
+	 * Destroys control
+	 * and cleans up
+	 * 
+	 */
+	destroy : function(){
+		
+		if ( this.getParent() ){
+			this.getParent().removeChildControl( this );
+		}
+		
+		if ( this._positionMarker ){
+			this._positionMarker.remove();
+			this._positionMarker = null;
+		}
+		
+		for ( var i=0; i<this._childControls.length; i++ ){
+			this._childControls[i].destroy();
+		}
+		
+		this.removeRenderedNodes();
+		
 	},
 	
 	/**

@@ -85,12 +85,24 @@ var TRepeater = TControl.extend( {
 	setDataSource : function( _ds ){
 		this._DataSource = _ds;
 		
-		this.preRenderCleanUp();
+		for ( var i=0; i<this._Items.length; i++ ){
+			this._Items[i].destroy();
+		}
+
+		var to_destroy = ['_HeaderItem','_FooterItem','_EmptyItem'];
+		for ( var j=0; j<to_destroy.length; j++ ){
+			var c = to_destroy[j];
+			if ( this[c] ){
+				this[c].destroy();
+			}
+		}
+
+		this.removeRenderedNodes();
 		
 		this._childControlsCreated = false;
 		this._childControls = [];
 		this._childControlsHash = {};
-		
+				
 		this._Items = [];
 		this._HeaderItem = null;
 		this._FooterItem = null;
