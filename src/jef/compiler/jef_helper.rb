@@ -33,6 +33,16 @@ class JefHelper
 		@BUILD_DIR     = File.join(ROOT_DIR, 'build')
 	end
 	
+	def empty_tmp
+		dir_path = TMP_DIR
+		FileUtils.rm_rf( "#{dir_path}/." )
+	end
+	
+	def empty_build
+		dir_path = @BUILD_DIR
+		FileUtils.rm_rf( "#{dir_path}/." )
+	end
+	
   def self.has_git?
     begin
       `git --version`
