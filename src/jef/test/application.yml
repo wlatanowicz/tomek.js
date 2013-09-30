@@ -1,11 +1,19 @@
 MAINS:
+  - tests/000_dummy/main.js
   - tests/001_basic/main.js
+  - tests/002_control_order/main.js
 
 TEMPLATES:
   - **/*.tpl
   
 RESOURCES:
+  - application.yml
   - lib/**/*.js
   - lib/**/*.css
-  - **/*.html
-  
+  - tests/**/index.html
+  - tests/**/test.js
+  - tests/**/*.css
+  - index.html
+  - tests.js
+  - style.css
+  - img/*

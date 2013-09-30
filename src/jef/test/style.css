@@ -1,0 +1,75 @@
+div.menu{
+	position: absolute;
+	left: 0;
+	width: 20%;
+	top: 0;
+	bottom: 0;
+	background: lightgray;
+}
+
+div.window{
+	position: absolute;
+	left: 20%;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+div.window iframe#test_place {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+}
+
+ul#test_list{
+	padding-left: 10px;
+}
+
+ul#test_list li{
+	list-style: none;
+	display: block;
+	height: 22px;
+}
+
+span.test_wait,
+span.test_ok,
+span.test_fail,
+span.test_error {
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	position: relative;
+	top: 2px;
+	background-repeat: no-repeat;
+}
+
+a.test_current{
+	padding-left: 20px;
+	background: url( 'img/test_current.png' );
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+span.test_wait {
+	background: url( 'img/test_wait.png' );
+}
+
+span.test_wait.test_wait2 {
+	background: url( 'img/test_wait2.png' );
+}
+
+span.test_ok {
+	background: url( 'img/test_ok.png' );
+}
+
+span.test_fail {
+	background: url( 'img/test_fail.png' );
+}
+
+span.test_error {
+	background: url( 'img/test_error.png' );
+}
