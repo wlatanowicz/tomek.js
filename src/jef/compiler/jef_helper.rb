@@ -34,13 +34,19 @@ class JefHelper
 	end
 	
 	def empty_tmp
-		dir_path = TMP_DIR
-		FileUtils.rm_rf( "#{dir_path}/." )
+		dir_path = TEMP_DEST_DIR
+		Dir.foreach(dir_path) do |f|
+			fn = File.join(dir_path, f)
+			FileUtils.rm_rf( "#{fn}" ) if f != '.' && f != '..' && f != '.svn'
+		end
 	end
 	
 	def empty_build
 		dir_path = @BUILD_DIR
-		FileUtils.rm_rf( "#{dir_path}/." )
+		Dir.foreach(dir_path) do |f|
+			fn = File.join(dir_path, f)
+			FileUtils.rm_rf( "#{fn}" ) if f != '.' && f != '..' && f != '.svn'
+		end
 	end
 	
   def self.has_git?
