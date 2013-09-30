@@ -323,10 +323,15 @@ var TControl = Base.extend( {
 		this._renderedNodes.push( el );
 		
 		if ( this._positionMarker == null || this._positionMarker.parentNode != root ){
-			//this._positionMarker = document.createComment( "-" );
-			this._positionMarker = document.createElement( "span" );
-			this._positionMarker.appendChild( document.createTextNode("x"));
-			this._positionMarker.style.color = 'red';
+			
+			// normal place holder:
+			this._positionMarker = document.createComment( "-" );
+			
+			// debug, visible place holder:
+			//this._positionMarker = document.createElement( "span" );
+			//this._positionMarker.appendChild( document.createTextNode("x"));
+			//this._positionMarker.style.color = 'red';
+			
 			this._positionMarker.positionMarkerForControl = this;
 			root.appendChild( this._positionMarker );
 		}
