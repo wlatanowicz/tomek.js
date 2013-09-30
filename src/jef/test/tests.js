@@ -33,6 +33,7 @@ function bindTestList( data ){
 	}
 	
 	$( 'test_list' ).update( txt );
+	updateSummary();
 }
 
 function autoRun(){
@@ -52,6 +53,7 @@ function runTest( test, autocontinue ){
 	}
 
 	highlightCurrentTest( test );
+	updateSummary();
 	
 	Event.stopObserving( 'test_place', 'load' );
 	Event.observe( 'test_place', 'load', checkCurrentTest.bind( this, test, next_test ) );
@@ -87,6 +89,8 @@ function testFinished( test, next_test, result ){
 	if ( result == 'error' ){
 		$( 'result_ph_'+test ).className = 'test_error';
 	}
+	
+	updateSummary();
 	
 	if ( next_test ){
 		highlightCurrentTest( next_test );
@@ -124,4 +128,15 @@ function checkCurrentTest( test, next_test, depth ){
 		setTimeout( checkCurrentTest.bind( this, test, next_test, parseInt( depth, 10 )+1 ), 150 );
 	}
 	
+}
+
+function updateSummary(){
+	var txts = [];
+	var txts2 = [];
+	txts.push( 'Tests: ' + TESTS.length );
+	txts.push( 'Runned: ' + $$( '.test_ok,.test_fail,.test_error' ).length );
+	txts2.push( 'Passed: ' + $$( '.test_ok' ).length );
+	txts2.push( 'Failed: ' + $$( '.test_fail' ).length );
+	txts2.push( 'Errors: ' + $$( '.test_error' ).length );
+	$( 'summary' ).update( txts.join( " | " ) + "<br/>" + txts2.join( " | " ) );
 }
