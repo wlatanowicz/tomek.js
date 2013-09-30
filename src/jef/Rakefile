@@ -14,19 +14,23 @@ require 'compiler/jef_test_helper'
 
 task :default => [:dist]
 
-desc "Builds the distribution."
-task :dist => ['clean:tmp', 'clean:dist'] do
-	jh = JefHelper.new
-  jh.compile_templates
-  jh.sprocketize
-	jh.copy_resources
-end
+task :dist => ['dist:build']
 
 task :clean => ['clean:tmp', 'clean:dist', 'clean:test']
 
 task :doc => ['doc:build']
 
 task :test => ['test:build', 'test:run']
+
+namespace :dist do
+	desc "Builds the application."
+	task :build => ['clean:tmp', 'clean:dist'] do
+		jh = JefHelper.new
+		jh.compile_templates
+		jh.sprocketize
+		jh.copy_resources
+	end
+end
 
 namespace :doc do
   desc "Builds the documentation."
@@ -40,11 +44,12 @@ namespace :doc do
 end
 
 namespace :test do
-  desc 'Runs all the JavaScript unit tests and collects the results'
+  desc 'Runs all the JavaScript tests and collects the results'
   task :run => [:build] do
 
   end
   
+  desc 'Builds test application and environment'
   task :build => ['clean:tmp', 'clean:test'] do
 		jh = JefTestHelper.new
 		jh.compile_templates
@@ -56,12 +61,15 @@ end
 
 namespace :clean do
   
+  desc 'Cleans up temp dir'
   task :tmp do
   end
 
+  desc 'Cleans up build dir'
   task :dist do
   end
 
+  desc 'Cleans up test-build dir'
   task :test do
   end
 
