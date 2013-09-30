@@ -15,19 +15,18 @@ require 'compiler/jef_test_helper'
 task :default => [:dist]
 
 desc "Builds the distribution."
-task :dist do
+task :dist => ['clean:tmp', 'clean:dist'] do
 	jh = JefHelper.new
   jh.compile_templates
   jh.sprocketize
 	jh.copy_resources
 end
 
-task :species do
-	jh = JefTestHelper.new
-  jh.compile_templates
-  jh.sprocketize
-	jh.copy_resources
-end
+task :clean => ['clean:tmp', 'clean:dist', 'clean:test']
+
+task :doc => ['doc:build']
+
+task :test => ['test:build', 'test:run']
 
 namespace :doc do
   desc "Builds the documentation."
@@ -40,73 +39,31 @@ namespace :doc do
   end
 end
 
-task :doc => ['doc:build']
-
-task :test => ['test:build', 'test:run']
 namespace :test do
   desc 'Runs all the JavaScript unit tests and collects the results'
-  task :run => [:require] do
-    testcases        = ENV['TESTCASES']
-    browsers_to_test = ENV['BROWSERS'] && ENV['BROWSERS'].split(',')
-    tests_to_run     = ENV['TESTS'] && ENV['TESTS'].split(',')
-    runner           = UnittestJS::WEBrickRunner::Runner.new(:test_dir => JefHelper::TMP_DIR)
+  task :run => [:build] do
 
-    Dir[File.join(JefHelper::TMP_DIR, '*_test.html')].each do |file|
-      file = File.basename(file)
-      test = file.sub('_test.html', '')
-      unless tests_to_run && !tests_to_run.include?(test)
-        runner.add_test(file, testcases)
-      end
-    end
-    
-    UnittestJS::Browser::SUPPORTED.each do |browser|
-      unless browsers_to_test && !browsers_to_test.include?(browser)
-        runner.add_browser(browser.to_sym)
-      end
-    end
-    
-    trap('INT') { runner.teardown; exit }
-    runner.run
   end
   
-  task :build => [:clean, :dist] do
-    builder = UnittestJS::Builder::SuiteBuilder.new({
-      :input_dir  => JefHelper::TEST_UNIT_DIR,
-      :assets_dir => JefHelper::DIST_DIR
-    })
-    selected_tests = (ENV['TESTS'] || '').split(',')
-    builder.collect(*selected_tests)
-    builder.render
+  task :build => ['clean:tmp', 'clean:test'] do
+		jh = JefTestHelper.new
+		jh.compile_templates
+		jh.sprocketize
+		jh.copy_resources
   end
-  
-  task :clean => [:require] do
-    UnittestJS::Builder.empty_dir!(JefHelper::TMP_DIR)
-  end
-  
-  task :require do
-    JefHelper.require_unittest_js
-  end
+
 end
 
-namespace :caja do
-  task :test => ['test:build', 'test:run']
+namespace :clean do
   
-  namespace :test do
-    task :run => ['rake:test:run']
+  task :tmp do
+  end
 
-    task :build => [:require, 'rake:test:clean', :dist] do 
-      builder = UnittestJS::CajaBuilder::SuiteBuilder.new({
-        :input_dir          => JefHelper::TEST_UNIT_DIR,
-        :assets_dir         => JefHelper::DIST_DIR,
-        :whitelist_dir      => File.join(JefHelper::TEST_DIR, 'unit', 'caja_whitelists'),
-        :html_attrib_schema => 'html_attrib.json'
-      })
-      selected_tests = (ENV['TESTS'] || '').split(',')
-      builder.collect(*selected_tests)
-      builder.render
-    end
+  task :dist do
   end
-  task :require => ['rake:test:require'] do
-    JefHelper.require_caja_builder
+
+  task :test do
   end
+
 end
+
