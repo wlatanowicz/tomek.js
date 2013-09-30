@@ -2,9 +2,9 @@
 //= require TEventResponder
 
 /**
- * Control renders a checkbox input
+ * Control renders a radio button input
  */
-var TCheckBox = TWebControl.extend( TEventResponderMixin ).extend( {
+var TRadioButton = TWebControl.extend( TEventResponderMixin ).extend( {
 	
 	//@Override
 	_tagName : 'input',
@@ -44,7 +44,7 @@ var TCheckBox = TWebControl.extend( TEventResponderMixin ).extend( {
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base()
-		arr.push( 'Checked' );
+		arr.push( 'Checked', 'Group' );
 		return arr;
 	},
 
@@ -52,7 +52,8 @@ var TCheckBox = TWebControl.extend( TEventResponderMixin ).extend( {
 	createMainElement : function(){
 		var d = this.base();
 		
-		d.setAttribute( 'type', 'checkbox' );
+		d.setAttribute( 'type', 'radio' );
+		d.setAttribute( 'name', this.getGroup() );
 		d.checked = this.getChecked();
 		
 		this.registerTriggerElement( d, 'click', 'Click' );
