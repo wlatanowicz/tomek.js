@@ -1,4 +1,4 @@
-//= require CommonUtils
+//= require Base
 
 var Exception = Base.extend({
 	
