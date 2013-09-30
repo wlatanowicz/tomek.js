@@ -63,14 +63,20 @@ namespace :clean do
   
   desc 'Cleans up temp dir'
   task :tmp do
+		jh = JefHelper.new
+		jh.empty_tmp
   end
 
   desc 'Cleans up build dir'
   task :dist do
+		jh = JefHelper.new
+		jh.empty_build
   end
 
   desc 'Cleans up test-build dir'
   task :test do
+		jh = JefTestHelper.new
+		jh.empty_build
   end
 
 end
