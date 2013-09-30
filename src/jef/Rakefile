@@ -10,14 +10,23 @@ require 'rake/packagetask'
 require 'yaml'
 
 require 'compiler/jef_helper'
+require 'compiler/jef_test_helper'
 
 task :default => [:dist]
 
 desc "Builds the distribution."
 task :dist do
-  JefHelper.compile_templates
-  JefHelper.sprocketize
-	JefHelper.copy_resources
+	jh = JefHelper.new
+  jh.compile_templates
+  jh.sprocketize
+	jh.copy_resources
+end
+
+task :species do
+	jh = JefTestHelper.new
+  jh.compile_templates
+  jh.sprocketize
+	jh.copy_resources
 end
 
 namespace :doc do
