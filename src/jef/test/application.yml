@@ -1,5 +1,5 @@
 MAINS:
-  - main.js
+  - tests/001_basic/main.js
 
 TEMPLATES:
   - **/*.tpl

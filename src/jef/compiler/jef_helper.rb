@@ -70,12 +70,19 @@ class JefHelper
 		
 		mains = YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))['MAINS']
 		mains.each do |m|
+			
+			target = File.join( @BUILD_DIR, m )
+			target_dir = File.dirname( target )
+			FileUtils.mkdir_p target_dir			
+			
 			env = Sprockets::Environment.new
 			env.prepend_path @APP_DIR
 			env.prepend_path TEMP_DEST_DIR
 			env.prepend_path FRAMEWORK_DIR
+			env.prepend_path File.dirname( @APP_DIR+"/"+m )
+			
 			js = env[ m ].to_s
-			file = File.new( File.join( @BUILD_DIR, m ), "w" )
+			file = File.new( target, "w" )
 			file.write( js )
 			file.close
 		end
