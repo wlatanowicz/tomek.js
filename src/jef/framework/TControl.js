@@ -196,8 +196,7 @@ var TControl = Base.extend( {
 			this._Placeholder = null;
 		}else
 		if ( typeof root_node == 'string' ){
-			root_node = document.getElementById( root_node );
-			this._Placeholder = root_node;
+			this._Placeholder = document.getElementById( root_node );
 		}else
 		if ( root_node.nodeType
 				&& root_node.nodeType == Element.ELEMENT_NODE ){

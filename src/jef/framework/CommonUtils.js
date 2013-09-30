@@ -1,4 +1,5 @@
 //= require Base
+//= require Exception
 
 function parseBool( v ){
 	return v === true
@@ -29,4 +30,11 @@ if (!Array.prototype.indexOf)
     }
     return -1;
   };
+}
+
+/**
+ * Fix for Safari
+ */
+if ( ! Element.ELEMENT_NODE ){
+	Element.ELEMENT_NODE = 1
 }
