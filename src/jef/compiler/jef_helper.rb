@@ -5,13 +5,14 @@ $LOAD_PATH << File.dirname(__FILE__)
 
 require 'compiler'
 
-module JefHelper
+class JefHelper
+	
+  @APP_DIR
+  @BUILD_DIR
 	
   ROOT_DIR      = File.expand_path(File.join( File.dirname(__FILE__), '..' ) )
-  APP_DIR       = File.join(ROOT_DIR, 'app')
   FRAMEWORK_DIR = File.join(ROOT_DIR, 'framework')
   DOC_DIR       = File.join(ROOT_DIR, 'doc')
-  BUILD_DIR     = File.join(ROOT_DIR, 'build')
   EXTERNAL_DIR  = File.join(ROOT_DIR, 'external')
 	TEMP_DEST_DIR = File.join(ROOT_DIR, 'tmp', 'templates')
 
@@ -27,6 +28,11 @@ module JefHelper
     $:.unshift File.join( EXTERNAL_DIR, name, 'lib')
   end
 
+	def initialize
+		@APP_DIR       = File.join(ROOT_DIR, 'app')
+		@BUILD_DIR     = File.join(ROOT_DIR, 'build')
+	end
+	
   def self.has_git?
     begin
       `git --version`
@@ -45,10 +51,10 @@ module JefHelper
     exit
   end
   
-	def self.compile_templates
+	def compile_templates
 		c = Compiler.new TEMP_DEST_DIR 
-		basedir = APP_DIR
-		templates = YAML.load(IO.read(File.join(APP_DIR, APP_YML)))['TEMPLATES']
+		basedir = @APP_DIR
+		templates = YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))['TEMPLATES']
 		templates.each do |r|
 			pat = File.join( basedir, r )
 			Dir[pat].each do |p|
@@ -58,41 +64,41 @@ module JefHelper
 		
 	end
   
-  def self.sprocketize
+  def sprocketize
 
-    require_sprockets
+    JefHelper.require_sprockets
 		
-		mains = YAML.load(IO.read(File.join(APP_DIR, APP_YML)))['MAINS']
+		mains = YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))['MAINS']
 		mains.each do |m|
 			env = Sprockets::Environment.new
-			env.prepend_path APP_DIR
+			env.prepend_path @APP_DIR
 			env.prepend_path TEMP_DEST_DIR
 			env.prepend_path FRAMEWORK_DIR
 			js = env[ m ].to_s
-			file = File.new( File.join( BUILD_DIR, m ), "w")
+			file = File.new( File.join( @BUILD_DIR, m ), "w" )
 			file.write( js )
 			file.close
 		end
 		
   end
 	
-	def self.copy_resources
-		basedir = APP_DIR
-		res = YAML.load(IO.read(File.join(APP_DIR, APP_YML)))['RESOURCES']
+	def copy_resources
+		basedir = @APP_DIR
+		res = YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))['RESOURCES']
 		res.each do |r|
 			pat = File.join( basedir, r )
 			Dir[pat].each do |p|
-				target = File.join( BUILD_DIR, p.to_s[basedir.to_s.length+1,9999] )
+				target = File.join( @BUILD_DIR, p.to_s[basedir.to_s.length+1,9999] )
 				FileUtils.mkdir_p File.dirname( target )
 				FileUtils.copy_file( p, target )
 			end
 		end
 	end
   
-  def self.build_doc_for(file)
+  def build_doc_for(file)
     rm_rf(DOC_DIR)
     mkdir_p(DOC_DIR)
-    hash = current_head
+    #hash = current_head
     index_header = <<EOF
 <h1 style="margin-top: 31px; height: 75px; padding: 1px 0; background: url(images/header-stripe-small.png) repeat-x;">
   <a href="http://prototypejs.org" style="padding-left: 120px;">
@@ -108,7 +114,7 @@ EOF
       :markdown_parser    => :bluecloth,
       :src_code_text => "View source on GitHub &rarr;",
       :src_code_href => proc { |obj|
-        "https://github.com/sstephenson/prototype/blob/#{hash}/#{obj.file}#L#{obj.line_number}"
+        "https://github.com/sstephenson/prototype/blob/"
       },
       :pretty_urls => false,
       :bust_cache  => false,
@@ -190,7 +196,7 @@ EOF
   end
   
   def self.require_pdoc
-    require_submodule('PDoc', 'pdoc')
+    require_submodule('PDoc', 'https://github.com/tobie/pdoc.git', 'pdoc')
   end
   
   def self.require_unittest_js

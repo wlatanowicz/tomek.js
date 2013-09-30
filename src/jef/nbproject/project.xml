@@ -8,6 +8,9 @@
                 <root id="src.app.dir" name="App"/>
                 <root id="src.compiler.dir" name="Compiler"/>
                 <root id="src.framework.dir" name="Framework"/>
+                <root id="src.build.dir" name="Build"/>
+                <root id="src.test.dir" name="Test"/>
+                <root id="src.test_build.dir" name="TestBuild"/>
             </source-roots>
             <test-roots/>
         </data>

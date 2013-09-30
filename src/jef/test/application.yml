@@ -1,0 +1,11 @@
+MAINS:
+  - main.js
+
+TEMPLATES:
+  - **/*.tpl
+  
+RESOURCES:
+  - lib/**/*.js
+  - lib/**/*.css
+  - **/*.html
+  
