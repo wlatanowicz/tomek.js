@@ -11,12 +11,13 @@ require 'yaml'
 
 require 'compiler/jef_helper'
 require 'compiler/jef_test_helper'
+require 'compiler/jef_doc_helper'
 
 task :default => [:dist]
 
 task :dist => ['dist:build']
 
-task :clean => ['clean:tmp', 'clean:dist', 'clean:test']
+task :clean => ['clean:tmp', 'clean:dist', 'clean:test', 'clean:doc']
 
 task :doc => ['doc:build']
 
@@ -34,12 +35,14 @@ end
 
 namespace :doc do
   desc "Builds the documentation."
-  task :build => [:require] do
-    JefHelper.build_doc_for(ENV['SECTION'] ? "#{ENV['SECTION']}.js" : 'prototype.js')
+  task :build => [ :require, 'clean:doc' ] do
+		jh = JefDocHelper.new
+		jh.build_doc
   end
   
   task :require do
-    JefHelper.require_pdoc
+		jh = JefDocHelper.new
+		jh.require_pdoc
   end
 end
 
@@ -77,6 +80,12 @@ namespace :clean do
   task :test do
 		jh = JefTestHelper.new
 		jh.empty_build
+  end
+
+  desc 'Cleans up doc dir'
+  task :doc do
+		jh = JefDocHelper.new
+		jh.empty_doc
   end
 
 end
