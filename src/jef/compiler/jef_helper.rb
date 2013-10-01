@@ -12,13 +12,12 @@ class JefHelper
 	
   ROOT_DIR      = File.expand_path(File.join( File.dirname(__FILE__), '..' ) )
   FRAMEWORK_DIR = File.join(ROOT_DIR, 'framework')
-  DOC_DIR       = File.join(ROOT_DIR, 'doc')
   EXTERNAL_DIR  = File.join(ROOT_DIR, 'external')
-	TEMP_DEST_DIR = File.join(ROOT_DIR, 'tmp', 'templates')
+	TEMP_DEST_DIR = File.join(ROOT_DIR, 'tmp')
 
   TEST_DIR      = File.join(ROOT_DIR, 'test')
   TEST_UNIT_DIR = File.join(TEST_DIR, 'unit')
-  TMP_DIR       = File.join(TEST_UNIT_DIR, 'tmp')
+  TMP_DIR       = File.join(ROOT_DIR, 'tmp')
 	APP_YML				= 'application.yml'
   
   # Possible options for PDoc syntax highlighting, in order of preference.
@@ -49,7 +48,7 @@ class JefHelper
 		end
 	end
 	
-  def self.has_git?
+  def has_git?
     begin
       `git --version`
       return true
@@ -58,7 +57,7 @@ class JefHelper
     end
   end
   
-  def self.require_git
+  def require_git
     return if has_git?
     puts "\nJEF requires Git in order to load its dependencies."
     puts "\nMake sure you've got Git installed and in your path."
@@ -118,119 +117,35 @@ class JefHelper
 		end
 	end
   
-  def build_doc_for(file)
-    rm_rf(DOC_DIR)
-    mkdir_p(DOC_DIR)
-    #hash = current_head
-    index_header = <<EOF
-<h1 style="margin-top: 31px; height: 75px; padding: 1px 0; background: url(images/header-stripe-small.png) repeat-x;">
-  <a href="http://prototypejs.org" style="padding-left: 120px;">
-    <img src="images/header-logo-small.png" alt="Prototype JavaScript Framework API" />
-  </a>
-</h1>
-EOF
-    PDoc.run({
-      :source_files => Dir[File.join('src', 'prototype', '**', '*.js')],
-      :destination  => DOC_DIR,
-      :index_page   => 'README.markdown',
-      :syntax_highlighter => syntax_highlighter,
-      :markdown_parser    => :bluecloth,
-      :src_code_text => "View source on GitHub &rarr;",
-      :src_code_href => proc { |obj|
-        "https://github.com/sstephenson/prototype/blob/"
-      },
-      :pretty_urls => false,
-      :bust_cache  => false,
-      :name => 'Prototype JavaScript Framework',
-      :short_name => 'Prototype',
-      :home_url => 'http://prototypejs.org',
-      :version => JefHelper::VERSION,
-      :index_header => index_header,
-      :footer => 'This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike 3.0 Unported License</a>.',
-      :assets => 'doc_assets'
-    })
-  end
-  
-  def self.syntax_highlighter
-    if ENV['SYNTAX_HIGHLIGHTER']
-      highlighter = ENV['SYNTAX_HIGHLIGHTER'].to_sym
-      require_highlighter(highlighter, true)
-      return highlighter
-    end
-    
-    SYNTAX_HIGHLIGHTERS.detect { |n| require_highlighter(n) }
-  end
-  
-  def self.require_highlighter(name, verbose=false)
-    case name
-    when :pygments
-      success = system("pygmentize -V > /dev/null")
-      if !success && verbose
-        puts "\nYou asked to use Pygments, but I can't find the 'pygmentize' binary."
-        puts "To install, visit:\n"
-        puts "  http://pygments.org/docs/installation/\n\n"
-        exit
-      end
-      return success # (we have pygments)
-    when :coderay
-      begin
-        require 'coderay'
-      rescue LoadError => e
-        if verbose
-          puts "\nYou asked to use CodeRay, but I can't find the 'coderay' gem. Just run:\n\n"
-          puts "  $ gem install coderay"
-          puts "\nand you should be all set.\n\n"
-          exit
-        end
-        return false
-      end
-      return true # (we have CodeRay)
-    when :none
-      return true
-    else
-      puts "\nYou asked to use a syntax highlighter I don't recognize."
-      puts "Valid options: #{SYNTAX_HIGHLIGHTERS.join(', ')}\n\n"
-      exit
-    end
-  end
-  
-	def self.require_hike
+	# Required by Sprockets
+	def require_hike
 		require_submodule( "Hike", "git://github.com/sstephenson/hike.git", "hike" )
 	end
 	
-	def self.require_tilt
+	# Required by Sprockets
+	def require_tilt
 		require_submodule( "tilt", "git://github.com/rtomayko/tilt.git", "tilt" )
 	end
 	
-	def self.require_rack
+	# Required by Sprockets
+	def require_rack
 		require_submodule( "rack", "git://github.com/rack/rack.git", "rack" )
 	end
 	
-	def self.require_multi_json
+	# Required by Sprockets
+	def require_multi_json
 		require_submodule( "multi_json", "git://github.com/intridea/multi_json.git", "multi_json" )
 	end
 	
-  def self.require_sprockets
+  def require_sprockets
 		require_hike
 		require_tilt
 		require_rack
 		require_multi_json
     require_submodule('Sprockets', 'git://github.com/sstephenson/sprockets.git', 'sprockets')
   end
-  
-  def self.require_pdoc
-    require_submodule('PDoc', 'https://github.com/tobie/pdoc.git', 'pdoc')
-  end
-  
-  def self.require_unittest_js
-    require_submodule('UnittestJS', 'unittest_js')
-  end
-  
-  def self.require_caja_builder
-    require_submodule('CajaBuilder', 'caja_builder')
-  end
-  
-  def self.get_submodule(name, git_path, path)
+    
+  def get_submodule(name, git_path, path)
     require_git
     puts "\nYou seem to be missing #{name}. Obtaining it via git...\n\n"
     
@@ -242,7 +157,7 @@ EOF
     false
   end
   
-  def self.require_submodule(name, git_path, path)
+  def require_submodule(name, git_path, path)
     begin
       require path
     rescue LoadError => e
