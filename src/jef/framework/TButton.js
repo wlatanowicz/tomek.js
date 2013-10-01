@@ -2,8 +2,12 @@
 //= require TEventResponder
 
 /**
+ * class TButton <  TWebControl
+ * includes TEventResponderMixin
+ * 
  * Control renders a button
- */
+ * 
+ **/
 var TButton = TWebControl.extend( TEventResponderMixin ).extend( {
 	
 	//@Override
@@ -15,17 +19,16 @@ var TButton = TWebControl.extend( TEventResponderMixin ).extend( {
 	//@Override
 	_triggersEvents : ['Click'],
 	
-	/**
-	 * Sets button's label text
-	 * 
-	 * @param v String text
-	 */
 	setText : function( v ){
 		if ( this._renderedMainElement ){
 			this._renderedMainElement.value = v;
 		}
 		this._Text = v;
 	},
+	
+	/**
+	 * TButton.Text -> String
+	 **/
 	
 	//@Override
 	getPublicProperties : function(){

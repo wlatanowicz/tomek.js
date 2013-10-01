@@ -2,8 +2,20 @@
 //= require TEventResponder
 
 /**
+ * class TTextBox < TWebControl
+ * includes TEventResponderMixin
+ * 
  * Control renders a text input
- */
+ * 
+ * ##### Triggered events
+ * 
+ * `on:Change`
+ * `on:KeyUp`
+ * `on:KeyDown`
+ * `on:Blur`
+ * `on:Focus`
+ * 
+ **/
 var TTextBox = TWebControl.extend( TEventResponderMixin ).extend( {
 	
 	//@Override
@@ -15,11 +27,6 @@ var TTextBox = TWebControl.extend( TEventResponderMixin ).extend( {
 	//@Override
 	_triggersEvents : ['Change','KeyUp','KeyDown','Blur','Focus'],
 	
-	/**
-	 * Sets text to input area
-	 * 
-	 * @param v String text
-	 */
 	setText : function( v ){
 		if ( this._renderedMainElement ){
 			this._renderedMainElement.value = v;
@@ -27,17 +34,16 @@ var TTextBox = TWebControl.extend( TEventResponderMixin ).extend( {
 		this._Text = v;
 	},
 	
-	/**
-	 * Returns text from input area
-	 * 
-	 * @returns String text
-	 */
 	getText : function(){
 		if ( this._renderedMainElement ){
 			return this._renderedMainElement.value;
 		}
 		return this._Text;
 	},
+	
+	/**
+	 * TTextBox.Text -> String
+	 **/
 	
 	//@Override
 	getPublicProperties : function(){

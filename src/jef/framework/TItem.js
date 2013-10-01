@@ -1,12 +1,22 @@
 //= require TControl
-//= require TItem
 
 /**
+ * class TItem < TControl
+ * 
  * Control used to render multiple times the same template
  * in repeater and similiar contexts
- */
+ * 
+ **/
 var TItem = TControl.extend( {
 
+	/**
+	 * TItem.DataItem -> Object
+	 **/
+	
+	/**
+	 * TItem.ItemIndex -> int
+	 **/
+	
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base()
@@ -15,10 +25,12 @@ var TItem = TControl.extend( {
 	},
 	
 	/**
+	 * TItem.useTemplate( template ) -> void
+	 * - template (Function): template
+	 * 
 	 * Sets template function
 	 * 
-	 * @param template Function
-	 */
+	 **/
 	useTemplate : function( template ){
 		this.createChildControls = template.bind( this, this );
 	}

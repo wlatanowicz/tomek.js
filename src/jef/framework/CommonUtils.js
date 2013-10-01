@@ -32,9 +32,7 @@ if (!Array.prototype.indexOf)
   };
 }
 
-/**
- * Fix for Safari
- */
+// Fix for Safari
 if ( ! Element.ELEMENT_NODE ){
 	Element.ELEMENT_NODE = 1
 }

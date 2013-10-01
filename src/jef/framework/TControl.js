@@ -2,60 +2,79 @@
 //= require TExpression
 
 /**
+ * class TControl
+ * 
  * Base control class
  * handles all common dependency and rendering routines
- */
+ * 
+ **/
 var TControl = Base.extend( {
 	
 	/**
-	 * Array of TControl
+	 * TControl._childControls -> Array[TControl]
+	 * 
 	 * Keeps all direct child controls
-	 */
+	 * 
+	 **/
 	_childControls : [],
 	
 	/**
-	 * Hash of TControl
-	 * Keeps track of child controls based on ID
-	 */
+	 * TControl._childControlsHash -> Hash[TControl]
+	 * 
+ 	 * Keeps track of child controls based on ID
+	 * 
+	 **/
 	_childControlsHash : {},
 	
 	/**
-	 * Boolean
+	 * TControl._childControlsCreated -> Boolean
+	 * 
 	 * True when child controls have been initialized
 	 * afer running createChildControls()
-	 */
+	 * 
+	 **/
 	_childControlsCreated : false,
 	
 	/**
-	 * Hash of TControl
+	 * TControl._templateControls -> Hash[TControl]
+	 * 
 	 * Keeps track of controls initialized using XML template
-	 */
+	 * 
+	 **/
 	_templateControls : {},
 	
 	/**
-	 * Array of DOMElement
+	 * TControl._renderedNodes -> Array[DOMElement]
+	 * 
 	 * Keeps track of rendered DOMElements
 	 * that should be removed on rerender
-	 */
+	 * 
+	 **/
 	_renderedNodes : [],
 	
 	/**
-	 * DOMElement
+	 * TControl._placeholder -> DOMElement
+	 * 
 	 * Control is rendered inside this element
-	 */
+	 * 
+	 **/
 	_placeholder : null,
 	
 	/**
-	 * Node
+	 * TControl._positionMarker -> DOMElement
+	 * 
 	 * Keeps position of this control inside _placeholder
-	 */
+	 * 
+	 **/
 	_positionMarker : null,
 	
 	/**
+	 *  new TControl([options])
+	 *  - options (Hash): hash of properties to be set
+	 * 
 	 * Default control constructor
 	 * 
-	 * @param options Hash of properties to be set
-	 */
+	 **/
 	constructor : function( options ){
 		this._childControls = [];
 		this._renderedNodes = [];
@@ -96,11 +115,6 @@ var TControl = Base.extend( {
 		}
 	},
 	
-	/**
-	 * Setter for control ID
-	 * 
-	 * @param id String new control ID
-	 */
 	setID : function( id ){
 		if ( this._ID != null ){
 			throw new Exception( 'Cannot change ID' )
@@ -112,18 +126,38 @@ var TControl = Base.extend( {
 	},
 	
 	/**
+	 * TControl.ID -> String
+	 **/
+	
+	/**
+	 * TControl.Placeholder -> DOMElement
+	 **/
+	
+	/**
+	 * TControl.Parent -> TControl
+	 **/
+	
+	/**
+	 * TControl.Visible -> Boolean
+	 **/
+	
+	/**
+	 * TControl.getPublicProperties() -> Array[String]
+	 * 
 	 * Defines list of public properties
 	 * 
-	 * @returns Array of String
-	 */
+	 **/
 	getPublicProperties : function(){
 		return ['ID','Placeholder','Parent','Visible'];
 	},
 	
 	/**
+	 * TControl.registerPublicProperties() -> void
+	 * 
 	 * Registers all public properties
 	 * defined by getPublicProperties()
-	 */
+	 * 
+	 **/
 	registerPublicProperties : function(){
 		var props = this.getPublicProperties();
 		var i;
@@ -133,12 +167,14 @@ var TControl = Base.extend( {
 	},
 	
 	/**
+	 * TControl.registerPublicProperty( name ) -> void
+	 * - name (String): property name
+	 * 
 	 * Registers public property
 	 * by creating object property,
 	 * setter and getter functions if necessary
 	 * 
-	 * @param name String property name
-	 */
+	 **/
 	registerPublicProperty : function( name ){
 		//http://johndyer.name/native-browser-get-set-properties-in-javascript/
 		
@@ -186,11 +222,13 @@ var TControl = Base.extend( {
 	},
 	
 	/**
+	 * TControl.setPlaceholder( placeholder ) -> void
+	 * - placeholder (String|DOMElement|TControl|null): a placeholder
+	 * 
 	 * Sets placholder for control
 	 * to be rendered in
 	 * 
-	 * @param root_node String|DOMElement|TControl|null placeholder
-	 */
+	 **/
 	setPlaceholder : function( root_node ){
 		if ( ! root_node ){
 			this._Placeholder = null;
@@ -211,11 +249,12 @@ var TControl = Base.extend( {
 	},
 	
 	/**
-	 * Returns placeholder for control
+	 * TControl.getPlaceholder() -> DOMElement
+	 * 
+	 * Returns placeholder for control (a node to render control in)
 	 * fallbacks to parent control if required
 	 * 
-	 * @returns DOMElement node to render control in
-	 */
+	 **/
 	getPlaceholder : function(){
 		return this._Placeholder
 			? this._Placeholder
@@ -225,9 +264,12 @@ var TControl = Base.extend( {
 	},
 	
 	/**
+	 * TControl.removeRenderedNodes() -> void
+	 * 
 	 * Removes all DOMElements created while rendering the control
 	 * before next render
-	 */
+	 * 
+	 **/
 	removeRenderedNodes : function(){
 		var i;
 		for ( i=0; i<this._childControls.length; i++ ){
@@ -247,8 +289,11 @@ var TControl = Base.extend( {
 	},
 	
 	/**
-	 * Initializes child controls if required
-	 */
+	 * TControl.ensureChildControls() -> void
+	 * 
+	 * Initializes child controls if required.
+	 * 
+	 **/
 	ensureChildControls : function(){
 		if ( ! this._childControlsCreated ){
 			this.createChildControls();
@@ -257,17 +302,23 @@ var TControl = Base.extend( {
 	},
 	
 	/**
-	 * Initializes child controls
-	 * should be overloaded
-	 */
+	 * TControl.createChildControls() -> void
+	 * 
+	 * Initializes child controls.
+	 * Should be overloaded.
+	 * 
+	 **/
 	createChildControls : function(){
 		
 	},
 	
 	/**
+	 * TControl.render() -> void
+	 * 
 	 * Renders the control
-	 * and all its child controls
-	 */
+	 * and all its child controls.
+	 * 
+	 **/
 	render : function(){
 		this.ensureChildControls();
 		this.removeRenderedNodes();
@@ -277,9 +328,13 @@ var TControl = Base.extend( {
 	},
 	
 	/**
-	 * Sets placeholder and renders contents of control
-	 * Should not be called directly
-	 */
+	 * TControl.renderContentsInPlaceholder( placeholder ) -> void
+	 * - placeholder (String|DOMElement|TControl|null): a placeholder
+	 * 
+	 * Sets placeholder and renders contents of control.
+	 * Should not be called directly.
+	 * 
+	 **/
 	renderContentsInPlaceholder : function( placeholder ){
 		this.setPlaceholder( placeholder );
 		
@@ -290,17 +345,24 @@ var TControl = Base.extend( {
 	},
 	
 	/**
-	 * Renders contents of control
-	 * Should not be called directly
-	 */
+	 * TControl.renderContents() -> void
+	 * 
+	 * Renders contents of control.
+	 * Should not be called directly.
+	 * 
+	 **/
 	renderContents : function(){
 		this.renderChildControls( this );
 	},
 
 	/**
-	 * Renders contents of child controls
-	 * Should not be called directly
-	 */
+	 * TControl.renderChildControls( placeholder ) -> void
+	 * - placeholder (DOMElement): a placeholder
+	 * 
+	 * Renders contents of child controls.
+	 * Should not be called directly.
+	 * 
+	 **/
 	renderChildControls : function( placeholder ){
 		for ( var i=0; i<this._childControls.length; i++ ){
 			this._childControls[ i ].renderContentsInPlaceholder( placeholder );
@@ -308,13 +370,14 @@ var TControl = Base.extend( {
 	},
 	
 	/**
-	 * Appends DOMElement to control
-	 * Used on render to add DOMElement to control's placeholder,
-	 * keeps track it in _renderedNodes and adds position marker
+	 * TControl.appendChild( el ) -> void
+	 * - el (DOMElement): element to be added
 	 * 
-	 * @param el DOMElement element to be added
-	 * @param root DOMElement optional, placeholder for element
-	 */
+	 * Appends DOMElement to control.
+	 * Used on render to add DOMElement to control's placeholder,
+	 * keeps track it in _renderedNodes and adds position marker.
+	 * 
+	 **/
 	appendChild : function( el ){
 		
 		var root = this.getPlaceholder();
@@ -340,11 +403,13 @@ var TControl = Base.extend( {
 	},
 	
 	/**
-	 * Adds child control
-	 * and sets relationship between controls
+	 * TControl.addChildControl( c ) -> void
+	 * - c (TControl): control
 	 * 
-	 * @param c TControl control
-	 */
+	 * Adds child control
+	 * and sets relationship between controls.
+	 * 
+	 **/
 	addChildControl : function( c ){
 		c.setParent( this );
 		this._childControls.push( c );
@@ -354,23 +419,27 @@ var TControl = Base.extend( {
 	},
 	
 	/**
+	 * TControl.addTemplateChildControl( k, c ) -> void
+	 * - k (String): name of variable defined by template compiler
+	 * - c (TControl): control
+	 * 
 	 * Adds child control defined in template
 	 * sets relationship between controls and
 	 * adds control to _templateControls hash
 	 * 
-	 * @param k String name of variable defined by template compiler
-	 * @param c TControl control
-	 */
+	 **/
 	addTemplateChildControl : function( k, c ){
 		this._templateControls[ k ] = c;
 		this.addChildControl( c );
 	},
 	
 	/**
+	 * TControl.removeChildControl( c ) -> void
+	 * - c (TControl): control to be removed
+	 * 
 	 * Removes child control
 	 * 
-	 * @param c TControl control to be removed
-	 */
+	 **/
 	removeChildControl : function( c ){
 		var idx = this._childControls.indexOf( c );
 		
@@ -390,9 +459,12 @@ var TControl = Base.extend( {
 	},
 	
 	/**
+	 * TControl.removePositionMarker() -> void
+	 * 
 	 * Removes position marker
 	 * from document tree
-	 */
+	 * 
+	 **/
 	removePositionMarker : function(){
 		if ( this._positionMarker ){
 			if ( this._positionMarker.remove ){
@@ -407,10 +479,12 @@ var TControl = Base.extend( {
 	},
 	
 	/**
+	 * TControl.destroy() -> void
+	 * 
 	 * Destroys control
 	 * and cleans up
 	 * 
-	 */
+	 **/
 	destroy : function(){
 		
 		if ( this.getParent() ){
@@ -427,12 +501,13 @@ var TControl = Base.extend( {
 	},
 	
 	/**
+	 * TControl.getChildControl( id ) -> TControl|null
+	 * - i (String): control ID
+	 * 
 	 * Returns direct child control by ID
+	 * if found or null if not found.
 	 * 
-	 * @param i String control ID
-	 * 
-	 * @returns TControl|null child control with particualar ID if found or null if not found
-	 */
+	 **/
 	getChildControl : function( id ){
 		return this._childControlsHash[ id ]
 				? this._childControlsHash[ id ]
@@ -440,13 +515,14 @@ var TControl = Base.extend( {
 	},
 	
 	/**
+	 * TControl.findChildControlByID( id ) -> TControl|null
+	 * - i (String): control ID
+	 * 
 	 * Returns child control by ID
-	 * searches recursively all child controls
+	 * and searches recursively all child controls.
+	 * Returns child control with particualar ID if found or null if not found
 	 * 
-	 * @param i String control ID
-	 * 
-	 * @returns TControl|null child control with particualar ID if found or null if not found
-	 */
+	 **/
 	findChildControlByID : function( id ){
 		var i;
 		if( this._childControlsHash[ id ]

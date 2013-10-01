@@ -1,36 +1,53 @@
 //= require TControl
 
 /**
+ * class TWebControl < TControl
+ * 
  * Control dedicated to render single DOMElements
  * designed to be extended
- */
+ * 
+ **/
 var TWebControl = TControl.extend( {
 
 	/**
-	 * String
+	 * TWebControl._tagName -> String
+	 * 
 	 * DOMElement tag name
-	 */
+	 * 
+	 **/
 	_tagName : 'span',
 	
 	/**
-	 * Boolean
+	 * TWebControl._rendersChildControls -> Boolean
+	 * 
 	 * True if there are child controls to render
 	 * Should be true for all containers like paragraphs
 	 * and false for controls like buttons
-	 */
+	 * 
+	 **/
 	_rendersChildControls : true,
 
 	/**
-	 * Hash of String
-	 * Stores additional HTML atributes to render
-	 */
-	_Attributes : {},
+	 * TWebControl._renderedMainElement -> DOMElement
+	 * 
+	 * Keeps track of rendered control's root DOMElement
+	 * 
+	 **/
+	_renderedMainElement : null,
 	
 	/**
-	 * DOMElement
-	 * Keeps track of rendered control's root DOMElement
-	 */
-	_renderedMainElement : null,
+	 * TWebControl.Attributes -> Hash[String]
+	 * 
+	 * Stores additional HTML atributes to render
+	 * 
+	 **/
+	
+	/**
+	 * TWebControl.CssClass -> String
+	 * 
+	 * CSS class of html tag
+	 * 
+	 **/
 	
 	//@Override
 	getPublicProperties : function(){
@@ -40,11 +57,12 @@ var TWebControl = TControl.extend( {
 	},
 	
 	/**
-	 * Creates control's root DOMElement
-	 * In most cases should be overloaded
+	 * TWebControl.createMainElement() -> DOMElement
 	 * 
-	 * @returns DOMElement
-	 */
+	 * Creates control's root DOMElement.
+	 * In most cases should be overloaded.
+	 * 
+	 **/
 	createMainElement : function(){
 		var d = document.createElement( this._tagName );
 		

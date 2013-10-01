@@ -1,10 +1,17 @@
 //= require TControl
 
 /**
+ * class TLiteral < TControl
+ * 
  * Simple control rendering text
- */
+ * 
+ **/
 var TLiteral = TControl.extend( {
 
+	/**
+	 * TLiteral.Text -> String
+	 **/
+	
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base()

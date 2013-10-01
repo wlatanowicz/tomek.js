@@ -1,33 +1,36 @@
 /**
+ * mixin TEventResponderMixin
+ * 
  * Mixin adding ability to handle events
- */
+ * 
+ **/
 var TEventResponderMixin = {
 	
 	/**
-	 * Array of String
+	 * TEventResponderMixin._triggersEvents -> Array[String]
+	 *
 	 * List of events triggered by the control
-	 */
+	 * 
+	 **/
 	_triggersEvents : [],
 	
 	/**
-	 * Hash of Array
+	 * TEventResponderMixin._eventResponders -> Hash[Array[Function]]
+	 * 
 	 * Keeps track of attached responder functions
-	 */
+	 * 
+	 **/
 	_eventResponders : {},
 	
 	/**
-	 * Array of Object
+	 * TEventResponderMixin._triggerElements -> Array[EventTrigger]
+	 * 
 	 * Keeps track of DOMElements, DOMEevents and triggered events
-	 * Object is defined as:
-	 * {
-	 *	element : DOMElement,
-	 *	dom_event : String,
-	 *	event : String,
-	 *	bound_function : Function
-	 * }
-	 */
+	 * 
+	 **/
 	_triggerElements : [], 
 	
+	//@Override
 	constructor : function( options ){
 		this.base( options );
 		this._eventResponders = {};
@@ -35,12 +38,12 @@ var TEventResponderMixin = {
 	},
 	
 	/**
+	 * TEventResponderMixin.triggersEvent( e ) -> Boolean
+	 * - e (String): event name
+	 * 
 	 * Checks if the control triggers particular event
 	 * 
-	 * @param e String event name
-	 * 
-	 * @returns Boolean
-	 */
+	 **/
 	triggersEvent : function( e ){
 		return this._triggersEvents.indexOf( e ) >= 0
 				? true
@@ -48,14 +51,14 @@ var TEventResponderMixin = {
 	},
 	
 	/**
+	 * TEventResponderMixin.respondsToEvent( e ) -> Boolean
+	 * - e (String): event name
+	 * 
 	 * Checks if the control responds to particular event
 	 * which means it triggers it and has a responder
 	 * function attached
 	 * 
-	 * @param e String event name
-	 * 
-	 * @returns Boolean
-	 */
+	 **/
 	respondsToEvent : function( e ){
 		return this.triggersEvent( e )
 				&& this._eventResponders[e]
@@ -65,11 +68,13 @@ var TEventResponderMixin = {
 	},
 	
 	/**
+	 * TEventResponderMixin.triggerEvent( e ) -> void
+	 * - e (String): event name
+	 * 
 	 * Triggers event
 	 * and calls attached event responder functions
 	 * 
-	 * @params e String event name
-	 */
+	 **/
 	triggerEvent : function( e ){
 		if ( this._eventResponders[e] ){
 			for ( var f in this._eventResponders[e] ){
@@ -79,11 +84,13 @@ var TEventResponderMixin = {
 	},
 	
 	/**
+	 * TEventResponderMixin.attachEvent( e, fun ) -> void
+	 * - e (String): event name
+	 * - fun (Function): event responder function
+	 * 
 	 * Attaches event responder function
 	 * 
-	 * @param e String event name
-	 * @param fun Function event responder function
-	 */
+	 **/
 	attachEvent : function( e, fun ){
 		
 		if ( ! this.triggersEvent( e ) ){
@@ -104,11 +111,13 @@ var TEventResponderMixin = {
 	},
 	
 	/**
+	 * TEventResponderMixin.dettachEvent( e [, fun] ) -> void
+	 * - e (String): event name
+	 * - fun (Function): event responder function
+	 * 
 	 * Removes event responder function or all responder function if no one given
 	 * 
-	 * @param e String event name
-	 * @param fun Function optional, event responder function
-	 */
+	 **/
 	dettachEvent : function( e, fun ){
 		if ( ! fun ){
 			this._eventResponders[e] = [];
@@ -134,28 +143,36 @@ var TEventResponderMixin = {
 	},
 	
 	/**
+	 * TEventResponderMixin.addEventListener( event_rec ) -> void
+	 * - event_rec (EventTrigger): trigger
+	 * 
 	 * Attaches event listener to trigger DOMElement
-	 * @param event_rec Object as defined in _triggerElements
-	 */
+	 * 
+	 **/
 	addEventListener : function( event_rec ){
 		event_rec.element.addEventListener( event_rec.dom_event, event_rec.bound_function );
 	},
 	
 	/**
+	 * TEventResponderMixin.removeEventListener( event_rec ) -> void
+	 * - event_rec (EventTrigger): trigger
+	 * 
 	 * Removes event listener from trigger DOMElement
-	 * @param event_rec Object as defined in _triggerElements
-	 */
+	 * 
+	 **/
 	removeEventListener : function( event_rec ){
 		event_rec.element.removeEventListener( event_rec.dom_event, event_rec.bound_function );
 	},
 	
 	/**
+	 * TEventResponderMixin.registerTriggerElement( el, dom_event, jef_event ) -> void
+	 * - el (DOMElement): element to attach listener to
+	 * - dom_event (String): DOMEvent name
+	 * - jef_event (String): event name
+	 * 
 	 * Registers DOMElement to trigger event on particular DOMEvent
 	 * 
-	 * @param el DOMElement element to attach listener to
-	 * @param dom_event String DOMEvent name
-	 * @param jef_ecent String event name
-	 */
+	 **/
 	registerTriggerElement : function( el, dom_event, jef_event ){
 		var e = {
 			'element' : el,
@@ -170,10 +187,12 @@ var TEventResponderMixin = {
 	},
 	
 	/**
+	 * TEventResponderMixin.registerTriggerElements( triples ) -> void
+	 * - triples (Array): array of three element arrays [ DOMElement, DOMEvent name, event name ]
+	 * 
 	 * Registers multiple DOMElements to trigger events on particular DOMEvents
 	 * 
-	 * @param triples Array of three element arrays [ DOMElement, DOMEvent name, event name ]
-	 */
+	 **/
 	registerTriggerElements : function( triples ){
 		for ( var i in triples ){
 			var t = triples[i];
@@ -182,11 +201,13 @@ var TEventResponderMixin = {
 	},
 	
 	/**
+	 * TEventResponderMixin.registerTriggerElementMultipleEvents( el, pairs ) -> void
+	 * - el (DOMElement): element
+	 * - pairs (Array): array of two element arrays [ DOMEvent name, event name ]
+	 * 
 	 * Registers single DOMElement to trigger multiple events on particular DOMEvents
 	 * 
-	 * @param el DOMElement
-	 * @param pairs Array of two element arrays [ DOMEvent name, event name ]
-	 */
+	 **/
 	registerTriggerElementMultipleEvents : function( el, pairs ){
 		for ( var i in pairs ){
 			var p = pairs[i];
@@ -195,3 +216,24 @@ var TEventResponderMixin = {
 	}	
 	
 };
+
+/**
+ * class EventTrigger
+ *
+ **/
+
+/**
+ * EventTrigger.element -> DOMElement
+ **/
+
+/**
+ * EventTrigger.dom_event -> String
+ **/
+
+/**
+ * EventTrigger.event -> String
+ **/
+
+/**
+ * EventTrigger.bound_function -> Function
+ **/

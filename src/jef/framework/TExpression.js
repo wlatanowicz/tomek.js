@@ -1,13 +1,16 @@
 //= require Base
 
 /**
+ * class TExpression
+ * 
  * Stores an expriession to be rendered
- */
+ * 
+ **/
 var TExpression = Base.extend( {
 	
 	/**
-	 * Function
-	 */
+	 * TExpression._expressionFunction -> Function
+	 **/
 	_expressionFunction : function(){return null},
 	
 	constructor : function( fun ){

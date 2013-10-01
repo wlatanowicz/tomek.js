@@ -2,56 +2,13 @@
 //= require TItem
 
 /**
+ * class TRepeater < TControl
+ * 
  * Control renders it's contents multiple times
  * based on data source
- */
+ * 
+ **/
 var TRepeater = TControl.extend( {
-	
-	/**
-	 * Array
-	 * Datasource for repeater
-	 */
-	_DataSource : [],
-	
-	/**
-	 * Array of TItem
-	 */
-	_Items : [],
-	
-	/**
-	 * TItem
-	 */
-	_HeaderItem : null,
-	
-	/**
-	 * TItem
-	 */
-	_FooterItem : null,
-	
-	/**
-	 * TItem
-	 */
-	_EmptyItem : null,
-	
-	/**
-	 * Function
-	 */
-	_ItemTemplate : null,
-	
-	/**
-	 * Function
-	 */
-	_HeaderTemplate : null,
-	
-	/**
-	 * Function
-	 */
-	_FooterTemplate : null,
-	
-	/**
-	 * Function
-	 */
-	_EmptyTemplate : null,
 	
 	//@Override
 	constructor : function( options ){
@@ -69,6 +26,46 @@ var TRepeater = TControl.extend( {
 		this._EmptyTemplate = null;
 	},
 	
+	/**
+	 * TRepeater.DataSource -> Array
+	 * 
+	 * Data source for repeater. Setting data source
+	 * clean ups the repeater for next rendering.
+	 * 
+	 **/
+	
+	/**
+	 * TRepeater.Items -> Array[TItem]
+	 **/
+	
+	/**
+	 * TRepeater.HeaderItem -> TItem
+	 **/
+	
+	/**
+	 * TRepeater.FooterItem -> TItem
+	 **/
+	
+	/**
+	 * TRepeater.EmptyItem -> TItem
+	 **/
+	
+	/**
+	 * TRepeater.ItemTemplate -> Function
+	 **/
+	
+	/**
+	 * TRepeater.HeaderTemplate -> Function
+	 **/
+	
+	/**
+	 * TRepeater.FooterTemplate -> Function
+	 **/
+	
+	/**
+	 * TRepeater.EmptyTemplate -> Function
+	 **/
+
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base()
@@ -78,12 +75,6 @@ var TRepeater = TControl.extend( {
 		return arr;
 	},	
 	
-	/**
-	 * Sets the datasource
-	 * and clean ups the repeater for next rendering
-	 * 
-	 * @param ds Array new data source
-	 */
 	setDataSource : function( ds ){
 		this._DataSource = ds;
 		
@@ -112,8 +103,11 @@ var TRepeater = TControl.extend( {
 	},
 	
 	/**
+	 * TRepeater.createChildControls() -> void
+	 * 
 	 * Creates child controls based on contents of DataSource
-	 */
+	 * 
+	 **/
 	//@Override
 	createChildControls : function(){
 		var data_source = this._DataSource;

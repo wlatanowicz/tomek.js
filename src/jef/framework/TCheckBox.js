@@ -2,8 +2,12 @@
 //= require TEventResponder
 
 /**
+ * class TCheckBox < TWebControl
+ * includes TEventResponderMixin
+ * 
  * Control renders a checkbox input
- */
+ * 
+ **/
 var TCheckBox = TWebControl.extend( TEventResponderMixin ).extend( {
 	
 	//@Override
@@ -15,11 +19,6 @@ var TCheckBox = TWebControl.extend( TEventResponderMixin ).extend( {
 	//@Override
 	_triggersEvents : ['Click','Change'],
 	
-	/**
-	 * Set state of control
-	 * 
-	 * @param v Boolean true if checked
-	 */
 	setChecked : function( v ){
 		v = parseBool( v );
 			
@@ -29,17 +28,16 @@ var TCheckBox = TWebControl.extend( TEventResponderMixin ).extend( {
 		this._Checked = v;
 	},
 	
-	/**
-	 * Get state of control
-	 * 
-	 * @returns Boolean true if checked
-	 */
 	getChecked : function(){
 		if ( this._renderedMainElement ){
 			return this._renderedMainElement.checked;
 		}
 		return this._Checked;
 	},
+	
+	/**
+	 * TCheckBox.Checked -> Boolean
+	 **/
 	
 	//@Override
 	getPublicProperties : function(){
