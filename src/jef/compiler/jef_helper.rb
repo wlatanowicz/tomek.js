@@ -81,7 +81,7 @@ class JefHelper
   
   def sprocketize
 
-    JefHelper.require_sprockets
+    require_sprockets
 		
 		mains = YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))['MAINS']
 		mains.each do |m|
