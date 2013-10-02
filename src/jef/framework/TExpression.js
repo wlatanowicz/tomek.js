@@ -1,6 +1,6 @@
 //= require Base
 
-/**
+/** section: Controls
  * class TExpression
  * 
  * Stores an expriession to be rendered

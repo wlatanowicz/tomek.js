@@ -1,4 +1,4 @@
-/**
+/** section: Controls
  * mixin TEventResponderMixin
  * 
  * Mixin adding ability to handle events
@@ -217,7 +217,7 @@ var TEventResponderMixin = {
 	
 };
 
-/**
+/** section: Utilities
  * class EventTrigger
  *
  **/

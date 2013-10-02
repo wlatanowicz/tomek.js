@@ -1,6 +1,6 @@
 //= require TControl
 
-/**
+/** section: Controls
  * class TLiteral < TControl
  * 
  * Simple control rendering text

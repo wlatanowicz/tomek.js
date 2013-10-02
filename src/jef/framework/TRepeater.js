@@ -1,7 +1,7 @@
 //= require TControl
 //= require TItem
 
-/**
+/** section: Controls
  * class TRepeater < TControl
  * 
  * Control renders it's contents multiple times

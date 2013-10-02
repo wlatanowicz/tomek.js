@@ -1,7 +1,7 @@
 //= require TWebControl
 //= require TEventResponder
 
-/**
+/** section: Controls
  * class TRadioButton < TWebControl
  * includes TEventResponderMixin
  * 

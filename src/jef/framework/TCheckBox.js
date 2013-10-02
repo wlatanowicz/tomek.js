@@ -1,7 +1,7 @@
 //= require TWebControl
 //= require TEventResponder
 
-/**
+/** section: Controls
  * class TCheckBox < TWebControl
  * includes TEventResponderMixin
  * 

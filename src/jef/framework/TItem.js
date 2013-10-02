@@ -1,6 +1,6 @@
 //= require TControl
 
-/**
+/** section: Controls
  * class TItem < TControl
  * 
  * Control used to render multiple times the same template

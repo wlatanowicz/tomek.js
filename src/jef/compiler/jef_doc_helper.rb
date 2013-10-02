@@ -5,7 +5,7 @@ class JefDocHelper < JefHelper
 
 	DOC_DIR = File.join(ROOT_DIR, 'doc')
 	
-	EXCLUDE = ['Base.js','CommonUtils.js']
+	EXCLUDE = []
 	
   def require_pdoc
     require_submodule('PDoc', 'https://github.com/tobie/pdoc.git', 'pdoc')
@@ -79,7 +79,7 @@ EOF
     PDoc.run({
       :source_files => files,
       :destination  => DOC_DIR,
-      #:index_page   => 'README.markdown',
+      :index_page   => 'README.markdown',
       :syntax_highlighter => syntax_highlighter,
       :markdown_parser    => :bluecloth,
       :src_code_text => "View source on GitHub &rarr;",
@@ -88,10 +88,10 @@ EOF
       },
       :pretty_urls => false,
       :bust_cache  => false,
-      :name => 'Prototype JavaScript Framework',
-      :short_name => 'Prototype',
-      :home_url => 'http://prototypejs.org',
-      :version => 'JefHelper::VERSION',
+      :name => 'JEF JavaScript Framework',
+      :short_name => 'JEF',
+      :home_url => 'http://jef-framework.org',
+      :version => JefHelper::VERSION,
       :index_header => index_header,
       :footer => 'This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike 3.0 Unported License</a>.',
       :assets => 'doc_assets'

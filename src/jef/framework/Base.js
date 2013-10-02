@@ -1,9 +1,18 @@
-/**
+/** section: Utilities
+ * class Base
+ * 
  * Base, version 1.0.2
+ * 
  * Copyright 2006, Dean Edwards
- * License: http://creativecommons.org/licenses/LGPL/2.1/
- * @class Base
- */
+ * 
+ * License: [http://creativecommons.org/licenses/LGPL/2.1/](http://creativecommons.org/licenses/LGPL/2.1/)
+ * 
+ * [Original source](http://dean.edwards.name/weblog/2006/03/base/)
+ * 
+ **/
+
+if ( !Base ){
+	
 var Base = function() {
 	if (arguments.length) {
 		if (this == window) { // cast an object to this class
@@ -105,3 +114,5 @@ Base.implement = function(_interface) {
 	if (_interface instanceof Function) _interface = _interface.prototype;
 	this.prototype.extend(_interface);
 };
+
+}

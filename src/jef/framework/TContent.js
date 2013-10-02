@@ -1,6 +1,6 @@
 //= require TControl
 
-/**
+/** section: Controls
  * class TContent < TControl
  * 
  * Dummy control designed as container

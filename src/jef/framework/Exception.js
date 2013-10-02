@@ -1,6 +1,6 @@
 //= require Base
 
-/**
+/** section: Utilities
  * class Exception
  * 
  **/

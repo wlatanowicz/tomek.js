@@ -1,14 +1,31 @@
 //= require Base
 //= require Exception
 
-function parseBool( v ){
-	return v === true
-			|| v === 1
-			|| v === 'true';
+/**
+ * == Utilities ==
+ **/
+
+/** section: Utilities
+ * parseBool( v ) -> Boolean
+ * - v (Boolean|String|number): a value
+ * 
+ * Bolean equivalent of parseInt
+ * 
+ **/
+if ( !parseBool ){
+	function parseBool( v ){
+		return v === true
+				|| v == 1
+				|| v === 'true';
+	}
 }
 
-
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
+/** section: Utilities
+ * Array_prototype_indexOf( elt[, from] ) -> int
+ * 
+ * [Original source](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf)
+ * 
+ **/
 if (!Array.prototype.indexOf)
 {
   Array.prototype.indexOf = function(elt /*, from*/)
@@ -31,6 +48,17 @@ if (!Array.prototype.indexOf)
     return -1;
   };
 }
+
+/** section: Utilities
+ * Element_ELEMENT_NODE = 1
+ * 
+ * Defines constant
+ * 
+ *    Element.ELEMENT_NODE = 1
+ *		
+ * if not defined
+ * 
+ **/
 
 // Fix for Safari
 if ( ! Element.ELEMENT_NODE ){

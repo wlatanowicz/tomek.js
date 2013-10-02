@@ -2,6 +2,10 @@
 //= require TExpression
 
 /**
+ * == Controls ==
+ **/
+
+/** section: Controls
  * class TControl
  * 
  * Base control class

@@ -1,6 +1,6 @@
 //= require TControl
 
-/**
+/** section: Controls
  * class TTemplateControl < TControl
  * 
  * Control which createChildControls() function
