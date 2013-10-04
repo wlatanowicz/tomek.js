@@ -25,7 +25,7 @@ class JefHelper
   # Possible options for PDoc syntax highlighting, in order of preference.
   SYNTAX_HIGHLIGHTERS = [:pygments, :coderay, :none]
 
-  %w[sprockets hike tilt rack multi_json pdoc unittest_js caja_builder].each do |name|
+  %w[sprockets hike tilt rack multi_json pdoc unittest_js caja_builder uglifier execjs].each do |name|
     $:.unshift File.join( EXTERNAL_DIR, name, 'lib')
   end
 
@@ -81,9 +81,11 @@ class JefHelper
 		
 	end
   
-  def sprocketize
+  def sprocketize minify
 
     require_sprockets
+		
+		require_uglifier if minify
 		
 		mains = YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))['MAINS']
 		mains.each do |m|
@@ -99,6 +101,9 @@ class JefHelper
 			env.prepend_path File.dirname( @APP_DIR+"/"+m )
 			
 			js = env[ m ].to_s
+			
+			js = Uglifier.compile( js, :output => { :comments => :none } ) if minify
+			
 			file = File.new( target, "w" )
 			file.write( js )
 			file.close
@@ -146,6 +151,15 @@ class JefHelper
 		require_multi_json
     require_submodule('Sprockets', 'git://github.com/sstephenson/sprockets.git', 'sprockets')
   end
+	
+	def require_execjs
+		require_submodule( 'ExecJS', 'https://github.com/sstephenson/execjs.git', 'execjs' )
+	end
+	
+	def require_uglifier
+		require_execjs
+    require_submodule('Uglifier', 'https://github.com/lautis/uglifier.git', 'uglifier')
+	end
     
   def get_submodule(name, git_path, path)
     require_git
