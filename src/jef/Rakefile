@@ -16,6 +16,7 @@ require 'compiler/jef_doc_helper'
 task :default => [:dist]
 
 task :dist => ['dist:build']
+task :dist_nouglify => ['dist:build_nouglify']
 
 task :clean => ['clean:tmp', 'clean:dist', 'clean:test', 'clean:doc']
 
@@ -28,7 +29,13 @@ namespace :dist do
 	task :build => ['clean:tmp', 'clean:dist'] do
 		jh = JefHelper.new
 		jh.compile_templates
-		jh.sprocketize
+		jh.sprocketize true
+		jh.copy_resources
+	end
+	task :build_nouglify => ['clean:tmp', 'clean:dist'] do
+		jh = JefHelper.new
+		jh.compile_templates
+		jh.sprocketize false
 		jh.copy_resources
 	end
 end
