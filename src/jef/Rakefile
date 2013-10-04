@@ -63,7 +63,7 @@ namespace :test do
   task :build => ['clean:tmp', 'clean:test'] do
 		jh = JefTestHelper.new
 		jh.compile_templates
-		jh.sprocketize
+		jh.sprocketize true
 		jh.copy_resources
   end
 
