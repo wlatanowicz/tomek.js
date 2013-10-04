@@ -25,13 +25,15 @@ task :doc => ['doc:build']
 task :test => ['test:build', 'test:run']
 
 namespace :dist do
-	desc "Builds the application."
+	desc "Builds the application and compresses output."
 	task :build => ['clean:tmp', 'clean:dist'] do
 		jh = JefHelper.new
 		jh.compile_templates
 		jh.sprocketize true
 		jh.copy_resources
 	end
+	
+	desc "Builds the application without compressing output."
 	task :build_debug => ['clean:tmp', 'clean:dist'] do
 		jh = JefHelper.new
 		jh.compile_templates
