@@ -23,6 +23,7 @@ task :clean => ['clean:tmp', 'clean:dist', 'clean:test', 'clean:doc']
 task :doc => ['doc:build']
 
 task :test => ['test:build', 'test:run']
+task :update_tests => ['test:update']
 
 namespace :dist do
 	desc "Builds the application and compresses output."
@@ -58,7 +59,9 @@ end
 namespace :test do
   desc 'Runs all the JavaScript tests and collects the results'
   task :run => [:build] do
-
+		jh = JefTestHelper.new
+		url = jh.index_file
+		Kernel.system( "open #{url}" )
   end
   
   desc 'Builds test application and environment'
@@ -67,6 +70,12 @@ namespace :test do
 		jh.compile_templates
 		jh.sprocketize true
 		jh.copy_resources
+  end
+
+  desc 'Updates list of tests'
+  task :update do
+		jh = JefTestHelper.new
+		jh.update_tests
   end
 
 end
