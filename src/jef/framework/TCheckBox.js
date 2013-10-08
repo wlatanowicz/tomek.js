@@ -7,6 +7,11 @@
  * 
  * Control renders a checkbox input
  * 
+ * ##### Triggered events
+ * 
+ * `on:Click`
+ * `on:Change`
+ * 
  **/
 var TCheckBox = TWebControl.extend( TEventResponderMixin ).extend( {
 	

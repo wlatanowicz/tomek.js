@@ -7,6 +7,11 @@
  * 
  * Control renders a radio button input
  * 
+ * ##### Triggered events
+ * 
+ * `on:Click`
+ * `on:Change`
+ * 
  **/
 var TRadioButton = TWebControl.extend( TEventResponderMixin ).extend( {
 	
