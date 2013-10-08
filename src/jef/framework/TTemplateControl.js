@@ -9,5 +9,9 @@
  **/
 var TTemplateControl = TControl.extend( {
 
+	//@Override
+	createChildControls : function(){
+		throw new Exception( 'Template not loaded' );
+	}
 		
 } );
