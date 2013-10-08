@@ -68,25 +68,43 @@ var TEventResponderMixin = {
 	},
 	
 	/**
-	 * TEventResponderMixin.triggerEvent( e ) -> void
+	 * TEventResponderMixin.triggerEvent( e[, param] ) -> void
 	 * - e (String): event name
+	 * - param (EventParameter): event parameter
 	 * 
 	 * Triggers event
 	 * and calls attached event responder functions
 	 * 
 	 **/
-	triggerEvent : function( e ){
+	triggerEvent : function( e, param ){
 		if ( this._eventResponders[e] ){
 			for ( var f in this._eventResponders[e] ){
-				this._eventResponders[e][f]( this );
+				this._eventResponders[e][f]( this, param );
 			}
 		}
 	},
 	
 	/**
+	 * TEventResponderMixin.triggerEventFromElement( e, dom_event ) -> void
+	 * - e (String): event name
+	 * - dom_event (DOMEvent): dom event
+	 * 
+	 * Serves as dom event listener and triggers proper event.
+	 * Should not be called directly.
+	 * 
+	 **/
+	triggerEventFromElement : function( e, dom_event ){
+		var param = {
+				'event' : e,
+				'domEvent' : dom_event || window.event
+			};
+		this.triggerEvent( e, param );
+	},
+	
+	/**
 	 * TEventResponderMixin.attachEvent( e, fun ) -> void
 	 * - e (String): event name
-	 * - fun (Function): event responder function
+	 * - fun (Function): event responder function. Should accept two parameters: a sender - triggering control and a param - stuff that control would like to tell you about the event.
 	 * 
 	 * Attaches event responder function
 	 * 
@@ -178,7 +196,7 @@ var TEventResponderMixin = {
 			'element' : el,
 			'dom_event' : dom_event,
 			'event' : jef_event,
-			'bound_function' : this.triggerEvent.bind( this, jef_event )
+			'bound_function' : this.triggerEventFromElement.bind( this, jef_event )
 		};
 		this._triggerElements.push( e );
 		if ( this.respondsToEvent( jef_event ) ){
@@ -236,4 +254,18 @@ var TEventResponderMixin = {
 
 /**
  * EventTrigger.bound_function -> Function
+ **/
+
+
+/** section: Utilities
+ * class EventParameter
+ *
+ **/
+
+/**
+ * EventTrigger.domEvent -> DOMEvent
+ **/
+
+/**
+ * EventTrigger.event -> String
  **/
