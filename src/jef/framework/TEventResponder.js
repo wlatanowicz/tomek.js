@@ -168,7 +168,7 @@ var TEventResponderMixin = {
 	 * 
 	 **/
 	addEventListener : function( event_rec ){
-		event_rec.element.addEventListener( event_rec.dom_event, event_rec.bound_function );
+		event_rec.element.addEventListener( event_rec.domEvent, event_rec.boundFunction );
 	},
 	
 	/**
@@ -179,7 +179,7 @@ var TEventResponderMixin = {
 	 * 
 	 **/
 	removeEventListener : function( event_rec ){
-		event_rec.element.removeEventListener( event_rec.dom_event, event_rec.bound_function );
+		event_rec.element.removeEventListener( event_rec.domEvent, event_rec.boundFunction );
 	},
 	
 	/**
@@ -194,9 +194,9 @@ var TEventResponderMixin = {
 	registerTriggerElement : function( el, dom_event, jef_event ){
 		var e = {
 			'element' : el,
-			'dom_event' : dom_event,
+			'domEvent' : dom_event,
 			'event' : jef_event,
-			'bound_function' : this.triggerEventFromElement.bind( this, jef_event )
+			'boundFunction' : this.triggerEventFromElement.bind( this, jef_event )
 		};
 		this._triggerElements.push( e );
 		if ( this.respondsToEvent( jef_event ) ){
@@ -245,7 +245,7 @@ var TEventResponderMixin = {
  **/
 
 /**
- * EventTrigger.dom_event -> String
+ * EventTrigger.domEvent -> String
  **/
 
 /**
@@ -253,7 +253,7 @@ var TEventResponderMixin = {
  **/
 
 /**
- * EventTrigger.bound_function -> Function
+ * EventTrigger.boundFunction -> Function
  **/
 
 
@@ -263,9 +263,9 @@ var TEventResponderMixin = {
  **/
 
 /**
- * EventTrigger.domEvent -> DOMEvent
+ * EventParameter.domEvent -> DOMEvent
  **/
 
 /**
- * EventTrigger.event -> String
+ * EventParameter.event -> String
  **/
