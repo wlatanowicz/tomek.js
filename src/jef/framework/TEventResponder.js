@@ -78,8 +78,8 @@ var TEventResponderMixin = {
 	 **/
 	triggerEvent : function( e, param ){
 		if ( this._eventResponders[e] ){
-			for ( var f in this._eventResponders[e] ){
-				this._eventResponders[e][f]( this, param );
+			for ( var i=0; i<this._eventResponders[e].length; i++ ){
+				this._eventResponders[e][i]( this, param );
 			}
 		}
 	},
