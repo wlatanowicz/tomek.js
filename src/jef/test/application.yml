@@ -1,13 +1,4 @@
 --- 
-TEMPLATES: 
-- "**/*.tpl"
-MAINS: 
-- tests/000_dummy/main.js
-- tests/001_basic/main.js
-- tests/002_control_order/main.js
-- tests/003_nested_templates/main.js
-- tests/004_simple_repeater/main.js
-- tests/005_basic_events/main.js
 RESOURCES: 
 - application.yml
 - lib/**/*.js
@@ -19,3 +10,13 @@ RESOURCES:
 - tests.js
 - style.css
 - img/*
+MAINS: 
+- tests/000_dummy/main.js
+- tests/001_basic/main.js
+- tests/002_control_order/main.js
+- tests/003_nested_templates/main.js
+- tests/004_simple_repeater/main.js
+- tests/005_basic_events/main.js
+- tests/006_nested_repeaters/main.js
+TEMPLATES: 
+- "**/*.tpl"

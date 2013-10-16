@@ -1,14 +1,23 @@
 //= require TControl
 //= require TItem
+//= require TEventResponder
 
 /** section: Controls
  * class TRepeater < TControl
+ * includes TEventResponderMixin
  * 
  * Control renders it's contents multiple times
  * based on data source
  * 
+ * ##### Triggered events
+ * 
+ * `on:ItemCreated`
+ * 
  **/
-var TRepeater = TControl.extend( {
+var TRepeater = TControl.extend( TEventResponderMixin ).extend( {
+	
+	//@Override
+	_triggersEvents : ['ItemCreated'],
 	
 	//@Override
 	constructor : function( options ){
@@ -130,6 +139,14 @@ var TRepeater = TControl.extend( {
 					item.useTemplate( this._ItemTemplate );
 					this._Items.push( item );
 					this.addChildControl( item );
+					var param = {
+						'domEvent' : null,
+						'event' : 'ItemCreated',
+						'item' : item,
+						'dataItem' : data_item,
+						'itemIndex' : i
+					};
+					this.triggerEvent( 'ItemCreated', param );
 				}
 			}
 			
@@ -151,3 +168,28 @@ var TRepeater = TControl.extend( {
 	}
 	
 } );
+
+/** section: Utilities
+ * class RepeaterItemCreatedEventParameter
+ *
+ **/
+
+/**
+ * RepeaterItemCreatedEventParameter.domEvent -> null
+ **/
+
+/**
+ * RepeaterItemCreatedEventParameter.event -> String
+ **/
+
+/**
+ * RepeaterItemCreatedEventParameter.item -> TItem
+ **/
+
+/**
+ * RepeaterItemCreatedEventParameter.dataItem -> Object
+ **/
+
+/**
+ * RepeaterItemCreatedEventParameter.itemIndex -> int
+ **/
