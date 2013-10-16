@@ -52,7 +52,7 @@ class Renderer < BaseRenderer
 			if ( n.instance_of? StencilNode ) then
 				add_output varname( node )+".set"+n.property_name+"Template( function( item ){"
 				push_indent
-				add_output "var expression_context = item;\n"
+				add_output "var ExpressionContext = item;\n"
 				render_initializers n
 				pop_indent
 				add_output "} );"
@@ -77,7 +77,8 @@ class Renderer < BaseRenderer
 		txt += "\n"
 		
 		txt += @control+".prototype.createChildControls = function(){\n" +
-				"\tvar expression_context = this;\n" +
+				"\tvar ExpressionContext = this;\n" +
+				"\tvar SourceTemplateControl = this;\n" +
 				@output +
 				"};\n";
 			
