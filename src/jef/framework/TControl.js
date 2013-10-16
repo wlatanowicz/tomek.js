@@ -513,6 +513,8 @@ var TControl = Base.extend( {
 	 * 
 	 **/
 	getChildControl : function( id ){
+		this.ensureChildControls();
+		
 		return this._childControlsHash[ id ]
 				? this._childControlsHash[ id ]
 				: null;
@@ -529,6 +531,9 @@ var TControl = Base.extend( {
 	 **/
 	findChildControlByID : function( id ){
 		var i;
+		
+		this.ensureChildControls();
+		
 		if( this._childControlsHash[ id ]
 			&& this._childControlsHash[ id ].getID() == id ){
 			return this._childControlsHash[ id ];
