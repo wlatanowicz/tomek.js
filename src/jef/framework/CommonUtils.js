@@ -12,7 +12,7 @@
  * Bolean equivalent of parseInt
  * 
  **/
-if ( !parseBool ){
+if ( ! window.hasOwnProperty('parseBool') ){
 	function parseBool( v ){
 		return v === true
 				|| v == 1
