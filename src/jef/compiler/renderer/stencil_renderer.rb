@@ -27,7 +27,12 @@ class StencilRenderer < BaseRenderer
 		end
 		add_output "var "+varname( node )+" = document.createElement( \""+node.tag+"\" );"
 		node.attributes.each do |a|
-			add_output varname( node ) + ".setAttribute( \"" + a.name + "\", " + a.value.js_expression + " );";
+			if a.name == 'style' then
+				# IE8 fix
+				add_output varname( node ) + ".style.cssText = " + a.value.js_expression + ";";
+			else
+				add_output varname( node ) + ".setAttribute( \"" + a.name + "\", " + a.value.js_expression + " );";
+			end
 		end
 		
 		render_renderers node

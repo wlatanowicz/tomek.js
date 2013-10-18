@@ -73,7 +73,12 @@ var TWebControl = TControl.extend( {
 		var attrs = this.getAttributes();
 		
 		for ( var attr in attrs ){
-			d.setAttribute( attr, attrs[attr] );
+			if ( attr == 'style' ){
+				//IE8 fix
+				d.style.cssText = attrs[attr];
+			}else{
+				d.setAttribute( attr, attrs[attr] );
+			}
 		}
 		
 		return d;
