@@ -1,23 +1,12 @@
-var TESTS = [];
 
 Event.observe( window, 'load', onLoad );
 
 function onLoad(){
-	loadTestList();
+	bindTestList();
 }
 
-function loadTestList(){
-	YAML.fromURL( 'application.yml', bindTestList );
-}
-
-function bindTestList( data ){
+function bindTestList(){
 	var txt = '';
-	TESTS = [];
-	
-	for ( var i=0; i<data["MAINS"].length; i++ ){
-		var n = data["MAINS"][i].split( "/" )[1];
-		TESTS.push( n );
-	}
 	
 	for ( var j=0; j<TESTS.length; j++ ){
 		
