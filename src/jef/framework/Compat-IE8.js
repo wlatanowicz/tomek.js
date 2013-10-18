@@ -78,3 +78,12 @@ if ( !window.Element )
     }
 }
 
+// Node.ELEMENT_NODE constant
+
+if ( !window.Node ){
+	var Node = {};
+}
+if ( ! Node.ELEMENT_NODE ){
+	Node.ELEMENT_NODE = 1
+}
+

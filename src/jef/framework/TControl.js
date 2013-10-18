@@ -268,7 +268,7 @@ var TControl = Base.extend( {
 			this._Placeholder = document.getElementById( root_node );
 		}else
 		if ( root_node.nodeType
-				&& root_node.nodeType == Element.ELEMENT_NODE ){
+				&& root_node.nodeType == Node.ELEMENT_NODE ){
 			this._Placeholder = root_node;
 		}else
 		if ( root_node.getPlaceholder ){
