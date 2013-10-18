@@ -242,7 +242,13 @@ var TControl = Base.extend( {
 				get : getFn,
 				set : setFn
 			};
-			Object.defineProperty( this, name, props );
+			
+			try{
+				Object.defineProperty( this, name, props );
+			}catch( ex ){
+				// IE8 fix
+				// IE8 does not support Object.defineProperty for out objects :(
+			}
 
 		// Older Mozilla
 		} else if ( this.__defineGetter__ ) {
