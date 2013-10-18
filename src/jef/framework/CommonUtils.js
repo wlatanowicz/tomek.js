@@ -1,5 +1,6 @@
 //= require Base
 //= require Exception
+//= require Compat-IE8
 
 /**
  * == Utilities ==
@@ -12,41 +13,12 @@
  * Bolean equivalent of parseInt
  * 
  **/
-if ( ! window.hasOwnProperty('parseBool') ){
+if ( ! window.parseBool ){
 	function parseBool( v ){
 		return v === true
 				|| v == 1
 				|| v === 'true';
 	}
-}
-
-/** section: Utilities
- * Array_prototype_indexOf( elt[, from] ) -> int
- * 
- * [Original source](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf)
- * 
- **/
-if (!Array.prototype.indexOf)
-{
-  Array.prototype.indexOf = function(elt /*, from*/)
-  {
-    var len = this.length >>> 0;
-
-    var from = Number(arguments[1]) || 0;
-    from = (from < 0)
-         ? Math.ceil(from)
-         : Math.floor(from);
-    if (from < 0)
-      from += len;
-
-    for (; from < len; from++)
-    {
-      if (from in this &&
-          this[from] === elt)
-        return from;
-    }
-    return -1;
-  };
 }
 
 /** section: Utilities
@@ -64,3 +36,4 @@ if (!Array.prototype.indexOf)
 if ( ! Element.ELEMENT_NODE ){
 	Element.ELEMENT_NODE = 1
 }
+
