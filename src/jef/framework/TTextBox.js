@@ -38,7 +38,7 @@ var TTextBox = TWebControl.extend( TEventResponderMixin ).extend( {
 		if ( this._renderedMainElement ){
 			return this._renderedMainElement.value;
 		}
-		return this._Text;
+		return this._Text ? this._Text : '';
 	},
 	
 	/**
