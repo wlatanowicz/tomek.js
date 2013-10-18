@@ -102,17 +102,42 @@ var TControl = Base.extend( {
 					var i;
 					
 					for ( i=0; i<(opts.length-1); i++ ){
-						if ( ! obj[ opts[i] ] ){
-							obj[ opts[i] ] = {};
+						
+						if ( obj["get"+opts[i]] ){
+							//use getter if available
+							var next_obj = obj["get"+opts[i]]();
+							if ( ! next_obj ){
+								obj["set"+opts[i]]( {} );
+								next_obj = obj["get"+opts[i]]();
+							}
+							obj = next_obj;
+						}else{
+							//direct read
+							if ( ! obj[ opts[i] ] ){
+								obj[ opts[i] ] = {};
+							}
+							obj = obj[ opts[i] ];
 						}
-						obj = obj[ opts[i] ];
+					
 					}
 					
-					obj[ opts[i] ] = options[ opt ];
+					if ( obj[ "set"+opts[i] ] ){
+						//use setter if available
+						obj[ "set"+opts[i] ]( options[ opt ] );
+					}else{
+						//direct assignment
+						obj[ opts[i] ] = options[ opt ];
+					}
 					
 				}else{
 					//handle simple properties
-					this[opt] = options[ opt ];
+					if ( this["set"+opt] ){
+						//use setter if available
+						this["set"+opt]( options[ opt ] );
+					}else{
+						//direct assignment
+						this[opt] = options[ opt ];
+					}
 				}
 				
 			}
