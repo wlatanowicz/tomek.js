@@ -27,8 +27,8 @@
 		</temp:Empty>
 		<temp:Item>
 			<com:TControl>
-				<span class="item" id="item_[%= this.ItemIndex %]">
-					Item-[%= this.DataItem %]
+				<span class="item" id="item_[%= this.getItemIndex() %]">
+					Item-[%= this.getDataItem() %]
 				</span>
 			</com:TControl>
 		</temp:Item>

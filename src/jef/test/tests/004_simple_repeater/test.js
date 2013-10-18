@@ -44,7 +44,7 @@ component( 'TRepeater', function(){
 			});
 			
 			when('Set the data and render the control', function() {
-				c.findChildControlByID('Rep').DataSource = ds;
+				c.findChildControlByID('Rep').setDataSource( ds );
 				c.render();
 			});
 			
@@ -84,7 +84,7 @@ component( 'TRepeater', function(){
 			});
 			
 			when('Set the data and render the control', function() {
-				c.findChildControlByID('Rep').DataSource = ds;
+				c.findChildControlByID('Rep').setDataSource( ds );
 				c.render();
 			});
 			
@@ -93,7 +93,7 @@ component( 'TRepeater', function(){
 			});
 			
 			when('Set the new data and render the control', function() {
-				c.findChildControlByID('Rep').DataSource = ds2;
+				c.findChildControlByID('Rep').setDataSource( ds2 );
 				c.render();
 			});
 			
@@ -132,7 +132,7 @@ component( 'TRepeater', function(){
 			});
 			
 			when('Set the data and render the control', function() {
-				c.findChildControlByID('Rep').DataSource = ds;
+				c.findChildControlByID('Rep').setDataSource( ds );
 				c.render();
 			});
 			
@@ -141,7 +141,7 @@ component( 'TRepeater', function(){
 			});
 			
 			when('Set the new data and render the control', function() {
-				c.findChildControlByID('Rep').DataSource = [];
+				c.findChildControlByID('Rep').setDataSource( [] );
 				c.render();
 			});
 
