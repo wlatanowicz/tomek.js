@@ -168,7 +168,13 @@ var TEventResponderMixin = {
 	 * 
 	 **/
 	addEventListener : function( event_rec ){
-		event_rec.element.addEventListener( event_rec.domEvent, event_rec.boundFunction );
+		if ( event_rec.element.addEventListener ){
+			event_rec.element.addEventListener( event_rec.domEvent, event_rec.boundFunction );
+		}else
+		if ( event_rec.element.attachEvent ){
+			//IE8 fix
+			event_rec.element.attachEvent( "on"+event_rec.domEvent, event_rec.boundFunction );
+		}
 	},
 	
 	/**
@@ -179,7 +185,13 @@ var TEventResponderMixin = {
 	 * 
 	 **/
 	removeEventListener : function( event_rec ){
-		event_rec.element.removeEventListener( event_rec.domEvent, event_rec.boundFunction );
+		if ( event_rec.element.removeEventListener ){
+			event_rec.element.removeEventListener( event_rec.domEvent, event_rec.boundFunction );
+		}else
+		if ( event_rec.element.detachEvent ){
+			//IE8 fix
+			event_rec.element.detachEvent( "on"+event_rec.domEvent, event_rec.boundFunction );
+		}
 	},
 	
 	/**
