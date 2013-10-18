@@ -1,6 +1,8 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 
+require 'json'
+
 class JefTestHelper < JefHelper
 	
 	def initialize
@@ -16,24 +18,35 @@ class JefTestHelper < JefHelper
 		
 		
 		file = File.join(@APP_DIR, APP_YML)
+		json_file = File.join(@APP_DIR, "test_list.js")
 		app = YAML.load_file( file )
 		
 		newapp = Hash.new
 		
+		test_mains_list = []
 		test_list = []
 		test_dir = File.join( @APP_DIR, 'tests' )
 		
 		Dir.foreach(test_dir) do |f|
-			test_list.push File.join( "tests", f, "main.js" ) if ! f.start_with?( '.' )
+			if ! f.start_with?( '.' ) then
+				test_mains_list.push File.join( "tests", f, "main.js" )
+				test_list.push f
+			end
 		end
 		
-		newapp['MAINS'] = test_list
+		newapp['MAINS'] = test_mains_list
 		newapp['TEMPLATES'] = app['TEMPLATES']
 		newapp['RESOURCES'] = app['RESOURCES']
 
 		
 		File.open( file, 'w' ) do |io|
 			YAML.dump( newapp, io )
+		end
+		
+		json = JSON.generate( test_list )
+		
+		File.open( json_file, 'w' ) do |io|
+			io.write "var TESTS = "+json+";"
 		end
 		
  	end
