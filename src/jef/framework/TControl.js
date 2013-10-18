@@ -247,7 +247,7 @@ var TControl = Base.extend( {
 				Object.defineProperty( this, name, props );
 			}catch( ex ){
 				// IE8 fix
-				// IE8 does not support Object.defineProperty for out objects :(
+				// IE8 does not support Object.defineProperty for our objects :(
 			}
 
 		// Older Mozilla
