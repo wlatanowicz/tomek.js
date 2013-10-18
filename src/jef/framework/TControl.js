@@ -104,7 +104,7 @@ var TControl = Base.extend( {
 					for ( i=0; i<(opts.length-1); i++ ){
 						
 						if ( obj["get"+opts[i]] ){
-							//use getter if available
+							//use getter if available //IE8 fix
 							var next_obj = obj["get"+opts[i]]();
 							if ( ! next_obj ){
 								obj["set"+opts[i]]( {} );
@@ -122,7 +122,7 @@ var TControl = Base.extend( {
 					}
 					
 					if ( obj[ "set"+opts[i] ] ){
-						//use setter if available
+						//use setter if available //IE8 fix
 						obj[ "set"+opts[i] ]( options[ opt ] );
 					}else{
 						//direct assignment
@@ -201,7 +201,9 @@ var TControl = Base.extend( {
 	 * 
 	 * Registers public property
 	 * by creating object property,
-	 * setter and getter functions if necessary
+	 * setter and getter functions if necessary.
+	 * Automated call of setter and getter when accessing property
+	 * does not work in IE8.
 	 * 
 	 **/
 	registerPublicProperty : function( name ){
