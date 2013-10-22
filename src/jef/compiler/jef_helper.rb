@@ -12,6 +12,7 @@ class JefHelper
 	
   ROOT_DIR      = File.expand_path(File.join( File.dirname(__FILE__), '..' ) )
   FRAMEWORK_DIR = File.join(ROOT_DIR, 'framework')
+  COMPAT_DIR = File.join(ROOT_DIR, 'compatibility')
   EXTERNAL_DIR  = File.join(ROOT_DIR, 'external')
 	TEMP_DEST_DIR = File.join(ROOT_DIR, 'tmp')
 
@@ -98,9 +99,14 @@ class JefHelper
 			env.prepend_path @APP_DIR
 			env.prepend_path TEMP_DEST_DIR
 			env.prepend_path FRAMEWORK_DIR
-			env.prepend_path File.dirname( @APP_DIR+"/"+m )
+			
+			env.prepend_path File.dirname( File.join( @APP_DIR, m ) )
 			
 			js = env[ m ].to_s
+			
+			if ENV['compat_ie8'] == 'yes' then
+				js = File.read( File.join( COMPAT_DIR, 'IE8.js' ) ) + "\n" + js
+			end
 			
 			js = Uglifier.compile( js, :output => { :comments => :none } ) if minify
 			

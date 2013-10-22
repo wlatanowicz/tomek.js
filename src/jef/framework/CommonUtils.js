@@ -1,6 +1,5 @@
 //= require Base
 //= require Exception
-//= require Compat-IE8
 
 /**
  * == Utilities ==
