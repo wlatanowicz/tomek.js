@@ -9,9 +9,9 @@ require 'rake'
 require 'rake/packagetask'
 require 'yaml'
 
-require 'compiler/jef_helper'
-require 'compiler/jef_test_helper'
-require 'compiler/jef_doc_helper'
+require_relative 'compiler/jef_helper'
+require_relative 'compiler/jef_test_helper'
+require_relative 'compiler/jef_doc_helper'
 
 task :default => [:dist]
 
