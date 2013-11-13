@@ -1,21 +1,40 @@
-feature('Car engine startup', function() {
+feature('Tests environment', function() {
 	summary(
-		'In order to drive my car around',
-		'As a vehicle owner',
-		'I want to press a button to start my car'
+		'Pre-test to check if test libs work well'
 	);
 
-	scenario('The is stopped with the engine off', function() {
-		var car;
+	scenario('Check Jasmine', function() {
+		var x;
 
-		given('My car is parked and not running', function() {
-			car = {};
+		given('Set variable to false', function() {
+			x = false;
 		});
-		when('I press the start button', function() {
-			car.x = 'x';
+		when('Set variable to true', function() {
+			x = true;
 		});
-		then('The car should start up', function() {
-			expect(false).toBe(true)
+		then('Value should be true', function() {
+			expect( x ).toBe(true)
+		});
+		when('Set variable to false', function() {
+			x = false;
+		});
+		then('Value should be false', function() {
+			expect( x ).not.toBe(true)
 		});
 	});
+
+	scenario('Check Prototype', function() {
+		var div;
+
+		given('Set variable to null', function() {
+			div = null;
+		});
+		when('Set variable to container', function() {
+			div = $( 'container' );
+		});
+		then('Element id should be container', function() {
+			expect( div.id ).toBe( 'container' );
+		});
+	});
+	
 });
