@@ -61,7 +61,7 @@ namespace :test do
   task :run => [:build] do
 		jh = JefTestHelper.new
 		url = jh.index_file
-		Kernel.system( "open #{url}" )
+		Kernel.system( "open -a Firefox #{url}" )
   end
   
   desc 'Builds test application and environment'
