@@ -1,5 +1,5 @@
---- 
-MAINS: 
+---
+MAINS:
 - tests/000_dummy/main.js
 - tests/001_basic/main.js
 - tests/002_control_order/main.js
@@ -7,7 +7,11 @@ MAINS:
 - tests/004_simple_repeater/main.js
 - tests/005_basic_events/main.js
 - tests/006_nested_repeaters/main.js
-RESOURCES: 
+- tests/007_drop_down_list/main.js
+- tests/008_simple_validator/main.js
+TEMPLATES:
+- '**/*.tpl'
+RESOURCES:
 - application.yml
 - lib/**/*.js
 - lib/**/*.css
@@ -19,5 +23,3 @@ RESOURCES:
 - test_list.js
 - style.css
 - img/*
-TEMPLATES: 
-- "**/*.tpl"
