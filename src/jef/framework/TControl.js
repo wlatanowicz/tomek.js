@@ -361,6 +361,8 @@ var TControl = Base.extend( {
 		this.removeRenderedNodes();
 		if ( this._Visible ){
 			this.renderContents();
+		}else{
+			this.ensurePositionMarker();
 		}
 	},
 	
@@ -378,7 +380,10 @@ var TControl = Base.extend( {
 		this.ensureChildControls();
 		if ( this._Visible ){
 			this.renderContents();
+		}else{
+			this.ensurePositionMarker();
 		}
+
 	},
 	
 	/**
@@ -421,12 +426,27 @@ var TControl = Base.extend( {
 		
 		this._renderedNodes.push( el );
 		
+		this.ensurePositionMarker();
+		
+		root.insertBefore( el, this._positionMarker );
+		
+	},
+	
+	/**
+	 * TControl.ensurePositionMarker() -> void
+	 * 
+	 * Ensures position marker exists.
+	 * 
+	 **/
+	ensurePositionMarker : function(){
+		var root = this.getPlaceholder();
+		
 		if ( this._positionMarker == null || this._positionMarker.parentNode != root ){
 			
-			// normal place holder:
+			/* normal place holder: */
 			this._positionMarker = document.createComment( "-" );
 			
-			// debug, visible place holder:
+			/* debug, visible place holder: */
 			//this._positionMarker = document.createElement( "span" );
 			//this._positionMarker.appendChild( document.createTextNode("x"));
 			//this._positionMarker.style.color = 'red';
@@ -434,9 +454,6 @@ var TControl = Base.extend( {
 			this._positionMarker.positionMarkerForControl = this;
 			root.appendChild( this._positionMarker );
 		}
-
-		root.insertBefore( el, this._positionMarker );
-		
 	},
 	
 	/**
@@ -578,6 +595,26 @@ var TControl = Base.extend( {
 			}
 		}
 		return null;
+	},
+	
+	/**
+	 * TControl.findControlByID( id ) -> TControl|null
+	 * - i (String): control ID
+	 * 
+	 * Returns a control by ID in current control tree
+	 * Function goes to the root parent
+	 * and searches recursively all child controls.
+	 * Returns control with particualar ID if found or null if not found
+	 * 
+	 **/
+	findControlByID : function( id ){
+		var c;
+		if ( this.getParent() ){
+			c = this.getParent().findControlByID( id );
+		}else{
+			c = this.findChildControlByID( id );
+		}
+		return c;
 	}
 	
 } );
