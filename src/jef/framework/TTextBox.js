@@ -1,5 +1,6 @@
 //= require TWebControl
 //= require TEventResponder
+//= require TValidatable
 
 /** section: Controls
  * class TTextBox < TWebControl
@@ -16,7 +17,7 @@
  * `on:Focus`
  * 
  **/
-var TTextBox = TWebControl.extend( TEventResponderMixin ).extend( {
+var TTextBox = TWebControl.extend( TEventResponderMixin ).extend( TValidatableMixin ).extend( {
 	
 	//@Override
 	_tagName : 'input',
@@ -41,6 +42,14 @@ var TTextBox = TWebControl.extend( TEventResponderMixin ).extend( {
 		return this._Text ? this._Text : '';
 	},
 	
+	getValue : function(){
+		return this.getText();
+	},
+	
+	setValue : function( v ){
+		this.setText( v );
+	},
+	
 	/**
 	 * TTextBox.Text -> String
 	 **/
@@ -48,7 +57,7 @@ var TTextBox = TWebControl.extend( TEventResponderMixin ).extend( {
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base()
-		arr.push( 'Text' );
+		arr.push( 'Text', 'Value' );
 		return arr;
 	},
 
