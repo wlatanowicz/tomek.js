@@ -1,13 +1,13 @@
-//= require TControl
+//= require TTemplateControl
 
 /** section: Controls
- * class TItem < TControl
+ * class TItem < TTemplateControl
  * 
  * Control used to render multiple times the same template
  * in repeater and similiar contexts
  * 
  **/
-var TItem = TControl.extend( {
+var TItem = TTemplateControl.extend( {
 
 	/**
 	 * TItem.DataItem -> Object
