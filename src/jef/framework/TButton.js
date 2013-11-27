@@ -10,7 +10,6 @@
  * ##### Triggered events
  * 
  * `on:Click`
- * `on:Change`
  * 
  **/
 var TButton = TWebControl.extend( TEventResponderMixin ).extend( {
