@@ -4,6 +4,7 @@
 $LOAD_PATH << File.dirname(__FILE__) 
 
 require 'compiler'
+require 'find'
 
 class JefHelper
 	
@@ -98,7 +99,10 @@ class JefHelper
 			env = Sprockets::Environment.new
 			env.prepend_path @APP_DIR
 			env.prepend_path TEMP_DEST_DIR
-			env.prepend_path FRAMEWORK_DIR
+			
+			Find.find( FRAMEWORK_DIR ) do |e| 
+				env.prepend_path e if File.directory?(e)
+			end
 			
 			env.prepend_path File.dirname( File.join( @APP_DIR, m ) )
 			
