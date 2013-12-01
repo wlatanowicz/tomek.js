@@ -1,6 +1,6 @@
 //= require TControl
 
-/** section: Controls
+/** section: WebControls
  * class TWebControl < TControl
  * 
  * Control dedicated to render single DOMElements

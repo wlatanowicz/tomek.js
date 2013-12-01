@@ -1,6 +1,6 @@
 //= require TWebControl
 
-/** section: Controls
+/** section: WebControls
  * class TPanel < TWebControl
  * 
  * Control renders a div container

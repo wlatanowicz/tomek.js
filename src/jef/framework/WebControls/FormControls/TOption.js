@@ -1,6 +1,6 @@
 //= require TWebControl
 
-/** section: Controls
+/** section: FormControls
  * class TOption < TWebControl
  * 
  * Control renders an option for select

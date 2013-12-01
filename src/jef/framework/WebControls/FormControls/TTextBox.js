@@ -2,7 +2,7 @@
 //= require TEventResponder
 //= require TValidatable
 
-/** section: Controls
+/** section: FormControls
  * class TTextBox < TWebControl
  * includes TEventResponderMixin
  * 

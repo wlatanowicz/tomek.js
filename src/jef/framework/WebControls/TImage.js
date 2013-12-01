@@ -1,6 +1,6 @@
 //= require TWebControl
 
-/** section: Controls
+/** section: WebControls
  * class TImage < TWebControl
  * 
  * Control renders an image

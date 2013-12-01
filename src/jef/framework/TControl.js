@@ -1,10 +1,6 @@
 //= require CommonUtils
 //= require TExpression
 
-/**
- * == Controls ==
- **/
-
 /** section: Controls
  * class TControl
  * 

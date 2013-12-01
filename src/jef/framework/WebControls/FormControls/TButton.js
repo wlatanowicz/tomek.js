@@ -1,7 +1,7 @@
 //= require TWebControl
 //= require TEventResponder
 
-/** section: Controls
+/** section: FormControls
  * class TButton <  TWebControl
  * includes TEventResponderMixin
  * 
