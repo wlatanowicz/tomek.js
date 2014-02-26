@@ -87,7 +87,7 @@ var TWebControl = TControl.extend( {
 	//@Override
 	renderContents : function(){
 		var d = this.createMainElement();
-		d.JefControlObject = this;
+		d.TomekControlObject = this;
 		this._renderedMainElement = d;
 		if ( this._rendersChildControls ){
 			this.renderChildControls( d );

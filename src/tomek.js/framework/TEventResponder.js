@@ -195,23 +195,23 @@ var TEventResponderMixin = {
 	},
 	
 	/**
-	 * TEventResponderMixin.registerTriggerElement( el, dom_event, jef_event ) -> void
+	 * TEventResponderMixin.registerTriggerElement( el, dom_event, tomek_event ) -> void
 	 * - el (DOMElement): element to attach listener to
 	 * - dom_event (String): DOMEvent name
-	 * - jef_event (String): event name
+	 * - tomek_event (String): event name
 	 * 
 	 * Registers DOMElement to trigger event on particular DOMEvent
 	 * 
 	 **/
-	registerTriggerElement : function( el, dom_event, jef_event ){
+	registerTriggerElement : function( el, dom_event, tomek_event ){
 		var e = {
 			'element' : el,
 			'domEvent' : dom_event,
-			'event' : jef_event,
-			'boundFunction' : this.triggerEventFromElement.bind( this, jef_event )
+			'event' : tomek_event,
+			'boundFunction' : this.triggerEventFromElement.bind( this, tomek_event )
 		};
 		this._triggerElements.push( e );
-		if ( this.respondsToEvent( jef_event ) ){
+		if ( this.respondsToEvent( tomek_event ) ){
 			this.addEventListener( e );
 		}
 	},
