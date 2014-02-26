@@ -186,7 +186,7 @@ var TControl = Base.extend( {
 	registerPublicProperties : function(){
 		var props = this.getPublicProperties();
 		var i;
-		for ( i=0; i<props.length; i++ ){
+		for ( i=props.length-1; i>=0; i-- ){
 			this.registerPublicProperty( props[i] );
 		}
 	},
