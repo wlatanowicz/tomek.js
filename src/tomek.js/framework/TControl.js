@@ -193,7 +193,7 @@ var TControl = Base.extend( {
 	
 	/**
 	 * TControl.registerPublicProperty( name ) -> void
-	 * - name (String): property name
+	 * - property (String): property name
 	 * 
 	 * Registers public property
 	 * by creating object property,
@@ -202,42 +202,65 @@ var TControl = Base.extend( {
 	 * does not work in IE8.
 	 * 
 	 **/
-	registerPublicProperty : function( name ){
+	registerPublicProperty : function( property ){
 		//http://johndyer.name/native-browser-get-set-properties-in-javascript/
 		
-		this['_'+name] = null;
+        var name = '';
+        var can_get = true;
+        var can_set = true;
+        var default_value = null;
+        
+        if ( typeof property === 'string' ){
+            name = property;
+        }else{
+            name = property.name;
+            if ( typeof property.default !== 'undefined' ){
+                default_value = property.default;
+                //@TODO optional setter and getter
+            }
+        }
+        
+		this['_'+name] = default_value;
 		
-		if ( ! this['set'+name] ){
-			this['set'+name] = function( value ){
-				this['_'+name] = value;
-			}
-		}
-		
-		if ( ! this['get'+name] ){
-			this['get'+name] = function(){
-				return this['_'+name];
-			}
-		}
-		
-		var onSet = this['set'+name];
-		var onGet = this['get'+name];
-		
-		var	getFn = function () {
-					return onGet.apply( this );
-				};
-		
-		var	setFn = function (newValue) {
-					return onSet.apply( this, [newValue]);
-				};
-
-
-		// Modern browsers, IE9+, and IE8 (must be a DOM object),
+        var	getFn = null;
+        var	setFn = null;
+        
+        if ( can_get ){
+            if ( ! this['get'+name] ){
+                this['get'+name] = function(){
+                    return this['_'+name];
+                }
+            }
+            var onGet = this['get'+name];
+            getFn = function () {
+                        return onGet.apply( this );
+                    };
+        }
+        
+        if ( can_set ){
+            if ( ! this['set'+name] ){
+                this['set'+name] = function( value ){
+                    this['_'+name] = value;
+                }
+            }
+    		var onSet = this['set'+name];
+    		setFn = function (newValue) {
+    					return onSet.apply( this, [newValue]);
+        			};
+        }
+        
+        // Modern browsers, IE9+, and IE8 (must be a DOM object),
 		if ( Object.defineProperty ) {
 			
-			var props = {
-				get : getFn,
-				set : setFn
-			};
+			var props = {};
+            
+            if ( getFn ){
+                props['get'] = getFn;
+            }
+            
+            if ( setFn ){
+                props['set'] = setFn;
+            }
 			
 			try{
 				Object.defineProperty( this, name, props );
@@ -248,8 +271,12 @@ var TControl = Base.extend( {
 
 		// Older Mozilla
 		} else if ( this.__defineGetter__ ) {
-			this.__defineGetter__( name, getFn );
-			this.__defineSetter__( name, setFn );
+            if ( getFn ){
+    			this.__defineGetter__( name, getFn );
+            }
+            if ( setFn ){
+                this.__defineSetter__( name, setFn );
+            }
 		}
 		
 	},
