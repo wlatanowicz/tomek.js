@@ -141,7 +141,7 @@ var TControl = Base.extend( {
 	},
 	
 	setID : function( id ){
-		if ( this._ID != null ){
+		if ( this._ID !== null ){
 			throw new Exception( 'Cannot change ID' )
 		}
 		this._ID = id;
@@ -149,9 +149,24 @@ var TControl = Base.extend( {
 			this.getParent()._childControlsHash[ this._ID ] = this;
 		}
 	},
+    
+    setId : function( id ){
+        this.setID( id );
+    },
+    
+    getId : function(){
+        return this.getID();
+    },
 	
 	/**
 	 * TControl.ID -> String
+	 **/
+	
+	/**
+	 * TControl.Id -> String
+     * 
+     * An alias for TControl.ID
+     * 
 	 **/
 	
 	/**
@@ -173,7 +188,7 @@ var TControl = Base.extend( {
 	 * 
 	 **/
 	getPublicProperties : function(){
-		return ['ID','Placeholder','Parent','Visible'];
+		return ['ID','Id','Placeholder','Parent','Visible'];
 	},
 	
 	/**
