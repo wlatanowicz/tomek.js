@@ -14,7 +14,7 @@
  * `on:Change`
  * 
  **/
-var TDropDownList = TWebControl.extend( TEventResponderMixin ).extend( TValidatableMixin ).extend( {
+klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
 	
 	//@Override
 	_tagName : 'select',

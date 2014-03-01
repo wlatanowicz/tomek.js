@@ -6,7 +6,7 @@
  * Control renders an image
  * 
  **/
-var TImage = TWebControl.extend( {
+klass( 'TImage', TWebControl, {
 	
 	//@Override
 	_tagName : 'img',

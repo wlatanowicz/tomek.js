@@ -14,7 +14,7 @@
  * `on:ItemCreated`
  * 
  **/
-var TRepeater = TControl.extend( TEventResponderMixin ).extend( {
+klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 	
 	//@Override
 	_triggersEvents : ['ItemCreated'],

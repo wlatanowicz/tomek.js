@@ -6,7 +6,7 @@
  * Stores an expriession to be rendered
  * 
  **/
-var TExpression = Base.extend( {
+klass( 'TExpression', {
 	
 	/**
 	 * TExpression._expressionFunction -> Function

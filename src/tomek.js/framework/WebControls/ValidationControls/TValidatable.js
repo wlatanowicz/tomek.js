@@ -4,7 +4,7 @@
  * Mixin adding ability to be validated
  * 
  **/
-var TValidatableMixin = {
+mixin( 'TValidatableMixin', {
 	
 	_controlIsValidatable : true,// && (this.getValue ? true : false),
 	
@@ -23,4 +23,4 @@ var TValidatableMixin = {
 		return this._IsValid;
 	}
 	
-};
+});

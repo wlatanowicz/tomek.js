@@ -4,7 +4,7 @@
  * Mixin adding ability to handle events
  * 
  **/
-var TEventResponderMixin = {
+mixin( 'TEventResponderMixin', {
 	
 	/**
 	 * TEventResponderMixin._triggersEvents -> Array[String]
@@ -112,7 +112,7 @@ var TEventResponderMixin = {
 	attachEvent : function( e, fun ){
 		
 		if ( ! this.triggersEvent( e ) ){
-			throw new Exception( 'Control does not trigger event '+e );
+			throw new TException( 'Control does not trigger event '+e );
 		}
 		
 		if ( ! this._eventResponders[e] ){
@@ -245,7 +245,7 @@ var TEventResponderMixin = {
 		}
 	}	
 	
-};
+});
 
 /** section: Utilities
  * class EventTrigger

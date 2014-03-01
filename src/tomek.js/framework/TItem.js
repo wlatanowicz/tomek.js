@@ -7,7 +7,7 @@
  * in repeater and similiar contexts
  * 
  **/
-var TItem = TTemplateControl.extend( {
+klass( 'TItem', TTemplateControl, {
 
 	/**
 	 * TItem.DataItem -> Object

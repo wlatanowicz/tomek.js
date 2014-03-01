@@ -1,3 +1,5 @@
+//= require TObject
+//= require TException
 //= require CommonUtils
 //= require TExpression
 
@@ -8,7 +10,7 @@
  * handles all common dependency and rendering routines
  * 
  **/
-var TControl = Base.extend( {
+klass( 'TControl', {
 	
 	/**
 	 * TControl._childControls -> Array[TControl]
@@ -142,7 +144,7 @@ var TControl = Base.extend( {
 	
 	setID : function( id ){
 		if ( this._ID !== null ){
-			throw new Exception( 'Cannot change ID' )
+			throw new TException( 'Cannot change ID' )
 		}
 		this._ID = id;
 		if ( this.getParent() ){
@@ -319,7 +321,7 @@ var TControl = Base.extend( {
 			this._Placeholder = null;
 		}else
 		{
-			throw new Exception( 'Invalid Placeholder' )
+			throw new TException( 'Invalid Placeholder' )
 		}
 	},
 	
@@ -545,7 +547,7 @@ var TControl = Base.extend( {
 			}
 			
 		}else{
-			throw new Exception( 'No such control' );
+			throw new TException( 'No such control' );
 		}
 		
 	},

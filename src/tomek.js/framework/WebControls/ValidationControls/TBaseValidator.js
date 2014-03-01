@@ -5,7 +5,7 @@
  * 
  * 
  **/
-var TBaseValidator = TWebControl.extend( {
+klass( 'TBaseValidator', TWebControl, {
 	
 	/**
 	 * TBaseValidator.ControlToValidate -> TControl
@@ -43,7 +43,7 @@ var TBaseValidator = TWebControl.extend( {
 		}
 
 		if ( !validatedForm._isValidatedForm ){
-			throw new Exception( 'ControlToValidate not withing TValidatedForm' );
+			throw new TException( 'ControlToValidate not withing TValidatedForm' );
 		}
 
 		validatedForm.addValidator( this );
@@ -55,7 +55,7 @@ var TBaseValidator = TWebControl.extend( {
 		}else{
 		
 			if ( ! c._controlIsValidatable ){
-				throw new Exception( 'Control is not validatable' );
+				throw new TException( 'Control is not validatable' );
 			}
 
 			this._ControlToValidate = c;
@@ -68,7 +68,7 @@ var TBaseValidator = TWebControl.extend( {
 				
 			var ctrl = this.findControlByID( this._ControlToValidateID );
 			if ( ctrl == null ){
-				throw new Exception( 'Cannot find control: '+this._ControlToValidateID );
+				throw new TException( 'Cannot find control: '+this._ControlToValidateID );
 			}
 			this.setControlToValidate( ctrl );
 			

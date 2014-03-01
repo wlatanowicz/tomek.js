@@ -12,7 +12,7 @@
  * `on:Click`
  * 
  **/
-var TButton = TWebControl.extend( TEventResponderMixin ).extend( {
+klass( 'TButton', TWebControl, [ TEventResponderMixin ], {
 	
 	//@Override
 	_tagName : 'input',

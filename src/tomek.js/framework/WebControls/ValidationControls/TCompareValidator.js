@@ -5,7 +5,7 @@
  * 
  * 
  **/
-var TCompareValidator = TBaseValidator.extend( {
+klass( 'TCompareValidator', TBaseValidator, {
 	
 	//@Override
 	getPublicProperties : function(){

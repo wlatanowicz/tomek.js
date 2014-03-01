@@ -6,7 +6,7 @@
  * Simple control rendering text
  * 
  **/
-var TLiteral = TControl.extend( {
+klass( 'TLiteral', TControl, {
 
 	/**
 	 * TLiteral.Text -> String

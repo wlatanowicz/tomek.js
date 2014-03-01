@@ -6,7 +6,7 @@
  * Control renders an option for select
  * 
  **/
-var TOption = TWebControl.extend( {
+klass( 'TOption', TWebControl, {
 
 	//@Override
 	_tagName : 'option',

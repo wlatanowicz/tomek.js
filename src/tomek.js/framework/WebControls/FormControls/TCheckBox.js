@@ -13,7 +13,7 @@
  * `on:Change`
  * 
  **/
-var TCheckBox = TWebControl.extend( TEventResponderMixin ).extend( {
+klass( 'TCheckBox', TWebControl, [ TEventResponderMixin ], {
 	
 	//@Override
 	_tagName : 'input',

@@ -5,7 +5,7 @@
  * 
  * 
  **/
-var TRequiredValidator = TBaseValidator.extend( {
+klass( 'TRequiredValidator', TBaseValidator, {
 	
 	//@Override
 	performValidation : function(){

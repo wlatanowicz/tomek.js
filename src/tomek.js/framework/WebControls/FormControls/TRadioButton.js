@@ -13,7 +13,7 @@
  * `on:Change`
  * 
  **/
-var TRadioButton = TWebControl.extend( TEventResponderMixin ).extend( {
+klass( 'TRadioButton', TWebControl, [ TEventResponderMixin ], {
 	
 	//@Override
 	_tagName : 'input',

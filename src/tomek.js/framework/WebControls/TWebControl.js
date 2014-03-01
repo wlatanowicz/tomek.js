@@ -7,7 +7,7 @@
  * designed to be extended
  * 
  **/
-var TWebControl = TControl.extend( {
+klass( 'TWebControl', TControl, {
 
 	/**
 	 * TWebControl._tagName -> String

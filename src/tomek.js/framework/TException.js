@@ -1,10 +1,10 @@
-//= require Base
+//= require TObject
 
 /** section: Utilities
- * class Exception
+ * class TException
  * 
  **/
-var Exception = Base.extend({
+klass( 'TException', {
 	
 	message : null,
 	
@@ -17,7 +17,7 @@ var Exception = Base.extend({
 	},
 	
 	toString : function(){
-		return 'Exception: '+this.getMessage();
+		return 'TException: '+this.getMessage();
 	}
 	
 });

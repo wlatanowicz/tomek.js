@@ -6,7 +6,7 @@
  * Control renders a div container
  * 
  **/
-var TPanel = TWebControl.extend( {
+klass( 'TPanel', TWebControl, {
 
 	//@Override
 	_tagName : 'div'

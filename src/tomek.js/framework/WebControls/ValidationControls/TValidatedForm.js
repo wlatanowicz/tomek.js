@@ -5,7 +5,7 @@
  * 
  * 
  **/
-var TValidatedForm = TControl.extend( {
+klass( 'TValidatedForm', TControl, {
 	
 	_isValidatedForm : true,
 	

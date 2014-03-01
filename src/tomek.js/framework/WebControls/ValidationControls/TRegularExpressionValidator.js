@@ -5,7 +5,7 @@
  * 
  * 
  **/
-var TRegularExpressionValidator = TBaseValidator.extend( {
+klass( 'TRegularExpressionValidator', TBaseValidator, {
 	
 	//@Override
 	getPublicProperties : function(){

@@ -7,6 +7,6 @@
  * Should be be used as root control in templates
  * 
  **/
-var TContent = TControl.extend( {
+klass( 'TContent', TControl, {
 	
 });

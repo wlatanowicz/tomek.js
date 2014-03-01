@@ -17,7 +17,7 @@
  * `on:Focus`
  * 
  **/
-var TTextBox = TWebControl.extend( TEventResponderMixin ).extend( TValidatableMixin ).extend( {
+klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
 	
 	//@Override
 	_tagName : 'input',

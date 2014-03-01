@@ -1,6 +1,3 @@
-//= require Base
-//= require Exception
-
 /** section: Utilities
  * parseBool( v ) -> Boolean
  * - v (Boolean|String|number): a value
