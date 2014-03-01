@@ -190,7 +190,7 @@ class JefHelper
       # Wait until we notice that a submodule is missing before we bother the
       # user about installing git. (Maybe they brought all the files over
       # from a different machine.)
-      missing_file = e.message.sub('no such file to load -- ', '')
+      missing_file = e.message.sub('cannot load such file -- ', '')
       if missing_file == path
         # Missing a git submodule.
         retry if get_submodule(name, git_path, path)
