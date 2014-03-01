@@ -3,7 +3,7 @@
 
 require 'json'
 
-class JefTestHelper < JefHelper
+class TomekTestHelper < TomekHelper
 	
 	def initialize
 		@APP_DIR       = File.join(ROOT_DIR, 'test')

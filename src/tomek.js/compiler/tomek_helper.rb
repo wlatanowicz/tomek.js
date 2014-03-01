@@ -6,7 +6,7 @@ $LOAD_PATH << File.dirname(__FILE__)
 require 'compiler'
 require 'find'
 
-class JefHelper
+class TomekHelper
 	
   @APP_DIR
   @BUILD_DIR

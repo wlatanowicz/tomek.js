@@ -4,7 +4,7 @@
 # gem install treetop
 # gem install bluecloth
 
-class JefDocHelper < JefHelper
+class TomekDocHelper < TomekHelper
 
 	DOC_DIR = File.join(ROOT_DIR, 'doc')
 	
@@ -94,7 +94,7 @@ EOF
       :name => 'JEF JavaScript Framework',
       :short_name => 'JEF',
       :home_url => 'http://jef-framework.org',
-      :version => JefHelper::VERSION,
+      :version => TomekHelper::VERSION,
       :index_header => index_header,
       :footer => 'This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike 3.0 Unported License</a>.',
       :assets => 'doc_assets'

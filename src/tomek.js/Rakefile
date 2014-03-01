@@ -9,9 +9,9 @@ require 'rake'
 require 'rake/packagetask'
 require 'yaml'
 
-require_relative 'compiler/jef_helper'
-require_relative 'compiler/jef_test_helper'
-require_relative 'compiler/jef_doc_helper'
+require_relative 'compiler/tomek_helper'
+require_relative 'compiler/tomek_test_helper'
+require_relative 'compiler/tomek_doc_helper'
 
 task :default => [:dist]
 
@@ -28,7 +28,7 @@ task :update_tests => ['test:update']
 namespace :dist do
 	desc "Builds the application and compresses output."
 	task :build => ['clean:tmp', 'clean:dist'] do
-		jh = JefHelper.new
+		jh = TomekHelper.new
 		jh.compile_templates
 		jh.sprocketize true
 		jh.copy_resources
@@ -36,7 +36,7 @@ namespace :dist do
 	
 	desc "Builds the application without compressing output."
 	task :build_debug => ['clean:tmp', 'clean:dist'] do
-		jh = JefHelper.new
+		jh = TomekHelper.new
 		jh.compile_templates
 		jh.sprocketize false
 		jh.copy_resources
@@ -46,12 +46,12 @@ end
 namespace :doc do
   desc "Builds the documentation."
   task :build => [ :require, 'clean:doc' ] do
-		jh = JefDocHelper.new
+		jh = TomekDocHelper.new
 		jh.build_doc
   end
   
   task :require do
-		jh = JefDocHelper.new
+		jh = TomekDocHelper.new
 		jh.require_pdoc
   end
 end
@@ -59,14 +59,14 @@ end
 namespace :test do
   desc 'Runs all the JavaScript tests and collects the results'
   task :run => [:build] do
-		jh = JefTestHelper.new
+		jh = TomekTestHelper.new
 		url = jh.index_file
 		Kernel.system( "open -a Firefox #{url}" )
   end
   
   desc 'Builds test application and environment'
   task :build => ['clean:tmp', 'clean:test'] do
-		jh = JefTestHelper.new
+		jh = TomekTestHelper.new
 		jh.compile_templates
 		jh.sprocketize true
 		jh.copy_resources
@@ -74,7 +74,7 @@ namespace :test do
 
   desc 'Updates list of tests'
   task :update do
-		jh = JefTestHelper.new
+		jh = TomekTestHelper.new
 		jh.update_tests
   end
 
@@ -84,25 +84,25 @@ namespace :clean do
   
   desc 'Cleans up temp dir'
   task :tmp do
-		jh = JefHelper.new
+		jh = TomekHelper.new
 		jh.empty_tmp
   end
 
   desc 'Cleans up build dir'
   task :dist do
-		jh = JefHelper.new
+		jh = TomekHelper.new
 		jh.empty_build
   end
 
   desc 'Cleans up test-build dir'
   task :test do
-		jh = JefTestHelper.new
+		jh = TomekTestHelper.new
 		jh.empty_build
   end
 
   desc 'Cleans up doc dir'
   task :doc do
-		jh = JefDocHelper.new
+		jh = TomekDocHelper.new
 		jh.empty_doc
   end
 
