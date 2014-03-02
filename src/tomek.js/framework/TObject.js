@@ -97,7 +97,7 @@ var TObject = Base.extend( {
         return this.klass === class_name;
     },
     
-	/** alias of: TObject.isTypeOf
+	/** alias of: TObject#isTypeOf
 	 * TObject#isMemberOf( class_name ) -> Boolean
 	 * - class_name (String): class name
 	 * 
