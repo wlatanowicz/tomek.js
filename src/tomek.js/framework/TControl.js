@@ -655,6 +655,66 @@ klass( 'TControl', {
 			c = this.findChildControlByID( id );
 		}
 		return c;
-	}
+	},
 	
+	/**
+	 * TControl.findChildControlsByType( class_name ) -> Array[TControl]
+	 * - class_name (String): control ID
+	 * 
+	 * Returns child control by type (excatly, excluding subclasses)
+	 * and searches recursively all child controls.
+	 * Returns an array of child controls with particualar type
+	 * 
+	 **/
+	findChildControlsByType : function( class_name ){
+		var i;
+        var j;
+      
+		var ret = [];
+        
+		this.ensureChildControls();
+		
+		for ( i=0; i<this._childControls.length; i++ ){
+			var ctrl = this._childControls[i];
+            if ( ctrl.isTypeOf( class_name ) ){
+                ret.push( ctrl );
+            }
+			var ctrls = ctrl.findChildControlsByType( class_name );
+            for( j=0; j<ctrls.length; j++ ){
+                ret.push( ctrls[j] );
+            }
+		}
+		return ret;
+	},
+
+	/**
+	 * TControl.findChildControlsByKind( class_name ) -> Array[TControl]
+	 * - class_name (String): control ID
+	 * 
+	 * Returns child control by type (including subclassed)
+	 * and searches recursively all child controls.
+	 * Returns an array of child controls with particualar type
+	 * 
+	 **/
+	findChildControlsByKind : function( class_name ){
+		var i;
+        var j;
+      
+		var ret = [];
+        
+		this.ensureChildControls();
+		
+		for ( i=0; i<this._childControls.length; i++ ){
+			var ctrl = this._childControls[i];
+            if ( ctrl.isKindOf( class_name ) ){
+                ret.push( ctrl );
+            }
+			var ctrls = ctrl.findChildControlsByKind( class_name );
+            for( j=0; j<ctrls.length; j++ ){
+                ret.push( ctrls[j] );
+            }
+		}
+		return ret;
+	}
+
 } );
