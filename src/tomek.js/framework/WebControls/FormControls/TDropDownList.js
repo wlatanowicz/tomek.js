@@ -32,7 +32,7 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 	},
 	
 	/**
-	 * TDropDownList.DataSource -> Array
+	 * TDropDownList#DataSource -> Array
 	 **/
 	
 	//@Override
@@ -66,7 +66,7 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 	},
 	
 	/**
-	 * TDropDownList.createChildControls() -> void
+	 * TDropDownList#createChildControls() -> void
 	 * 
 	 * Creates child controls based on contents of DataSource
 	 * 

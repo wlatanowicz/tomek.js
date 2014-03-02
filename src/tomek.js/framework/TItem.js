@@ -10,11 +10,11 @@
 klass( 'TItem', TTemplateControl, {
 
 	/**
-	 * TItem.DataItem -> Object
+	 * TItem#DataItem -> Object
 	 **/
 	
 	/**
-	 * TItem.ItemIndex -> int
+	 * TItem#ItemIndex -> int
 	 **/
 	
 	//@Override
@@ -25,7 +25,7 @@ klass( 'TItem', TTemplateControl, {
 	},
 	
 	/**
-	 * TItem.useTemplate( template ) -> void
+	 * TItem#useTemplate( template ) -> void
 	 * - template (Function): template
 	 * 
 	 * Sets template function

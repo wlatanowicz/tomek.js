@@ -41,7 +41,7 @@ klass( 'TCheckBox', TWebControl, [ TEventResponderMixin ], {
 	},
 	
 	/**
-	 * TCheckBox.Checked -> Boolean
+	 * TCheckBox#Checked -> Boolean
 	 **/
 	
 	//@Override

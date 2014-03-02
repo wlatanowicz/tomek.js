@@ -41,11 +41,11 @@ klass( 'TRadioButton', TWebControl, [ TEventResponderMixin ], {
 	},
 	
 	/**
-	 * TRadioButton.Checked -> Boolean
+	 * TRadioButton#Checked -> Boolean
 	 **/
 	
 	/**
-	 * TRadioButton.Group -> String
+	 * TRadioButton#Group -> String
 	 **/
 	
 	//@Override

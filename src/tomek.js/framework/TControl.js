@@ -13,7 +13,7 @@
 klass( 'TControl', {
 	
 	/**
-	 * TControl._childControls -> Array[TControl]
+	 * TControl#_childControls -> Array[TControl]
 	 * 
 	 * Keeps all direct child controls
 	 * 
@@ -21,7 +21,7 @@ klass( 'TControl', {
 	_childControls : [],
 	
 	/**
-	 * TControl._childControlsHash -> Hash[TControl]
+	 * TControl#_childControlsHash -> Hash[TControl]
 	 * 
  	 * Keeps track of child controls based on ID
 	 * 
@@ -29,7 +29,7 @@ klass( 'TControl', {
 	_childControlsHash : {},
 	
 	/**
-	 * TControl._childControlsCreated -> Boolean
+	 * TControl#_childControlsCreated -> Boolean
 	 * 
 	 * True when child controls have been initialized
 	 * afer running createChildControls()
@@ -38,7 +38,7 @@ klass( 'TControl', {
 	_childControlsCreated : false,
 	
 	/**
-	 * TControl._templateControls -> Hash[TControl]
+	 * TControl#_templateControls -> Hash[TControl]
 	 * 
 	 * Keeps track of controls initialized using XML template
 	 * 
@@ -46,7 +46,7 @@ klass( 'TControl', {
 	_templateControls : {},
 	
 	/**
-	 * TControl._renderedNodes -> Array[DOMElement]
+	 * TControl#_renderedNodes -> Array[DOMElement]
 	 * 
 	 * Keeps track of rendered DOMElements
 	 * that should be removed on rerender
@@ -55,7 +55,7 @@ klass( 'TControl', {
 	_renderedNodes : [],
 	
 	/**
-	 * TControl._placeholder -> DOMElement
+	 * TControl#_placeholder -> DOMElement
 	 * 
 	 * Control is rendered inside this element
 	 * 
@@ -63,7 +63,7 @@ klass( 'TControl', {
 	_placeholder : null,
 	
 	/**
-	 * TControl._positionMarker -> DOMElement
+	 * TControl#_positionMarker -> DOMElement
 	 * 
 	 * Keeps position of this control inside _placeholder
 	 * 
@@ -161,30 +161,30 @@ klass( 'TControl', {
     },
 	
 	/**
-	 * TControl.ID -> String
+	 * TControl#ID -> String
 	 **/
 	
 	/**
-	 * TControl.Id -> String
+	 * TControl#Id -> String
      * 
-     * An alias for TControl.ID
+     * An alias for TControl#ID
      * 
 	 **/
 	
 	/**
-	 * TControl.Placeholder -> DOMElement
+	 * TControl#Placeholder -> DOMElement
 	 **/
 	
 	/**
-	 * TControl.Parent -> TControl
+	 * TControl#Parent -> TControl
 	 **/
 	
 	/**
-	 * TControl.Visible -> Boolean
+	 * TControl#Visible -> Boolean
 	 **/
 	
 	/**
-	 * TControl.getPublicProperties() -> Array[String]
+	 * TControl#getPublicProperties() -> Array[String]
 	 * 
 	 * Defines list of public properties
 	 * 
@@ -194,7 +194,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.registerPublicProperties() -> void
+	 * TControl#registerPublicProperties() -> void
 	 * 
 	 * Registers all public properties
 	 * defined by getPublicProperties()
@@ -209,7 +209,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.registerPublicProperty( name ) -> void
+	 * TControl#registerPublicProperty( name ) -> void
 	 * - property (String): property name
 	 * 
 	 * Registers public property
@@ -299,7 +299,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.setPlaceholder( placeholder ) -> void
+	 * TControl#setPlaceholder( placeholder ) -> void
 	 * - placeholder (String|DOMElement|TControl|null): a placeholder
 	 * 
 	 * Sets placholder for control
@@ -326,7 +326,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.getPlaceholder() -> DOMElement
+	 * TControl#getPlaceholder() -> DOMElement
 	 * 
 	 * Returns placeholder for control (a node to render control in)
 	 * fallbacks to parent control if required
@@ -341,7 +341,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.removeRenderedNodes() -> void
+	 * TControl#removeRenderedNodes() -> void
 	 * 
 	 * Removes all DOMElements created while rendering the control
 	 * before next render
@@ -366,7 +366,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.ensureChildControls() -> void
+	 * TControl#ensureChildControls() -> void
 	 * 
 	 * Initializes child controls if required.
 	 * 
@@ -379,7 +379,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.createChildControls() -> void
+	 * TControl#createChildControls() -> void
 	 * 
 	 * Initializes child controls.
 	 * Should be overloaded.
@@ -390,7 +390,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.render() -> void
+	 * TControl#render() -> void
 	 * 
 	 * Renders the control
 	 * and all its child controls.
@@ -407,7 +407,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.renderContentsInPlaceholder( placeholder ) -> void
+	 * TControl#renderContentsInPlaceholder( placeholder ) -> void
 	 * - placeholder (String|DOMElement|TControl|null): a placeholder
 	 * 
 	 * Sets placeholder and renders contents of control.
@@ -427,7 +427,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.renderContents() -> void
+	 * TControl#renderContents() -> void
 	 * 
 	 * Renders contents of control.
 	 * Should not be called directly.
@@ -438,7 +438,7 @@ klass( 'TControl', {
 	},
 
 	/**
-	 * TControl.renderChildControls( placeholder ) -> void
+	 * TControl#renderChildControls( placeholder ) -> void
 	 * - placeholder (DOMElement): a placeholder
 	 * 
 	 * Renders contents of child controls.
@@ -452,7 +452,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.appendChild( el ) -> void
+	 * TControl#appendChild( el ) -> void
 	 * - el (DOMElement): element to be added
 	 * 
 	 * Appends DOMElement to control.
@@ -473,7 +473,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.ensurePositionMarker() -> void
+	 * TControl#ensurePositionMarker() -> void
 	 * 
 	 * Ensures position marker exists.
 	 * 
@@ -497,7 +497,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.addChildControl( c ) -> void
+	 * TControl#addChildControl( c ) -> void
 	 * - c (TControl): control
 	 * 
 	 * Adds child control
@@ -513,7 +513,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.addTemplateChildControl( k, c ) -> void
+	 * TControl#addTemplateChildControl( k, c ) -> void
 	 * - k (String): name of variable defined by template compiler
 	 * - c (TControl): control
 	 * 
@@ -528,7 +528,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.removeChildControl( c ) -> void
+	 * TControl#removeChildControl( c ) -> void
 	 * - c (TControl): control to be removed
 	 * 
 	 * Removes child control
@@ -553,7 +553,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.removePositionMarker() -> void
+	 * TControl#removePositionMarker() -> void
 	 * 
 	 * Removes position marker
 	 * from document tree
@@ -573,7 +573,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.destroy() -> void
+	 * TControl#destroy() -> void
 	 * 
 	 * Destroys control
 	 * and cleans up
@@ -595,7 +595,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.getChildControl( id ) -> TControl|null
+	 * TControl#getChildControl( id ) -> TControl|null
 	 * - i (String): control ID
 	 * 
 	 * Returns direct child control by ID
@@ -611,7 +611,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.findChildControlByID( id ) -> TControl|null
+	 * TControl#findChildControlByID( id ) -> TControl|null
 	 * - id (String): control ID
 	 * 
 	 * Returns child control by ID
@@ -638,7 +638,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.findControlByID( id ) -> TControl|null
+	 * TControl#findControlByID( id ) -> TControl|null
 	 * - id (String): control ID
 	 * 
 	 * Returns a control by ID in current control tree
@@ -658,7 +658,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl.findChildControlsByType( class_name ) -> Array[TControl]
+	 * TControl#findChildControlsByType( class_name ) -> Array[TControl]
 	 * - class_name (String): control ID
 	 * 
 	 * Returns child control by type (excatly, excluding subclasses)
@@ -688,7 +688,7 @@ klass( 'TControl', {
 	},
 
 	/**
-	 * TControl.findChildControlsByKind( class_name ) -> Array[TControl]
+	 * TControl#findChildControlsByKind( class_name ) -> Array[TControl]
 	 * - class_name (String): control ID
 	 * 
 	 * Returns child control by type (including subclassed)

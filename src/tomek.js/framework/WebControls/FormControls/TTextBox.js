@@ -51,7 +51,7 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
 	},
 	
 	/**
-	 * TTextBox.Text -> String
+	 * TTextBox#Text -> String
 	 **/
 	
 	//@Override

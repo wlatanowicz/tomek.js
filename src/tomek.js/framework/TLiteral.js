@@ -9,7 +9,7 @@
 klass( 'TLiteral', TControl, {
 
 	/**
-	 * TLiteral.Text -> String
+	 * TLiteral#Text -> String
 	 **/
 	
 	//@Override

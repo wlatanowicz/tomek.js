@@ -36,7 +36,7 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 	},
 	
 	/**
-	 * TRepeater.DataSource -> Array
+	 * TRepeater#DataSource -> Array
 	 * 
 	 * Data source for repeater. Setting data source
 	 * clean ups the repeater for next rendering.
@@ -44,35 +44,35 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 	 **/
 	
 	/**
-	 * TRepeater.Items -> Array[TItem]
+	 * TRepeater#Items -> Array[TItem]
 	 **/
 	
 	/**
-	 * TRepeater.HeaderItem -> TItem
+	 * TRepeater#HeaderItem -> TItem
 	 **/
 	
 	/**
-	 * TRepeater.FooterItem -> TItem
+	 * TRepeater#FooterItem -> TItem
 	 **/
 	
 	/**
-	 * TRepeater.EmptyItem -> TItem
+	 * TRepeater#EmptyItem -> TItem
 	 **/
 	
 	/**
-	 * TRepeater.ItemTemplate -> Function
+	 * TRepeater#ItemTemplate -> Function
 	 **/
 	
 	/**
-	 * TRepeater.HeaderTemplate -> Function
+	 * TRepeater#HeaderTemplate -> Function
 	 **/
 	
 	/**
-	 * TRepeater.FooterTemplate -> Function
+	 * TRepeater#FooterTemplate -> Function
 	 **/
 	
 	/**
-	 * TRepeater.EmptyTemplate -> Function
+	 * TRepeater#EmptyTemplate -> Function
 	 **/
 
 	//@Override
@@ -112,7 +112,7 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 	},
 	
 	/**
-	 * TRepeater.createChildControls() -> void
+	 * TRepeater#createChildControls() -> void
 	 * 
 	 * Creates child controls based on contents of DataSource
 	 * 

@@ -10,7 +10,7 @@
 klass( 'TWebControl', TControl, {
 
 	/**
-	 * TWebControl._tagName -> String
+	 * TWebControl#_tagName -> String
 	 * 
 	 * DOMElement tag name
 	 * 
@@ -18,7 +18,7 @@ klass( 'TWebControl', TControl, {
 	_tagName : 'span',
 	
 	/**
-	 * TWebControl._rendersChildControls -> Boolean
+	 * TWebControl#_rendersChildControls -> Boolean
 	 * 
 	 * True if there are child controls to render
 	 * Should be true for all containers like paragraphs
@@ -28,7 +28,7 @@ klass( 'TWebControl', TControl, {
 	_rendersChildControls : true,
 
 	/**
-	 * TWebControl._renderedMainElement -> DOMElement
+	 * TWebControl#_renderedMainElement -> DOMElement
 	 * 
 	 * Keeps track of rendered control's root DOMElement
 	 * 
@@ -36,14 +36,14 @@ klass( 'TWebControl', TControl, {
 	_renderedMainElement : null,
 	
 	/**
-	 * TWebControl.Attributes -> Hash[String]
+	 * TWebControl#Attributes -> Hash[String]
 	 * 
 	 * Stores additional HTML atributes to render
 	 * 
 	 **/
 	
 	/**
-	 * TWebControl.CssClass -> String
+	 * TWebControl#CssClass -> String
 	 * 
 	 * CSS class of html tag
 	 * 
@@ -57,7 +57,7 @@ klass( 'TWebControl', TControl, {
 	},
 	
 	/**
-	 * TWebControl.createMainElement() -> DOMElement
+	 * TWebControl#createMainElement() -> DOMElement
 	 * 
 	 * Creates control's root DOMElement.
 	 * In most cases should be overloaded.

@@ -9,7 +9,7 @@
 klass( 'TExpression', {
 	
 	/**
-	 * TExpression._expressionFunction -> Function
+	 * TExpression#_expressionFunction -> Function
 	 **/
 	_expressionFunction : function(){return null},
 	

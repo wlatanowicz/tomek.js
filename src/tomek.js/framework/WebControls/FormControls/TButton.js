@@ -31,7 +31,7 @@ klass( 'TButton', TWebControl, [ TEventResponderMixin ], {
 	},
 	
 	/**
-	 * TButton.Text -> String
+	 * TButton#Text -> String
 	 **/
 	
 	//@Override

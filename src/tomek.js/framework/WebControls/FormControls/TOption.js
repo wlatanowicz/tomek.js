@@ -15,11 +15,11 @@ klass( 'TOption', TWebControl, {
 	_rendersChildControls : true,
 
 	/**
-	 * TButton.Text -> String
+	 * TOption#Text -> String
 	 **/
 	
 	/**
-	 * TButton.Value -> String
+	 * TOption#Value -> String
 	 **/
 	
 	//@Override

@@ -8,15 +8,15 @@
 klass( 'TBaseValidator', TWebControl, {
 	
 	/**
-	 * TBaseValidator.ControlToValidate -> TControl
+	 * TBaseValidator#ControlToValidate -> TControl
 	 **/
 	
 	/**
-	 * TBaseValidator.ValidationGroup -> Array[String]|String
+	 * TBaseValidator#ValidationGroup -> Array[String]|String
 	 **/
 	
 	/**
-	 * TBaseValidator.Enabled -> Boolean
+	 * TBaseValidator#Enabled -> Boolean
 	 **/
 	
 	//@Override
@@ -84,7 +84,7 @@ klass( 'TBaseValidator', TWebControl, {
 	},
 	
 	/**
-	 * TControl.isInValidationGroup() -> Boolean
+	 * TBaseValidator#isInValidationGroup() -> Boolean
 	 * 
 	 * Checks if validator belongs to validation group
 	 * 
@@ -94,7 +94,7 @@ klass( 'TBaseValidator', TWebControl, {
 	},
 	
 	/**
-	 * TControl.validate() -> void
+	 * TBaseValidator#validate() -> void
 	 * 
 	 * Runs validation.
 	 * Is called from TValidatedForm and SHOULD NOT be called directly.
@@ -115,7 +115,7 @@ klass( 'TBaseValidator', TWebControl, {
 	},
 	
 	/**
-	 * TControl.performValidation() -> void
+	 * TBaseValidator#performValidation() -> void
 	 * 
 	 * Performs validation logic.
 	 * Returns true when no errors occured.

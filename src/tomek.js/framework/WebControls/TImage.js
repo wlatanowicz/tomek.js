@@ -15,11 +15,11 @@ klass( 'TImage', TWebControl, {
 	_rendersChildControls : false,
 	
 	/**
-	 * TImage.Src -> String
+	 * TImage#Src -> String
 	 **/
 	
 	/**
-	 * TImage.Alt -> String
+	 * TImage#Alt -> String
 	 **/
 	
 	//@Override

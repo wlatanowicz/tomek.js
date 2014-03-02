@@ -7,7 +7,7 @@
 mixin( 'TEventResponderMixin', {
 	
 	/**
-	 * TEventResponderMixin._triggersEvents -> Array[String]
+	 * TEventResponderMixin#_triggersEvents -> Array[String]
 	 *
 	 * List of events triggered by the control
 	 * 
@@ -15,7 +15,7 @@ mixin( 'TEventResponderMixin', {
 	_triggersEvents : [],
 	
 	/**
-	 * TEventResponderMixin._eventResponders -> Hash[Array[Function]]
+	 * TEventResponderMixin#_eventResponders -> Hash[Array[Function]]
 	 * 
 	 * Keeps track of attached responder functions
 	 * 
@@ -23,7 +23,7 @@ mixin( 'TEventResponderMixin', {
 	_eventResponders : {},
 	
 	/**
-	 * TEventResponderMixin._triggerElements -> Array[EventTrigger]
+	 * TEventResponderMixin#_triggerElements -> Array[EventTrigger]
 	 * 
 	 * Keeps track of DOMElements, DOMEevents and triggered events
 	 * 
@@ -38,7 +38,7 @@ mixin( 'TEventResponderMixin', {
 	},
 	
 	/**
-	 * TEventResponderMixin.triggersEvent( e ) -> Boolean
+	 * TEventResponderMixin#triggersEvent( e ) -> Boolean
 	 * - e (String): event name
 	 * 
 	 * Checks if the control triggers particular event
@@ -51,7 +51,7 @@ mixin( 'TEventResponderMixin', {
 	},
 	
 	/**
-	 * TEventResponderMixin.respondsToEvent( e ) -> Boolean
+	 * TEventResponderMixin#respondsToEvent( e ) -> Boolean
 	 * - e (String): event name
 	 * 
 	 * Checks if the control responds to particular event
@@ -68,7 +68,7 @@ mixin( 'TEventResponderMixin', {
 	},
 	
 	/**
-	 * TEventResponderMixin.triggerEvent( e[, param] ) -> void
+	 * TEventResponderMixin#triggerEvent( e[, param] ) -> void
 	 * - e (String): event name
 	 * - param (EventParameter): event parameter
 	 * 
@@ -85,7 +85,7 @@ mixin( 'TEventResponderMixin', {
 	},
 	
 	/**
-	 * TEventResponderMixin.triggerEventFromElement( e, dom_event ) -> void
+	 * TEventResponderMixin#triggerEventFromElement( e, dom_event ) -> void
 	 * - e (String): event name
 	 * - dom_event (DOMEvent): dom event
 	 * 
@@ -102,7 +102,7 @@ mixin( 'TEventResponderMixin', {
 	},
 	
 	/**
-	 * TEventResponderMixin.attachEvent( e, fun ) -> void
+	 * TEventResponderMixin#attachEvent( e, fun ) -> void
 	 * - e (String): event name
 	 * - fun (Function): event responder function. Should accept two parameters: a sender - triggering control and a param - stuff that control would like to tell you about the event.
 	 * 
@@ -129,7 +129,7 @@ mixin( 'TEventResponderMixin', {
 	},
 	
 	/**
-	 * TEventResponderMixin.dettachEvent( e [, fun] ) -> void
+	 * TEventResponderMixin#dettachEvent( e [, fun] ) -> void
 	 * - e (String): event name
 	 * - fun (Function): event responder function
 	 * 
@@ -161,7 +161,7 @@ mixin( 'TEventResponderMixin', {
 	},
 	
 	/**
-	 * TEventResponderMixin.addEventListener( event_rec ) -> void
+	 * TEventResponderMixin#addEventListener( event_rec ) -> void
 	 * - event_rec (EventTrigger): trigger
 	 * 
 	 * Attaches event listener to trigger DOMElement
@@ -178,7 +178,7 @@ mixin( 'TEventResponderMixin', {
 	},
 	
 	/**
-	 * TEventResponderMixin.removeEventListener( event_rec ) -> void
+	 * TEventResponderMixin#removeEventListener( event_rec ) -> void
 	 * - event_rec (EventTrigger): trigger
 	 * 
 	 * Removes event listener from trigger DOMElement
@@ -195,7 +195,7 @@ mixin( 'TEventResponderMixin', {
 	},
 	
 	/**
-	 * TEventResponderMixin.registerTriggerElement( el, dom_event, tomek_event ) -> void
+	 * TEventResponderMixin#registerTriggerElement( el, dom_event, tomek_event ) -> void
 	 * - el (DOMElement): element to attach listener to
 	 * - dom_event (String): DOMEvent name
 	 * - tomek_event (String): event name
@@ -217,7 +217,7 @@ mixin( 'TEventResponderMixin', {
 	},
 	
 	/**
-	 * TEventResponderMixin.registerTriggerElements( triples ) -> void
+	 * TEventResponderMixin#registerTriggerElements( triples ) -> void
 	 * - triples (Array): array of three element arrays [ DOMElement, DOMEvent name, event name ]
 	 * 
 	 * Registers multiple DOMElements to trigger events on particular DOMEvents
@@ -231,7 +231,7 @@ mixin( 'TEventResponderMixin', {
 	},
 	
 	/**
-	 * TEventResponderMixin.registerTriggerElementMultipleEvents( el, pairs ) -> void
+	 * TEventResponderMixin#registerTriggerElementMultipleEvents( el, pairs ) -> void
 	 * - el (DOMElement): element
 	 * - pairs (Array): array of two element arrays [ DOMEvent name, event name ]
 	 * 

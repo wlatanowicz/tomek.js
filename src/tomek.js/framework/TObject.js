@@ -87,7 +87,7 @@ var TObject = Base.extend( {
     mixins : [],
     
 	/**
-	 * TObject.isTypeOf( class_name ) -> Boolean
+	 * TObject#isTypeOf( class_name ) -> Boolean
 	 * - class_name (String): class name
 	 * 
 	 * Checks if the object is a particular type
@@ -98,7 +98,7 @@ var TObject = Base.extend( {
     },
     
 	/** alias of: TObject.isTypeOf
-	 * TObject.isMemberOf( class_name ) -> Boolean
+	 * TObject#isMemberOf( class_name ) -> Boolean
 	 * - class_name (String): class name
 	 * 
 	 **/
@@ -107,7 +107,7 @@ var TObject = Base.extend( {
     },
     
 	/**
-	 * TObject.isKindOf( class_name ) -> Boolean
+	 * TObject#isKindOf( class_name ) -> Boolean
 	 * - class_name (String): class name
 	 * 
 	 * Checks if the object is a particular type or
@@ -128,7 +128,7 @@ var TObject = Base.extend( {
     },
     
 	/**
-	 * TObject.includesMixin( mixin_name ) -> Boolean
+	 * TObject#includesMixin( mixin_name ) -> Boolean
 	 * - mixin_name (String): mixin name
 	 * 
 	 * Checks if the object includes a mixin
