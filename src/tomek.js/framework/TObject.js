@@ -1,5 +1,18 @@
 //= require Base
 
+/** section: Utilities
+ * klass( new_class_name, class_definition ) -> void
+ * klass( new_class_name, extended_class, class_definition ) -> void
+ * klass( new_class_name, extended_class, mixin_list, class_definition ) -> void
+ * 
+ * - new_class_name (String): name of a new class
+ * - extended_class (Object): a class to be extended
+ * - mixin_list (Array[Object]): list of mixins
+ * - class_definition (Object): class body definition
+ * 
+ * Creates a new class
+ * 
+ **/
 function klass( new_class_name, extended_class, mixin_list, class_definition ){
     
     console.log( new_class_name );
@@ -49,25 +62,58 @@ function klass( new_class_name, extended_class, mixin_list, class_definition ){
     eval( new_class_name+' = nc;' );
 }
 
+/** section: Utilities
+ * mixin( new_mixin_name, mixin_definition ) -> void
+ * 
+ * - new_mixin_name (String): name of a new mixin
+ * - mixin_definition (Object): mixin body definition
+ * 
+ * Creates a new mixin
+ * 
+ **/
 function mixin( new_mixin_name, mixin_definition ){
     var nm = mixin_definition;
     nm.mixin = new_mixin_name;
     eval( new_mixin_name+' = nm;' );
 }
 
+/** section: Utilities
+ * class TObject
+ * 
+ **/
 var TObject = Base.extend( {
     klass : 'TObject',
     parent_klasses : [],
     mixins : [],
     
+	/**
+	 * TObject.isTypeOf( class_name ) -> Boolean
+	 * - class_name (String): class name
+	 * 
+	 * Checks if the object is a particular type
+	 * 
+	 **/
     isTypeOf : function( class_name ){
         return this.klass === class_name;
     },
     
+	/** alias of: TObject.isTypeOf
+	 * TObject.isMemberOf( class_name ) -> Boolean
+	 * - class_name (String): class name
+	 * 
+	 **/
     isMemberOf : function( class_name ){
         return this.isTypeOf( class_name );
     },
     
+	/**
+	 * TObject.isKindOf( class_name ) -> Boolean
+	 * - class_name (String): class name
+	 * 
+	 * Checks if the object is a particular type or
+     * a subclass of if
+	 * 
+	 **/
     isKindOf : function( class_name ){
         if ( this.isTypeOf( class_name ) ){
             return true;
@@ -81,6 +127,13 @@ var TObject = Base.extend( {
         return false;
     },
     
+	/**
+	 * TObject.includesMixin( mixin_name ) -> Boolean
+	 * - mixin_name (String): mixin name
+	 * 
+	 * Checks if the object includes a mixin
+	 * 
+	 **/
     includesMixin : function( mixin_name ){
         var i;
         for( i=0; i<this.mixins.length; i++ ){

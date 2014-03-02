@@ -612,7 +612,7 @@ klass( 'TControl', {
 	
 	/**
 	 * TControl.findChildControlByID( id ) -> TControl|null
-	 * - i (String): control ID
+	 * - id (String): control ID
 	 * 
 	 * Returns child control by ID
 	 * and searches recursively all child controls.
@@ -639,7 +639,7 @@ klass( 'TControl', {
 	
 	/**
 	 * TControl.findControlByID( id ) -> TControl|null
-	 * - i (String): control ID
+	 * - id (String): control ID
 	 * 
 	 * Returns a control by ID in current control tree
 	 * Function goes to the root parent
