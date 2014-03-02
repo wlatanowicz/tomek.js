@@ -15,8 +15,6 @@
  **/
 function klass( new_class_name, extended_class, mixin_list, class_definition ){
     
-    console.log( new_class_name );
-    
     if ( arguments.length === 2 ){
         class_definition = extended_class;
         extended_class = null;
@@ -47,18 +45,22 @@ function klass( new_class_name, extended_class, mixin_list, class_definition ){
             mixin_names.push( extended_class.mixins[j] );
         }
     }
-    parent_klasses.push( extended_class.klass );
+    parent_klasses.push( extended_class );
     
-    class_definition.klass = new_class_name;
-    class_definition.parent_klasses = parent_klasses;
-    class_definition.mixins = mixin_names;
+    class_definition.super = extended_class.prototype;
+//    class_definition.parent_klasses = parent_klasses;
+//    class_definition.mixins = mixin_names;
     
-    nc = nc.extend( class_definition );
+    var static_definition = {
+            klass_name : new_class_name,
+            parent_klasses : parent_klasses,
+            mixins : mixin_names
+    };
+    
+    nc = nc.extend( class_definition, static_definition );
+    
+    nc.prototype.klass = nc;
 
-    nc.klass = new_class_name;
-    nc.parent_klasses = parent_klasses;
-    nc.mixins = mixin_names;
-    
     eval( new_class_name+' = nc;' );
 }
 
@@ -82,9 +84,9 @@ function mixin( new_mixin_name, mixin_definition ){
  * 
  **/
 var TObject = Base.extend( {
-    klass : 'TObject',
-    parent_klasses : [],
-    mixins : [],
+    
+    klass : null,
+    super : null,
     
 	/**
 	 * TObject#isTypeOf( class_name ) -> Boolean
@@ -94,7 +96,7 @@ var TObject = Base.extend( {
 	 * 
 	 **/
     isTypeOf : function( class_name ){
-        return this.klass === class_name;
+        return this.klass.klass_name === class_name;
     },
     
 	/** alias of: TObject#isTypeOf
@@ -119,8 +121,8 @@ var TObject = Base.extend( {
             return true;
         }
         var i;
-        for( i=0; i<this.parent_klasses.length; i++ ){
-            if ( this.parent_klasses[i] === class_name ){
+        for( i=0; i<this.klass.parent_klasses.length; i++ ){
+            if ( this.klass.parent_klasses[i].klass_name === class_name ){
                 return true;
             }
         }
@@ -144,8 +146,10 @@ var TObject = Base.extend( {
         return false;
     }
     
-} );
+},{
+    klass_name : 'TObject',
+    parent_klasses : [],
+    mixins : []
+});
 
-TObject.klass = 'TObject';
-TObject.parent_klasses = [];
-TObject.mixins = [];
+TObject.prototype.klass = TObject;
