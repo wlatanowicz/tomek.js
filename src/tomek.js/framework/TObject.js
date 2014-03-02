@@ -119,8 +119,8 @@ var TObject = Base.extend( {
             return true;
         }
         var i;
-        for( i=0; i<this.mixins.length; i++ ){
-            if ( this.mixins[i] === mixin_name ){
+        for( i=0; i<this.parent_klasses.length; i++ ){
+            if ( this.parent_klasses[i] === class_name ){
                 return true;
             }
         }
