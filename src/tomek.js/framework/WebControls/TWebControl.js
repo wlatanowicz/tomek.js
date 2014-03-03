@@ -52,10 +52,19 @@ klass( 'TWebControl', TControl, {
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base()
-		arr.push( 'CssClass', 'Attributes' );
+		arr.push( 'CssClass', 'Attributes', 'Element' );
 		return arr;
 	},
 	
+    /**
+	 * TWebControl#Element -> DOMElement
+     * 
+     */
+    
+    getElement : function(){
+        return this._renderedMainElement;
+    },
+    
 	/**
 	 * TWebControl#createMainElement() -> DOMElement
 	 * 
@@ -73,7 +82,7 @@ klass( 'TWebControl', TControl, {
 		var attrs = this.getAttributes();
 		
 		for ( var attr in attrs ){
-			if ( attr == 'style' ){
+			if ( attr === 'style' ){
 				//IE8 fix
 				d.style.cssText = attrs[attr];
 			}else{
