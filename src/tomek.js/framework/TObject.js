@@ -1,6 +1,7 @@
 //= require Base
 
 /** section: Utilities
+ * klass( new_class_name ) -> void
  * klass( new_class_name, class_definition ) -> void
  * klass( new_class_name, extended_class, class_definition ) -> void
  * klass( new_class_name, extended_class, mixin_list, class_definition ) -> void
@@ -15,6 +16,11 @@
  **/
 function klass( new_class_name, extended_class, mixin_list, class_definition ){
     
+    if ( arguments.length === 1 ){
+        extended_class = null;
+        mixin_list = [];
+        class_definition = {};
+    }else
     if ( arguments.length === 2 ){
         class_definition = extended_class;
         extended_class = null;
