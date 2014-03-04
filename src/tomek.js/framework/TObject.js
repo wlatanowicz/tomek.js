@@ -75,7 +75,7 @@ function klass( new_class_name, extended_class, mixin_list, class_definition ){
  **/
 function mixin( new_mixin_name, mixin_definition ){
     var nm = mixin_definition;
-    nm.mixin = new_mixin_name;
+    nm.mixin_name = new_mixin_name;
     eval( new_mixin_name+' = nm;' );
 }
 
@@ -89,40 +89,46 @@ var TObject = Base.extend( {
     super : null,
     
 	/**
-	 * TObject#isTypeOf( class_name ) -> Boolean
-	 * - class_name (String): class name
+	 * TObject#isTypeOf( klass ) -> Boolean
+	 * - klass (Object|String): class or class name
 	 * 
 	 * Checks if the object is a particular type
 	 * 
 	 **/
-    isTypeOf : function( class_name ){
-        return this.klass.klass_name === class_name;
+    isTypeOf : function( klass ){
+        if ( klass.klass_name ){
+            klass = klass.klass_name;
+        }
+        return this.klass.klass_name === klass;
     },
     
 	/** alias of: TObject#isTypeOf
-	 * TObject#isMemberOf( class_name ) -> Boolean
-	 * - class_name (String): class name
+	 * TObject#isMemberOf( klass ) -> Boolean
+	 * - klass (Object|String): class or class name
 	 * 
 	 **/
-    isMemberOf : function( class_name ){
-        return this.isTypeOf( class_name );
+    isMemberOf : function( klass ){
+        return this.isTypeOf( klass );
     },
     
 	/**
-	 * TObject#isKindOf( class_name ) -> Boolean
-	 * - class_name (String): class name
+	 * TObject#isKindOf( klass ) -> Boolean
+	 * - klass (Object|String): class or class name
 	 * 
 	 * Checks if the object is a particular type or
      * a subclass of if
 	 * 
 	 **/
-    isKindOf : function( class_name ){
-        if ( this.isTypeOf( class_name ) ){
+    isKindOf : function( klass ){
+        if ( klass.klass_name ){
+            klass = klass.klass_name;
+        }
+        if ( this.isTypeOf( klass ) ){
             return true;
         }
         var i;
         for( i=0; i<this.klass.parent_klasses.length; i++ ){
-            if ( this.klass.parent_klasses[i].klass_name === class_name ){
+            if ( this.klass.parent_klasses[i].klass_name === klass ){
                 return true;
             }
         }
@@ -130,16 +136,20 @@ var TObject = Base.extend( {
     },
     
 	/**
-	 * TObject#includesMixin( mixin_name ) -> Boolean
-	 * - mixin_name (String): mixin name
+	 * TObject#includesMixin( mixin ) -> Boolean
+	 * - mixin_name (Object|String): mixin or mixin name
 	 * 
 	 * Checks if the object includes a mixin
 	 * 
 	 **/
-    includesMixin : function( mixin_name ){
+    includesMixin : function( mixin ){
+        if ( mixin.mixin_name ){
+            mixin = mixin.mixin_name;
+        }
+        
         var i;
         for( i=0; i<this.mixins.length; i++ ){
-            if ( this.mixins[i] === mixin_name ){
+            if ( this.mixins[i].mixin_name === mixin ){
                 return true;
             }
         }
