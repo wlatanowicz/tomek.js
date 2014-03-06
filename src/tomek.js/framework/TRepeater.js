@@ -77,7 +77,7 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 
 	//@Override
 	getPublicProperties : function(){
-		var arr = this.base()
+		var arr = this.base();
 		arr.push( 'ItemTemplate', 'HeaderTemplate', 'FooterTemplate', 'EmptyTemplate' );
 		arr.push( 'Items', 'HeaderItem', 'FooterItem', 'EmptyItem' );
 		arr.push( 'DataSource' );
