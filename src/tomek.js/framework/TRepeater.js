@@ -123,7 +123,10 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 		if ( data_source.length > 0 ){
 			
 			if ( this._HeaderTemplate ){
-				var header = new TItem();
+				var header = new TItem({
+                        'Type' : 'Header',
+                        'Repeater' : this
+                    });
 				header.useTemplate( this._HeaderTemplate );
 				this._HeaderItem = header;
 				this.addChildControl( header );
@@ -133,6 +136,8 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 				for( var i =0; i<data_source.length; i++ ){
 					var data_item = data_source[i];
 					var item = new TItem({
+                            'Type' : 'Item',
+                            'Repeater' : this,
 							'ItemIndex' : i,
 							'DataItem' : data_item
 						});
@@ -151,7 +156,10 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 			}
 			
 			if ( this._FooterTemplate ){
-				var footer = new TItem();
+				var footer = TItem({
+                        'Type' : 'Footer',
+                        'Repeater' : this
+                    });
 				footer.useTemplate( this._FooterTemplate );
 				this._HeaderItem = footer;
 				this.addChildControl( footer );
@@ -159,7 +167,10 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 			
 		}else{
 			if ( this._EmptyTemplate ){
-				var empty = new TItem();
+				var empty = TItem({
+                        'Type' : 'Empty',
+                        'Repeater' : this
+                    });
 				empty.useTemplate( this._EmptyTemplate );
 				this._EmptyItem = empty;
 				this.addChildControl( empty );
