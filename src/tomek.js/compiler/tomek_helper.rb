@@ -128,8 +128,13 @@ class TomekHelper
 			pat = File.join( basedir, r )
 			Dir[pat].each do |p|
 				target = File.join( @BUILD_DIR, p.to_s[basedir.to_s.length+1,9999] )
-				FileUtils.mkdir_p File.dirname( target )
-				FileUtils.copy_file( p, target )
+        if File.directory?( p )
+        then
+  				FileUtils.mkdir_p target
+        else
+  				FileUtils.mkdir_p File.dirname( target )
+  				FileUtils.copy_file( p, target )
+        end
 			end
 		end
 	end
