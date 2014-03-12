@@ -30,16 +30,16 @@ namespace :dist do
 	task :build => ['clean:tmp', 'clean:dist'] do
 		jh = TomekHelper.new
 		jh.compile_templates
-		jh.sprocketize true
 		jh.copy_resources
+		jh.sprocketize true
 	end
 	
 	desc "Builds the application without compressing output."
 	task :build_debug => ['clean:tmp', 'clean:dist'] do
 		jh = TomekHelper.new
 		jh.compile_templates
-		jh.sprocketize false
 		jh.copy_resources
+		jh.sprocketize false
 	end
 end
 
@@ -68,8 +68,8 @@ namespace :test do
   task :build => ['clean:tmp', 'clean:test'] do
 		jh = TomekTestHelper.new
 		jh.compile_templates
-		jh.sprocketize true
 		jh.copy_resources
+		jh.sprocketize true
   end
 
   desc 'Updates list of tests'
