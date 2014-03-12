@@ -22,7 +22,7 @@ class TomekHelper
   TMP_DIR       = File.join(ROOT_DIR, 'tmp')
 	APP_YML				= 'application.yml'
   
-  VERSION       = IO.read(File.join(ROOT_DIR, 'VERSION'))
+  VERSION       = IO.read(File.join(FRAMEWORK_DIR, 'VERSION'))
 	
   # Possible options for PDoc syntax highlighting, in order of preference.
   SYNTAX_HIGHLIGHTERS = [:pygments, :coderay, :none]
