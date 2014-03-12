@@ -9,10 +9,11 @@
                 <root id="src.compiler.dir" name="Compiler"/>
                 <root id="src.framework.dir" name="Framework"/>
                 <root id="src.build.dir" name="Build"/>
-                <root id="src.test.dir" name="Test"/>
-                <root id="src.test_build.dir" name="TestBuild"/>
             </source-roots>
-            <test-roots/>
+            <test-roots>
+                <root id="test.test.dir" name="Test"/>
+                <root id="test.test_build.dir" name="Test build"/>
+            </test-roots>
         </data>
     </configuration>
 </project>
