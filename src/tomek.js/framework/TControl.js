@@ -87,8 +87,6 @@ klass( 'TControl', {
 		
 		this.registerPublicProperties();
 		
-		this._Visible = true;
-		
 		if ( options ){
 			for ( var opt in options ){
 				
@@ -190,7 +188,12 @@ klass( 'TControl', {
 	 * 
 	 **/
 	getPublicProperties : function(){
-		return ['ID','Id','Placeholder','Parent','Visible'];
+		return ['ID',
+				'Id',
+				{ name: 'Placeholder', type: 'object' },
+				{ name: 'Parent', type: 'object' },
+				{ name: 'Visible', type: 'bool', default: true }
+				];
 	},
 	
 	/**
@@ -226,6 +229,8 @@ klass( 'TControl', {
         var can_get = true;
         var can_set = true;
         var default_value = null;
+		var setConversion = 'none';
+		var getConversion = 'string';
         
         if ( typeof property === 'string' ){
             name = property;
@@ -235,6 +240,14 @@ klass( 'TControl', {
                 default_value = property.default;
                 //@TODO optional setter and getter
             }
+            if ( typeof property.type !== 'undefined' ){
+				// one of: int, integer, float, string, bool, boolean, object
+				getConversion = property.type.toLowerCase();
+			}
+            if ( typeof property.settype !== 'undefined' ){
+				// one of: int, integer, float, string, bool, boolean, object
+				setConversion = property.settype.toLowerCase();
+			}
         }
         
 		this['_'+name] = default_value;
@@ -244,10 +257,40 @@ klass( 'TControl', {
         
         if ( can_get ){
             if ( ! this['get'+name] ){
-                this['get'+name] = function(){
-                    return this['_'+name];
-                }
-            }
+				if ( getConversion === 'none' ){
+					this['get'+name] = function(){
+						return this['_'+name];
+					};
+				}else
+				if ( getConversion === 'string' ){
+					this['get'+name] = function(){
+						return this['_'+name] !== null ? this['_'+name].toString() : '';
+					};
+				}else
+				if ( getConversion === 'int' || getConversion === 'integer' ){
+					this['get'+name] = function(){
+						return parseInt( this['_'+name] );
+					};
+				}else
+				if ( getConversion === 'float' ){
+					this['get'+name] = function(){
+						return parseFloat( this['_'+name] );
+					};
+				}else
+				if ( getConversion === 'bool' || getConversion === 'boolean' ){
+					this['get'+name] = function(){
+						return parseBool( this['_'+name] );
+					};
+				}else
+				if ( getConversion === 'object' || getConversion === 'obj' ){
+					this['get'+name] = function(){
+						return this['_'+name] !== null ? this['_'+name].valueOf() : null;
+					};
+				}else
+				{
+					throw new TException( 'Bad getter type conversion: '+getConversion );
+				}
+			}
             var onGet = this['get'+name];
             getFn = function () {
                         return onGet.apply( this );
@@ -256,9 +299,40 @@ klass( 'TControl', {
         
         if ( can_set ){
             if ( ! this['set'+name] ){
-                this['set'+name] = function( value ){
-                    this['_'+name] = value;
-                }
+				if ( setConversion === 'none' ){
+					this['set'+name] = function( value ){
+						this['_'+name] = value;
+					};
+				}else
+				if ( setConversion === 'string' ){
+					this['set'+name] = function( value ){
+						this['_'+name] = value !== null ? value.toString() : '';
+					};
+				}else
+				if ( setConversion === 'int' || setConversion === 'integer' ){
+					this['set'+name] = function( value ){
+						this['_'+name] = parseInt( value );
+					};
+				}else
+				if ( setConversion === 'float' ){
+					this['set'+name] = function( value ){
+						this['_'+name] = parseFloat( value );
+					};
+				}else
+				if ( setConversion === 'bool' || setConversion === 'boolean' ){
+					this['set'+name] = function( value ){
+						this['_'+name] = parseBool( value.toString() );
+					};
+				}else
+				if ( setConversion === 'object' || setConversion === 'obj' ){
+					this['set'+name] = function( value ){
+						this['_'+name] = value !== null ? value.valueOf() : null;
+					};
+				}else
+				{
+					throw new TException( 'Bad setter type conversion: '+getConversion );
+				}
+			
             }
     		var onSet = this['set'+name];
     		setFn = function (newValue) {
@@ -340,6 +414,10 @@ klass( 'TControl', {
 				: document.body );
 	},
 	
+	getVisible : function(){
+		return parseBool( this._Visible ) && ( this.getParent() === null || this.getParent().getVisible() );
+	},
+	
 	/**
 	 * TControl#removeRenderedNodes() -> void
 	 * 
@@ -399,7 +477,7 @@ klass( 'TControl', {
 	render : function(){
 		this.ensureChildControls();
 		this.removeRenderedNodes();
-		if ( this._Visible ){
+		if ( this.getVisible() ){
 			this.renderContents();
 		}else{
 			this.ensurePositionMarker();
@@ -418,7 +496,7 @@ klass( 'TControl', {
 		this.setPlaceholder( placeholder );
 		
 		this.ensureChildControls();
-		if ( this._Visible ){
+		if ( this.getVisible() ){
 			this.renderContents();
 		}else{
 			this.ensurePositionMarker();

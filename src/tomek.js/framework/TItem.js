@@ -30,7 +30,11 @@ klass( 'TItem', TTemplateControl, {
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base();
-		arr.push( 'DataItem', 'ItemIndex', 'Repeater', 'Type' );
+		arr.push( { name:'DataItem', type: 'object' },
+				  { name:'ItemIndex', type: 'integer' },
+				  { name:'Repeater', type: 'object' },
+				  { name:'Type', type:'string'}
+				);
 		return arr;
 	},
 	

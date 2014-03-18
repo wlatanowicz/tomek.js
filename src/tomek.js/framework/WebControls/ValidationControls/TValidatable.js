@@ -10,8 +10,10 @@ mixin( 'TValidatableMixin', {
 	
 	//@Override
 	getPublicProperties : function(){
-		var arr = this.base()
-		arr.push( 'ErrorCssClass', 'IsValid' );
+		var arr = this.base();
+		arr.push( 'ErrorCssClass',
+					{ name: 'IsValid', type: 'bool' }
+				);
 		return arr;
 	},
 	

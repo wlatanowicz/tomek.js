@@ -20,7 +20,7 @@ klass( 'TExpression', {
 	valueOf : function(){
 		var exp = this._expressionFunction();
 		if ( exp == null ){
-			return '!NULL!';
+			return null;
 		}
 		return exp.valueOf();
 	},

@@ -9,7 +9,7 @@ klass( 'TRegularExpressionValidator', TBaseValidator, {
 	
 	//@Override
 	getPublicProperties : function(){
-		var arr = this.base()
+		var arr = this.base();
 		arr.push( 'Pattern', 'Modifiers' );
 		return arr;
 	},

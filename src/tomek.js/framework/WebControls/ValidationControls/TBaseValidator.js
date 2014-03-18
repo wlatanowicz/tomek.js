@@ -28,8 +28,11 @@ klass( 'TBaseValidator', TWebControl, {
 	
 	//@Override
 	getPublicProperties : function(){
-		var arr = this.base()
-		arr.push( 'ControlToValidate', 'ValidationGroup', 'Enabled' );
+		var arr = this.base();
+		arr.push( { name: 'ControlToValidate', type: 'none' },
+					'ValidationGroup',
+					{ name: 'Enabled', type: 'bool' }
+				);
 		return arr;
 	},
 	
