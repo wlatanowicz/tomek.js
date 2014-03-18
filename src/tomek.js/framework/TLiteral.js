@@ -14,7 +14,7 @@ klass( 'TLiteral', TControl, {
 	
 	//@Override
 	getPublicProperties : function(){
-		var arr = this.base()
+		var arr = this.base();
 		arr.push( 'Text' );
 		return arr;
 	},
