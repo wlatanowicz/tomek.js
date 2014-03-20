@@ -32,11 +32,52 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base();
-		arr.push( { name:'DataSource', type:'none', default: [] },
+		arr.push( 'Value',
+					'SelectedValue',
+					{ name: 'SelectedIndex', type: 'integer', default: 0 },
+					{ name:'DataSource', type:'none', default: [] },
 					{ name: 'TextFieldName', default: 'text' },
 					{ name: 'ValueFieldName', default: 'value' }
 					);
 		return arr;
+	},
+	
+	setValue : function( v ){
+		this.setSelectedValue( v );
+	},
+	
+	getValue : function(){
+		return this.getSelectedValue();
+	},
+	
+	setSelectedValue : function( v ){
+		var index_to_set = 0;
+		var j;
+		for ( j=0; j<this._Items.length; j++ ){
+			var i = this._Items[j];
+			if ( i.getValue() == v ){
+				index_to_set = j;
+			}
+		}
+		this.setSelectedIndex( index_to_set );
+	},
+	
+	getSelectedValue : function(){
+		return this.findChildControlsByKind('TOption')[ this.getSelectedIndex() ].getValue();
+	},
+	
+	getSelectedIndex : function(){
+		if ( this._renderedMainElement ){
+			return this._renderedMainElement.selectedIndex;
+		}
+		return this._SelectedIndex;
+	},
+	
+	setSelectedIndex : function( v ){
+		if ( this._renderedMainElement ){
+			this._renderedMainElement.selectedIndex = v;
+		}
+		this._SelectedIndex = v;
 	},
 
 	//@Override
@@ -71,11 +112,13 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 	//@Override
 	createChildControls : function(){
 		var data_source = this._DataSource;
+		var selected_index = this.getSelectedIndex();
 		for( var i =0; i<data_source.length; i++ ){
 			var data_item = data_source[i];
 			var opt = new TOption();
 			opt.setText( data_item[ this.getTextFieldName() ] );
 			opt.setValue( data_item[ this.getValueFieldName() ] );
+			opt.setSelected( selected_index === i );
 			this.addChildControl( opt );
 		}
 	}

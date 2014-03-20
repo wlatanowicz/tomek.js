@@ -24,8 +24,10 @@ klass( 'TOption', TWebControl, {
 	
 	//@Override
 	getPublicProperties : function(){
-		var arr = this.base()
-		arr.push( 'Text', 'Value' );
+		var arr = this.base();
+		arr.push( 'Text', 'Value',
+					{ name: 'Selected', 'type': 'bool' }
+				);
 		return arr;
 	},
 	
