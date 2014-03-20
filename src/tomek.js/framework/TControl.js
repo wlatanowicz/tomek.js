@@ -430,16 +430,13 @@ klass( 'TControl', {
 		for ( i=0; i<this._childControls.length; i++ ){
 			this._childControls[i].removeRenderedNodes();
 		}
-		var x_el = document.createElement( "div" );
+		//var x_el = document.createElement( "div" );
 		for ( i=0; i<this._renderedNodes.length; i++ ){
 			var n = this._renderedNodes[ i ];
-			if ( n.remove ){
-				n.remove();
-			}else{
-				x_el.appendChild( n );
-			}
+			//x_el.appendChild( n );
+			n.parentNode.removeChild(n);
 		}
-		x_el = null;
+		//x_el = null;
 		this._renderedNodes = [];
 	},
 	
