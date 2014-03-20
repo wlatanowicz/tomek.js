@@ -25,20 +25,17 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 	//@Override
 	_triggersEvents : ['Change'],
 	
-	//@Override
-	constructor : function( options ){
-		this.base( options );
-		this._DataSource = [];
-	},
-	
 	/**
 	 * TDropDownList#DataSource -> Array
 	 **/
 	
 	//@Override
 	getPublicProperties : function(){
-		var arr = this.base()
-		arr.push( 'DataSource' );
+		var arr = this.base();
+		arr.push( { name:'DataSource', type:'none', default: [] },
+					{ name: 'TextFieldName', default: 'text' },
+					{ name: 'ValueFieldName', default: 'value' }
+					);
 		return arr;
 	},
 
@@ -77,8 +74,8 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 		for( var i =0; i<data_source.length; i++ ){
 			var data_item = data_source[i];
 			var opt = new TOption();
-			opt.setText( data_item.text );
-			opt.setValue( data_item.value );
+			opt.setText( data_item[ this.getTextFieldName() ] );
+			opt.setValue( data_item[ this.getValueFieldName() ] );
 			this.addChildControl( opt );
 		}
 	}
