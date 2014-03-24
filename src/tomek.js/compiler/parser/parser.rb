@@ -41,7 +41,8 @@ class Parser
 			end
 		end
 		if ( node.type == Nokogiri::XML::Node::ELEMENT_NODE ) then
-			if ( node.namespace == nil ) then
+			if ( node.namespace != 'component' and 
+						node.namespace != 'stencil' ) then
 				return HtmlNode.new node
 			end
 			if ( node.namespace.href == 'component' ) then
