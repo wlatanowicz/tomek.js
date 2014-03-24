@@ -26,7 +26,7 @@ class StencilRenderer < BaseRenderer
 			render_in = varname( node.parent )
 		end
 		if ( node.namespace != nil )
-			add_output "var "+varname( node )+" = document.createElementNS( \""+node.tag+"\", \""+node.namespace+"\" );"
+			add_output "var "+varname( node )+" = document.createElementNS( \""+node.namespace+"\", \""+node.tag+"\" );"
 		else
 			add_output "var "+varname( node )+" = document.createElement( \""+node.tag+"\" );"
 		end
