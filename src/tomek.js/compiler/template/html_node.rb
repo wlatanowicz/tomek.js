@@ -21,7 +21,7 @@ class HtmlNode < TemplateNode
 		@tag = node.name.to_s
 		@namespace = nil
 		if ( node.namespace != nil )
-			@namespace = node.namespace.to_s
+			@namespace = node.namespace.href.to_s
 		end
   end
 	
