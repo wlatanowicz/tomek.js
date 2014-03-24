@@ -25,7 +25,12 @@ class StencilRenderer < BaseRenderer
 		if ( node.parent != @root )then
 			render_in = varname( node.parent )
 		end
-		add_output "var "+varname( node )+" = document.createElement( \""+node.tag+"\" );"
+		if ( node.namespace != nil )
+			add_output "var "+varname( node )+" = document.createElementNS( \""+node.tag+"\", \""+node.namespace+"\" );"
+		else
+			add_output "var "+varname( node )+" = document.createElement( \""+node.tag+"\" );"
+		end
+		
 		node.attributes.each do |a|
 			if a.name == 'style' then
 				# IE8 fix
