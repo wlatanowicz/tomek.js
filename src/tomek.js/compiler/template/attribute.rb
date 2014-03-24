@@ -9,15 +9,21 @@ class Attribute
 	
 	@name
 	@value
+	@namespace
 	
   def initialize node, value = ""
     
+		@namespace = nil
+		
 		if ( node.instance_of? Nokogiri::XML::Element ) then
 			@name = node.name.to_s
 			@value = TextExpression.new node.text
 		elsif ( node.instance_of? Nokogiri::XML::Attr ) then
 			@name = node.name
 			@value = TextExpression.new node.value
+			if ( node.namespace != nil )
+				@namespace = node.namespace.href.to_s
+			end
 		elsif ( node.instance_of? String and value.instance_of? String ) then
 			@name = node
 			@value = TextExpression.new value
@@ -34,6 +40,10 @@ class Attribute
 	
 	def value
 		@value
+	end
+	
+	def namespace
+		@namespace
 	end
 	
 	def to_s

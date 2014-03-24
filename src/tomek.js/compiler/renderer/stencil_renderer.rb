@@ -36,7 +36,11 @@ class StencilRenderer < BaseRenderer
 				# IE8 fix
 				add_output varname( node ) + ".style.cssText = " + a.value.js_expression + ";";
 			else
-				add_output varname( node ) + ".setAttribute( \"" + a.name + "\", " + a.value.js_expression + " );";
+				if ( a.namespace != nil )
+					add_output varname( node ) + ".setAttributeNS( \""+a.namespace+"\", \"" + a.name + "\", " + a.value.js_expression + " );";
+				else
+					add_output varname( node ) + ".setAttribute( \"" + a.name + "\", " + a.value.js_expression + " );";
+				end
 			end
 		end
 		
