@@ -22,7 +22,8 @@ class TextExpression
 		part = ""
 		
 		i = 0
-		str = str.to_s.strip
+		#str = str.to_s.strip
+		str = str.to_s
 		l = str.length
 		
 		while i < ( l + 1 ) do
@@ -31,7 +32,7 @@ class TextExpression
 				mode = "expr"
 				i += 3
 				
-				part = part.strip
+				#part = part.strip
 				if part.length > 0 then
 					part = part.to_json
 					parts.push part
@@ -44,7 +45,7 @@ class TextExpression
 				mode = "text"
 				i += 2
 				
-				part = part.strip
+				#part = part.strip
 				if part.length > 0 then
 					part = "( new TExpression( function(){ return ("+part+"); }.bind( ExpressionContext ) ) )"
 					parts.push part
@@ -75,6 +76,6 @@ class TextExpression
 		str.to_json
 	end
 	
-	
-	
+
+
 end
