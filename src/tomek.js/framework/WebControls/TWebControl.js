@@ -61,8 +61,7 @@ klass( 'TWebControl', TControl, {
     /**
 	 * TWebControl#Element -> DOMElement
      * 
-     */
-    
+     **/
     getElement : function(){
         return this._renderedMainElement;
     },
