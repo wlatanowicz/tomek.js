@@ -89,9 +89,11 @@ class TomekHelper
 		
 		require_uglifier if minify
 		
-		paths = YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))['PATHS']
-    
-		mains = YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))['MAINS']
+		yaml = YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))
+		
+		paths = yaml['PATHS']
+		mains = yaml['MAINS']
+		
 		mains.each do |m|
 			
 			target = File.join( @BUILD_DIR, m )
@@ -106,9 +108,11 @@ class TomekHelper
 				env.prepend_path e if File.directory?(e)
 			end
       
-      paths.each do |p|
-        env.prepend_path File.join( @APP_DIR, p )
-      end
+			if ( paths ) then
+				paths.each do |p|
+					env.prepend_path File.join( @APP_DIR, p )
+				end
+			end
 			
 			env.prepend_path File.dirname( File.join( @APP_DIR, m ) )
 			
