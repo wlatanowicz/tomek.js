@@ -26,7 +26,7 @@ class Compiler
 		r.render( doc )
 		js = r.output
 
-		file = File.new( File.join( @output_dir, ctrl+".tpl.js" ), "w")
+		file = File.new( File.join( @output_dir, ctrl+"-tpl.js" ), "w")
 		file.write( js )
 		file.close
 	end
