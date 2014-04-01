@@ -134,17 +134,19 @@ class TomekHelper
 	def copy_resources
 		basedir = @APP_DIR
 		res = YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))['RESOURCES']
-		res.each do |r|
-			pat = File.join( basedir, r )
-			Dir[pat].each do |p|
-				target = File.join( @BUILD_DIR, p.to_s[basedir.to_s.length+1,9999] )
-        if File.directory?( p )
-        then
-  				FileUtils.mkdir_p target
-        else
-  				FileUtils.mkdir_p File.dirname( target )
-  				FileUtils.copy_file( p, target )
-        end
+		if ( res )
+			res.each do |r|
+				pat = File.join( basedir, r )
+				Dir[pat].each do |p|
+					target = File.join( @BUILD_DIR, p.to_s[basedir.to_s.length+1,9999] )
+					if File.directory?( p )
+					then
+						FileUtils.mkdir_p target
+					else
+						FileUtils.mkdir_p File.dirname( target )
+						FileUtils.copy_file( p, target )
+					end
+				end
 			end
 		end
 	end
