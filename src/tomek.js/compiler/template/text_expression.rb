@@ -61,6 +61,10 @@ class TextExpression
 			i += 1
 		end
 
+		if ( parts.length <= 0 )
+			parts.push "''"
+		end
+		
     @str = parts.join( "+" )
   end
 	
