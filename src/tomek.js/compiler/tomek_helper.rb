@@ -3,6 +3,7 @@
 
 $LOAD_PATH << File.dirname(__FILE__) 
 
+require 'dictionary'
 require 'compiler'
 require 'find'
 
@@ -21,6 +22,7 @@ class TomekHelper
   TEST_UNIT_DIR = File.join(TEST_DIR, 'unit')
   TMP_DIR       = File.join(ROOT_DIR, 'tmp')
 	APP_YML				= 'application.yml'
+	TARGET_LANGUAGE = ENV['TARGET_LANGUAGE'] ? ENV['TARGET_LANGUAGE'] : 'en'
   
   VERSION       = IO.read(File.join(FRAMEWORK_DIR, 'VERSION'))
 	
@@ -34,6 +36,8 @@ class TomekHelper
 	def initialize
 		@APP_DIR       = File.join(ROOT_DIR, 'app')
 		@BUILD_DIR     = File.join(ROOT_DIR, 'build')
+		Dictionary.set_dictionaries( YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))['DICTIONARIES'] )
+		Dictionary.set_target_langugae( TARGET_LANGUAGE )
 	end
 	
 	def empty_tmp
@@ -71,7 +75,7 @@ class TomekHelper
   end
   
 	def compile_templates
-		c = Compiler.new TEMP_DEST_DIR 
+		c = Compiler.new TEMP_DEST_DIR
 		basedir = @APP_DIR
 		templates = YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))['TEMPLATES']
 		templates.each do |r|

@@ -5,14 +5,6 @@ require 'json'
 
 class TextExpression
  
-	class JSString < String
-		
-	end
-	
-	class JSExpression < String
-		
-	end
-	
 	@str
 	
 	def initialize str
@@ -26,16 +18,42 @@ class TextExpression
 		str = str.to_s
 		l = str.length
 		
+		dictionary = Dictionary.new
+		
 		while i < ( l + 1 ) do
 		
+			if mode == "text" and ( i >= l or str[i,3] == "[%@" ) then
+				mode = "trans"
+				i += 3
+				
+				#part = part.strip
+				if part.length > 0 then
+					parts.push part.to_json
+				end
+				
+				part = ""
+			end
+			
 			if mode == "text" and ( i >= l or str[i,3] == "[%=" ) then
 				mode = "expr"
 				i += 3
 				
 				#part = part.strip
 				if part.length > 0 then
-					part = part.to_json
-					parts.push part
+					parts.push part.to_json
+				end
+				
+				part = ""
+			end
+			
+			if mode == "trans" and ( i >= l or str[i,2] == "%]" ) then
+				mode = "text"
+				i += 2
+				
+				#part = part.strip
+				if part.length > 0 then
+					part = dictionary.translate part.strip
+					parts.push part.to_json
 				end
 				
 				part = ""
