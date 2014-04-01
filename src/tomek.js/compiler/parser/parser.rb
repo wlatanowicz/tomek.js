@@ -36,7 +36,7 @@ class Parser
 	
 	def create_node ( node )
 		if ( node.type == Nokogiri::XML::Node::TEXT_NODE ) then
-			if ( node.text.strip.length > 0 )then
+			if ( node.text.length > 0 )then
 				return TextNode.new node
 			end
 		end
