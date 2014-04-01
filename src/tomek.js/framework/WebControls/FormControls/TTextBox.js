@@ -22,6 +22,9 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
 	//@Override
 	_tagName : 'input',
 	
+	_singleLineTagName : 'input',
+	_multiLineTagName : 'textarea',
+	
 	//@Override
 	_rendersChildControls : false,
 	
@@ -56,17 +59,42 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
 	
 	//@Override
 	getPublicProperties : function(){
-		var arr = this.base()
-		arr.push( 'Text', 'Value' );
+		var arr = this.base();
+		arr.push( 'Text', 'Value',
+					{ name: 'Rows', type: 'int', default: 1 },
+					{ name: 'Cols', type: 'int', default: 0 }
+		);
 		return arr;
 	},
 
 	//@Override
 	createMainElement : function(){
+		
+		var rows = this.getRows();
+		var cols = this.getCols();
+		
+		if ( rows > 1 ){
+			this._tagName = this._multiLineTagName;
+		}else{
+			this._tagName = this._singleLineTagName;
+		}
+		
 		var d = this.base();
 		
-		d.setAttribute( 'type', 'text' );
-		d.value = this.getText();
+		if ( rows > 1 ){
+			var t = document.createTextNode( this.getText() );
+			d.appendChild( t );
+			if ( cols > 0 ){
+				d.cols = cols;
+			}
+			d.rows = rows;
+		}else{
+			d.setAttribute( 'type', 'text' );
+			d.value = this.getText();
+			if ( cols > 0 ){
+				d.size = cols;
+			}
+		}
 		
 		this.registerTriggerElement( d, 'change', 'Change' );
 		this.registerTriggerElement( d, 'keyup', 'KeyUp' );
