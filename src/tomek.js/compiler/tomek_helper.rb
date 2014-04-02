@@ -36,7 +36,7 @@ class TomekHelper
 	def initialize
 		@APP_DIR       = File.join(ROOT_DIR, 'app')
 		@BUILD_DIR     = File.join(ROOT_DIR, 'build')
-		Dictionary.set_dictionaries( YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))['DICTIONARIES'] )
+		#Dictionary.set_dictionaries( YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))['DICTIONARIES'] )
 		Dictionary.set_target_langugae( TARGET_LANGUAGE )
 	end
 	
@@ -75,7 +75,7 @@ class TomekHelper
   end
   
 	def compile_templates
-		c = Compiler.new TEMP_DEST_DIR
+		c = Compiler.new TEMP_DEST_DIR 
 		basedir = @APP_DIR
 		templates = YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))['TEMPLATES']
 		templates.each do |r|
