@@ -163,18 +163,18 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 			}
 			
 			if ( this._FooterTemplate ){
-				var footer = TItem({
+				var footer = new TItem({
                         'Type' : 'Footer',
                         'Repeater' : this
                     });
 				footer.useTemplate( this._FooterTemplate );
-				this._HeaderItem = footer;
+				this._FooterItem = footer;
 				this.addChildControl( footer );
 			}
 			
 		}else{
 			if ( this._EmptyTemplate ){
-				var empty = TItem({
+				var empty = new TItem({
                         'Type' : 'Empty',
                         'Repeater' : this
                     });
