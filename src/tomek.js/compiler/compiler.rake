@@ -23,6 +23,8 @@ task :clean => ['clean:tmp', 'clean:dist', 'clean:test', 'clean:doc']
 task :doc => ['doc:build']
 
 task :test => ['test:build', 'test:run']
+task :test_debug => ['test:build_debug', 'test:run']
+
 task :update_tests => ['test:update']
 
 namespace :dist do
@@ -58,7 +60,7 @@ end
 
 namespace :test do
   desc 'Runs all the JavaScript tests and collects the results'
-  task :run => [:build] do
+  task :run do
 		jh = TomekTestHelper.new
 		url = jh.index_file
 		Kernel.system( "open -a Firefox #{url}" )
@@ -70,6 +72,14 @@ namespace :test do
 		jh.compile_templates
 		jh.copy_resources
 		jh.sprocketize true
+  end
+
+  desc 'Builds test application and environment'
+  task :build_debug => ['clean:tmp', 'clean:test'] do
+		jh = TomekTestHelper.new
+		jh.compile_templates
+		jh.copy_resources
+		jh.sprocketize false
   end
 
   desc 'Updates list of tests'
