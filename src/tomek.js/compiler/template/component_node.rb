@@ -12,8 +12,13 @@ class ComponentNode < TemplateNode
 	end
 	
 	def initialize node
+		if ( node.is_a?( String ) )
+			@classname = node
+			node = nil
+		else
+			@classname = node.name.to_s
+		end
     super
-		@classname = node.name.to_s
   end
 		
 end

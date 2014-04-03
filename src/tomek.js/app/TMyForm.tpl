@@ -2,8 +2,6 @@
 
 <template xmlns:com='component' xmlns:prop='property' xmlns:on='event' xmlns:temp='stencil'>
 
-<com:TContent>
-
 <com:TPanel ID="Panel1" Attributes.style="background: #FFCCFF;">
 	<div>
 		<h3>
@@ -57,39 +55,31 @@
 	</div>
 	<com:TRepeater ID="Rep" >
 		<temp:Header>
-			<com:TControl>
-				<span class="header">
-					Header
-				</span>
-			</com:TControl>
+			<span class="header">
+				Header
+			</span>
 		</temp:Header>
 		<temp:Footer>
-			<com:TControl>
-				<span class="footer">
-					Footer
-				</span>
-			</com:TControl>
+			<span class="footer">
+				Footer
+			</span>
 		</temp:Footer>
 		<temp:Empty>
-			<com:TControl>
-				<span class="empty">
-					Empty
-				</span>
-			</com:TControl>
+			<span class="empty">
+				Empty
+			</span>
 		</temp:Empty>
 		<temp:Item>
-			<com:TPanel Attributes.style="background: [%= this.DataItem.i % 2 ? '#CCFFFF' : '#FFFFCC' %]; ">
+			<div style="background: [%= this.DataItem.i % 2 ? '#CCFFFF' : '#FFFFCC' %]; ">
 				<p>
 					Liczba #[%= this.DataItem.i %] = [%= this.DataItem.n %]
 				</p>
 				<p>
 					<com:TButton on:Click="c.innerButtonClicked" Text="Button [%= ' ' + (this.DataItem.i + 1) %]" />
 				</p>
-			</com:TPanel>
+			</div>
 		</temp:Item>
 	</com:TRepeater>
 </com:TPanel>
-
-</com:TContent>
 
 </template>

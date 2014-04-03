@@ -42,7 +42,7 @@ class Renderer < BaseRenderer
 		r = StencilRenderer.new node
 		r.render
 		if ( r.output.length > 0 ) then
-			add_output varname( node )+".renderChildControls = function( placeholder ){"
+			add_output varname( node )+".renderTemplateChildControls = function( placeholder ){"
 			add_output r.output
 			add_output "}"
 		end

@@ -4,6 +4,7 @@
 class StencilNode < TemplateNode
 	
 	@property_name
+	@placeholder_node
 	
 	def property_name
 		@property_name
@@ -12,6 +13,13 @@ class StencilNode < TemplateNode
 	def initialize node
     super
 		@property_name = node.name.to_s
+		@placeholder_node = ComponentNode.new "TContent"
+		@placeholder_node.parent= self
+		@children.push @placeholder_node
   end
+	
+	def add_child c
+		@placeholder_node.add_child c
+	end
 	
 end
