@@ -66,7 +66,7 @@ component( 'TRepeater', function(){
 			then('Data items should have proper texts and ids', function() {
 				for ( var i=0; i<ds.length; i++ ){
 					var item = $( 'item_'+i );
-					expect( item.innerHTML ).toEqual( 'Item-'+ds[i] );
+					expect( item.innerHTML.trim() ).toEqual( 'Item-'+ds[i].trim() );
 					expect( item.hasClassName( 'item' ) ).toBeTruthy();
 				}
 			});
@@ -115,7 +115,7 @@ component( 'TRepeater', function(){
 			then('Data items should have proper texts and ids', function() {
 				for ( var i=0; i<ds2.length; i++ ){
 					var item = $( 'item_'+i );
-					expect( item.innerHTML ).toEqual( 'Item-'+ds2[i] );
+					expect( item.innerHTML.trim() ).toEqual( 'Item-'+ds2[i].trim() );
 					expect( item.hasClassName( 'item' ) ).toBeTruthy();
 				}
 			});

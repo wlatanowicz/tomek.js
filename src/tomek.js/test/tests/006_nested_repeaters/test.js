@@ -39,7 +39,7 @@ component( 'TRepeater', function(){
 					for ( var j=0; j<ds[i].length; j++ ){
 						var els = $$( '#container #item_'+i+' .inneritem_'+j );
 						expect( els.length ).toEqual( 1 );
-						expect( els[0].innerHTML ).toEqual( 'Item_'+ds[i][j] );
+						expect( els[0].innerHTML.trim() ).toEqual( 'Item_'+ds[i][j].trim() );
 					}
 				}
 			});

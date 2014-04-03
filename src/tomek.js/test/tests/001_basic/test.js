@@ -17,10 +17,10 @@ component( 'TTemplateControl', function(){
 			});
 			
 			then('Expression text should be rendered', function() {
-				expect( $('s1').innerHTML ).toEqual( c.getTestText() );
+				expect( $('s1').innerHTML.trim() ).toEqual( c.getTestText() );
 			});
 			then('Static text should be rendered', function() {
-				expect( $('s2').innerHTML ).toEqual( 'Static text' );
+				expect( $('s2').innerHTML.trim() ).toEqual( 'Static text' );
 			});
 			
 		});
@@ -41,7 +41,7 @@ component( 'TTemplateControl', function(){
 			});
 			
 			then('Expression text should be rendered', function() {
-				expect( $('s1').innerHTML ).toEqual( e1 );
+				expect( $('s1').innerHTML.trim() ).toEqual( e1.trim() );
 			});
 			
 			when('Set new value and rerender control', function() {
@@ -50,8 +50,8 @@ component( 'TTemplateControl', function(){
 			});
 			
 			then('Expression text should change', function() {
-				expect( $('s1').innerHTML ).not.toEqual( e1 );
-				expect( $('s1').innerHTML ).toEqual( e2 );
+				expect( $('s1').innerHTML.trim() ).not.toEqual( e1.trim() );
+				expect( $('s1').innerHTML.trim() ).toEqual( e2.trim() );
 			});
 			
 		});
