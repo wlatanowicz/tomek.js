@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<xliff version="1.0">
+<file source-language="EN" target-language="pl" datatype="plaintext" original="messages" date="2014-02-06T10:26:04Z" product-name="messages">
+<body>
+
+<trans-unit id="1">
+<source>TRANSLATE_THIS</source>
+<target>Przetłumacz to</target>
+</trans-unit>
+
+<trans-unit id="2">
+<source>AND_THIS</source>
+<target>i to</target>
+</trans-unit>
+
+</body>
+</file>
+</xliff>

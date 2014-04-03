@@ -21,6 +21,7 @@
 		<div>
 			<h3>
 				Odczyt i zapis z kontrolki
+				[%@ TRANSLATE_THIS %]
 			</h3>
 			<p tomek:StripWhitespace='no'>
 				Źródło
@@ -44,7 +45,7 @@
 	<com:TPanel ID="Panel3">
 		<div>
 			<h2>
-				Generowanie ciągu #[%= this.iteration %]
+				Generowanie ciągu #[%= this.iteration %] [%@ AND_THIS %]
 			</h2>
 			<p>
 				Liczba liczb

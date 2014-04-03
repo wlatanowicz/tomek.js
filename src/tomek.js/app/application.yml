@@ -7,3 +7,5 @@ TEMPLATES:
 RESOURCES:
   - '**/*.html'
   
+DICTIONARIES:
+  - 'translations/*.xml'

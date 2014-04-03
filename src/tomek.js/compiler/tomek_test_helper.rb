@@ -8,7 +8,8 @@ class TomekTestHelper < TomekHelper
 	def initialize
 		@APP_DIR       = File.join(ROOT_DIR, 'test')
 		@BUILD_DIR     = File.join(ROOT_DIR, 'test_build')
-		#Dictionary.set_dictionaries( YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))['DICTIONARIES'] )
+		Dictionary.set_app_dir( @APP_DIR )
+		Dictionary.set_dictionaries( YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))['DICTIONARIES'] )
 		Dictionary.set_target_langugae( TARGET_LANGUAGE )
 	end
 
