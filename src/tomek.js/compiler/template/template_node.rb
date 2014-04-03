@@ -11,6 +11,7 @@ class TemplateNode
 	@children
 	@parent
 	
+	DEFAULT_STRIP_SPACES = 'yes'
 	@strip_spaces
 	
 	@@last_auto_id = 0
@@ -70,7 +71,7 @@ class TemplateNode
 			if ( parent != nil )
 				return parent.strip_spaces?
 			end
-			return 'no'
+			return DEFAULT_STRIP_SPACES
 		else
 			return @strip_spaces == 'yes'
 		end
