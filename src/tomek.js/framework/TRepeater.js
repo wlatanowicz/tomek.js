@@ -20,6 +20,9 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 	_triggersEvents : ['ItemCreated'],
 	
 	//@Override
+	_ignoreTemplate : true,
+	
+	//@Override
 	constructor : function( options ){
 		this.base( options );
 		this._DataSource = [];

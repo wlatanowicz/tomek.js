@@ -59,12 +59,14 @@ class StencilRenderer < BaseRenderer
 	end
 	
 	def render_text_node node
-		render_in = "placeholder";
-		if ( node.parent != @root )then
-			render_in = varname( node.parent )
+		if ! node.strip_spaces? or node.get_raw.strip.length > 0
+			render_in = "placeholder";
+			if ( node.parent != @root )then
+				render_in = varname( node.parent )
+			end
+			add_output "var "+varname( node )+" = document.createTextNode( "+node.get_js_expression+" );"
+			add_output render_in+".appendChild( "+varname( node )+" );"
 		end
-		add_output "var "+varname( node )+" = document.createTextNode( "+node.get_js_expression+" );"
-		add_output render_in+".appendChild( "+varname( node )+" );"
 	end
 	
 	def render_renderers node

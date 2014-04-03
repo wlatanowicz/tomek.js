@@ -71,6 +71,14 @@ klass( 'TControl', {
 	_positionMarker : null,
 	
 	/**
+	 * TControl#_ignoreTemplate -> Boolean
+	 * 
+	 * Controls created in template are ignored if true.
+	 * 
+	 **/
+	_ignoreTemplate : false,
+	
+	/**
 	 *  new TControl([options])
 	 *  - options (Hash): hash of properties to be set
 	 * 
@@ -521,6 +529,34 @@ klass( 'TControl', {
 	 * 
 	 **/
 	renderChildControls : function( placeholder ){
+		if ( !this._ignoreTemplate && this.renderTemplateChildControls ){
+			this.renderTemplateChildControls( placeholder );
+		}else{
+			this.renderStandardChildControls( placeholder );
+		}
+	},
+
+	/**
+	 * TControl#renderTemplateChildControls( placeholder ) -> void
+	 * - placeholder (DOMElement): a placeholder
+	 * 
+	 * Renders contents of child controls as defined in template.
+	 * Method is created by compiler.
+	 * 
+	 * Should not be called directly.
+	 * 
+	 **/
+	renderTemplateChildControls : null,
+	
+	/**
+	 * TControl#renderStandardChildControls( placeholder ) -> void
+	 * - placeholder (DOMElement): a placeholder
+	 * 
+	 * Renders contents of all child controls - one by one.
+	 * Should not be called directly.
+	 * 
+	 **/
+	renderStandardChildControls : function( placeholder ){
 		for ( var i=0; i<this._childControls.length; i++ ){
 			this._childControls[ i ].renderContentsInPlaceholder( placeholder );
 		}

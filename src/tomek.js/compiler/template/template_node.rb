@@ -11,6 +11,7 @@ class TemplateNode
 	@children
 	@parent
 	
+	@strip_spaces
 	
 	@@last_auto_id = 0
 	
@@ -22,6 +23,8 @@ class TemplateNode
     @children = []
 		@attributes = []
 		@events = []
+		
+		@strip_spaces = 'inherit'
 		
 		if ( node != nil ) then
 			
@@ -38,14 +41,40 @@ class TemplateNode
 			node.attribute_nodes.each do |a|
 				if ( a.namespace == nil ) then
 					@attributes.push Attribute.new a
+				elsif ( a.namespace.href == 'tomek' ) then
+					process_option a.name, a.value
 				elsif ( a.namespace.href == 'event' ) then
 					@events.push Event.new a
+				else
+					@attributes.push Attribute.new a
 				end
 			end
 			
 		end
 		
   end
+	
+	def process_option name, value
+		if( name == 'StripWhitespace' )
+			if ( value.downcase == 'yes' )
+				@strip_spaces = 'yes'
+			end
+			if ( value.downcase == 'no' )
+				@strip_spaces = 'no'
+			end
+		end
+	end
+	
+	def strip_spaces?
+		if ( @strip_spaces == 'inherit' )
+			if ( parent != nil )
+				return parent.strip_spaces?
+			end
+			return 'no'
+		else
+			return @strip_spaces == 'yes'
+		end
+	end
 	
 	# Adds child node and assigns self to it as parent
 	def add_child c
