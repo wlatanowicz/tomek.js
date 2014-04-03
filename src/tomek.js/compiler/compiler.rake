@@ -63,7 +63,8 @@ namespace :test do
   task :run do
 		jh = TomekTestHelper.new
 		url = jh.index_file
-		Kernel.system( "open -a Firefox #{url}" )
+		browser = ENV['BROWSER'] ? ENV['BROWSER'] : 'FireFox'
+		Kernel.system( "open -a #{browser} #{url}" )
   end
   
   desc 'Builds test application and environment'
