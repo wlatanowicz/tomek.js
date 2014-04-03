@@ -2,8 +2,8 @@ MAINS:
   - main.js
 
 TEMPLATES:
-  - **/*.tpl
+  - '**/*.tpl'
   
 RESOURCES:
-  - **/*.html
+  - '**/*.html'
   
