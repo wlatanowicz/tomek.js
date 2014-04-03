@@ -56,6 +56,27 @@
 		</p>
 	</div>
 	<com:TRepeater ID="Rep" >
+		<temp:Header>
+			<com:TControl>
+				<span class="header">
+					Header
+				</span>
+			</com:TControl>
+		</temp:Header>
+		<temp:Footer>
+			<com:TControl>
+				<span class="footer">
+					Footer
+				</span>
+			</com:TControl>
+		</temp:Footer>
+		<temp:Empty>
+			<com:TControl>
+				<span class="empty">
+					Empty
+				</span>
+			</com:TControl>
+		</temp:Empty>
 		<temp:Item>
 			<com:TPanel Attributes.style="background: [%= this.DataItem.i % 2 ? '#CCFFFF' : '#FFFFCC' %]; ">
 				<p>
