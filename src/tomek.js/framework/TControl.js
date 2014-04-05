@@ -826,6 +826,35 @@ klass( 'TControl', {
             }
 		}
 		return ret;
+	},
+
+	/**
+	 * TControl#findChildControlsByID( id ) -> Array[TControl]
+	 * - id (String): control ID
+	 * 
+	 * Returns array of child controls by ID
+	 * and searches recursively all child controls.
+	 * Returns child controls with particualar ID if found or empty array not found
+	 * 
+	 **/
+	findChildControlsByID : function( id ){
+		var i;
+		var ret = [];
+		
+		this.ensureChildControls();
+		
+		if( this._childControlsHash[ id ]
+			&& this._childControlsHash[ id ].getID() == id ){
+			ret.push( this._childControlsHash[ id ] );
+		}
+		for ( i=0; i<this._childControls.length; i++ ){
+			var ctrls = this._childControls[i].findChildControlsByID( id );
+			var j;
+			for ( j=0; j<ctrls.length; j++ ){
+				ret.push( ctrls[j] );
+			}
+		}
+		return ret;
 	}
 
 } );
