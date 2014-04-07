@@ -51,9 +51,9 @@ klass( 'TWebControl', TControl, {
 	
 	//@Override
 	getPublicProperties : function(){
-		var arr = this.base()
+		var arr = this.base();
 		arr.push( 'CssClass',
-					{ name:'Attributes', type: 'none' },
+					{ name:'Attributes', type: 'none', default: {} },
 					{ name:'Element', type: 'object' } );
 		return arr;
 	},
