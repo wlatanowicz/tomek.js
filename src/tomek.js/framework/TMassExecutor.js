@@ -9,6 +9,7 @@ klass( 'TMassExecutor', {
 	___array : [],
 	
 	constructor : function( array ){
+		this.___array = [];
 		if ( array ){
 			var i;
 			for( i=0; i<array.length; i++ ){
