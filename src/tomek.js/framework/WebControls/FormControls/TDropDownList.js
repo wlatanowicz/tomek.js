@@ -34,6 +34,7 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 		var arr = this.base();
 		arr.push( 'Value',
 					'SelectedValue',
+					{ name: 'Options' },
 					{ name: 'SelectedIndex', type: 'integer', default: 0 },
 					{ name:'DataSource', type:'none', default: [] },
 					{ name: 'TextFieldName', default: 'text' },
@@ -53,8 +54,8 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 	setSelectedValue : function( v ){
 		var index_to_set = 0;
 		var j;
-		for ( j=0; j<this._Items.length; j++ ){
-			var i = this._Items[j];
+		for ( j=0; j<this.getOptions().length; j++ ){
+			var i = this.getOptions()[j];
 			if ( i.getValue() == v ){
 				index_to_set = j;
 			}
@@ -63,7 +64,7 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 	},
 	
 	getSelectedValue : function(){
-		return this.findChildControlsByKind('TOption')[ this.getSelectedIndex() ].getValue();
+		return this.getOptions()[ this.getSelectedIndex() ].getValue();
 	},
 	
 	getSelectedIndex : function(){
@@ -121,6 +122,10 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 			opt.setSelected( selected_index === i );
 			this.addChildControl( opt );
 		}
+	},
+	
+	getOptions: function(){
+		return this.findChildControlsByKind( TOption );
 	}
 	
 });
