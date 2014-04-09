@@ -26,7 +26,7 @@
 				[%@ TRANSLATE_THIS %]
 			</h3>
 			<p tomek:StripWhitespace='no'>
-				Źródło
+				<com:TLabel ForControl="SourceTB" Text="Źródło" />
 				<com:TTextBox ID="SourceTB" />
 				<a href='#'>aaaa</a>
 				<a href='#'>bbbb</a>

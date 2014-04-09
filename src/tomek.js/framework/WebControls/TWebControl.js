@@ -49,13 +49,40 @@ klass( 'TWebControl', TControl, {
 	 * 
 	 **/
 	
+	/**
+	 * TWebControl#HtmlID -> String
+	 * 
+	 * id of html tag
+	 * 
+	 **/
+	
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base();
 		arr.push( 'CssClass',
+					{ name:'HtmlID', default: '' },
 					{ name:'Attributes', type: 'none', default: {} },
 					{ name:'Element', type: 'object' } );
 		return arr;
+	},
+	
+	ensureHtmlID : function(){
+		if ( this._HtmlID.length <= 0 ){
+			if ( ! TWebControl.num ){
+				TWebControl.num = 1;
+			}
+			if ( ! TWebControl.id_prefix ){
+				TWebControl.id_prefix = 'tom_';
+			}
+			this.setHtmlID( TWebControl.id_prefix+(TWebControl.num++) );
+		}
+	},
+	
+	setHtmlID : function( v ){
+		this._HtmlID = v;
+		if ( this.getElement() ){
+			this.getElement().setAttribute( 'id', this._HtmlID );
+		}
 	},
 	
     /**
@@ -89,6 +116,11 @@ klass( 'TWebControl', TControl, {
 			}else{
 				d.setAttribute( attr, attrs[attr] );
 			}
+		}
+		
+		var id = this.getHtmlID();
+		if ( id.length > 0 ){
+			d.setAttribute( 'id', id );
 		}
 		
 		return d;
