@@ -1,6 +1,7 @@
 //= require TControl
 //= require TItem
 //= require TEventResponder
+//= require TPlaceHolder
 
 /** section: Controls
  * class TRepeater < TControl
@@ -22,21 +23,21 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 	//@Override
 	_ignoreTemplate : true,
 	
-	//@Override
-	constructor : function( options ){
-		this.base( options );
-		this._DataSource = [];
-		
-		this._Items = [];
-		this._HeaderItem = null;
-		this._FooterItem = null;
-		this._EmptyItem = null;
-		
-		this._ItemTemplate = null;
-		this._HeaderTemplate = null;
-		this._FooterTemplate = null;
-		this._EmptyTemplate = null;
-	},
+//	//@Override
+//	constructor : function( options ){
+//		this.base( options );
+//		this._DataSource = [];
+//		
+//		this._Items = [];
+//		this._HeaderItem = null;
+//		this._FooterItem = null;
+//		this._EmptyItem = null;
+//		
+//		this._ItemTemplate = null;
+//		this._HeaderTemplate = null;
+//		this._FooterTemplate = null;
+//		this._EmptyTemplate = null;
+//	},
 	
 	/**
 	 * TRepeater#DataSource -> Array
@@ -85,6 +86,7 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 					{ name: 'HeaderTemplate', type: 'none' },
 					{ name: 'FooterTemplate', type: 'none' },
 					{ name: 'EmptyTemplate', type: 'none' },
+					{ name: 'WrapperTemplate', type: 'none' },
 					{ name: 'Items', type: 'none', default: [] },
 					{ name: 'HeaderItem', type: 'none' },
 					{ name: 'FooterItem', type: 'none' },
@@ -130,7 +132,23 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 	//@Override
 	createChildControls : function(){
 		var data_source = this._DataSource;
+		
 		if ( data_source.length > 0 ){
+			
+			var placeholder = this;
+			
+			if ( this._WrapperTemplate ){
+				var wrapper = new TItem({
+					'Type' : 'Wrapper',
+					'Repeater' : this
+				});
+				wrapper.useTemplate( this._WrapperTemplate );
+				var placeholders = wrapper.findChildControlsByKind( TPlaceHolder );
+				if ( placeholders.length > 0 ){
+					this.addChildControl( wrapper );
+					placeholder = placeholders[0];
+				}
+			}
 			
 			if ( this._HeaderTemplate ){
 				var header = new TItem({
@@ -139,7 +157,7 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
                     });
 				header.useTemplate( this._HeaderTemplate );
 				this._HeaderItem = header;
-				this.addChildControl( header );
+				placeholder.addChildControl( header );
 			}
 			
 			if ( this._ItemTemplate ){
@@ -153,7 +171,7 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 						});
 					item.useTemplate( this._ItemTemplate );
 					this._Items.push( item );
-					this.addChildControl( item );
+					placeholder.addChildControl( item );
 					var param = {
 						'domEvent' : null,
 						'event' : 'ItemCreated',
@@ -172,7 +190,7 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
                     });
 				footer.useTemplate( this._FooterTemplate );
 				this._FooterItem = footer;
-				this.addChildControl( footer );
+				placeholder.addChildControl( footer );
 			}
 			
 		}else{

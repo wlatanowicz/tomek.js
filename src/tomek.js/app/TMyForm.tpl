@@ -16,6 +16,8 @@
 			</p>
 		</div>
 	</com:TPanel>
+	
+	<com:TButton Text="RED" on:Click="SourceTemplateControl.executeButtonClicked" />
 
 	<com:TPanel ID="Panel2">
 		<div>
@@ -61,6 +63,11 @@
 			</p>
 		</div>
 		<com:TRepeater ID="Rep" >
+			<temp:Wrapper>
+				<div style="background: yellow;">
+					<com:TPlaceHolder />
+				</div>
+			</temp:Wrapper>
 			<temp:Header>
 				<span class="header">
 					Header
