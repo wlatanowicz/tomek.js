@@ -32,7 +32,7 @@
 				<a href='#'>bbbb</a>
 			</p>
 			<p>
-				Cel
+				<com:TLabel ForControl="TargetTB" Text="Cel" />
 				<com:TTextBox ID="TargetTB" />
 				</p>
 				<a href='#'>aaaa</a>
