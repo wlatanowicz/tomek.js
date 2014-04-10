@@ -3,11 +3,21 @@
 /** section: ValidationControls
  * class TCustomValidator < TBaseValidator
  * 
+ * Validates based on value of IsValid property
+ * and results of event functions.
+ * 
+ * ##### Triggered events
+ * 
+ * `on:Validate`
  * 
  **/
 klass( 'TCustomValidator', TBaseValidator, [ TEventResponderMixin ], {
 		
 	_triggersEvents : [ 'Validate' ],
+	
+	/**
+	 * TButton#IsValid -> Boolean
+	 **/
 	
 	//@Override
 	getPublicProperties : function(){
