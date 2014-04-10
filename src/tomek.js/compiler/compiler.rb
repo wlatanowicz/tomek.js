@@ -3,6 +3,8 @@
 
 require 'parser/parser'
 require 'renderer/renderer'
+require 'help/colorize'
+require 'help/xml_corrector'
 
 class Compiler
 	
@@ -20,7 +22,17 @@ class Compiler
 		str = File.read( input_file )
 
 		p = Parser.new
-		doc = p.parse( str )
+		
+		begin
+			doc = p.parse( str )
+		rescue Nokogiri::XML::SyntaxError => e
+			file_name = File.basename( input_file ).red
+			puts "Error parsing template #{file_name}: #{e}"
+			puts "Part of your XML:"
+			c = XmlCorrector.new
+			c.correct str, e
+			exit
+		end
 
 		r = Renderer.new ctrl;
 		r.render( doc )
