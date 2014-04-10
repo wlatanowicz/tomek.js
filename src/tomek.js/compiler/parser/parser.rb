@@ -28,7 +28,7 @@ class Parser
 	end
 	
 	def parse( str )
-		doc = Nokogiri::XML( str )
+		doc = Nokogiri::XML( str ){ |config| config.strict }
 		node = DocumentNode.new
 		parse_recursive( node, doc.at( "template" ) )
 		return node
