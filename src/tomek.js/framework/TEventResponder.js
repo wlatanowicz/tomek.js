@@ -77,11 +77,13 @@ mixin( 'TEventResponderMixin', {
 	 * 
 	 **/
 	triggerEvent : function( e, param ){
+		var results = [];
 		if ( this._eventResponders[e] ){
 			for ( var i=0; i<this._eventResponders[e].length; i++ ){
-				this._eventResponders[e][i]( this, param );
+				results.push( this._eventResponders[e][i]( this, param ) );
 			}
 		}
+		return results;
 	},
 	
 	/**
@@ -98,7 +100,7 @@ mixin( 'TEventResponderMixin', {
 				'event' : e,
 				'domEvent' : dom_event || window.event
 			};
-		this.triggerEvent( e, param );
+		return this.triggerEvent( e, param );
 	},
 	
 	/**
