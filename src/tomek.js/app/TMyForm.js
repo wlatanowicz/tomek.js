@@ -1,4 +1,5 @@
 //= require TTemplateControl
+//= require TMassExecutor
 
 var TMyForm = TTemplateControl.extend( {
 	
@@ -30,6 +31,15 @@ var TMyForm = TTemplateControl.extend( {
 	
 	innerButtonClicked : function( sender ){
 		alert( sender.Text );
+	},
+	
+	executeButtonClicked : function(){
+		var e = new TMassExecutor( $$( 'div' ) );
+		e.addClassName( 'red' );
+	},
+	
+	getLiczba : function(){
+		return 3;
 	}
 	
 	
