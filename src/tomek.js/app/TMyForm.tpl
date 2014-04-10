@@ -17,6 +17,16 @@
 		</div>
 	</com:TPanel>
 	
+	<com:TPanel Visible="[%= SourceTemplateControl.getLiczba() > 2 %]">
+		wiecej niz dwa
+	</com:TPanel>
+	<com:TPanel Visible="[%= !( SourceTemplateControl.getLiczba() &gt; 5 ) %]">
+		mniej niz pięć
+	</com:TPanel>
+	<com:TPanel Visible="[%= ( SourceTemplateControl.getLiczba() &lt; 5 ) %]">
+		mniej niz pięć #2
+	</com:TPanel>
+	
 	<com:TButton Text="RED" on:Click="SourceTemplateControl.executeButtonClicked" />
 
 	<com:TPanel ID="Panel2">
@@ -84,6 +94,13 @@
 				</span>
 			</temp:Empty>
 			<temp:Item>
+	<com:TPanel Visible="[%= !( SourceTemplateControl.getLiczba() &gt; 5 ) %]">
+		<![CDATA[ xxx ]]>
+		mniej niz pięć
+	</com:TPanel>
+	<com:TPanel Visible="[%= ( SourceTemplateControl.getLiczba() &lt; 5 ) %]">
+		mniej niz pięć #2
+	</com:TPanel>
 				<div style="background: [%= this.DataItem.i % 2 ? '#CCFFFF' : '#FFFFCC' %]; ">
 					<p>
 						Liczba #[%= this.DataItem.i %] = [%= this.DataItem.n %]
