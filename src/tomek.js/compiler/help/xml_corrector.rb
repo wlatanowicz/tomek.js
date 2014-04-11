@@ -19,7 +19,8 @@ class XmlCorrector
 			if ( i > ( e.line - margin ) and
 						i < ( e.line + margin ) )
 				if ( i == e.line )
-					print line.red
+					print line[0,e.column].bold
+					print line[e.column,99999].bold.red
 				else
 					print line
 				end
