@@ -50,8 +50,9 @@ klass( 'TRadioButton', TWebControl, [ TEventResponderMixin ], {
 	
 	//@Override
 	getPublicProperties : function(){
-		var arr = this.base()
-		arr.push( 'Checked', 'Group' );
+		var arr = this.base();
+		arr.push( { name: 'Checked', type: 'bool', default: 'none' },
+					'Value', 'Group' );
 		return arr;
 	},
 
@@ -69,4 +70,4 @@ klass( 'TRadioButton', TWebControl, [ TEventResponderMixin ], {
 		return d;
 	}
 	
-});
+});l

@@ -236,113 +236,46 @@ klass( 'TControl', {
         var name = '';
         var can_get = true;
         var can_set = true;
-        var default_value = null;
-		var setConversion = 'none';
-		var getConversion = 'string';
         
         if ( typeof property === 'string' ){
-            name = property;
-        }else{
-            name = property.name;
-            if ( typeof property.default !== 'undefined' ){
-                default_value = property.default;
-                //@TODO optional setter and getter
-            }
-            if ( typeof property.type !== 'undefined' ){
-				// one of: int, integer, float, string, bool, boolean, object
-				getConversion = property.type.toLowerCase();
-			}
-            if ( typeof property.settype !== 'undefined' ){
-				// one of: int, integer, float, string, bool, boolean, object
-				setConversion = property.settype.toLowerCase();
-			}
+			property = {
+					name : property
+				};
         }
-        
-		this['_'+name] = default_value;
+		
+		property.name = property.name;
+		if ( typeof property.default == 'undefined' ){
+			property.default = null;
+		}
+		if ( typeof property.type == 'undefined' ){
+			// one of: int, integer, float, string, bool, boolean, object
+			property.type = 'string';
+		}
+		if ( typeof property.settype == 'undefined' ){
+			// one of: int, integer, float, string, bool, boolean, object
+			property.settype = 'none';
+		}
+		
+		this['_'+property.name] = property.default;
 		
         var	getFn = null;
         var	setFn = null;
         
         if ( can_get ){
-            if ( ! this['get'+name] ){
-				if ( getConversion === 'none' ){
-					this['get'+name] = function(){
-						return this['_'+name];
-					};
-				}else
-				if ( getConversion === 'string' ){
-					this['get'+name] = function(){
-						return this['_'+name] !== null ? this['_'+name].toString() : '';
-					};
-				}else
-				if ( getConversion === 'int' || getConversion === 'integer' ){
-					this['get'+name] = function(){
-						return parseInt( this['_'+name] );
-					};
-				}else
-				if ( getConversion === 'float' ){
-					this['get'+name] = function(){
-						return parseFloat( this['_'+name] );
-					};
-				}else
-				if ( getConversion === 'bool' || getConversion === 'boolean' ){
-					this['get'+name] = function(){
-						return parseBool( this['_'+name] );
-					};
-				}else
-				if ( getConversion === 'object' || getConversion === 'obj' ){
-					this['get'+name] = function(){
-						return this['_'+name] !== null ? this['_'+name].valueOf() : null;
-					};
-				}else
-				{
-					throw new TException( 'Bad getter type conversion: '+getConversion );
-				}
+            if ( ! this['get'+property.name] ){
+				this.createGetterFunction( property );
 			}
-            var onGet = this['get'+name];
+            var onGet = this['get'+property.name];
             getFn = function () {
                         return onGet.apply( this );
                     };
         }
         
         if ( can_set ){
-            if ( ! this['set'+name] ){
-				if ( setConversion === 'none' ){
-					this['set'+name] = function( value ){
-						this['_'+name] = value;
-					};
-				}else
-				if ( setConversion === 'string' ){
-					this['set'+name] = function( value ){
-						this['_'+name] = value !== null ? value.toString() : '';
-					};
-				}else
-				if ( setConversion === 'int' || setConversion === 'integer' ){
-					this['set'+name] = function( value ){
-						this['_'+name] = parseInt( value );
-					};
-				}else
-				if ( setConversion === 'float' ){
-					this['set'+name] = function( value ){
-						this['_'+name] = parseFloat( value );
-					};
-				}else
-				if ( setConversion === 'bool' || setConversion === 'boolean' ){
-					this['set'+name] = function( value ){
-						this['_'+name] = parseBool( value.toString() );
-					};
-				}else
-				if ( setConversion === 'object' || setConversion === 'obj' ){
-					this['set'+name] = function( value ){
-						this['_'+name] = value !== null ? value.valueOf() : null;
-					};
-				}else
-				{
-					throw new TException( 'Bad setter type conversion: '+getConversion );
-				}
-			
+            if ( ! this['set'+property.name] ){
+				this.createSetterFunction( property );
             }
-    		var onSet = this['set'+name];
+    		var onSet = this['set'+property.name];
     		setFn = function (newValue) {
     					return onSet.apply( this, [newValue]);
         			};
@@ -362,7 +295,7 @@ klass( 'TControl', {
             }
 			
 			try{
-				Object.defineProperty( this, name, props );
+				Object.defineProperty( this, property.name, props );
 			}catch( ex ){
 				// IE8 fix
 				// IE8 does not support Object.defineProperty for our objects :(
@@ -371,13 +304,85 @@ klass( 'TControl', {
 		// Older Mozilla
 		} else if ( this.__defineGetter__ ) {
             if ( getFn ){
-    			this.__defineGetter__( name, getFn );
+    			this.__defineGetter__( property.name, getFn );
             }
             if ( setFn ){
-                this.__defineSetter__( name, setFn );
+                this.__defineSetter__( property.name, setFn );
             }
 		}
 		
+	},
+	
+	createSetterFunction : function( property ){
+		if ( property.settype === 'none' ){
+			this['set'+property.name] = function( value ){
+				this['_'+property.name] = value;
+			};
+		}else
+		if ( property.settype === 'string' ){
+			this['set'+property.name] = function( value ){
+				this['_'+property.name] = value !== null ? value.toString() : '';
+			};
+		}else
+		if ( property.settype === 'int' || property.settype === 'integer' ){
+			this['set'+property.name] = function( value ){
+				this['_'+property.name] = parseInt( value );
+			};
+		}else
+		if ( property.settype === 'float' ){
+			this['set'+property.name] = function( value ){
+				this['_'+property.name] = parseFloat( value );
+			};
+		}else
+		if ( property.settype === 'bool' || property.settype === 'boolean' ){
+			this['set'+property.name] = function( value ){
+				this['_'+property.name] = parseBool( value.toString() );
+			};
+		}else
+		if ( property.settype === 'object' || property.settype === 'obj' ){
+			this['set'+property.name] = function( value ){
+				this['_'+property.name] = value !== null ? value.valueOf() : null;
+			};
+		}else
+		{
+			throw new TException( 'Bad setter type conversion: '+property.type );
+		}
+	},
+	
+	createGetterFunction : function( property ){
+		if ( property.type === 'none' ){
+			this['get'+property.name] = function(){
+				return this['_'+property.name];
+			};
+		}else
+		if ( property.type === 'string' ){
+			this['get'+property.name] = function(){
+				return this['_'+property.name] !== null ? this['_'+property.name].toString() : '';
+			};
+		}else
+		if ( property.type === 'int' || property.type === 'integer' ){
+			this['get'+property.name] = function(){
+				return parseInt( this['_'+property.name] );
+			};
+		}else
+		if ( property.type === 'float' ){
+			this['get'+property.name] = function(){
+				return parseFloat( this['_'+property.name] );
+			};
+		}else
+		if ( property.type === 'bool' || property.type === 'boolean' ){
+			this['get'+property.name] = function(){
+				return parseBool( this['_'+property.name] );
+			};
+		}else
+		if ( property.type === 'object' || property.type === 'obj' ){
+			this['get'+property.name] = function(){
+				return this['_'+property.name] !== null ? this['_'+property.name].valueOf() : null;
+			};
+		}else
+		{
+			throw new TException( 'Bad getter type conversion: '+property.type );
+		}
 	},
 	
 	/**

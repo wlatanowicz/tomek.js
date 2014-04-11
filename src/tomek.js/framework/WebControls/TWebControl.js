@@ -60,7 +60,7 @@ klass( 'TWebControl', TControl, {
 	getPublicProperties : function(){
 		var arr = this.base();
 		arr.push( 'CssClass',
-					{ name:'HtmlID', default: '' },
+					{ name:'HtmlID', default: '', elementProperty: 'id' },
 					{ name:'Attributes', type: 'none', default: {} },
 					{ name:'Element', type: 'object' } );
 		return arr;
@@ -75,13 +75,6 @@ klass( 'TWebControl', TControl, {
 				TWebControl.id_prefix = 'tom_';
 			}
 			this.setHtmlID( TWebControl.id_prefix+(TWebControl.num++) );
-		}
-	},
-	
-	setHtmlID : function( v ){
-		this._HtmlID = v;
-		if ( this.getElement() ){
-			this.getElement().setAttribute( 'id', this._HtmlID );
 		}
 	},
 	
@@ -135,6 +128,124 @@ klass( 'TWebControl', TControl, {
 			this.renderChildControls( d );
 		}
 		this.appendChild( d );
-	}
+	},
 	
+	//@Override
+	createSetterFunction : function( property ){
+		if ( typeof ( property.elementProperty ) == 'undefined' ){
+			this.base( property );
+		}else{
+			if ( property.settype === 'none' ){
+				this['set'+property.name] = function( value ){
+					this['_'+property.name] = value;
+					if ( this._renderedMainElement ){
+						this._renderedMainElement[property.elementProperty] = this['_'+property.name];
+					}
+				};
+			}else
+			if ( property.settype === 'string' ){
+				this['set'+property.name] = function( value ){
+					this['_'+property.name] = value !== null ? value.toString() : '';
+					if ( this._renderedMainElement ){
+						this._renderedMainElement[property.elementProperty] = this['_'+property.name];
+					}
+				};
+			}else
+			if ( property.settype === 'int' || property.settype === 'integer' ){
+				this['set'+property.name] = function( value ){
+					this['_'+property.name] = parseInt( value );
+					if ( this._renderedMainElement ){
+						this._renderedMainElement[property.elementProperty] = this['_'+property.name];
+					}
+				};
+			}else
+			if ( property.settype === 'float' ){
+				this['set'+property.name] = function( value ){
+					this['_'+property.name] = parseFloat( value );
+					if ( this._renderedMainElement ){
+						this._renderedMainElement[property.elementProperty] = this['_'+property.name];
+					}
+				};
+			}else
+			if ( property.settype === 'bool' || property.settype === 'boolean' ){
+				this['set'+property.name] = function( value ){
+					this['_'+property.name] = parseBool( value.toString() );
+					if ( this._renderedMainElement ){
+						this._renderedMainElement[property.elementProperty] = this['_'+property.name];
+					}
+				};
+			}else
+			if ( property.settype === 'object' || property.settype === 'obj' ){
+				this['set'+property.name] = function( value ){
+					this['_'+property.name] = value !== null ? value.valueOf() : null;
+					if ( this._renderedMainElement ){
+						this._renderedMainElement[property.elementProperty] = this['_'+property.name];
+					}
+				};
+			}else
+			{
+				throw new TException( 'Bad setter type conversion: '+property.type );
+			}
+		}
+	},
+	
+	//@Override
+	createGetterFunction : function( property ){
+		if ( typeof ( property.elementProperty ) == 'undefined' ){
+			this.base( property );
+		}else{
+			if ( property.type === 'none' ){
+				this['get'+property.name] = function(){
+					if ( this._renderedMainElement ){
+						this['_'+property.name] = this._renderedMainElement[property.elementProperty];
+					}
+					return this['_'+property.name];
+				};
+			}else
+			if ( property.type === 'string' ){
+				this['get'+property.name] = function(){
+					if ( this._renderedMainElement ){
+						this['_'+property.name] = this._renderedMainElement[property.elementProperty];
+					}
+					return this['_'+property.name] !== null ? this['_'+property.name].toString() : '';
+				};
+			}else
+			if ( property.type === 'int' || property.type === 'integer' ){
+				this['get'+property.name] = function(){
+					if ( this._renderedMainElement ){
+						this['_'+property.name] = this._renderedMainElement[property.elementProperty];
+					}
+					return parseInt( this['_'+property.name] );
+				};
+			}else
+			if ( property.type === 'float' ){
+				this['get'+property.name] = function(){
+					if ( this._renderedMainElement ){
+						this['_'+property.name] = this._renderedMainElement[property.elementProperty];
+					}
+					return parseFloat( this['_'+property.name] );
+				};
+			}else
+			if ( property.type === 'bool' || property.type === 'boolean' ){
+				this['get'+property.name] = function(){
+					if ( this._renderedMainElement ){
+						this['_'+property.name] = this._renderedMainElement[property.elementProperty];
+					}
+					return parseBool( this['_'+property.name] );
+				};
+			}else
+			if ( property.type === 'object' || property.type === 'obj' ){
+				this['get'+property.name] = function(){
+					if ( this._renderedMainElement ){
+						this['_'+property.name] = this._renderedMainElement[property.elementProperty];
+					}
+					return this['_'+property.name] !== null ? this['_'+property.name].valueOf() : null;
+				};
+			}else
+			{
+				throw new TException( 'Bad getter type conversion: '+property.type );
+			}
+		}
+	}
+
 });

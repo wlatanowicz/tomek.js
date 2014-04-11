@@ -24,8 +24,11 @@ klass( 'TImage', TWebControl, {
 	
 	//@Override
 	getPublicProperties : function(){
-		var arr = this.base()
-		arr.push( 'Src', 'Alt' );
+		var arr = this.base();
+		arr.push( 
+					{ name: 'Src', elementProperty: 'src' },
+					{ name: 'Alt', elementProperty: 'alt' }
+					);
 		return arr;
 	},
 

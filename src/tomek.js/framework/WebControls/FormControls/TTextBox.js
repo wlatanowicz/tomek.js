@@ -31,20 +31,6 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
 	//@Override
 	_triggersEvents : ['Change','KeyUp','KeyDown','Blur','Focus'],
 	
-	setText : function( v ){
-		if ( this._renderedMainElement ){
-			this._renderedMainElement.value = v;
-		}
-		this._Text = v;
-	},
-	
-	getText : function(){
-		if ( this._renderedMainElement ){
-			return this._renderedMainElement.value;
-		}
-		return this._Text ? this._Text : '';
-	},
-	
 	getValue : function(){
 		return this.getText();
 	},
@@ -60,7 +46,8 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base();
-		arr.push( 'Text', 'Value',
+		arr.push( { name: 'Text', elementProperty: 'value' },
+					'Value',
 					{ name: 'Rows', type: 'int', default: 1 },
 					{ name: 'Cols', type: 'int', default: 0 }
 		);

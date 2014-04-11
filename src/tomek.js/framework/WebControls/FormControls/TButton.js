@@ -23,21 +23,16 @@ klass( 'TButton', TWebControl, [ TEventResponderMixin ], {
 	//@Override
 	_triggersEvents : ['Click'],
 	
-	setText : function( v ){
-		if ( this._renderedMainElement ){
-			this._renderedMainElement.value = v;
-		}
-		this._Text = v;
-	},
-	
 	/**
 	 * TButton#Text -> String
 	 **/
 	
 	//@Override
 	getPublicProperties : function(){
-		var arr = this.base()
-		arr.push( 'Text' );
+		var arr = this.base();
+		arr.push( 
+					{ name:'Text', elementProperty: 'value' }
+					);
 		return arr;
 	},
 

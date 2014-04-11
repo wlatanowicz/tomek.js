@@ -24,30 +24,16 @@ klass( 'TCheckBox', TWebControl, [ TEventResponderMixin ], {
 	//@Override
 	_triggersEvents : ['Click','Change'],
 	
-	setChecked : function( v ){
-		v = parseBool( v );
-			
-		if ( this._renderedMainElement ){
-			this._renderedMainElement.checked = v;
-		}
-		this._Checked = v;
-	},
-	
-	getChecked : function(){
-		if ( this._renderedMainElement ){
-			return this._renderedMainElement.checked;
-		}
-		return this._Checked;
-	},
-	
 	/**
 	 * TCheckBox#Checked -> Boolean
 	 **/
 	
 	//@Override
 	getPublicProperties : function(){
-		var arr = this.base()
-		arr.push( 'Checked' );
+		var arr = this.base();
+		arr.push( 
+					{ name: 'Checked', type: 'bool', elementProperty: 'checked' }
+				);
 		return arr;
 	},
 

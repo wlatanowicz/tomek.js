@@ -29,7 +29,9 @@ klass( 'TLink', TWebControl, {
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base();
-		arr.push( 'Text', 'Href' );
+		arr.push( 'Text',
+					{ name: 'Href', elementProperty: 'href' }
+					);
 		return arr;
 	},
 
