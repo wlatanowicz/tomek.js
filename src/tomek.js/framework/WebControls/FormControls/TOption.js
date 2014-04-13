@@ -27,7 +27,7 @@ klass( 'TOption', TWebControl, {
 		var arr = this.base();
 		arr.push( 'Text', 
 					{ name: 'Value', elementProperty: 'value' },
-					{ name: 'Selected', 'type': 'bool' }
+					{ name: 'Selected', 'type': 'bool', elementProperty: 'selected' }
 				);
 		return arr;
 	},
@@ -37,6 +37,7 @@ klass( 'TOption', TWebControl, {
 		var d = this.base();
 		
 		d.setAttribute( 'value', this.getValue() );
+		d.selected = this.getSelected();
 		
 		if ( this.getText() ){
 			var t = document.createTextNode( this.getText() );
