@@ -51,8 +51,9 @@ klass( 'TRadioButton', TWebControl, [ TEventResponderMixin ], {
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base();
-		arr.push( { name: 'Checked', type: 'bool', default: 'none' },
-					'Value', 'Group' );
+		arr.push( { name: 'Checked', type: 'bool', default: false, elementProperty: 'checked' },
+					{ name: 'Value', elementProperty: 'value' },
+					{ name:'Group', elementProperty: 'name' } );
 		return arr;
 	},
 
@@ -61,8 +62,6 @@ klass( 'TRadioButton', TWebControl, [ TEventResponderMixin ], {
 		var d = this.base();
 		
 		d.setAttribute( 'type', 'radio' );
-		d.setAttribute( 'name', this.getGroup() );
-		d.checked = this.getChecked();
 		
 		this.registerTriggerElement( d, 'click', 'Click' );
 		this.registerTriggerElement( d, 'change', 'Change' );

@@ -69,15 +69,12 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
 		var d = this.base();
 		
 		if ( rows > 1 ){
-			var t = document.createTextNode( this.getText() );
-			d.appendChild( t );
 			if ( cols > 0 ){
 				d.cols = cols;
 			}
 			d.rows = rows;
 		}else{
 			d.setAttribute( 'type', 'text' );
-			d.value = this.getText();
 			if ( cols > 0 ){
 				d.size = cols;
 			}

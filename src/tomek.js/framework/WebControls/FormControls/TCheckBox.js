@@ -42,7 +42,6 @@ klass( 'TCheckBox', TWebControl, [ TEventResponderMixin ], {
 		var d = this.base();
 		
 		d.setAttribute( 'type', 'checkbox' );
-		d.checked = this.getChecked();
 		
 		this.registerTriggerElement( d, 'click', 'Click' );
 		this.registerTriggerElement( d, 'change', 'Change' );

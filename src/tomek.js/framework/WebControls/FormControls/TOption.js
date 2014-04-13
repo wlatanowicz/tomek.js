@@ -36,9 +36,6 @@ klass( 'TOption', TWebControl, {
 	createMainElement : function(){
 		var d = this.base();
 		
-		d.setAttribute( 'value', this.getValue() );
-		d.selected = this.getSelected();
-		
 		if ( this.getText() ){
 			var t = document.createTextNode( this.getText() );
 			d.appendChild( t );

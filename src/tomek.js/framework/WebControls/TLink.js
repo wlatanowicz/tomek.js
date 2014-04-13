@@ -38,7 +38,6 @@ klass( 'TLink', TWebControl, {
 	//@Override
 	createMainElement : function(){
 		var d = this.base();
-		d.setAttribute( 'href', this.getHref() );
 		
 		if ( this.getText().length > 0 ){
 			var t = document.createTextNode( this.getText() );

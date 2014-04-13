@@ -96,8 +96,17 @@ klass( 'TWebControl', TControl, {
 	createMainElement : function(){
 		var d = document.createElement( this._tagName );
 		
-		if ( this._CssClass ){
-			d.setAttribute( 'class', this._CssClass );
+		var props = this.getPublicProperties();
+		var i;
+		for ( i=0; i<props.length; i++ ){
+			if ( typeof( props[i] ) != 'string'
+					&& typeof( props[i].elementProperty ) == 'string' ){
+				d[ props[i].elementProperty ] = this['get'+props[i].name]();
+			}
+		}
+		
+		if ( this.getCssClass() ){
+			d.setAttribute( 'class', this.getCssClass() );
 		}
 		
 		var attrs = this.getAttributes();

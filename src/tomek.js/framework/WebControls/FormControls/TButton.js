@@ -41,7 +41,6 @@ klass( 'TButton', TWebControl, [ TEventResponderMixin ], {
 		var d = this.base();
 		
 		d.setAttribute( 'type', 'button' );
-		d.value = this.getText();
 		
 		this.registerTriggerElement( d, 'click', 'Click' );
 		

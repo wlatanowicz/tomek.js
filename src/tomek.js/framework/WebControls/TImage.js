@@ -32,14 +32,5 @@ klass( 'TImage', TWebControl, {
 		return arr;
 	},
 
-	//@Override
-	createMainElement : function(){
-		var d = this.base();
-		
-		d.setAttribute( 'src', this.getSrc() );
-		d.setAttribute( 'alt', this.getAlt() );
-		
-		return d;
-	}
 	
 });
