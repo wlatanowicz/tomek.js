@@ -21,32 +21,5 @@ if ( ! Array.prototype.in_array ){
 			}
 		}
 		return false;
-	}
-}
-
-function elementHasClassName( e, c ){
-	var classes = e['class'].split( ' ' );
-	for ( var i=0; i<classes.length; i++ ){
-		if ( classes[i] && classes[i] == c ){
-			return true;
-		}
-	}
-	return false;
-}
-
-function elementAddClassName( e, c ){
-	if ( ! elementHasClassName( e, c ) ){
-		e['class'] += ' ' + c;
-	}
-}
-
-function elementRemoveClassName( e, c ){
-	var classes = e['class'].split( ' ' );
-	var new_classes = [];
-	for ( var i=0; i<classes.length; i++ ){
-		if ( classes[i] && classes[i] != c ){
-			new_classes.push( classes[i] );
-		}
-	}
-	e['class'] = classes.join( ' ' );
+	};
 }

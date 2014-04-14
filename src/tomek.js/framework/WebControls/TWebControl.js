@@ -59,11 +59,40 @@ klass( 'TWebControl', TControl, {
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base();
-		arr.push( 'CssClass',
+		arr.push( { name: 'CssClass', default: '', elementProperty: 'class' },
 					{ name:'HtmlID', default: '', elementProperty: 'id' },
 					{ name:'Attributes', type: 'none', default: {} },
 					{ name:'Element', type: 'object' } );
 		return arr;
+	},
+	
+	addCssClass : function( cls ){
+		if ( ! this.hasCssClass( cls ) ){
+			var classes = this.getCssClass();
+			classes = (classes.length > 0) ? (classes+' '+cls) : cls;
+			this.setCssClass(  classes );
+		}
+	},
+	
+	removeCssClass : function( cls ){
+		var classes = this.getCssClass().split( ' ' );
+		var new_classes = [];
+		for ( var i=0; i<classes.length; i++ ){
+			if ( classes[i] && classes[i] != cls ){
+				new_classes.push( classes[i] );
+			}
+		}
+		this.setCssClass( classes.join( ' ' ) );
+	},
+	
+	hasCssClass : function( cls ){
+		var classes = this.getCssClass().split( ' ' );
+		for ( var i=0; i<classes.length; i++ ){
+			if ( classes[i] && classes[i] == cls ){
+				return true;
+			}
+		}
+		return false;
 	},
 	
 	ensureHtmlID : function(){
@@ -103,10 +132,6 @@ klass( 'TWebControl', TControl, {
 					&& typeof( props[i].elementProperty ) == 'string' ){
 				d[ props[i].elementProperty ] = this['get'+props[i].name]();
 			}
-		}
-		
-		if ( this.getCssClass() ){
-			d.setAttribute( 'class', this.getCssClass() );
 		}
 		
 		var attrs = this.getAttributes();
