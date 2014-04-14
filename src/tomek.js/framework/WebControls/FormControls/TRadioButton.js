@@ -69,4 +69,4 @@ klass( 'TRadioButton', TWebControl, [ TEventResponderMixin ], {
 		return d;
 	}
 	
-});l
+});
