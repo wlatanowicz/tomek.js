@@ -53,7 +53,9 @@ klass( 'TRadioButton', TWebControl, [ TEventResponderMixin ], {
 		var arr = this.base();
 		arr.push( { name: 'Checked', type: 'bool', default: false, elementProperty: 'checked' },
 					{ name: 'Value', elementProperty: 'value' },
-					{ name:'Group', elementProperty: 'name' } );
+					{ name:'Group', elementProperty: 'name' },
+					{ name:'Disabled', type:'bool', elementProperty:'disabled' }
+				);
 		return arr;
 	},
 

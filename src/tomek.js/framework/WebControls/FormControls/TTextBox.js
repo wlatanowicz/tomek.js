@@ -49,7 +49,8 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
 		arr.push( { name: 'Text', elementProperty: 'value' },
 					'Value',
 					{ name: 'Rows', type: 'int', default: 1 },
-					{ name: 'Cols', type: 'int', default: 0 }
+					{ name: 'Cols', type: 'int', default: 0 },
+					{ name:'Disabled', type:'bool', elementProperty:'disabled' }
 		);
 		return arr;
 	},

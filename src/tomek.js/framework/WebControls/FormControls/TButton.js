@@ -31,7 +31,8 @@ klass( 'TButton', TWebControl, [ TEventResponderMixin ], {
 	getPublicProperties : function(){
 		var arr = this.base();
 		arr.push( 
-					{ name:'Text', elementProperty: 'value' }
+					{ name:'Text', elementProperty: 'value' },
+					{ name:'Disabled', type:'bool', elementProperty:'disabled' }
 					);
 		return arr;
 	},

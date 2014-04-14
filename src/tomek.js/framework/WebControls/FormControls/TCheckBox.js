@@ -32,7 +32,8 @@ klass( 'TCheckBox', TWebControl, [ TEventResponderMixin ], {
 	getPublicProperties : function(){
 		var arr = this.base();
 		arr.push( 
-					{ name: 'Checked', type: 'bool', elementProperty: 'checked' }
+					{ name: 'Checked', type: 'bool', elementProperty: 'checked' },
+					{ name:'Disabled', type:'bool', elementProperty:'disabled' }
 				);
 		return arr;
 	},

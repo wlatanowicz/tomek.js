@@ -38,7 +38,8 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 					{ name: 'SelectedIndex', type: 'integer', default: 0 },
 					{ name:'DataSource', type:'none', default: [] },
 					{ name: 'TextFieldName', default: 'text' },
-					{ name: 'ValueFieldName', default: 'value' }
+					{ name: 'ValueFieldName', default: 'value' },
+					{ name:'Disabled', type:'bool', elementProperty:'disabled' }
 					);
 		return arr;
 	},
