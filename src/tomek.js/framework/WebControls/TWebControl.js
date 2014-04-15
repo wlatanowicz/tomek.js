@@ -82,7 +82,7 @@ klass( 'TWebControl', TControl, {
 				new_classes.push( classes[i] );
 			}
 		}
-		this.setCssClass( classes.join( ' ' ) );
+		this.setCssClass( new_classes.join( ' ' ) );
 	},
 	
 	hasCssClass : function( cls ){
