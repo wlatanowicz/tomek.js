@@ -31,7 +31,7 @@ class Compiler
 			puts "Part of your XML:"
 			c = XmlCorrector.new
 			c.correct str, e
-			exit
+			exit 99
 		end
 
 		r = Renderer.new ctrl;
