@@ -101,7 +101,8 @@ klass( 'TWebControl', TControl, {
 	},
 	
 	ensureHtmlID : function(){
-		if ( this._HtmlID.length <= 0 ){
+		if ( this._HtmlID == null
+				|| this._HtmlID.length <= 0 ){
 			if ( ! TWebControl.num ){
 				TWebControl.num = 1;
 			}
