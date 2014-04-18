@@ -66,6 +66,11 @@ klass( 'TWebControl', TControl, {
 		return arr;
 	},
 	
+	propFix : {
+		'htmlFor' : 'for',
+		'cssClass' : 'class',
+	},
+	
 	addCssClass : function( cls ){
 		if ( ! this.hasCssClass( cls ) ){
 			var classes = this.getCssClass();
@@ -130,7 +135,10 @@ klass( 'TWebControl', TControl, {
 		for ( i=0; i<props.length; i++ ){
 			if ( typeof( props[i] ) != 'string'
 					&& typeof( props[i].elementProperty ) == 'string' ){
-				d[ props[i].elementProperty ] = this['get'+props[i].name]();
+				
+				var value = this['get'+props[i].name]();
+				this.setAttribute( d, props[i], value );
+				
 			}
 		}
 		
@@ -144,12 +152,7 @@ klass( 'TWebControl', TControl, {
 				d.setAttribute( attr, attrs[attr] );
 			}
 		}
-		
-		var id = this.getHtmlID();
-		if ( id.length > 0 ){
-			d.setAttribute( 'id', id );
-		}
-		
+				
 		return d;
 	},
 
@@ -164,6 +167,22 @@ klass( 'TWebControl', TControl, {
 		this.appendChild( d );
 	},
 	
+	setAttribute : function( el, property, value ){
+		if ( el ){
+			if ( value ){
+				el.setAttribute( this.propFix[ property.elementProperty ] || property.elementProperty, value );
+			}else{
+				el.removeAttribute( this.propFix[ property.elementProperty ] || property.elementProperty );
+			}
+		}
+	},
+	
+	getAttribute : function( el, property ){
+		if ( el ){
+			return el.getAttribute( this.propFix[ property.elementProperty ] || property.elementProperty );
+		}
+	},
+	
 	//@Override
 	createSetterFunction : function( property ){
 		if ( typeof ( property.elementProperty ) == 'undefined' ){
@@ -172,49 +191,37 @@ klass( 'TWebControl', TControl, {
 			if ( property.settype === 'none' ){
 				this['set'+property.name] = function( value ){
 					this['_'+property.name] = value;
-					if ( this._renderedMainElement ){
-						this._renderedMainElement[property.elementProperty] = this['_'+property.name];
-					}
+					this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
 				};
 			}else
 			if ( property.settype === 'string' ){
 				this['set'+property.name] = function( value ){
 					this['_'+property.name] = value !== null ? value.toString() : '';
-					if ( this._renderedMainElement ){
-						this._renderedMainElement[property.elementProperty] = this['_'+property.name];
-					}
+					this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
 				};
 			}else
 			if ( property.settype === 'int' || property.settype === 'integer' ){
 				this['set'+property.name] = function( value ){
 					this['_'+property.name] = parseInt( value );
-					if ( this._renderedMainElement ){
-						this._renderedMainElement[property.elementProperty] = this['_'+property.name];
-					}
+					this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
 				};
 			}else
 			if ( property.settype === 'float' ){
 				this['set'+property.name] = function( value ){
 					this['_'+property.name] = parseFloat( value );
-					if ( this._renderedMainElement ){
-						this._renderedMainElement[property.elementProperty] = this['_'+property.name];
-					}
+					this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
 				};
 			}else
 			if ( property.settype === 'bool' || property.settype === 'boolean' ){
 				this['set'+property.name] = function( value ){
 					this['_'+property.name] = parseBool( value.toString() );
-					if ( this._renderedMainElement ){
-						this._renderedMainElement[property.elementProperty] = this['_'+property.name];
-					}
+					this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
 				};
 			}else
 			if ( property.settype === 'object' || property.settype === 'obj' ){
 				this['set'+property.name] = function( value ){
 					this['_'+property.name] = value !== null ? value.valueOf() : null;
-					if ( this._renderedMainElement ){
-						this._renderedMainElement[property.elementProperty] = this['_'+property.name];
-					}
+					this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
 				};
 			}else
 			{
@@ -231,7 +238,7 @@ klass( 'TWebControl', TControl, {
 			if ( property.type === 'none' ){
 				this['get'+property.name] = function(){
 					if ( this._renderedMainElement ){
-						this['_'+property.name] = this._renderedMainElement[property.elementProperty];
+						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property.elementProperty );
 					}
 					return this['_'+property.name];
 				};
@@ -239,7 +246,7 @@ klass( 'TWebControl', TControl, {
 			if ( property.type === 'string' ){
 				this['get'+property.name] = function(){
 					if ( this._renderedMainElement ){
-						this['_'+property.name] = this._renderedMainElement[property.elementProperty];
+						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property.elementProperty );
 					}
 					return this['_'+property.name] !== null ? this['_'+property.name].toString() : '';
 				};
@@ -247,7 +254,7 @@ klass( 'TWebControl', TControl, {
 			if ( property.type === 'int' || property.type === 'integer' ){
 				this['get'+property.name] = function(){
 					if ( this._renderedMainElement ){
-						this['_'+property.name] = this._renderedMainElement[property.elementProperty];
+						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property.elementProperty );
 					}
 					return parseInt( this['_'+property.name] );
 				};
@@ -255,7 +262,7 @@ klass( 'TWebControl', TControl, {
 			if ( property.type === 'float' ){
 				this['get'+property.name] = function(){
 					if ( this._renderedMainElement ){
-						this['_'+property.name] = this._renderedMainElement[property.elementProperty];
+						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property.elementProperty );
 					}
 					return parseFloat( this['_'+property.name] );
 				};
@@ -263,7 +270,7 @@ klass( 'TWebControl', TControl, {
 			if ( property.type === 'bool' || property.type === 'boolean' ){
 				this['get'+property.name] = function(){
 					if ( this._renderedMainElement ){
-						this['_'+property.name] = this._renderedMainElement[property.elementProperty];
+						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property.elementProperty );
 					}
 					return parseBool( this['_'+property.name] );
 				};
@@ -271,7 +278,7 @@ klass( 'TWebControl', TControl, {
 			if ( property.type === 'object' || property.type === 'obj' ){
 				this['get'+property.name] = function(){
 					if ( this._renderedMainElement ){
-						this['_'+property.name] = this._renderedMainElement[property.elementProperty];
+						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property.elementProperty );
 					}
 					return this['_'+property.name] !== null ? this['_'+property.name].valueOf() : null;
 				};
