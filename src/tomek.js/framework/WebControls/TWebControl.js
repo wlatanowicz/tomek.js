@@ -174,7 +174,7 @@ klass( 'TWebControl', TControl, {
 	setAttribute : function( el, property, value ){
 		if ( el ){
 			if ( value ){
-				el.setAttribute( this.propFix( property.elementProperty ), value );
+				el[this.propFix( property.elementProperty )] = value;
 			}else{
 				el.removeAttribute( this.propFix( property.elementProperty ) );
 			}
@@ -183,7 +183,7 @@ klass( 'TWebControl', TControl, {
 	
 	getAttribute : function( el, property ){
 		if ( el ){
-			return el.getAttribute( this.propFix( property.elementProperty ) );
+			return el[property.elementProperty];
 		}
 	},
 	
