@@ -200,7 +200,7 @@ klass( 'TWebControl', TControl, {
 			}else
 			if ( property.settype === 'string' ){
 				this['set'+property.name] = function( value ){
-					this['_'+property.name] = value !== null ? value.toString() : '';
+					this['_'+property.name] = value !== null && typeof( value ) != 'undefined' ? value.toString() : '';
 					this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
 				};
 			}else
@@ -224,7 +224,7 @@ klass( 'TWebControl', TControl, {
 			}else
 			if ( property.settype === 'object' || property.settype === 'obj' ){
 				this['set'+property.name] = function( value ){
-					this['_'+property.name] = value !== null ? value.valueOf() : null;
+					this['_'+property.name] = value !== null && typeof( value ) != 'undefined' ? value.valueOf() : null;
 					this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
 				};
 			}else
@@ -252,7 +252,7 @@ klass( 'TWebControl', TControl, {
 					if ( this._renderedMainElement ){
 						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property.elementProperty );
 					}
-					return this['_'+property.name] !== null ? this['_'+property.name].toString() : '';
+					return this['_'+property.name] !== null && typeof ( this['_'+property.name] ) != 'undefined' ? this['_'+property.name].toString() : '';
 				};
 			}else
 			if ( property.type === 'int' || property.type === 'integer' ){
@@ -284,7 +284,7 @@ klass( 'TWebControl', TControl, {
 					if ( this._renderedMainElement ){
 						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property.elementProperty );
 					}
-					return this['_'+property.name] !== null ? this['_'+property.name].valueOf() : null;
+					return this['_'+property.name] !== null && typeof ( this['_'+property.name] ) != 'undefined' ? this['_'+property.name].valueOf() : null;
 				};
 			}else
 			{
