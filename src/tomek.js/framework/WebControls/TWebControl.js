@@ -66,9 +66,12 @@ klass( 'TWebControl', TControl, {
 		return arr;
 	},
 	
-	propFix : {
-		'htmlFor' : 'for',
-		'cssClass' : 'class',
+	propFix : function( prop ){
+		switch( prop ){
+			case 'htmlFor': return 'for';
+			case 'className' : return 'class';
+		}
+		return prop;
 	},
 	
 	addCssClass : function( cls ){
@@ -171,16 +174,16 @@ klass( 'TWebControl', TControl, {
 	setAttribute : function( el, property, value ){
 		if ( el ){
 			if ( value ){
-				el.setAttribute( this.propFix[ property.elementProperty ] || property.elementProperty, value );
+				el.setAttribute( this.propFix( property.elementProperty ), value );
 			}else{
-				el.removeAttribute( this.propFix[ property.elementProperty ] || property.elementProperty );
+				el.removeAttribute( this.propFix( property.elementProperty ) );
 			}
 		}
 	},
 	
 	getAttribute : function( el, property ){
 		if ( el ){
-			return el.getAttribute( this.propFix[ property.elementProperty ] || property.elementProperty );
+			return el.getAttribute( this.propFix( property.elementProperty ) );
 		}
 	},
 	
