@@ -173,14 +173,16 @@ klass( 'TWebControl', TControl, {
 	
 	setAttribute : function( el, property, value ){
 		if ( value ){
-			el[this.propFix( property.elementProperty )] = value;
+			//el[ property.elementProperty ] = value;
+			el.setAttribute( this.propFix( property.elementProperty ), value );
 		}else{
 			el.removeAttribute( this.propFix( property.elementProperty ) );
 		}
 	},
 	
 	getAttribute : function( el, property ){
-		return el[property.elementProperty];
+		//return el[ property.elementProperty ];
+		return el.getAttribute( this.propFix( property.elementProperty ) );
 	},
 	
 	//@Override
@@ -250,7 +252,7 @@ klass( 'TWebControl', TControl, {
 			if ( property.type === 'none' ){
 				this['get'+property.name] = function(){
 					if ( this._renderedMainElement ){
-						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property.elementProperty );
+						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property );
 					}
 					return this['_'+property.name];
 				};
@@ -258,7 +260,7 @@ klass( 'TWebControl', TControl, {
 			if ( property.type === 'string' ){
 				this['get'+property.name] = function(){
 					if ( this._renderedMainElement ){
-						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property.elementProperty );
+						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property );
 					}
 					return this['_'+property.name] !== null && typeof ( this['_'+property.name] ) != 'undefined' ? this['_'+property.name].toString() : '';
 				};
@@ -266,7 +268,7 @@ klass( 'TWebControl', TControl, {
 			if ( property.type === 'int' || property.type === 'integer' ){
 				this['get'+property.name] = function(){
 					if ( this._renderedMainElement ){
-						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property.elementProperty );
+						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property );
 					}
 					return parseInt( this['_'+property.name] );
 				};
@@ -274,7 +276,7 @@ klass( 'TWebControl', TControl, {
 			if ( property.type === 'float' ){
 				this['get'+property.name] = function(){
 					if ( this._renderedMainElement ){
-						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property.elementProperty );
+						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property );
 					}
 					return parseFloat( this['_'+property.name] );
 				};
@@ -282,7 +284,7 @@ klass( 'TWebControl', TControl, {
 			if ( property.type === 'bool' || property.type === 'boolean' ){
 				this['get'+property.name] = function(){
 					if ( this._renderedMainElement ){
-						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property.elementProperty );
+						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property );
 					}
 					return parseBool( this['_'+property.name] );
 				};
@@ -290,7 +292,7 @@ klass( 'TWebControl', TControl, {
 			if ( property.type === 'object' || property.type === 'obj' ){
 				this['get'+property.name] = function(){
 					if ( this._renderedMainElement ){
-						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property.elementProperty );
+						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property );
 					}
 					return this['_'+property.name] !== null && typeof ( this['_'+property.name] ) != 'undefined' ? this['_'+property.name].valueOf() : null;
 				};
