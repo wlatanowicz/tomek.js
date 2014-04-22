@@ -30,7 +30,7 @@ klass( 'TLink', TWebControl, {
 	getPublicProperties : function(){
 		var arr = this.base();
 		arr.push( 'Text',
-					{ name: 'Href', elementProperty: 'href' },
+					{ name: 'Href', elementProperty: 'href', default: '#' },
 					{ name: 'Target', default: '_self', elementProperty: 'target' }
 					);
 		return arr;
