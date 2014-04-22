@@ -172,19 +172,15 @@ klass( 'TWebControl', TControl, {
 	},
 	
 	setAttribute : function( el, property, value ){
-		if ( el ){
-			if ( value ){
-				el[this.propFix( property.elementProperty )] = value;
-			}else{
-				el.removeAttribute( this.propFix( property.elementProperty ) );
-			}
+		if ( value ){
+			el[this.propFix( property.elementProperty )] = value;
+		}else{
+			el.removeAttribute( this.propFix( property.elementProperty ) );
 		}
 	},
 	
 	getAttribute : function( el, property ){
-		if ( el ){
-			return el[property.elementProperty];
-		}
+		return el[property.elementProperty];
 	},
 	
 	//@Override
@@ -195,37 +191,49 @@ klass( 'TWebControl', TControl, {
 			if ( property.settype === 'none' ){
 				this['set'+property.name] = function( value ){
 					this['_'+property.name] = value;
-					this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
+					if ( this._renderedMainElement ){
+						this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
+					}
 				};
 			}else
 			if ( property.settype === 'string' ){
 				this['set'+property.name] = function( value ){
 					this['_'+property.name] = value !== null && typeof( value ) != 'undefined' ? value.toString() : '';
-					this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
+					if ( this._renderedMainElement ){
+						this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
+					}
 				};
 			}else
 			if ( property.settype === 'int' || property.settype === 'integer' ){
 				this['set'+property.name] = function( value ){
 					this['_'+property.name] = parseInt( value );
-					this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
+					if ( this._renderedMainElement ){
+						this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
+					}
 				};
 			}else
 			if ( property.settype === 'float' ){
 				this['set'+property.name] = function( value ){
 					this['_'+property.name] = parseFloat( value );
-					this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
+					if ( this._renderedMainElement ){
+						this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
+					}
 				};
 			}else
 			if ( property.settype === 'bool' || property.settype === 'boolean' ){
 				this['set'+property.name] = function( value ){
 					this['_'+property.name] = parseBool( value.toString() );
-					this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
+					if ( this._renderedMainElement ){
+						this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
+					}
 				};
 			}else
 			if ( property.settype === 'object' || property.settype === 'obj' ){
 				this['set'+property.name] = function( value ){
 					this['_'+property.name] = value !== null && typeof( value ) != 'undefined' ? value.valueOf() : null;
-					this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
+					if ( this._renderedMainElement ){
+						this.setAttribute( this._renderedMainElement, property, this['_'+property.name] );
+					}
 				};
 			}else
 			{
