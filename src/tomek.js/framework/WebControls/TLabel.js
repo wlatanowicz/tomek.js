@@ -32,10 +32,16 @@ klass( 'TLabel', TWebControl, {
 		var c = this._ForControl;
 		if ( typeof( c ) == 'string' ){
 			return this.findControlByID( this._ForControl );
-		}else
+		}
 		if ( c != null && c.isKindOf && c.isKindOf( TWebControl ) ){
 			return c;
-		}else
+		}
+		if ( c != null && c.isKindOf && c.isKindOf( TExpression ) ){
+			var c2 = c.valueOf();
+			if ( c2 != null && c.isKindOf && c.isKindOf( TWebControl ) ){
+				return c2;
+			}
+		}
 		if ( c != null ){
 			throw new TException( 'Bad ForControl '+c );
 		}
