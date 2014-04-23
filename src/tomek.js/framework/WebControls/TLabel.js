@@ -37,7 +37,7 @@ klass( 'TLabel', TWebControl, {
 			return c;
 		}else
 		if ( c != null ){
-			throw new TException();
+			throw new TException( 'Bad ForControl '+c );
 		}
 		return null;
 	},
