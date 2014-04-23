@@ -38,7 +38,7 @@ klass( 'TLabel', TWebControl, {
 		}
 		if ( c != null && c.isKindOf && c.isKindOf( TExpression ) ){
 			var c2 = c.valueOf();
-			if ( c2 != null && c.isKindOf && c.isKindOf( TWebControl ) ){
+			if ( c2 != null && c2.isKindOf && c2.isKindOf( TWebControl ) ){
 				return c2;
 			}
 		}
