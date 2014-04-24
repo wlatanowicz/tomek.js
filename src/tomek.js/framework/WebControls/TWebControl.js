@@ -56,12 +56,16 @@ klass( 'TWebControl', TControl, {
 	 * 
 	 **/
 	
+	getDefaultAttributes : function(){
+		return {};
+	},
+	
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base();
 		arr.push( { name: 'CssClass', default: '', elementProperty: 'className' },
 					{ name:'HtmlID', default: '', elementProperty: 'id' },
-					{ name:'Attributes', type: 'none', default: {} },
+					{ name:'Attributes', type: 'none', default: this.getDefaultAttributes() },
 					{ name:'Element', type: 'object' } );
 		return arr;
 	},

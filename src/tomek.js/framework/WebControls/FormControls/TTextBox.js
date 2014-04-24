@@ -23,9 +23,6 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
 	_tagName : 'input',
 	
 	_singleLineTagName : 'input',
-	
-	_type : 'text',
-	
 	_multiLineTagName : 'textarea',
 	
 	//@Override
@@ -33,6 +30,11 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
 	
 	//@Override
 	_triggersEvents : ['Change','KeyUp','KeyDown','Blur','Focus'],
+	
+	//@Override
+	getDefaultAttributes : function(){
+		return { type: 'text' };
+	},
 	
 	getValue : function(){
 		return this.getText();
@@ -77,8 +79,8 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
 				d.cols = cols;
 			}
 			d.rows = rows;
+			d.removeAttribute( 'type' );
 		}else{
-			d.setAttribute( 'type', this._type );
 			if ( cols > 0 ){
 				d.size = cols;
 			}

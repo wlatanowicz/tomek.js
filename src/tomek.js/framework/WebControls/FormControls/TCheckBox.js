@@ -18,13 +18,16 @@ klass( 'TCheckBox', TWebControl, [ TEventResponderMixin ], {
 	//@Override
 	_tagName : 'input',
 	
-	_type : 'checkbox',
-	
 	//@Override
 	_rendersChildControls : false,
 	
 	//@Override
 	_triggersEvents : ['Click','Change'],
+	
+	//@Override
+	getDefaultAttributes : function(){
+		return { type: 'checkbox' };
+	},
 	
 	/**
 	 * TCheckBox#Checked -> Boolean
@@ -43,8 +46,6 @@ klass( 'TCheckBox', TWebControl, [ TEventResponderMixin ], {
 	//@Override
 	createMainElement : function(){
 		var d = this.base();
-		
-		d.setAttribute( 'type', this._type );
 		
 		this.registerTriggerElement( d, 'click', 'Click' );
 		this.registerTriggerElement( d, 'change', 'Change' );

@@ -17,13 +17,16 @@ klass( 'TButton', TWebControl, [ TEventResponderMixin ], {
 	//@Override
 	_tagName : 'input',
 	
-	_type : 'button',
-	
 	//@Override
 	_rendersChildControls : false,
 	
 	//@Override
 	_triggersEvents : ['Click'],
+	
+	//@Override
+	getDefaultAttributes : function(){
+		return { type: 'button' };
+	},
 	
 	/**
 	 * TButton#Text -> String
@@ -42,8 +45,6 @@ klass( 'TButton', TWebControl, [ TEventResponderMixin ], {
 	//@Override
 	createMainElement : function(){
 		var d = this.base();
-		
-		d.setAttribute( 'type', this._type );
 		
 		this.registerTriggerElement( d, 'click', 'Click' );
 		

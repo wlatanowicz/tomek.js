@@ -18,13 +18,16 @@ klass( 'TFileUpload', TWebControl, [ TEventResponderMixin, TValidatableMixin ], 
 	//@Override
 	_tagName : 'input',
 	
-	_type : 'file',
-	
 	//@Override
 	_rendersChildControls : false,
 	
 	//@Override
 	_triggersEvents : ['Change'],
+	
+	//@Override
+	getDefaultAttributes : function(){
+		return { type: 'file' };
+	},
 	
 	/**
 	 * TTextBox#Text -> String
@@ -44,8 +47,6 @@ klass( 'TFileUpload', TWebControl, [ TEventResponderMixin, TValidatableMixin ], 
 	createMainElement : function(){
 		
 		var d = this.base();
-		
-		d.setAttribute( 'type', this._type );
 		
 		this.registerTriggerElement( d, 'change', 'Change' );
 		
