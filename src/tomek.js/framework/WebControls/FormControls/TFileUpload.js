@@ -18,6 +18,8 @@ klass( 'TFileUpload', TWebControl, [ TEventResponderMixin, TValidatableMixin ], 
 	//@Override
 	_tagName : 'input',
 	
+	_type : 'file',
+	
 	//@Override
 	_rendersChildControls : false,
 	
@@ -42,7 +44,8 @@ klass( 'TFileUpload', TWebControl, [ TEventResponderMixin, TValidatableMixin ], 
 	createMainElement : function(){
 		
 		var d = this.base();
-		d.setAttribute( 'type', 'file' );
+		
+		d.setAttribute( 'type', this._type );
 		
 		this.registerTriggerElement( d, 'change', 'Change' );
 		

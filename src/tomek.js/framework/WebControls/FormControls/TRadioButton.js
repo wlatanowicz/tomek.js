@@ -18,6 +18,8 @@ klass( 'TRadioButton', TWebControl, [ TEventResponderMixin ], {
 	//@Override
 	_tagName : 'input',
 	
+	_type : 'radio',
+	
 	//@Override
 	_rendersChildControls : false,
 	
@@ -63,7 +65,7 @@ klass( 'TRadioButton', TWebControl, [ TEventResponderMixin ], {
 	createMainElement : function(){
 		var d = this.base();
 		
-		d.setAttribute( 'type', 'radio' );
+		d.setAttribute( 'type', this._type );
 		
 		this.registerTriggerElement( d, 'click', 'Click' );
 		this.registerTriggerElement( d, 'change', 'Change' );

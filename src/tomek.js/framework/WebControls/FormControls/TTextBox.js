@@ -23,6 +23,9 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
 	_tagName : 'input',
 	
 	_singleLineTagName : 'input',
+	
+	_type : 'text',
+	
 	_multiLineTagName : 'textarea',
 	
 	//@Override
@@ -75,7 +78,7 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
 			}
 			d.rows = rows;
 		}else{
-			d.setAttribute( 'type', 'text' );
+			d.setAttribute( 'type', this._type );
 			if ( cols > 0 ){
 				d.size = cols;
 			}
