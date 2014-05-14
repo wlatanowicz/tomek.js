@@ -7,7 +7,6 @@ MAINS:
 - tests/004_simple_repeater/main.js
 - tests/005_basic_events/main.js
 - tests/006_nested_repeaters/main.js
-- tests/007_drop_down_list/main.js
 - tests/008_simple_validator/main.js
 TEMPLATES:
 - '**/*.tpl'

@@ -91,6 +91,12 @@ namespace :test do
 
 end
 
+desc 'Creates a test'
+task :test_create, :name do |t, args|
+	jh = TomekTestHelper.new
+	jh.create_test args.name
+end
+
 namespace :clean do
   
   desc 'Cleans up temp dir'

@@ -54,4 +54,36 @@ class TomekTestHelper < TomekHelper
 		
  	end
 	
+	def create_test name
+		
+		template = File.join( @APP_DIR, 'test_template' )
+		test_dir = File.join( @APP_DIR, 'tests' )
+		
+		last_num = 0;
+		Dir.foreach(test_dir) do |f|
+			if ! f.start_with?( '.' ) then
+				num = f.split( "_" )[0].to_i
+				last_num = num if ( num > last_num )
+			end
+		end
+		
+		new_num = (last_num+1).to_s.rjust( 3, '0' )
+		
+		new_dir = File.join( test_dir, new_num+"_"+name )
+		Dir.mkdir( new_dir )
+		
+		Dir.foreach( template ) do |f|
+			if ! f.start_with?( '.' ) then
+				
+				File.open( File.join( new_dir, f ).gsub( "__NUM__", new_num ), 'w') do |file|
+					file.write( IO.read( File.join( template, f ) ).gsub( "__NUM__", new_num ) )
+				end
+				
+			end
+		end
+		
+		update_tests
+		
+	end
+	
 end
