@@ -113,6 +113,12 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 	
 	getOptions: function(){
 		return this.findChildControlsByKind( TOption );
-	}
+	},
 	
+	renderContents : function(){
+		var si = this.getSelectedIndex();
+		this.base();
+		this.setSelectedIndex( si );
+	}
+
 });

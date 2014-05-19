@@ -188,6 +188,30 @@ klass( 'TWebControl', TControl, {
 		return el[ property.elementProperty ];
 	},
 	
+	removeRenderedNodes : function(){
+		this.removeMainElement();
+		this.base();
+	},
+	
+	removeMainElement : function(){
+		var el = this._renderedMainElement;
+		this._renderedMainElement = null;
+		
+		if ( el ){
+			var props = this.getPublicProperties();
+			var i;
+			for ( i=0; i<props.length; i++ ){
+				if ( typeof( props[i] ) != 'string'
+						&& typeof( props[i].elementProperty ) == 'string'
+						&& props[i].fetchFromElement ){
+
+					this['set'+props[i].name]( this.getAttribute( el, props[i] ) );
+
+				}
+			}
+		}
+	},
+	
 	//@Override
 	createSetterFunction : function( property ){
 		if ( typeof ( property.elementProperty ) == 'undefined' ){
