@@ -35,7 +35,7 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 		arr.push( 'Value',
 					'SelectedValue',
 					{ name: 'Options' },
-					{ name: 'SelectedIndex', type: 'integer', default: 0 },
+					{ name: 'SelectedIndex', type: 'integer', default: 0, elementProperty: 'selectedIndex', fetchFromElement: true },
 					{ name:'DataSource', type:'none', default: [] },
 					{ name: 'TextFieldName', default: 'text' },
 					{ name: 'ValueFieldName', default: 'value' },
@@ -66,20 +66,6 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 	
 	getSelectedValue : function(){
 		return this.getOptions()[ this.getSelectedIndex() ].getValue();
-	},
-	
-	getSelectedIndex : function(){
-		if ( this._renderedMainElement ){
-			return this._renderedMainElement.selectedIndex;
-		}
-		return this._SelectedIndex;
-	},
-	
-	setSelectedIndex : function( v ){
-		if ( this._renderedMainElement ){
-			this._renderedMainElement.selectedIndex = v;
-		}
-		this._SelectedIndex = v;
 	},
 
 	//@Override

@@ -51,7 +51,7 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base();
-		arr.push( { name: 'Text', elementProperty: 'value' },
+		arr.push( { name: 'Text', elementProperty: 'value', fetchFromElement: true },
 					'Value',
 					{ name: 'Rows', type: 'int', default: 1 },
 					{ name: 'Cols', type: 'int', default: 0 },

@@ -4,12 +4,7 @@
 /** section: FormControls
  * class TRadioButtonGroup < TControl
  * 
- * Control renders a radio button input
- * 
- * ##### Triggered events
- * 
- * `on:Click`
- * `on:Change`
+ * Control fetches value from radio button inputs
  * 
  **/
 klass( 'TRadioButton', TControl, {
@@ -30,7 +25,7 @@ klass( 'TRadioButton', TControl, {
 	
 	//@Override
 	getPublicProperties : function(){
-		var arr = this.base()
+		var arr = this.base();
 		arr.push( 'Value', 'Group' );
 		return arr;
 	}

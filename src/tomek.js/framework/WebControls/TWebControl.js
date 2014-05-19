@@ -254,7 +254,7 @@ klass( 'TWebControl', TControl, {
 		}else{
 			if ( property.type === 'none' ){
 				this['get'+property.name] = function(){
-					if ( this._renderedMainElement ){
+					if ( this._renderedMainElement && property.fetchFromElement ){
 						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property );
 					}
 					return this['_'+property.name];
@@ -262,7 +262,7 @@ klass( 'TWebControl', TControl, {
 			}else
 			if ( property.type === 'string' ){
 				this['get'+property.name] = function(){
-					if ( this._renderedMainElement ){
+					if ( this._renderedMainElement && property.fetchFromElement ){
 						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property );
 					}
 					return this['_'+property.name] !== null && typeof ( this['_'+property.name] ) != 'undefined' ? this['_'+property.name].toString() : '';
@@ -270,7 +270,7 @@ klass( 'TWebControl', TControl, {
 			}else
 			if ( property.type === 'int' || property.type === 'integer' ){
 				this['get'+property.name] = function(){
-					if ( this._renderedMainElement ){
+					if ( this._renderedMainElement && property.fetchFromElement ){
 						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property );
 					}
 					return parseInt( this['_'+property.name] );
@@ -278,7 +278,7 @@ klass( 'TWebControl', TControl, {
 			}else
 			if ( property.type === 'float' ){
 				this['get'+property.name] = function(){
-					if ( this._renderedMainElement ){
+					if ( this._renderedMainElement && property.fetchFromElement ){
 						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property );
 					}
 					return parseFloat( this['_'+property.name] );
@@ -286,7 +286,7 @@ klass( 'TWebControl', TControl, {
 			}else
 			if ( property.type === 'bool' || property.type === 'boolean' ){
 				this['get'+property.name] = function(){
-					if ( this._renderedMainElement ){
+					if ( this._renderedMainElement && property.fetchFromElement ){
 						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property );
 					}
 					return parseBool( this['_'+property.name] );
@@ -294,7 +294,7 @@ klass( 'TWebControl', TControl, {
 			}else
 			if ( property.type === 'object' || property.type === 'obj' ){
 				this['get'+property.name] = function(){
-					if ( this._renderedMainElement ){
+					if ( this._renderedMainElement && property.fetchFromElement ){
 						this['_'+property.name] = this.getAttribute( this._renderedMainElement, property );
 					}
 					return this['_'+property.name] !== null && typeof ( this['_'+property.name] ) != 'undefined' ? this['_'+property.name].valueOf() : null;

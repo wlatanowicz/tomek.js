@@ -57,7 +57,7 @@ klass( 'TRadioButton', TWebControl, [ TEventResponderMixin ], {
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base();
-		arr.push( { name: 'Checked', type: 'bool', default: false, elementProperty: 'checked' },
+		arr.push( { name: 'Checked', type: 'bool', default: false, elementProperty: 'checked', fetchFromElement: true },
 					{ name: 'Value', elementProperty: 'value' },
 					{ name:'Group', elementProperty: 'name' },
 					{ name:'Disabled', type:'bool', elementProperty:'disabled' }

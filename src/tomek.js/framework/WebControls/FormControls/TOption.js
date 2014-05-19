@@ -27,7 +27,7 @@ klass( 'TOption', TWebControl, {
 		var arr = this.base();
 		arr.push( 'Text', 
 					{ name: 'Value', elementProperty: 'value' },
-					{ name: 'Selected', 'type': 'bool', elementProperty: 'selected' },
+					{ name: 'Selected', 'type': 'bool', elementProperty: 'selected', fetchFromElement: true },
 					{ name:'Disabled', type:'bool', elementProperty:'disabled' }
 				);
 		return arr;

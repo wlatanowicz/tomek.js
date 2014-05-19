@@ -36,7 +36,7 @@ klass( 'TFileUpload', TWebControl, [ TEventResponderMixin, TValidatableMixin ], 
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base();
-		arr.push( { name:'Value', elementProperty: 'value' },
+		arr.push( { name:'Value', elementProperty: 'value', fetchFromElement: true },
 					{ name:'Multiple', type:'bool', default: 'false', elementProperty:'multiple' },
 					{ name:'Disabled', type:'bool', elementProperty:'disabled' }
 		);
