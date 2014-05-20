@@ -1,21 +1,51 @@
-feature('Car engine startup', function() {
-	summary(
-		'In order to drive my car around',
-		'As a vehicle owner',
-		'I want to press a button to start my car'
-	);
+function checkOrder( el ){
+	var txt = $( el ).textContent;
+	var ar = txt.split(/[\s]+/);
+	var ar2 = [];
+	for ( var i =0; i<ar.length; i++ ){
+		if ( ar[i].length > 0 ){
+			ar2.push( ar[i] );
+		}
+	}
+	for ( var i=1; i<ar2.length; i++ ){
+		if ( ar2[i-1] >= ar2[i] ){
+			return false;
+		}
+	}
+	return true;
+}
 
-	scenario('The is stopped with the engine off', function() {
-		var car;
+component( 'TTemplateControl', function(){
+	feature('Expression rendering', function() {
+		summary(
+			'Tests if template renders contents in correct order'
+		);
 
-		given('My car is parked and not running', function() {
-			car = {};
+		scenario('Render template', function() {
+			$( 'container' ).update('');
+			var c;
+
+			given('Create new control', function() {
+				c = new TTestControl002( { 'Placeholder' : 'container' } );
+			});
+			
+			when('Render control', function() {
+				c.render();
+			});
+			
+			then('Order should be ascending', function() {
+				expect( checkOrder( $('container') ) ).toBe( true );
+			});
+			
+			when('Rerender control', function() {
+				c.render();
+			});
+			
+			then('Order should be ascending', function() {
+				expect( checkOrder( $('container') ) ).toBe( true );
+			});
+			
 		});
-		when('I press the start button', function() {
-			car.x = 'x';
-		});
-		then('The car should start up', function() {
-			expect(false).toBe(true)
-		});
+		
 	});
 });
