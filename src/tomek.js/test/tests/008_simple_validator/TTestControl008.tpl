@@ -6,12 +6,12 @@
 	<com:TValidatedForm ID="Form">
 		<div>
 			<com:TTextBox ID="TB" />
-			<com:TRequiredValidator ControlToValidate="TB" >
+			<com:TRequiredValidator CssClass="err" ControlToValidate="TB" >
 				No text in textbox
 			</com:TRequiredValidator>
 		</div>
 	</com:TValidatedForm>
-	<com:TButton on:Click="SourceTemplateControl.buttonClicked" />
+	<com:TButton ID="B" on:Click="SourceTemplateControl.buttonClicked" />
 </com:TContent>
 	
 </template>

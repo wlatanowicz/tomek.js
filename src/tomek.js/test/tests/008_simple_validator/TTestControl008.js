@@ -2,8 +2,10 @@
 
 var TTestControl008 = TTemplateControl.extend( {
 	
+	validationResult : null,
+	
 	buttonClicked : function( sender, param ){
-		console.log( sender.findControlByID( 'Form' ).validate() ? 'OK' : 'ERR' );
+		this.validationResult = sender.findControlByID( 'Form' ).validate() ? 'OK' : 'ERR';
 	}
 	
 } );
