@@ -863,3 +863,9 @@ klass( 'TControl', {
 	}
 
 } );
+
+TControl.prototype.$ = TControl.prototype.findChildControlByID;
+TControl.prototype.$$ = TControl.prototype.findChildControlsByID;
+TControl.prototype.$$type = TControl.prototype.findChildsControlByType;
+TControl.prototype.$$kind = TControl.prototype.findChildsControlByKind;
+
