@@ -65,7 +65,12 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 	},
 	
 	getSelectedValue : function(){
-		return this.getOptions()[ this.getSelectedIndex() ].getValue();
+		var idx = this.getSelectedIndex();
+		if ( this.getOptions()[ idx ] && this.getOptions()[ idx ].getValue ){
+			return this.getOptions()[ idx ].getValue();
+		}else{
+			return null;
+		}
 	},
 
 	//@Override
