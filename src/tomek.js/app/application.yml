@@ -6,6 +6,8 @@ TEMPLATES:
   
 RESOURCES:
   - '**/*.html'
+  - '**/*.css'
+  - 'ionic/**/*'
   
 DICTIONARIES:
   - 'translations/*.xml'

@@ -2,115 +2,90 @@
 
 <template xmlns:com='component' xmlns:prop='property' xmlns:on='event' xmlns:temp='stencil' xmlns:tomek='tomek'>
 
-<div tomek:StripWhitespace='yes'>
-		
-	<com:TPanel ID="Panel1" Attributes.style="background: #FFCCFF;">
-		<div>
-			<h3>
-				Kontrolka z danymi z wyrażenia
-			</h3>
-			<p tomek:StripWhitespace='no'>
-				Dzisiaj ( [%= (new Date()).getFullYear() + '-' + ((new Date()).getMonth()+1) + '-' + (new Date()).getDate() %] ) jest
-				<com:TTextBox ID="DateTB"
-							  Text="[%= (new Date()).getTime() %]" />
-			</p>
-		</div>
-	</com:TPanel>
-	
-	<com:TPanel Visible="[%= SourceTemplateControl.getLiczba() > 2 %]">
-		wiecej niz dwa
-	</com:TPanel>
-	<com:TPanel Visible="[%= !( SourceTemplateControl.getLiczba() &gt; 5 ) %]">
-		mniej niz pięć
-	</com:TPanel>
-	<com:TPanel Visible="[%= ( SourceTemplateControl.getLiczba() &lt; 5 ) %]">
-		mniej niz pięć #2
-	</com:TPanel>
-	
-	<com:TButton Text="RED" on:Click="SourceTemplateControl.executeButtonClicked" />
+    <com:TControl>
+        <div class="bar bar-header bar-stable">
+            <com:UIButton CssClass="button button-icon icon ion-navicon" />
+            <div class="h1 title">Header Buttons</div>
+            <com:UIButton CssClass="button button-clear button-positive" Text="Edit" />
+        </div>
 
-	<com:TPanel ID="Panel2">
-		<div>
-			<h3>
-				Odczyt i zapis z kontrolki
-				[%@ TRANSLATE_THIS %]
-			</h3>
-			<p tomek:StripWhitespace='no'>
-				<com:TLabel ForControl="SourceTB" Text="Źródło" />
-				<com:TTextBox ID="SourceTB" />
-				<a href='#'>aaaa</a>
-				<a href='#'>bbbb</a>
-			</p>
-			<p>
-				<com:TLabel ForControl="TargetTB" Text="Cel" />
-				<com:TTextBox ID="TargetTB" />
-				</p>
-				<a href='#'>aaaa</a>
-				<a href='#'>bbbb</a>
-			<p>
-				<com:TButton Text="Przepisz"
-							 on:Click="c.copyClicked" />
-			</p>
-		</div>
-	</com:TPanel>
+        <div class="scroll-content ionic-scroll has-header has-tabs padding" >
 
-	<com:TPanel ID="Panel3">
-		<div>
-			<h2>
-				Generowanie ciągu #[%= this.iteration %] [%@ AND_THIS %]
-			</h2>
-			<p>
-				Liczba liczb
-				<com:TTextBox ID="NumberTB" />
-			</p>
-			<p>
-				Krok
-				<com:TTextBox ID="StepTB" />
-			</p>
-			<p>
-				<com:TButton Text="Generuj"
-							 on:Click="c.fillClicked" />
-			</p>
-		</div>
-		<com:TRepeater ID="Rep" >
-			<temp:Wrapper>
-				<div style="background: yellow;">
-					<com:TPlaceHolder />
-				</div>
-			</temp:Wrapper>
-			<temp:Header>
-				<span class="header">
-					Header
-				</span>
-			</temp:Header>
-			<temp:Footer>
-				<span class="footer">
-					Footer
-				</span>
-			</temp:Footer>
-			<temp:Empty>
-				<span class="empty">
-					Empty
-				</span>
-			</temp:Empty>
-			<temp:Item>
-	<com:TPanel Visible="[%= !( SourceTemplateControl.getLiczba() &gt; 5 ) %]">
-		<![CDATA[ xxx ]]>
-		mniej niz pięć
-	</com:TPanel>
-	<com:TPanel Visible="[%= ( SourceTemplateControl.getLiczba() &lt; 5 ) %]">
-		mniej niz pięć #2
-	</com:TPanel>
-				<div style="background: [%= this.DataItem.i % 2 ? '#CCFFFF' : '#FFFFCC' %]; ">
-					<p>
-						Liczba #[%= this.DataItem.i %] = [%= this.DataItem.n %]
-					</p>
-					<p>
-						<com:TButton on:Click="c.innerButtonClicked" Text="Button [%= ' ' + (this.DataItem.i + 1) %]" />
-					</p>
-				</div>
-			</temp:Item>
-		</com:TRepeater>
-	</com:TPanel>
-</div>
+            <div class="list">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">First Name</span>
+                    <com:TTextBox />
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Last Name</span>
+                    <input type="text" placeholder="Suhr" />
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Email</span>
+                    <input type="text" placeholder="john@suhr.com" />
+                </label>
+            </div>
+
+            <ul class="list">
+
+                <li class="item item-toggle">
+                    HTML5
+                    <label class="toggle toggle-positive">
+                        <input type="checkbox" />
+                        <div class="track">
+                            <div class="handle"></div>
+                        </div>
+                    </label>
+                </li>
+                <li class="item item-toggle">
+                    HTML5
+                    <label class="toggle toggle-assertive">
+                        <input type="checkbox" />
+                        <div class="track">
+                            <div class="handle"></div>
+                        </div>
+                    </label>
+                </li>
+                <li class="item item-toggle">
+                    HTML5
+                    <label class="toggle toggle-assertive">
+                        <input type="checkbox" />
+                        <div class="track">
+                            <div class="handle"></div>
+                        </div>
+                    </label>
+                </li>
+
+            </ul>            
+
+            <div class="range">
+                <i class="icon ion-volume-low"></i>
+                <input type="range" name="volume" />
+                <i class="icon ion-volume-high"></i>
+            </div>
+
+            <div class="list">
+                <div class="item range range-positive">
+                    <i class="icon ion-ios7-sunny-outline"></i>
+                    <input type="range" name="volume" min="0" max="100" value="33" />
+                    <i class="icon ion-ios7-sunny"></i>
+                </div>
+                <div class="item range range-negative">
+                    <i class="icon ion-ios7-sunny-outline"></i>
+                    <input type="range" name="volume" min="0" max="100" value="33" />
+                    <i class="icon ion-ios7-sunny"></i>
+                </div>
+                <div class="item range range-positive">
+                    <i class="icon ion-ios7-sunny-outline"></i>
+                    <input type="range" name="volume" min="0" max="100" value="33" />
+                    <i class="icon ion-ios7-sunny"></i>
+                </div>
+            </div>            
+
+
+            <com:TButton CssClass="button button-block button-positive" Text="Block button" />
+
+        </div>
+    </com:TControl>
+
 </template>
