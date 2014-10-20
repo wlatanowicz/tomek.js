@@ -74,8 +74,8 @@ class TomekDocHelper < TomekHelper
     #hash = current_head
     index_header = <<EOF
 <h1 style="margin-top: 31px; height: 75px; padding: 1px 0; background: url(images/header-stripe-small.png) repeat-x;">
-  <a href="http://prototypejs.org" style="padding-left: 120px;">
-    <img src="images/header-logo-small.png" alt="Prototype JavaScript Framework API" />
+  <a href="http://tomekjs.com" style="padding-left: 120px;">
+    Tomek.js framework API
   </a>
 </h1>
 EOF
@@ -91,12 +91,12 @@ EOF
       },
       :pretty_urls => false,
       :bust_cache  => false,
-      :name => 'JEF JavaScript Framework',
-      :short_name => 'JEF',
-      :home_url => 'http://jef-framework.org',
+      :name => 'Tomek.js JavaScript Framework',
+      :short_name => 'Tomek.js',
+      :home_url => 'http://tomekjs.com',
       :version => TomekHelper::VERSION,
       :index_header => index_header,
-      :footer => 'This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike 3.0 Unported License</a>.',
+      :footer => '',
       :assets => 'doc_assets'
     })
   end
