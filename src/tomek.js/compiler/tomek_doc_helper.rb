@@ -85,10 +85,10 @@ EOF
       :index_page   => 'README.markdown',
       :syntax_highlighter => syntax_highlighter,
       :markdown_parser    => :bluecloth,
-      :src_code_text => "View source on GitHub &rarr;",
-      :src_code_href => proc { |obj|
-        "https://github.com/sstephenson/prototype/blob/"
-      },
+#      :src_code_text => "View source on GitHub &rarr;",
+#      :src_code_href => proc { |obj|
+#        "https://github.com/tomekjs/"
+#      },
       :pretty_urls => false,
       :bust_cache  => false,
       :name => 'Tomek.js JavaScript Framework',
