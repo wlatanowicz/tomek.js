@@ -94,7 +94,7 @@ EOF
       :name => 'Tomek.js JavaScript Framework',
       :short_name => 'Tomek.js',
       :home_url => 'http://tomekjs.com',
-      :version => TomekHelper::VERSION,
+      :version => '3.2.9',#TomekHelper::VERSION,
       :index_header => index_header,
       :footer => '',
       :assets => 'doc_assets'
