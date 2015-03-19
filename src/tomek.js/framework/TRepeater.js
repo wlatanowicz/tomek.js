@@ -133,7 +133,7 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 	createChildControls : function(){
 		var data_source = this._DataSource;
 		
-		if ( data_source.length > 0 ){
+		if ( data_source && data_source.length > 0 ){
 			
 			var placeholder = this;
 			
