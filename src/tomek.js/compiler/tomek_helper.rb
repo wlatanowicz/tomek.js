@@ -76,8 +76,9 @@ class TomekHelper
   end
   
 	def compile_templates
-		c = Compiler.new TEMP_DEST_DIR 
+		c = Compiler.new TEMP_DEST_DIR
 		basedir = @APP_DIR
+		c.source_path = basedir
 		templates = YAML.load(IO.read(File.join(@APP_DIR, APP_YML)))['TEMPLATES']
 		templates.each do |r|
 			pat = File.join( basedir, r )

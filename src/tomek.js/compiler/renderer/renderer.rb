@@ -8,8 +8,9 @@ class Renderer < BaseRenderer
 	
 	@dependencies
 	@control
+	@source_path
 	
-	def initialize control
+	def initialize control 
 		super
 		@control = control
 		@dependencies = []
@@ -17,6 +18,10 @@ class Renderer < BaseRenderer
 	
 	def render doc
 		render_initializers doc
+	end
+	
+	def source_path= value
+		@source_path = value
 	end
 	
 	def render_initializer node
@@ -68,7 +73,15 @@ class Renderer < BaseRenderer
 		txt = ""
 		
 		@dependencies.each do |c|
-			txt += "//= require \""+c+"\"\n"
+			
+			f = File.join( @source_path, "**", c+".tpl" )
+			found = Dir.glob( f )
+			if found.count > 0
+				txt += "//= require \""+c+"-tpl\"\n"
+			else
+				txt += "//= require \""+c+"\"\n"
+			end
+			
 		end
 		
 		txt += "\n"

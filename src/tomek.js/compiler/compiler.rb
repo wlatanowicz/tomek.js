@@ -10,10 +10,15 @@ class Compiler
 	
 	@output_dir
 	@suffix
+	@source_path
 	
 	def initialize output
 		@output_dir = output
 		@suffix = ".tpl"
+	end
+	
+	def source_path= value
+		@source_path = value
 	end
 	
 	def compile input_file
@@ -35,6 +40,7 @@ class Compiler
 		end
 
 		r = Renderer.new ctrl;
+		r.source_path = @source_path
 		r.render( doc )
 		js = r.output
 
