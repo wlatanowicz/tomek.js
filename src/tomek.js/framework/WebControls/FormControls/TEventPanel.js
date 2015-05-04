@@ -39,7 +39,6 @@ klass( 'TEventPanel', TWebControl, [ TEventResponderMixin ], {
 			this._triggersEvents.push( this._eventsLUT[e] );
 		}
 		
-		this._complexEventResponders = {};
 	},
 	
 	setStopOnEvents : function( v ){
@@ -55,15 +54,15 @@ klass( 'TEventPanel', TWebControl, [ TEventResponderMixin ], {
 	attachEvent : function( e, fun ){
 		
 		var mainEvent = this.splitEvent( e ).main;
-		
+
 		if ( ! this.respondsToEvent( mainEvent ) ){
 			this.base( mainEvent, this.domEventResponder.bind( this ) );
 		}
 		
-		if ( ! this._complexEventResponders[e] ){
-			this._complexEventResponders[e] = [];
+		if ( ! this._eventResponders[e] ){
+			this._eventResponders[e] = [];
 		}
-		this._complexEventResponders[e].push( fun );
+		this._eventResponders[e].push( fun );
 	},
 	
 	splitEvent : function ( e ){
@@ -77,24 +76,23 @@ klass( 'TEventPanel', TWebControl, [ TEventResponderMixin ], {
 		};
 	},
 	
-	domEventResponder : function( inputEvent ){
-		
-		var element = inputEvent.element();
-		var domEventName = inputEvent.type;
+	domEventResponder : function( tomekEvent, inputEvent ){
+		var element = inputEvent.domEvent.element();
+		var domEventName = inputEvent.domEvent.type;
 		var tomekEventName = this._eventsLUT[ domEventName ];
 		
 		while ( true ){
 			
 			var event = element.getAttribute( 'Event' );
-			var events = event.split( "," );
+			var events = event ? event.split( "," ) : [];
 			
 			for( var i=0; i<events.length; i++ ){
 				var complexEvent = events[i];
 				var complexEventObj = this.splitEvent( complexEvent );
-				
 				if ( complexEventObj.main === tomekEventName ){
 					var param = {
 						DomElement : element,
+						DomEvent : inputEvent.domEvent,
 						Control : null
 					};
 					this.triggerEvent( complexEvent, param );
