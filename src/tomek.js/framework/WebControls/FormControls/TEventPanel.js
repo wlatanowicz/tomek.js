@@ -76,9 +76,9 @@ klass( 'TEventPanel', TWebControl, [ TEventResponderMixin ], {
 		};
 	},
 	
-	domEventResponder : function( tomekEvent, inputEvent ){
-		var element = inputEvent.domEvent.element();
-		var domEventName = inputEvent.domEvent.type;
+	domEventResponder : function( sender, inputParam ){
+		var element = inputParam.domEvent.element();
+		var domEventName = inputParam.domEvent.type;
 		var tomekEventName = this._eventsLUT[ domEventName ];
 		
 		while ( true ){
@@ -92,7 +92,7 @@ klass( 'TEventPanel', TWebControl, [ TEventResponderMixin ], {
 				if ( complexEventObj.main === tomekEventName ){
 					var param = {
 						DomElement : element,
-						DomEvent : inputEvent.domEvent,
+						DomEvent : inputParam.domEvent,
 						Control : null
 					};
 					this.triggerEvent( complexEvent, param );
