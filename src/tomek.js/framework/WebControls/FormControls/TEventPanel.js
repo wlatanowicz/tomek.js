@@ -91,9 +91,10 @@ klass( 'TEventPanel', TWebControl, [ TEventResponderMixin ], {
 				var complexEventObj = this.splitEvent( complexEvent );
 				if ( complexEventObj.main === tomekEventName ){
 					var param = {
-						DomElement : element,
-						DomEvent : inputParam.domEvent,
-						Control : null
+						event : complexEvent,
+						domElement : element,
+						domEvent : inputParam.domEvent,
+						control : element && element.TomekControlObject ? element.TomekControlObject : null
 					};
 					this.triggerEvent( complexEvent, param );
 					
