@@ -73,13 +73,14 @@ class Renderer < BaseRenderer
 		txt = ""
 		
 		@dependencies.each do |c|
-			
-			f = File.join( @source_path, "**", c+".tpl" )
-			found = Dir.glob( f )
-			if found.count > 0
-				txt += "//= require \""+c+"-tpl\"\n"
-			else
-				txt += "//= require \""+c+"\"\n"
+			unless c == @control
+				f = File.join( @source_path, "**", c+".tpl" )
+				found = Dir.glob( f )
+				if found.count > 0
+					txt += "//= require \""+c+"-tpl\"\n"
+				else
+					txt += "//= require \""+c+"\"\n"
+				end
 			end
 			
 		end
