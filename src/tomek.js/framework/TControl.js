@@ -321,7 +321,10 @@ klass( 'TControl', {
 		}else
 		if ( property.settype === 'string' ){
 			this['set'+property.name] = function( value ){
-				this['_'+property.name] = value !== null ? value.toString() : '';
+				this['_'+property.name] = value !== null
+											&& value !== undefined
+											? value.toString()
+											: '';
 			};
 		}else
 		if ( property.settype === 'int' || property.settype === 'integer' ){
@@ -341,7 +344,10 @@ klass( 'TControl', {
 		}else
 		if ( property.settype === 'object' || property.settype === 'obj' ){
 			this['set'+property.name] = function( value ){
-				this['_'+property.name] = value !== null ? value.valueOf() : null;
+				this['_'+property.name] = value !== null
+											&& value !== undefined
+											? value.valueOf()
+											: null;
 			};
 		}else
 		{
@@ -357,7 +363,10 @@ klass( 'TControl', {
 		}else
 		if ( property.type === 'string' ){
 			this['get'+property.name] = function(){
-				return this['_'+property.name] !== null ? this['_'+property.name].toString() : '';
+				return this['_'+property.name] !== null
+						&& this['_'+property.name] !== undefined
+						? this['_'+property.name].toString()
+						: '';
 			};
 		}else
 		if ( property.type === 'int' || property.type === 'integer' ){
@@ -377,7 +386,10 @@ klass( 'TControl', {
 		}else
 		if ( property.type === 'object' || property.type === 'obj' ){
 			this['get'+property.name] = function(){
-				return this['_'+property.name] !== null ? this['_'+property.name].valueOf() : null;
+				return this['_'+property.name] !== null
+						&& this['_'+property.name] !== undefined
+						? this['_'+property.name].valueOf()
+						: null;
 			};
 		}else
 		{
