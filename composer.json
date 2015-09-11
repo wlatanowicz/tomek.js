@@ -1,0 +1,14 @@
+{
+    "name": "wlatanowicz/tomek.js",
+    "description": "Tomek.js Framework",
+    "keywords": ["framework"],
+    "homepage": "http://wiktor.latanowicz.com",
+    "license": "Commercial",
+    "authors": [
+        {
+            "name": "Wiktor Latanowicz",
+            "email": "wiktor@truesolutions.pl"
+        }
+    ],
+    "minimum-stability": "dev"
+}
