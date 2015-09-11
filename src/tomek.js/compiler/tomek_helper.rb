@@ -45,7 +45,7 @@ class TomekHelper
 		dir_path = TEMP_DEST_DIR
 		Dir.foreach(dir_path) do |f|
 			fn = File.join(dir_path, f)
-			FileUtils.rm_rf( "#{fn}" ) if f != '.' && f != '..' && f != '.svn'
+			FileUtils.rm_rf( "#{fn}" ) if f != '.' && f != '..' && f != '.svn' && f != '.gitignore'
 		end
 	end
 	
@@ -53,7 +53,7 @@ class TomekHelper
 		dir_path = @BUILD_DIR
 		Dir.foreach(dir_path) do |f|
 			fn = File.join(dir_path, f)
-			FileUtils.rm_rf( "#{fn}" ) if f != '.' && f != '..' && f != '.svn'
+			FileUtils.rm_rf( "#{fn}" ) if f != '.' && f != '..' && f != '.svn' && f != '.gitignore'
 		end
 	end
 	
