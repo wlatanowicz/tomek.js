@@ -4,4 +4,8 @@ import Renderer from "./renderer/Renderer";
 
 
 var parser = new Parser();
-parser.parseFile( "../app/TMyControl.tpl" );
+var control = parser.parseFile( "../app/TMyControl.tpl" );
+
+var renderer = new Renderer("TMyControl" );
+renderer.render(control);
+

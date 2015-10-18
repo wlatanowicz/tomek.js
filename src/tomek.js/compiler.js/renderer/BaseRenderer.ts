@@ -5,7 +5,7 @@ import StencilNode from '../template/StencilNode';
 import HtmlNode from '../template/HtmlNode';
 import DocumentNode from '../template/DocumentNode';
 
-export default  class BaseRenderer {
+export default class BaseRenderer {
 	
 	indent: number;
 	output: string;
@@ -37,24 +37,29 @@ export default  class BaseRenderer {
 		this.output += input + "\n";
 	}
 
-	varname( n ){
+	getVarname( n ):string{
 		if ( n === null ){
 			return "placeholdeer";
 		}
 		if (n instanceof HtmlNode) {
-			return "h_" + n.variablename;
+			return "h_" + n.getVariableName();
 		}
 		if (n instanceof ComponentNode) {
-			return n.variablename;
+			return n.getVariableName();
 		}
 		if ( n instanceof StencilNode ){
 			return "item";
 		}
 		if ( n instanceof TextNode ){
-			return "t_"+n.variablename;
+			return "t_" + n.getVariableName();
 		}
 		throw "error";
 		
+	}
+
+	getAttributesJson(node:TemplateNode):string{
+		//@TODO
+		return '{}';
 	}
 
 }
