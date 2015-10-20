@@ -1,0 +1,17 @@
+{
+
+	"mains": [
+		"main.js"
+	],
+	"templates": [
+		"**/*.tpl"
+	],
+	"resources": [
+		"**/*.html",
+		"**/*.css"
+  	],
+  	"dictionaries": [
+  		"translations/*.xml"
+  	]
+
+}

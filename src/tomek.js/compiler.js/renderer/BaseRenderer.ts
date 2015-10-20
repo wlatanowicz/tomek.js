@@ -58,8 +58,17 @@ export default class BaseRenderer {
 	}
 
 	getAttributesJson(node:TemplateNode):string{
-		//@TODO
-		return '{}';
+		if (node.attributes.length == 0) {
+			return '[]';
+		}
+
+		var attrs = [];
+		for (let i = 0; i < node.attributes.length;i++){
+			let a = node.attributes[i];
+			attrs.push( "\"" + a.name + "\" : " + a.value.epression );
+		}
+
+		return " {\n\t\t\t\t" + attrs.join( ",\n\t\t\t\t" )+"\n\t\t\t\t} ";
 	}
 
 }
