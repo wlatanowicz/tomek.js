@@ -18,4 +18,8 @@ export default class ComponentNode extends TemplateNode {
 		}
 	}
 
+	detailedDescription(){
+		return this.classname;
+	}
+
 }

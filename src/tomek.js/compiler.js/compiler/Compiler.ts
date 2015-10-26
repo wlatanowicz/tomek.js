@@ -11,7 +11,7 @@ export default class Compiler {
 	destination_dir: string;
 	source_paths: string[];
 
-	construcor( destination_dir:string, source_paths:string[] ) {
+	constructor( destination_dir:string, source_paths:string[] ) {
 		this.destination_dir = destination_dir;
 		this.source_paths = source_paths;
 	}
@@ -19,6 +19,8 @@ export default class Compiler {
 	compile(source_file: string ) {
 		var parser = new Parser();
 		var control = parser.parseFile( source_file );
+
+//		console.log(control.description());
 
 		var control_name = path.basename( source_file, '.tpl' );
 

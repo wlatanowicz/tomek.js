@@ -16,7 +16,7 @@ export default class TextExpression {
 
 		while ( i < (l+1) ){
 
-			if (mode == "text" && str.substring(i, i + 3) == "[%@") {
+			if (mode == "text" && ( i >= l || str.substring(i, i + 3) == "[%@" ) ){
 				mode = "trans";
 				i += 3;
 				if (part.length > 0) {
@@ -25,7 +25,7 @@ export default class TextExpression {
 				part = "";
 			}
 
-			if ( mode == "text" && str.substring( i, i+3) == "[%=" ){
+			if ( mode == "text" && ( i >= l || str.substring( i, i+3) == "[%=" ) ){
 				mode = "expr";
 				i += 3;
 				if ( part.length > 0 ){
@@ -34,7 +34,7 @@ export default class TextExpression {
 				part = "";
 			}
 
-			if ( mode == "trans" && str.substring( i, i+2) == "%]" ){
+			if ( mode == "trans" && ( i >= l || str.substring( i, i+2) == "%]" ) ){
 				mode = "text";
 				i += 2;
 				if ( part.length > 0 ){
@@ -45,7 +45,7 @@ export default class TextExpression {
 				part = "";
 			}
 
-			if ( mode == "expr" && str.substring( i, i+2) == "%]" ){
+			if ( mode == "expr" && ( i >= l || str.substring( i, i+2) == "%]" ) ){
 				mode = "text";
 				i += 2;
 				if ( part.length > 0 ){

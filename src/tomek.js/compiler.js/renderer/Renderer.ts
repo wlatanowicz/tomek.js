@@ -6,11 +6,15 @@ import ComponentNode from "../template/ComponentNode";
 import BaseRenderer from "./BaseRenderer";
 import StencilRenderer from "./StencilRenderer";
 
+import glob = require('glob');
+import path = require('path');
 
 export default class Renderer extends BaseRenderer {
 
 	dependencies: string[];
 	controlName: string;
+
+	source_paths: string[];
 
 	constructor( controlName:string ){
 		super();
@@ -59,7 +63,7 @@ export default class Renderer extends BaseRenderer {
 
 		for (let i = 0; i < node.events.length; i++ ){
 			let event = node.events[i];
-			this.addOutput( this.getVarname( node )+".attachEvent( \""+event.event+"\", "+event.boundFunction+" );" );
+			this.addOutput(this.getVarname(node) + ".attachEvent( \"" + event.event + "\", " + event.getBoundFunction()+" );" );
 		}
 
 		var r = new StencilRenderer(node);
@@ -73,7 +77,7 @@ export default class Renderer extends BaseRenderer {
 		for (let i = 0; i < node.children.length; i++ ){
 			let child = node.children[i];
 			if ( child instanceof StencilNode ){
-				this.addOutput(this.getVarname(node) + ".set" + child.propertyName + "Tmplate( function( item ){");
+				this.addOutput(this.getVarname(node) + ".set" + child.propertyName + "Template( function( item ){");
 				this.pushIndent();
 				this.addOutput("var ExpressionContext = item;\n");
 				this.renderInitializers(child);
@@ -81,6 +85,8 @@ export default class Renderer extends BaseRenderer {
 				this.addOutput("} );");
 			}
 		}
+
+		this.renderInitializers(node);
 
 	}
 
@@ -122,6 +128,20 @@ export default class Renderer extends BaseRenderer {
 			}
 		}
 		this.dependencies.push(dependency);
+	}
+
+	templateExists( controlName:string ){
+		var found = false;
+		for (let i = 0; i < this.source_paths.length; i++ ){
+			let source_path = this.source_paths[i];
+			glob( path.join( source_path, "**", controlName+".tpl" ), function(er, files) {
+				found = files.length > 0;
+			});
+			if ( found ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

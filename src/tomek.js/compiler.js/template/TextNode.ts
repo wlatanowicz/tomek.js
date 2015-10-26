@@ -16,4 +16,8 @@ export default class TextNode extends TemplateNode {
 		return this.expression.epression;
 	}
 
+	detailedDescription(){
+		return this.expression.epression;
+	}
+
 }

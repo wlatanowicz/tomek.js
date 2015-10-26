@@ -53,6 +53,12 @@ export default class Parser {
 			else if (xmlNode.namespace() !== null && xmlNode.namespace().href() == 'stencil') {
 				return new StencilNode(xmlNode);
 			}
+			else if (xmlNode.namespace() !== null && xmlNode.namespace().href() == 'property') {
+				//skip
+			}
+			else if (xmlNode.namespace() !== null && xmlNode.namespace().href() == 'tomek'){
+				//skip
+			}
 			else {
 				return new HtmlNode(xmlNode);
 			}

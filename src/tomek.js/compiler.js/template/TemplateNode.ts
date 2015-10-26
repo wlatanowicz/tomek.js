@@ -47,7 +47,7 @@ export default class TemplateNode {
 			var attrs = xmlNode.attrs();
 			for (var j = 0; j < attrs.length; j++ ){
 				var attr = attrs[j];
-				if ( attr.namespace() !== null
+				if (attr.namespace() !== null
 					&& attr.namespace().href() == 'tomek' ){
 
 					this.processOption(attr.name(), attr.value());
@@ -102,6 +102,36 @@ export default class TemplateNode {
 			this.variableName = "c" + TemplateNode.variableNameNumber;
 		}
 		return this.variableName;
+	}
+
+	detailedDescription(){
+		return "";
+	}
+
+	description():string {
+		var ret = "---- ";
+		ret += this.constructor.toString().match(/\w+/g)[1];
+		ret += " ( "+this.detailedDescription()+" ) \n";
+
+		for (let i = 0; i < this.events.length; i++ ){
+			let event = this.events[i];
+			ret += "   |e|  " + event.event + " = " + event.function;
+		}
+
+		for (let i = 0; i < this.attributes.length; i++ ){
+			let attribute = this.attributes[i];
+			ret += "   |a|  " + (attribute.namespace != null ? attribute.namespace + ":" : "") + attribute.name + " = " + attribute.value + "\n";
+		}
+
+		for (let i = 0; i < this.children.length; i++ ){
+			let tmp = this.children[i].description().split("\n");
+			for (let j = 0; j < tmp.length; j++ ){
+				ret += "   + " + tmp[j] + "\n";
+			}
+		}
+
+		return ret;
+
 	}
 
 }

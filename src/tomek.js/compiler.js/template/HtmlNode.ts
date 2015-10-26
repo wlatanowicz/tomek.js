@@ -17,4 +17,8 @@ export default class HtmlNode extends TemplateNode {
 		}
 	}
 
+	detailedDescription(){
+		return ( this.namespace !== null ? this.namespace + ":" : "" ) + this.tag;
+	}
+
 }
