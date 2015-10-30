@@ -16,10 +16,11 @@ export default class Renderer extends BaseRenderer {
 
 	source_paths: string[];
 
-	constructor( controlName:string ){
+	constructor( controlName:string, source_paths:string[] ){
 		super();
 		this.controlName = controlName;
 		this.dependencies = [];
+		this.source_paths = source_paths;
 	}
 
 	render(doc:DocumentNode){
@@ -98,8 +99,8 @@ export default class Renderer extends BaseRenderer {
 			var dependency = this.dependencies[i];
 			if ( dependency !== this.controlName ){
 
-				if ( false ){ //@TODO
-					txt += "//= require \"" + dependency + "-tpl\"\n";
+				if ( this.existsFileByName( dependency + ".tpl" ) ){ //@TODO
+					txt += "//= require \"" + dependency + ".tpl\"\n";
 				} else {
 					txt += "//= require \"" + dependency + "\"\n";
 				}
@@ -119,6 +120,17 @@ export default class Renderer extends BaseRenderer {
 
 		return txt;
 
+	}
+
+	existsFileByName( filename:string ):boolean{
+		var file: string = null;
+		for (let i = 0; i < this .source_paths.length; i++ ){						
+			let files = glob.sync(path.join(this.source_paths[i], '**', filename));
+			if (files.length > 0 ){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	addDependency(dependency:string){

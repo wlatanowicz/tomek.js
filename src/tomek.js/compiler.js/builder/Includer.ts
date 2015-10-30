@@ -6,14 +6,18 @@ export default class Includer{
 
 	source_paths: string[];
 
+	included: string[];
+
 	constructor( source_paths:string[] ){
 		this.source_paths = source_paths;
+		this.included = [];
 	}
 
 	process( source_file:string, target_file:string ){
 		console.log( "Includer: "+source_file+" => "+target_file );
 		var contents : string = fs.readFileSync( source_file, "utf8" );
 		contents = this.processContents( contents );
+		console.log("  \\- END" );
 		fs.writeFileSync( target_file, contents, "utf8" );
 	}
 
@@ -25,10 +29,18 @@ export default class Includer{
 	replaceCallback( x:string, matches:string ):string{
 		var includedFile = matches;
 		includedFile += ".js";
+
+		if ( this.isIncluded( includedFile ) ){
+			return "";
+		}
+
+		this.included.push( includedFile );
+
 		var file = this.findFileByName(includedFile);
 		if ( file === null ){
 			throw "Cannot find file " + matches;
 		}
+		console.log( "  |- "+file );
 		var contents = fs.readFileSync( file, "utf8" );
 		contents = this.processContents( contents );
 		return contents;
@@ -45,6 +57,15 @@ export default class Includer{
 		return null;
 	}
 
+
+	isIncluded( filename: string ){
+		for (let i = 0; i < this.included.length; i++ ){
+			if ( this.included[i] == filename ){
+				return true;
+			}
+		}
+		return false;
+	}
 
 
 }

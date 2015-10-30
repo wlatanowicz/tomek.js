@@ -1,5 +1,6 @@
 import Compiler from '../compiler/Compiler';
 import Includer from  './Includer';
+import ResourceCopier from  './ResourceCopier';
 
 import glob = require('glob');
 import path = require('path');
@@ -11,12 +12,12 @@ export default class Builder {
 	resources: string[];
 	dictionaries: string[];
 
-	tmp: string = 'tmp';
+	tmp: string;
 	base_dir: string;
 
-	app: string = 'app';
-	framework: string = 'framework';
-	build: string = 'build';
+	app: string;
+	framework: string;
+	build: string;
 
 
 	constructor( base_dir:string, config ){
@@ -25,6 +26,12 @@ export default class Builder {
 		this.resources = config.resources;
 		this.dictionaries = config.dictionaries;
 		this.base_dir = base_dir;
+
+		this.tmp = 'tmp';
+
+		this.framework = 'framework';
+		this.app = 'app';
+		this.build = 'build';
 	}
 
 	getSourcePaths(): string[]{
@@ -38,7 +45,6 @@ export default class Builder {
 	compileTemplates(){
 		for (let i = 0; i < this.templates.length; i++ ){
 			let template_path = this.templates[i];
-			console.log(path.join(this.base_dir, this.app, template_path));
 			let templates = glob.sync(path.join(this.base_dir, this.app, template_path));
 			for (let j = 0; j < templates.length; j++ ){
 				this.compileTemplate(templates[j]);
@@ -47,7 +53,6 @@ export default class Builder {
 	}
 
 	compileTemplate( file:string ){
-		console.log("compile: " + file);
 		let compiler = new Compiler( path.join( this.base_dir, this.tmp ), this.getSourcePaths() );
 		compiler.compile(file);
 	}
@@ -66,6 +71,17 @@ export default class Builder {
 		var relPath:string = file.substring( path.join( this.base_dir, this.app ).length );
 		var target:string = path.join( this.base_dir, this.build, relPath );
 		includer.process( file, target );
+	}
+
+	processResources(){
+		for (let i = 0; i < this.resources.length; i++ ){
+			this.processResource(this.resources[i]);
+		}
+	}
+
+	processResource( path:string ){
+		var rc = new ResourceCopier( this.base_dir, this.app, this.build, path );
+		rc.copy();
 	}
 
 

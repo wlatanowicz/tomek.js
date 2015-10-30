@@ -17,17 +17,16 @@ export default class Compiler {
 	}
 
 	compile(source_file: string ) {
+		console.log("Compiler: " + source_file);
+
 		var parser = new Parser();
 		var control = parser.parseFile( source_file );
-
-//		console.log(control.description());
-
 		var control_name = path.basename( source_file, '.tpl' );
+		var renderer = new Renderer( control_name, this.source_paths );
 
-		var renderer = new Renderer( control_name );
 		renderer.render( control );
 
-		var destination_path = path.join(this.destination_dir, control_name + "-tpl.js");
+		var destination_path = path.join(this.destination_dir, control_name + ".tpl.js");
 
 		fs.writeFileSync( destination_path, renderer.getOutput(), 'utf8' );
 	}
