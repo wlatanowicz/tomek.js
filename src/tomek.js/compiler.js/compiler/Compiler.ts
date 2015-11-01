@@ -8,15 +8,13 @@ import glob = require('glob');
 
 export default class Compiler {
 
-	destination_dir: string;
 	source_paths: string[];
 
-	constructor( destination_dir:string, source_paths:string[] ) {
-		this.destination_dir = destination_dir;
+	constructor( source_paths:string[] ) {
 		this.source_paths = source_paths;
 	}
 
-	compile(source_file: string ) {
+	compile( source_file: string, target_file: string ) {
 		console.log("Compiler: " + source_file);
 
 		var parser = new Parser();
@@ -26,9 +24,7 @@ export default class Compiler {
 
 		renderer.render( control );
 
-		var destination_path = path.join(this.destination_dir, control_name + ".tpl.js");
-
-		fs.writeFileSync( destination_path, renderer.getOutput(), 'utf8' );
+		fs.writeFileSync( target_file, renderer.getOutput(), 'utf8' );
 	}
 
 }

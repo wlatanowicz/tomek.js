@@ -7,6 +7,5 @@ var config = require('./../app/application.json');
 var base_dir = path.resolve("..");
 
 var builder = new Builder( base_dir, config );
-builder.compileTemplates();
 builder.processMains();
 builder.processResources();

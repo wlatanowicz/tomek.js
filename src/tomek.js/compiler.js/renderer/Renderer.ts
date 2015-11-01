@@ -142,18 +142,4 @@ export default class Renderer extends BaseRenderer {
 		this.dependencies.push(dependency);
 	}
 
-	templateExists( controlName:string ){
-		var found = false;
-		for (let i = 0; i < this.source_paths.length; i++ ){
-			let source_path = this.source_paths[i];
-			glob( path.join( source_path, "**", controlName+".tpl" ), function(er, files) {
-				found = files.length > 0;
-			});
-			if ( found ) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 }

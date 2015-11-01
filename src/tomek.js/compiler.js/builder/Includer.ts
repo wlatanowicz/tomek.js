@@ -1,16 +1,24 @@
+import Compiler from '../compiler/Compiler';
+
 import glob = require('glob');
 import path = require('path') ;
 import fs = require('fs');
+import md5 = require('md5');
 
 export default class Includer{
 
 	source_paths: string[];
+	tmp: string;
+	language: string;
 
 	included: string[];
+	compiled;
 
-	constructor( source_paths:string[] ){
+	constructor( source_paths:string[], tmp: string, language: string ){
 		this.source_paths = source_paths;
 		this.included = [];
+		this.compiled = {};
+		this.tmp = tmp;
 	}
 
 	process( source_file:string, target_file:string ){
@@ -26,9 +34,7 @@ export default class Includer{
 		return contents.replace( regexp, this.replaceCallback.bind(this) );
 	}
 
-	replaceCallback( x:string, matches:string ):string{
-		var includedFile = matches;
-		includedFile += ".js";
+	replaceCallback( x:string, includedFile:string ):string{
 
 		if ( this.isIncluded( includedFile ) ){
 			return "";
@@ -36,14 +42,38 @@ export default class Includer{
 
 		this.included.push( includedFile );
 
-		var file = this.findFileByName(includedFile);
+		var file = this.findFileByInclude(includedFile);
 		if ( file === null ){
-			throw "Cannot find file " + matches;
+			throw "Cannot find file " + includedFile;
 		}
 		console.log( "  |- "+file );
 		var contents = fs.readFileSync( file, "utf8" );
 		contents = this.processContents( contents );
 		return contents;
+	}
+
+	findFileByInclude( includename:string ):string{
+		var filename = includename;
+		if ( filename.slice( -4 ) == '-tpl' ){
+			//change old -tpl notation to new .tpl
+			filename = filename.slice(0, -4) + ".tpl";
+		}
+
+		if ( filename.slice( -4 ) != '.tpl'
+			&& filename.slice( -3 ) != '.js' ){
+			filename += '.js';
+		}
+
+		if ( filename.slice(-3) == '.js' ){
+			return this.findFileByName(filename);
+		}
+
+		if ( filename.slice(-4) == '.tpl' ){
+			return this.findCompiledTemplate(filename);
+		}
+
+		return null;
+
 	}
 
 	findFileByName( filename:string ):string{
@@ -65,6 +95,31 @@ export default class Includer{
 			}
 		}
 		return false;
+	}
+
+	findCompiledTemplate(name:string){
+		var key = name;
+		if ( this.language != null ){
+			key += "." + this.language;
+		}
+
+		if ( this.compiled[key] ){
+			return this.compiled[key];
+		}
+
+		var file = this.findFileByName(name);
+
+		if ( file != null ){
+			let chksum = md5(file).substring( 0, 10 );
+			let target_file = path.join(this.tmp, key + "."+chksum+".js" );
+ 			let compiler = new Compiler( this.source_paths );
+			compiler.compile(file, target_file);
+			this.compiled[key] = target_file;
+			return target_file;
+		}
+
+		return null;
+
 	}
 
 

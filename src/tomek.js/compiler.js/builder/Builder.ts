@@ -1,4 +1,3 @@
-import Compiler from '../compiler/Compiler';
 import Includer from  './Includer';
 import ResourceCopier from  './ResourceCopier';
 
@@ -12,6 +11,8 @@ export default class Builder {
 	resources: string[];
 	dictionaries: string[];
 
+	language: string;
+
 	tmp: string;
 	base_dir: string;
 
@@ -20,12 +21,13 @@ export default class Builder {
 	build: string;
 
 
-	constructor( base_dir:string, config ){
+	constructor( base_dir: string, config, language:string = null ){
 		this.mains = config.mains;
-		this.templates = config.templates;
 		this.resources = config.resources;
 		this.dictionaries = config.dictionaries;
 		this.base_dir = base_dir;
+
+		this.language = language;
 
 		this.tmp = 'tmp';
 
@@ -37,25 +39,24 @@ export default class Builder {
 	getSourcePaths(): string[]{
 		return [
 			path.join(this.base_dir, this.app),
-			path.join(this.base_dir, this.framework),
-			path.join(this.base_dir, this.tmp)
+			path.join(this.base_dir, this.framework)
 		];
 	}
 
-	compileTemplates(){
-		for (let i = 0; i < this.templates.length; i++ ){
-			let template_path = this.templates[i];
-			let templates = glob.sync(path.join(this.base_dir, this.app, template_path));
-			for (let j = 0; j < templates.length; j++ ){
-				this.compileTemplate(templates[j]);
-			}
-		}
-	}
+	// compileTemplates(){
+	// 	for (let i = 0; i < this.templates.length; i++ ){
+	// 		let template_path = this.templates[i];
+	// 		let templates = glob.sync(path.join(this.base_dir, this.app, template_path));
+	// 		for (let j = 0; j < templates.length; j++ ){
+	// 			this.compileTemplate(templates[j]);
+	// 		}
+	// 	}
+	// }
 
-	compileTemplate( file:string ){
-		let compiler = new Compiler( path.join( this.base_dir, this.tmp ), this.getSourcePaths() );
-		compiler.compile(file);
-	}
+	// compileTemplate( file:string ){
+	// 	let compiler = new Compiler( path.join( this.base_dir, this.tmp ), this.getSourcePaths() );
+	// 	compiler.compile(file);
+	// }
 
 	processMains(){
 		for ( let i = 0; i < this.mains.length; i++ ){
@@ -67,7 +68,8 @@ export default class Builder {
 	}
 
 	processMain( file:string ){
-		var includer = new Includer( this.getSourcePaths() );
+		var tmp = path.join(this.base_dir, this.tmp);
+		var includer = new Includer( this.getSourcePaths(), tmp, this.language );
 		var relPath:string = file.substring( path.join( this.base_dir, this.app ).length );
 		var target:string = path.join( this.base_dir, this.build, relPath );
 		includer.process( file, target );
