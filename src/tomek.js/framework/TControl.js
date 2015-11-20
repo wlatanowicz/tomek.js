@@ -443,6 +443,10 @@ klass( 'TControl', {
 		return parseBool( this._Visible ) && ( this.getParent() === null || this.getParent().getVisible() );
 	},
 	
+	getVisibleForRender : function(){
+		return this.getVisible();
+	},
+	
 	/**
 	 * TControl#removeRenderedNodes() -> void
 	 * 
@@ -499,7 +503,7 @@ klass( 'TControl', {
 	render : function(){
 		this.ensureChildControls();
 		this.removeRenderedNodes();
-		if ( this.getVisible() ){
+		if ( this.getVisibleForRender() ){
 			this.renderContents();
 		}else{
 			this.ensurePositionMarker();
@@ -518,7 +522,7 @@ klass( 'TControl', {
 		this.setPlaceholder( placeholder );
 		
 		this.ensureChildControls();
-		if ( this.getVisible() ){
+		if ( this.getVisibleForRender() ){
 			this.renderContents();
 		}else{
 			this.ensurePositionMarker();
