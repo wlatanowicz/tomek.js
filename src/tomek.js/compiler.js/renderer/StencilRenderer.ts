@@ -50,9 +50,9 @@ export default class StencilRenderer extends BaseRenderer {
 		}
 
 		if ( node.namespace !== null ){
-			this.addOutput( "var " + this.getVarname(node) + " = dcument.createElementNS( \"" + node.namespace + "\", \"" + node.tag + "\" );" );
+			this.addOutput( "var " + this.getVarname(node) + " = document.createElementNS( \"" + node.namespace + "\", \"" + node.tag + "\" );" );
 		} else {
-			this.addOutput( "var " + this.getVarname(node) + " = dcument.createElement( \"" + node.tag + "\" );" );
+			this.addOutput( "var " + this.getVarname(node) + " = document.createElement( \"" + node.tag + "\" );" );
 		}
 
 		for (let i = 0; i < node.attributes.length; i++ ){
@@ -68,6 +68,10 @@ export default class StencilRenderer extends BaseRenderer {
 				this.addOutput( this.getVarname(node) + ".setAttributeNS( \""+attribute.namespace+"\" \""+attribute.name+"\", "+attribute.value.epression+" );" );
 			}
 		}
+
+		this.renderRenderers(node);
+
+		this.addOutput(render_in + ".appendChild( " +this.getVarname(node)+ " );");
 
 	}
 

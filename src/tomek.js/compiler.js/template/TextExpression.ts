@@ -49,7 +49,7 @@ export default class TextExpression {
 				mode = "text";
 				i += 2;
 				if ( part.length > 0 ){
-					//@TODO
+					//@TODO //@DONE ?
 					var expr_part = "( new TExpression( function(){ return (" + part + "); }.bind( ExpressionContext ) ) )";
 					parts.push(expr_part)
 				}

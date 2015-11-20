@@ -15,8 +15,6 @@ export default class Compiler {
 	}
 
 	compile( source_file: string, target_file: string ) {
-		console.log("Compiler: " + source_file);
-
 		var parser = new Parser();
 		var control = parser.parseFile( source_file );
 		var control_name = path.basename( source_file, '.tpl' );

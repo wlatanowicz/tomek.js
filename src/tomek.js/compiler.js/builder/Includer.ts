@@ -22,10 +22,10 @@ export default class Includer{
 	}
 
 	process( source_file:string, target_file:string ){
-		console.log( "Includer: "+source_file+" => "+target_file );
+		console.log( "Processing: "+source_file+" => "+target_file );
 		var contents : string = fs.readFileSync( source_file, "utf8" );
 		contents = this.processContents( contents );
-		console.log("  \\- END" );
+		console.log("  \\- done." );
 		fs.writeFileSync( target_file, contents, "utf8" );
 	}
 
@@ -46,7 +46,7 @@ export default class Includer{
 		if ( file === null ){
 			throw "Cannot find file " + includedFile;
 		}
-		console.log( "  |- "+file );
+		console.log( "  |- include: "+file );
 		var contents = fs.readFileSync( file, "utf8" );
 		contents = this.processContents( contents );
 		return contents;
@@ -114,6 +114,7 @@ export default class Includer{
 			let target_file = path.join(this.tmp, key + "."+chksum+".js" );
  			let compiler = new Compiler( this.source_paths );
 			compiler.compile(file, target_file);
+			console.log( "  |- compile: "+file+" => "+target_file );
 			this.compiled[key] = target_file;
 			return target_file;
 		}
