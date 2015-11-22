@@ -11,8 +11,8 @@ export default class StencilRenderer extends BaseRenderer {
 
 	root:TemplateNode;
 
-	constructor(node:TemplateNode){
-		super();
+	constructor(node:TemplateNode, language: string ){
+		super( language );
 		this.root = node;
 	}
 
@@ -60,12 +60,12 @@ export default class StencilRenderer extends BaseRenderer {
 
 			if ( attribute.namespace == null ){
 				if ( attribute.name === "style" ){
-					this.addOutput( this.getVarname(node)+".style.cssText = "+attribute.value.getExpression()+";" );
+					this.addOutput( this.getVarname(node)+".style.cssText = "+attribute.value.getExpression( this.language )+";" );
 				}else{
-					this.addOutput( this.getVarname(node) + ".setAttribute( \""+attribute.name+"\", "+attribute.value.getExpression()+" );" );
+					this.addOutput( this.getVarname(node) + ".setAttribute( \""+attribute.name+"\", "+attribute.value.getExpression( this.language )+" );" );
 				}
 			}else{
-				this.addOutput( this.getVarname(node) + ".setAttributeNS( \""+attribute.namespace+"\", \""+attribute.name+"\", "+attribute.value.getExpression()+" );" );
+				this.addOutput( this.getVarname(node) + ".setAttributeNS( \""+attribute.namespace+"\", \""+attribute.name+"\", "+attribute.value.getExpression( this.language )+" );" );
 			}
 		}
 
@@ -92,7 +92,7 @@ export default class StencilRenderer extends BaseRenderer {
 				render_in = this.getVarname( node.parent );
 			}
 
-			this.addOutput( "var "+this.getVarname(node)+" = document.createTextNode( "+node.expression.getExpression()+" );" );
+			this.addOutput( "var "+this.getVarname(node)+" = document.createTextNode( "+node.expression.getExpression( this.language )+" );" );
 			this.addOutput( render_in + ".appendChild( " + this.getVarname(node) + " );" );
 		 }
 	}

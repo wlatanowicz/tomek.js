@@ -16,8 +16,8 @@ export default class Renderer extends BaseRenderer {
 
 	source_paths: string[];
 
-	constructor( controlName:string, source_paths:string[] ){
-		super();
+	constructor( controlName:string, source_paths:string[], language:string = null ){
+		super( language );
 		this.controlName = controlName;
 		this.dependencies = [];
 		this.source_paths = source_paths;
@@ -67,7 +67,7 @@ export default class Renderer extends BaseRenderer {
 			this.addOutput(this.getVarname(node) + ".attachEvent( \"" + event.event + "\", " + event.getBoundFunction()+" );" );
 		}
 
-		var r = new StencilRenderer(node);
+		var r = new StencilRenderer( node, this.language );
 		r.render();
 		if ( r.output.length > 0 ){
 			this.addOutput(this.getVarname(node) + ".renderTemplateChildControls = function( placeholder ){");

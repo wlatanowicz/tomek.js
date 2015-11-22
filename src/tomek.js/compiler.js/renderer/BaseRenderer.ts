@@ -7,12 +7,15 @@ import DocumentNode from '../template/DocumentNode';
 
 export default class BaseRenderer {
 	
+	language: string;
+
 	indent: number;
 	output: string;
 
-	constructor(){
+	constructor( language:string ){
 		this.indent = 1;
 		this.output = "";
+		this.language = language;
 	}
 
 	pushIndent(){
@@ -65,7 +68,7 @@ export default class BaseRenderer {
 		var attrs = [];
 		for (let i = 0; i < node.attributes.length;i++){
 			let a = node.attributes[i];
-			attrs.push( "\"" + a.name + "\" : " + a.value.getExpression() );
+			attrs.push( "\"" + a.name + "\" : " + a.value.getExpression( this.language ) );
 		}
 
 		return " {\n\t\t\t\t" + attrs.join( ",\n\t\t\t\t" )+"\n\t\t\t\t} ";

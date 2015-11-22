@@ -9,7 +9,7 @@ export default class TextExpression {
 		this.epression_parts = this.createExpressionString(expr);
 	}
 
-	getExpression( language:string = null ){
+	getExpression( language:string ){
 		var parts = [];
 		var dp = new DictionaryProvider();
 		var dict = dp.getDictionary( language );
