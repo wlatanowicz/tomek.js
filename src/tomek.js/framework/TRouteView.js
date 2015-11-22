@@ -13,14 +13,14 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base();
-		arr.push( 'Mode' ); //default: none
+		arr.push( { name: 'Mode', default: 'none' } );
 		arr.push( 'RegExp' );
 		arr.push( 'RegExpParams' );
 		arr.push( 'Path' );
 		arr.push( 'RelativePath' );
 		arr.push( 'CurrentPath' )
-		arr.push( { name: 'AutoRender', type: 'bool', default: true } ); //bool
-		arr.push( { name: 'IsActive', type: 'bool', default: false } ); //bool
+		arr.push( { name: 'AutoRender', type: 'bool', default: true } );
+		arr.push( { name: 'IsActive', type: 'bool', default: false } );
 		arr.push( 'Params' );
 		return arr;
 	},
@@ -56,7 +56,12 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 	getComputedPaths : function(){
 		if ( this._ComputedPaths == null ){
 			if ( this._Path != null ){
-				this._ComputedPaths = this._Path;
+				this._ComputedPaths = [];
+				for ( var k=0; k<this._Path.length; k++ ){
+					if ( this._Path[k].length > 0 ){
+						this._ComputedPaths.push( this._Path[k] );
+					}
+				}
 			}else
 			if ( this._RelativePath != null ){
 				this._ComputedPaths = [];
@@ -64,7 +69,10 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 				for ( var i=0; i<parentPaths.length; i++ ){
 					if ( parentPaths[i].substring( parentPaths[i].length - 2 ) == '/*' ){
 						for( var j=0; j<this._RelativePath.length; j++ ){
-							this._ComputedPaths.push( parentPaths[i].substring( 0, parentPaths[i].length-2 ) + this._RelativePath[j] );
+							var computedPath = parentPaths[i].substring( 0, parentPaths[i].length-2 ) + this._RelativePath[j];
+							if ( computedPath.length > 0 ){
+								this._ComputedPaths.push( computedPath );
+							}
 						}
 					}
 				}
