@@ -65,7 +65,7 @@ export default class BaseRenderer {
 		var attrs = [];
 		for (let i = 0; i < node.attributes.length;i++){
 			let a = node.attributes[i];
-			attrs.push( "\"" + a.name + "\" : " + a.value.epression );
+			attrs.push( "\"" + a.name + "\" : " + a.value.getExpression() );
 		}
 
 		return " {\n\t\t\t\t" + attrs.join( ",\n\t\t\t\t" )+"\n\t\t\t\t} ";

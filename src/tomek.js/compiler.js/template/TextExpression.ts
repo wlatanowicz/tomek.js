@@ -1,13 +1,44 @@
+import TranslationExpression from './TranslationExpression';
+import DictionaryProvider from '../dictionary/DictionaryProvider';
+
 export default class TextExpression {
-	
-	epression: string;
+
+	epression_parts;
 
 	constructor( expr: string ){
-		this.epression = this.createExpressionString(expr);
+		this.epression_parts = this.createExpressionString(expr);
 	}
 
-	createExpressionString( str:string ):string{
-		var parts :string[] = [];
+	getExpression( language:string = null ){
+		var parts = [];
+		var dp = new DictionaryProvider();
+		var dict = dp.getDictionary( language );
+
+		for ( var i = 0; i < this.epression_parts.length; i++ ){
+			if ( this.epression_parts[i] instanceof TranslationExpression ){
+				parts.push( dict.getTranslationExpression( this.epression_parts[i].text ) );
+			}else{
+				parts.push( this.epression_parts[i] );
+			}
+		}
+
+		return parts.join( "+" );
+	}
+
+	getDescription(){
+		var parts = [];
+		for ( var i = 0; i < this.epression_parts.length; i++ ){
+			if ( this.epression_parts[i] instanceof TranslationExpression ){
+				parts.push( "@["+ JSON.stringify( this.epression_parts[i].text )+"]" );
+			}else{
+				parts.push( this.epression_parts[i] );
+			}
+		}
+		return parts.join( "+" );
+	}
+
+	createExpressionString( str:string ){
+		var parts = [];
 		var l = str.length;
 		var i = 0;
 
@@ -20,7 +51,7 @@ export default class TextExpression {
 				mode = "trans";
 				i += 3;
 				if (part.length > 0) {
-					parts.push(JSON.stringify(part))
+					parts.push( JSON.stringify( part ) );
 				}
 				part = "";
 			}
@@ -29,7 +60,7 @@ export default class TextExpression {
 				mode = "expr";
 				i += 3;
 				if ( part.length > 0 ){
-					parts.push( JSON.stringify( part ) )
+					parts.push( JSON.stringify( part ) );
 				}
 				part = "";
 			}
@@ -38,9 +69,8 @@ export default class TextExpression {
 				mode = "text";
 				i += 2;
 				if ( part.length > 0 ){
-					//@TODO
-					var translation = "";
-					parts.push( JSON.stringify( translation ) )
+					var translation = new TranslationExpression( part.trim() );
+					parts.push( translation );
 				}
 				part = "";
 			}
@@ -51,13 +81,13 @@ export default class TextExpression {
 				if ( part.length > 0 ){
 					//@TODO //@DONE ?
 					var expr_part = "( new TExpression( function(){ return (" + part + "); }.bind( ExpressionContext ) ) )";
-					parts.push(expr_part)
+					parts.push( expr_part );
 				}
 				part = "";
 			}
 
 			if ( i < l ){
-				part += str.substring(i, i + 1);
+				part += str.substring( i, i + 1 );
 			}
 
 			i += 1;
@@ -65,10 +95,10 @@ export default class TextExpression {
 		}
 
 		if ( parts.length <= 0 ){
-			parts.push( "" );
+			parts.push( '""' );
 		}
 
-		return parts.join( "+" );
+		return parts;
 
 	}
 

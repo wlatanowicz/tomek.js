@@ -12,12 +12,8 @@ export default class TextNode extends TemplateNode {
 		this.expression = new TextExpression(text);
 	}
 
-	getJsExpression(){
-		return this.expression.epression;
-	}
-
 	detailedDescription(){
-		return this.expression.epression;
+		return this.expression.getDescription();
 	}
 
 }
