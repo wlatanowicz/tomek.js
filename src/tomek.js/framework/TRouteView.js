@@ -96,7 +96,8 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 	
 	setCurrentPath : function( newPath ){
 		this._CurrentPath = newPath;
-		this._Params = {};
+		var oldParams = this._Params;
+		var newParams = {};
 		var active = false;
 		
 		if ( this.getMode() == 'regexp' ){
@@ -106,7 +107,7 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 				var matches = regexp.exec( this._CurrentPath );
 				var params = this.getPathParams();
 				for ( var i=0; i<params.length; i++ ){
-					this._Params[ params[i] ] = matches[ i+1 ];
+					newParams[ params[i] ] = matches[ i+1 ];
 				}
 			}
 		}else
@@ -129,7 +130,7 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 					if ( paramRegexp.test( explodedPath[i] ) ){
 						//param
 						var paramname = explodedPath[i].substring( 1, explodedPath[i].length-1 );
-						this._Params[ paramname ] = explodedCurrentPath[i];
+						newParams[ paramname ] = explodedCurrentPath[i];
 					}else{
 						//path part
 						active = active && explodedPath[i] == explodedCurrentPath[i];
@@ -142,15 +143,21 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 		}
 		
 		if ( active ){
+			this._Params = newParams;
 			this._IsActive = true;
-			this.triggerEvent( 'BecameActive', this._Params );
+			this.triggerEvent( 'BecameActive', {
+					"newParams" : newParams,
+					"oldParams" : oldParams
+					});
 			if ( this._AutoRender ){
 				this.render();
 			}
 		}else
 		if ( this._IsActive ){
 			this._IsActive = false;
-			this.triggerEvent( 'BecameInactive', this._Params );
+			this.triggerEvent( 'BecameInactive', {
+				"oldParams" : oldParams
+			});
 			if ( this._AutoRender ){
 				this.render();
 			}
