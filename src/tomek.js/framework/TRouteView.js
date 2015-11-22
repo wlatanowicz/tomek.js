@@ -1,6 +1,5 @@
 //= require TControl
 //= require TEventResponder
-//= require TRouteViewController
 
 klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 	
@@ -33,12 +32,45 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 	
 	setPath : function( path ){
 		this.setMode( 'path' );
-		this._Path = path;
+		this._RelativePath = null;
+		this._Path = path.split("\n").map( function(el){ return el.trim(); } );
 	},
 	
 	setRelativePath : function( path ){
-		this._RelativePath = path;
-		this.setPath( this.findParentRouteView().getPath() + path );
+		this.setMode( 'path' );
+		this._Path = null;
+		this._RelativePath = path.split("\n").map( function(el){ return el.trim(); } );
+	},
+	
+	findParentRouteView : function(){
+		var parent = this;
+		do {
+			parent = parent.getParent();
+			if ( parent !== null && parent.isKindOf( TRouteView ) ){
+				return parent;
+			}
+		}while( parent !== null );
+		throw "Cannot find parent TRouteView";
+	},
+	
+	getComputedPaths : function(){
+		if ( this._ComputedPaths == null ){
+			if ( this._Path != null ){
+				this._ComputedPaths = this._Path;
+			}else
+			if ( this._RelativePath != null ){
+				this._ComputedPaths = [];
+				var parentPaths = this.findParentRouteView().getComputedPaths();
+				for ( var i=0; i<parentPaths.length; i++ ){
+					if ( parentPaths[i].substring( parentPaths[i].length - 2 ) == '/*' ){
+						for( var j=0; j<this._RelativePath.length; j++ ){
+							this._ComputedPaths.push( parentPaths[i].substring( 0, parentPaths[i].length-2 ) + this._RelativePath[j] );
+						}
+					}
+				}
+			}
+		}
+		return this._ComputedPaths;
 	},
 	
 	getVisibleForRender : function(){
@@ -81,19 +113,30 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 		if ( this.getMode() == 'path' ){
 			
 			var paramRegexp = /{\w+}/;
-			var explodedPath = this.getPath().split('/');
 			var explodedCurrentPath = this._CurrentPath.split('/');
-			active = explodedPath.length == explodedCurrentPath.length;
+			var found = false;
+			var computedPath = this.getComputedPaths();
 			
-			for ( var i=0; i<explodedPath.length && active; i++ ){
-				if ( paramRegexp.test( explodedPath[i] ) ){
-					//param
-					var paramname = explodedPath[i].substring( 1, explodedPath[i].length-1 );
-					this._Params[ paramname ] = explodedCurrentPath[i];
-				}else{
-					//path part
-					active = active && explodedPath[i] == explodedCurrentPath[i];
+			for ( var j=0; j < computedPath.length && ! found; j++ ){
+				var explodedPath = computedPath[j].split('/');
+				var endsWithAsterisks = explodedPath[ explodedPath.length-1 ] == '*';
+				var explodedPathLength = endsWithAsterisks ? explodedPath.length-1 : explodedPath.length;
+				
+				active = ( ! endsWithAsterisks && explodedPathLength == explodedCurrentPath.length )
+						|| ( endsWithAsterisks && explodedPathLength <= explodedCurrentPath.length );
+
+				for ( var i=0; i<explodedPathLength && active; i++ ){
+					if ( paramRegexp.test( explodedPath[i] ) ){
+						//param
+						var paramname = explodedPath[i].substring( 1, explodedPath[i].length-1 );
+						this._Params[ paramname ] = explodedCurrentPath[i];
+					}else{
+						//path part
+						active = active && explodedPath[i] == explodedCurrentPath[i];
+					}
 				}
+				
+				found = found || active;
 			}
 			
 		}
