@@ -20,9 +20,13 @@ export default class EventAttribute {
 	}
 
 	getBoundFunction(){
-		var functionPath = this.function.split(".");
+		var realFunction = this.function;
+		if ( realFunction.substring( 0, 1 ) == '.' ){
+			realFunction = "SourceTemplateControl"+realFunction;
+		}
+		var functionPath = realFunction.split(".");
 		functionPath.pop();
-		return this.function + ".bind( " + (functionPath.join(".")) + " )";
+		return realFunction + ".bind( " + (functionPath.join(".")) + " )";
 	}
 
 	//@TODO
