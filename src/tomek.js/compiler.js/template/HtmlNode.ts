@@ -8,7 +8,7 @@ export default class HtmlNode extends TemplateNode {
 	namespace: string;
 
 	constructor(xmlNode:libxmljs.Element){
-		super();
+		super(xmlNode);
 		this.tag = xmlNode.name();
 		if ( xmlNode.namespace() !== null ){
 			this.namespace = xmlNode.namespace().href();

@@ -58,14 +58,14 @@ export default class StencilRenderer extends BaseRenderer {
 		for (let i = 0; i < node.attributes.length; i++ ){
 			let attribute:Attribute = node.attributes[i];
 
-			if ( attribute.namespace === null ){
+			if ( attribute.namespace == null ){
 				if ( attribute.name === "style" ){
 					this.addOutput( this.getVarname(node)+".style.cssText = "+attribute.value.epression+";" );
 				}else{
 					this.addOutput( this.getVarname(node) + ".setAttribute( \""+attribute.name+"\", "+attribute.value.epression+" );" );
 				}
 			}else{
-				this.addOutput( this.getVarname(node) + ".setAttributeNS( \""+attribute.namespace+"\" \""+attribute.name+"\", "+attribute.value.epression+" );" );
+				this.addOutput( this.getVarname(node) + ".setAttributeNS( \""+attribute.namespace+"\", \""+attribute.name+"\", "+attribute.value.epression+" );" );
 			}
 		}
 
