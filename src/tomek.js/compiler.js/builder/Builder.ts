@@ -1,5 +1,6 @@
 import Includer from  './Includer';
 import ResourceCopier from  './ResourceCopier';
+import DictionaryLoader from '../dictionary/DictionaryLoader';
 
 import glob = require('glob');
 import path = require('path');
@@ -43,20 +44,20 @@ export default class Builder {
 		];
 	}
 
-	// compileTemplates(){
-	// 	for (let i = 0; i < this.templates.length; i++ ){
-	// 		let template_path = this.templates[i];
-	// 		let templates = glob.sync(path.join(this.base_dir, this.app, template_path));
-	// 		for (let j = 0; j < templates.length; j++ ){
-	// 			this.compileTemplate(templates[j]);
-	// 		}
-	// 	}
-	// }
+	loadDictionaries(){
+		for (let i = 0; i < this.dictionaries.length; i++ ){
+			let dict_path = this.dictionaries[i];
+			let dicts = glob.sync(path.join(this.base_dir, this.app, dict_path));
+			for (let j = 0; j < dicts.length; j++ ){
+				this.loadDictionary(dicts[j]);
+			}
+		}
+	}
 
-	// compileTemplate( file:string ){
-	// 	let compiler = new Compiler( path.join( this.base_dir, this.tmp ), this.getSourcePaths() );
-	// 	compiler.compile(file);
-	// }
+	loadDictionary( path:string ){
+		var dl = new DictionaryLoader();
+		dl.loadXml( path );
+	}
 
 	processMains(){
 		for ( let i = 0; i < this.mains.length; i++ ){

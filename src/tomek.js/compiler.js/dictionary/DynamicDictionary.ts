@@ -1,6 +1,5 @@
-import DictionaryInterface from  './DictionaryInterface';
 
-export default class DynamicDictionary extends DictionaryInterface{
+export default class DynamicDictionary {
 
 	translateFunction: string = "( function(n){ return '@@'+n+'@@' } )";
 

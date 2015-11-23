@@ -1,12 +1,14 @@
-import DictionaryInterface from  './DictionaryInterface';
 
-export default class Dictionary extends DictionaryInterface{
+export default class Dictionary {
 	
 	items;
+	language: string;
+	strict: boolean;
 
-	constructor( ){
-		super();
+	constructor( language:string, strict:boolean ){
 		this.items = {};
+		this.language = language;
+		this.strict = strict;
 	}
 
 	setTranslation( token: string, phrase: string ){
@@ -17,7 +19,9 @@ export default class Dictionary extends DictionaryInterface{
 		if ( this.items[ token ] ){
 			return JSON.stringify( this.items[token] );
 		}
-
+		if ( this.strict ){
+			throw "No translation for " + JSON.stringify( token ) + " language: "+this.language;
+		}
 		return JSON.stringify( token );
 	}
 
