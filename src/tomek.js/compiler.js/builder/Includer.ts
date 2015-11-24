@@ -19,6 +19,7 @@ export default class Includer{
 		this.included = [];
 		this.compiled = {};
 		this.tmp = tmp;
+		this.language = language;
 	}
 
 	process( source_file:string, target_file:string ){
@@ -112,7 +113,7 @@ export default class Includer{
 		if ( file != null ){
 			let chksum = md5(file).substring( 0, 10 );
 			let target_file = path.join(this.tmp, key + "."+chksum+".js" );
- 			let compiler = new Compiler( this.source_paths );
+ 			let compiler = new Compiler( this.source_paths, this.language );
 			compiler.compile(file, target_file);
 			console.log( "  |- compile: "+file+" => "+target_file );
 			this.compiled[key] = target_file;
