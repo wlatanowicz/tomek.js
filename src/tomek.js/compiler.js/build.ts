@@ -1,6 +1,7 @@
 /// <reference path="typings/tsd.d.ts" />
 
 import Builder from './builder/Builder';
+import DictionaryProvider from './dictionary/DictionaryProvider';
 import path = require('path');
 import minimist = require('minimist');
 
@@ -12,6 +13,8 @@ var language = null;
 if ( argv['language'] ){
 	language = argv['language'];
 }
+
+DictionaryProvider.strict = false;
 
 var builder = new Builder( base_dir, config, language );
 builder.loadDictionaries();
