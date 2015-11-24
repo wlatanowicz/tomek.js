@@ -1,0 +1,3 @@
+npm install tsc
+npm install libxmljs glob minimist md5
+
