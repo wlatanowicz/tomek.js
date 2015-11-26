@@ -113,6 +113,19 @@ export default class Includer{
 		if ( file != null ){
 			let chksum = md5(file).substring( 0, 10 );
 			let target_file = path.join(this.tmp, key + "."+chksum+".js" );
+
+			if ( fs.existsSync( target_file ) ){
+
+				var targetStat = fs.statSync( target_file );
+				var sourceStat = fs.statSync( file );
+
+				if ( targetStat.mtime >= sourceStat.mtime ){
+					console.log( "  |- not modified: "+file+" => "+target_file );
+					return target_file;
+				}
+
+			}
+
  			let compiler = new Compiler( this.source_paths, this.language );
 			compiler.compile(file, target_file);
 			console.log( "  |- compile: "+file+" => "+target_file );
