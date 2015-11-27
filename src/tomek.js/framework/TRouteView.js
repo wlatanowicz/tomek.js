@@ -83,8 +83,8 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 		return this._ComputedPaths;
 	},
 	
-	getVisibleForRender : function(){
-		return this.getVisible() && this.getIsActive();
+	getVisible : function(){
+		return this.base() && this.getIsActive();
 	},
 	
 	getParam : function( name ){
