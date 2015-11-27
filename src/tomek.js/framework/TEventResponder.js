@@ -89,14 +89,14 @@ mixin( 'TEventResponderMixin', {
 	/**
 	 * TEventResponderMixin#triggerEventFromElement( e, dom_event ) -> void
 	 * - e (String): event name
-	 * - dom_event (DOMEvent): dom event
 	 * - prevent_default (Boolean): will prevent deafult browser event if true
+	 * - dom_event (DOMEvent): dom event
 	 * 
 	 * Serves as dom event listener and triggers proper event.
 	 * Should not be called directly.
 	 * 
 	 **/
-	triggerEventFromElement : function( e, dom_event, prevent_default ){
+	triggerEventFromElement : function( e, prevent_default, dom_event ){
 		if ( prevent_default ){
 			dom_event.preventDefault();
 		}
