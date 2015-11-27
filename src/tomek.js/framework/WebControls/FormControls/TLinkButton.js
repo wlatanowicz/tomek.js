@@ -21,7 +21,7 @@ klass( 'TLinkButton', TLink, [ TEventResponderMixin ], {
 	createMainElement : function(){
 		var d = this.base();
 		
-		this.registerTriggerElement( d, 'click', 'Click' );
+		this.registerTriggerElement( d, 'click', 'Click', true );
 		
 		return d;
 	}

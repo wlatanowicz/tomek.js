@@ -90,12 +90,16 @@ mixin( 'TEventResponderMixin', {
 	 * TEventResponderMixin#triggerEventFromElement( e, dom_event ) -> void
 	 * - e (String): event name
 	 * - dom_event (DOMEvent): dom event
+	 * - prevent_default (Boolean): will prevent deafult browser event if true
 	 * 
 	 * Serves as dom event listener and triggers proper event.
 	 * Should not be called directly.
 	 * 
 	 **/
-	triggerEventFromElement : function( e, dom_event ){
+	triggerEventFromElement : function( e, dom_event, prevent_default ){
+		if ( prevent_default ){
+			dom_event.preventDefault();
+		}
 		var param = {
 				'event' : e,
 				'domEvent' : dom_event || window.event
@@ -201,51 +205,23 @@ mixin( 'TEventResponderMixin', {
 	 * - el (DOMElement): element to attach listener to
 	 * - dom_event (String): DOMEvent name
 	 * - tomek_event (String): event name
+	 * - prevent_default (Boolean): will prevent deafult browser event if true (optional)
 	 * 
 	 * Registers DOMElement to trigger event on particular DOMEvent
 	 * 
 	 **/
-	registerTriggerElement : function( el, dom_event, tomek_event ){
+	registerTriggerElement : function( el, dom_event, tomek_event, prevent_default ){
 		var e = {
 			'element' : el,
 			'domEvent' : dom_event,
 			'event' : tomek_event,
-			'boundFunction' : this.triggerEventFromElement.bind( this, tomek_event )
+			'boundFunction' : this.triggerEventFromElement.bind( this, tomek_event, prevent_default )
 		};
 		this._triggerElements.push( e );
 		if ( this.respondsToEvent( tomek_event ) ){
 			this.addEventListener( e );
 		}
-	},
-	
-	/**
-	 * TEventResponderMixin#registerTriggerElements( triples ) -> void
-	 * - triples (Array): array of three element arrays [ DOMElement, DOMEvent name, event name ]
-	 * 
-	 * Registers multiple DOMElements to trigger events on particular DOMEvents
-	 * 
-	 **/
-	registerTriggerElements : function( triples ){
-		for ( var i in triples ){
-			var t = triples[i];
-			this.registerTriggerElement( t[0], t[1], t[2] );
-		}
-	},
-	
-	/**
-	 * TEventResponderMixin#registerTriggerElementMultipleEvents( el, pairs ) -> void
-	 * - el (DOMElement): element
-	 * - pairs (Array): array of two element arrays [ DOMEvent name, event name ]
-	 * 
-	 * Registers single DOMElement to trigger multiple events on particular DOMEvents
-	 * 
-	 **/
-	registerTriggerElementMultipleEvents : function( el, pairs ){
-		for ( var i in pairs ){
-			var p = pairs[i];
-			this.registerTriggerElement( el, p[0], p[1] );
-		}
-	}	
+	}
 	
 });
 
