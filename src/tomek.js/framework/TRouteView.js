@@ -103,6 +103,7 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 	},
 	
 	setCurrentPath : function( newPath ){
+		var oldPath = this._CurrentPath;
 		this._CurrentPath = newPath;
 		var oldParams = this._Params;
 		var newParams = {};
@@ -154,8 +155,10 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 			this._Params = newParams;
 			this._IsActive = true;
 			this.triggerEvent( 'BecameActive', {
+					"oldParams" : oldParams,
 					"newParams" : newParams,
-					"oldParams" : oldParams
+					"oldPath" : oldPath,
+					"newPath" : newPath
 					});
 			if ( this._AutoRender ){
 				this.render();
@@ -164,7 +167,9 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 		if ( this._IsActive ){
 			this._IsActive = false;
 			this.triggerEvent( 'BecameInactive', {
-				"oldParams" : oldParams
+				"oldParams" : oldParams,
+				"oldPath" : oldPath,
+				"newPath" : newPath
 			});
 			if ( this._AutoRender ){
 				this.render();
