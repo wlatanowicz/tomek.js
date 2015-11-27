@@ -69,9 +69,11 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 				for ( var i=0; i<parentPaths.length; i++ ){
 					if ( parentPaths[i].substring( parentPaths[i].length - 2 ) == '/*' ){
 						for( var j=0; j<this._RelativePath.length; j++ ){
-							var computedPath = parentPaths[i].substring( 0, parentPaths[i].length-2 ) + this._RelativePath[j];
-							if ( computedPath.length > 0 ){
-								this._ComputedPaths.push( computedPath );
+							if ( this._RelativePath[j].length > 0 ){
+								var computedPath = parentPaths[i].substring( 0, parentPaths[i].length-2 ) + this._RelativePath[j];
+								if ( computedPath.length > 0 ){
+									this._ComputedPaths.push( computedPath );
+								}
 							}
 						}
 					}
