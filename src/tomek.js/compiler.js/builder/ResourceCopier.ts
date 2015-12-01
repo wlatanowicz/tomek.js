@@ -2,6 +2,7 @@
 import glob = require('glob');
 import path = require('path');
 import fs = require('fs');
+import mkdirp = require('mkdirp');
 
 export default class ResourceCopier {
 
@@ -24,22 +25,12 @@ export default class ResourceCopier {
 			let relPath = file.substr(this.full_app_dir.length);
 			let target = path.join(this.full_build_dir, relPath);
 			let targetDir = path.dirname(target);
-			this.mkdirp(targetDir);
+			mkdirp.sync(targetDir);
 
 			fs.createReadStream( file ).pipe(fs.createWriteStream( target ));
 
 		}
 
-	}
-
-	mkdirp(dir: string) {
-		var baseDir = path.dirname(dir);
-		if ( ! fs.existsSync( baseDir ) ){
-			this.mkdirp( baseDir );
-		}
-		if ( ! fs.existsSync( dir ) ){
-			fs.mkdirSync(dir);
-		}
 	}
 
 }

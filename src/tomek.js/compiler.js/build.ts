@@ -23,5 +23,6 @@ if ( argv['strict-dictionary'] ){
 
 var builder = new Builder( base_dir, config, language );
 builder.loadDictionaries();
+builder.cleanupDestination();
 builder.processMains();
 builder.processResources();

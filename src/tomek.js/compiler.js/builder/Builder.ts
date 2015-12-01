@@ -5,6 +5,7 @@ import DictionaryProvider from '../dictionary/DictionaryProvider';
 
 import glob = require('glob');
 import path = require('path');
+import fs = require('fs');
 
 export default class Builder {
 
@@ -95,6 +96,32 @@ export default class Builder {
 		var rc = new ResourceCopier( this.base_dir, this.app, this.build, path );
 		rc.copy();
 	}
+	
+	cleanupDestination(){
+		var dest = path.join( this.base_dir, this.build );
+		this.rmDir( dest, false );
+	}
+	
+	rmDir( dirPath, includeCurrent ){
+		try {
+			var files = fs.readdirSync(dirPath);
+		}catch(e){
+			return;
+		}
+		if ( files.length > 0 ){
+			for (var i = 0; i < files.length; i++) {
+				var filePath = dirPath + '/' + files[i];
+				if ( fs.statSync( filePath ).isFile() ){
+					fs.unlinkSync( filePath );
+				}else{
+					this.rmDir( filePath, true );
+				}
+			}
+		}
+		if ( includeCurrent ){
+			fs.rmdirSync( dirPath );
+		}
+    };
 
 
 }
