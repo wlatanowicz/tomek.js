@@ -4,6 +4,7 @@ import glob = require('glob');
 import path = require('path') ;
 import fs = require('fs');
 import md5 = require('md5');
+import mkdirp = require('mkdirp');
 
 export default class Includer{
 
@@ -26,8 +27,9 @@ export default class Includer{
 		console.log( "Processing: "+source_file+" => "+target_file );
 		var contents : string = fs.readFileSync( source_file, "utf8" );
 		contents = this.processContents( contents );
-		console.log("  \\- done." );
+		mkdirp.sync( path.dirname( target_file ) );
 		fs.writeFileSync( target_file, contents, "utf8" );
+		console.log("  \\- done." );
 	}
 
 	processContents( contents: string ){
