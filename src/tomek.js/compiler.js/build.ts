@@ -14,7 +14,12 @@ if ( argv['language'] ){
 	language = argv['language'];
 }
 
-DictionaryProvider.strict = false;
+if ( argv['strict-dictionary'] ){
+	DictionaryProvider.strict = true;
+}else{
+	DictionaryProvider.strict = false;
+}
+
 
 var builder = new Builder( base_dir, config, language );
 builder.loadDictionaries();

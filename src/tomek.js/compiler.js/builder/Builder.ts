@@ -1,6 +1,7 @@
 import Includer from  './Includer';
 import ResourceCopier from  './ResourceCopier';
 import DictionaryLoader from '../dictionary/DictionaryLoader';
+import DictionaryProvider from '../dictionary/DictionaryProvider';
 
 import glob = require('glob');
 import path = require('path');
@@ -11,6 +12,7 @@ export default class Builder {
 	templates: string[];
 	resources: string[];
 	dictionaries: string[];
+	dictionary_function: string;
 
 	language: string;
 
@@ -26,6 +28,7 @@ export default class Builder {
 		this.mains = config.mains;
 		this.resources = config.resources;
 		this.dictionaries = config.dictionaries;
+		this.dictionary_function = config.dictionary_function;
 		this.base_dir = base_dir;
 
 		this.language = language;
@@ -51,6 +54,12 @@ export default class Builder {
 			for (let j = 0; j < dicts.length; j++ ){
 				this.loadDictionary(dicts[j]);
 			}
+		}
+		
+		if ( this.dictionary_function ){
+			var dp = new DictionaryProvider();
+			var dict = dp.getDynamicDictionary();
+			dict.setTranslateFunction( this.dictionary_function );
 		}
 	}
 
