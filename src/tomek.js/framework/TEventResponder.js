@@ -32,9 +32,9 @@ mixin( 'TEventResponderMixin', {
 	
 	//@Override
 	constructor : function( options ){
-		this.base( options );
 		this._eventResponders = {};
 		this._triggerElements = []; 
+		this.base( options );
 	},
 	
 	/**

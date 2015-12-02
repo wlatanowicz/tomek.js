@@ -1,6 +1,7 @@
 //= require TWebControl
 //= require TEventResponder
 //= require TValidatable
+//= require TTwoWayBinding
 
 /** section: FormControls
  * class TTextBox < TWebControl
@@ -17,7 +18,7 @@
  * `on:Focus`
  * 
  **/
-klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
+klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin, TTwoWayBindingMixin ], {
 	
 	//@Override
 	_tagName : 'input',
@@ -30,6 +31,10 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
 	
 	//@Override
 	_triggersEvents : ['Change','KeyUp','KeyDown','Blur','Focus'],
+	
+	_syncTriggerEvents : ['Change','KeyUp'],
+	
+	_syncControlProperty : 'Text',
 	
 	//@Override
 	getDefaultAttributes : function(){
