@@ -1,5 +1,6 @@
 //= require TWebControl
 //= require TEventResponder
+//= require TTwoWayBinding
 
 /** section: FormControls
  * class TCheckBox < TWebControl
@@ -13,7 +14,7 @@
  * `on:Change`
  * 
  **/
-klass( 'TCheckBox', TWebControl, [ TEventResponderMixin ], {
+klass( 'TCheckBox', TWebControl, [ TEventResponderMixin, TTwoWayBindingMixin ], {
 	
 	//@Override
 	_tagName : 'input',
@@ -28,6 +29,10 @@ klass( 'TCheckBox', TWebControl, [ TEventResponderMixin ], {
 	getDefaultAttributes : function(){
 		return { type: 'checkbox' };
 	},
+	
+	_syncTriggerEvents : ['Change'],
+	
+	_syncControlProperty : 'Checked',
 	
 	/**
 	 * TCheckBox#Checked -> Boolean

@@ -65,6 +65,15 @@ export default class TextExpression {
 				part = "";
 			}
 
+			if (mode == "text" && ( i >= l || str.substring(i, i + 3) == "[%^" ) ){
+				mode = "reference";
+				i += 3;
+				if (part.length > 0) {
+					parts.push( JSON.stringify( part ) );
+				}
+				part = "";
+			}
+
 			if ( mode == "trans" && ( i >= l || str.substring( i, i+2) == "%]" ) ){
 				mode = "text";
 				i += 2;
@@ -86,6 +95,19 @@ export default class TextExpression {
 				part = "";
 			}
 
+			if ( mode == "reference" && ( i >= l || str.substring( i, i+2) == "%]" ) ){
+				mode = "text";
+				i += 2;
+				if ( part.length > 0 ){
+					var exploded_part = part.trim().split( '.' );
+					var property = exploded_part.pop();
+					var object = exploded_part.join(".");
+					var expr_part = "( new TModel( function(){ return (" + object + "); }.call( ExpressionContext ), " + (JSON.stringify(property)) +" ) )";
+					parts.push( expr_part );
+				}
+				part = "";
+			}
+			
 			if ( i < l ){
 				part += str.substring( i, i + 1 );
 			}
