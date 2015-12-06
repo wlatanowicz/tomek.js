@@ -1,0 +1,29 @@
+.red {
+	background: red;
+}
+
+.green {
+	background: green;
+}
+
+.blue {
+	background: blue;
+}
+
+.yellow {
+	background: yellow;
+}
+
+.draggable {
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	margin: 10px;
+}
+
+.droppable {
+	display: block;
+	width: 400px;
+	height: 170px;
+	margin: 10px;
+}
