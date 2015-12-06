@@ -98,7 +98,10 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 	
 	setDataSource : function( ds ){
 		this._DataSource = ds;
-		
+		this.dataBind();
+	},
+	
+	dataBind : function(){
 		for ( var i=0; i<this._Items.length; i++ ){
 			this._Items[i].destroy();
 		}

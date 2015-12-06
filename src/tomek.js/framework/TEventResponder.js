@@ -129,7 +129,7 @@ mixin( 'TEventResponderMixin', {
 		for ( var e_rec_idx in this._triggerElements ){
 			var e_rec = this._triggerElements[e_rec_idx];
 			if ( e_rec.event == e ){
-				this.addEventListener( e_rec );
+				this.addEventListener( e_rec.element, e_rec.domEvent, e_rec.boundFunction );
 			}
 		}
 	},
@@ -173,13 +173,13 @@ mixin( 'TEventResponderMixin', {
 	 * Attaches event listener to trigger DOMElement
 	 * 
 	 **/
-	addEventListener : function( event_rec ){
-		if ( event_rec.element.addEventListener ){
-			event_rec.element.addEventListener( event_rec.domEvent, event_rec.boundFunction );
+	addEventListener : function( element, domEvent, boundFunction ){
+		if ( element.addEventListener ){
+			element.addEventListener( domEvent, boundFunction );
 		}else
-		if ( event_rec.element.attachEvent ){
+		if ( element.attachEvent ){
 			//IE8 fix
-			event_rec.element.attachEvent( "on"+event_rec.domEvent, event_rec.boundFunction );
+			element.attachEvent( "on"+domEvent, boundFunction );
 		}
 	},
 	

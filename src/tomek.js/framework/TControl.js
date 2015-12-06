@@ -200,6 +200,7 @@ klass( 'TControl', {
 				'Id',
 				{ name: 'Placeholder', type: 'object' },
 				{ name: 'Parent', type: 'object' },
+				{ name: 'CustomData', type: 'object' },
 				{ name: 'Visible', type: 'bool', default: true }
 				];
 	},
