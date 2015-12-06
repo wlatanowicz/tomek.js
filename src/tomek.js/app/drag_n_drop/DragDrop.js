@@ -5,6 +5,7 @@ var DragDrop = TTemplateControl.extend( {
 	items1 : [],
 	items2 : [],
 	items3 : [],
+	items4 : [],
 	
 	constructor : function(options){
 		this.base( options );
@@ -14,6 +15,7 @@ var DragDrop = TTemplateControl.extend( {
 	loadDefaults : function(){
 		this.items2 = [];
 		this.items3 = [];
+		this.items4 = [];
 		this.items1 = [
 			{
 				id: 1,
@@ -24,7 +26,19 @@ var DragDrop = TTemplateControl.extend( {
 				color: 'green'
 			},
 			{
-				id: 2,
+				id: 3,
+				color: 'blue'
+			},
+			{
+				id: 4,
+				color: 'red'
+			},
+			{
+				id: 5,
+				color: 'green'
+			},
+			{
+				id: 6,
 				color: 'blue'
 			}
 		];
@@ -32,24 +46,28 @@ var DragDrop = TTemplateControl.extend( {
 		this.$('Repeater1').setDataSource( this.items1 );
 		this.$('Repeater2').setDataSource( this.items2 );
 		this.$('Repeater3').setDataSource( this.items3 );
+		this.$('Repeater4').setDataSource( this.items4 );
 	},
 	
 	onDrop : function( sender, param ){
-		var obj = param.draggable.getCustomData().obj;
+		if ( param.hasMatchingDraggable ){
 		
-		var rpt = sender.findChildControlsByKind('TRepeater')[0];
-		rpt.getDataSource().push( obj );
-		rpt.dataBind();
-		
-		var src = this.$( param.draggable.getCustomData().source );
-		var i = src.getDataSource().indexOf( obj )
-		if ( i => 0 ){
-			src.getDataSource().splice( i, 1 );
-			src.dataBind();
-			src.render();
+			var obj = param.draggable.getCustomData().obj;
+
+			var rpt = sender.findChildControlsByKind('TRepeater')[0];
+			rpt.getDataSource().push( obj );
+			rpt.dataBind();
+
+			var src = this.$( param.draggable.getCustomData().source );
+			var i = src.getDataSource().indexOf( obj )
+			if ( i >= 0 ){
+				src.getDataSource().splice( i, 1 );
+				src.dataBind();
+				src.render();
+			}
+
+			sender.render();
 		}
-		
-		sender.render();
 	}
 	
 } );

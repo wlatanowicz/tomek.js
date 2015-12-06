@@ -23,6 +23,13 @@ klass( 'TDroppable', TWebControl, [TEventResponderMixin], {
 		return arr;
 	},
 	
+	setGroups : function( value ){
+		if ( value.length && value.split && value.substring ){
+			value = value.split(",").map( function( s ){ return s.trim() } );
+		}
+		this._Groups = value;
+	},
+	
 	createMainElement : function(){
 		var d = this.base();
 		
@@ -46,7 +53,7 @@ klass( 'TDroppable', TWebControl, [TEventResponderMixin], {
 			hasFiles = true;
 		}
 		
-		if ( this._dataTransferHasDraggable( ev.dataTransfer, currentDraggable ) ){
+		if ( this._dataTransferHasDraggable( ev, currentDraggable ) ){
 			hasDraggable = true;
 			if ( this.getGroups().in_array( '*' )
 				|| this.getGroups().in_array( currentDraggable.getGroup() ) ){
@@ -56,18 +63,19 @@ klass( 'TDroppable', TWebControl, [TEventResponderMixin], {
 		
 		if ( hasFiles || hasDraggable ){
 			
-			ev.preventDefault();
+			if ( hasFiles || hasMatchingDraggable ){
+				ev.preventDefault();
+			}
 			
 			var dragParam = {
 				domEvent: ev,
 				hasMatchingDroppable: hasMatchingDraggable,
-				droppable: this,
+				droppable: this
 			};
 			
 			var dropParam = {
 				domEvent: ev,
 				hasFiles: hasFiles,
-				hasDraggable: hasDraggable,
 				hasMatchingDraggable: hasMatchingDraggable,
 				draggable: null,
 				files: null
@@ -104,12 +112,14 @@ klass( 'TDroppable', TWebControl, [TEventResponderMixin], {
 		
 	},
 	
-	_dataTransferHasDraggable : function( dt, currentDraggable ){
-		var ctrl_id = dt.getData('draggable_id');
+	_dataTransferHasDraggable : function( ev, currentDraggable ){
+		var dt = ev.dataTransfer;
+ 		var ctrl_id = dt.getData('draggable_id');
 		
-		if ( ctrl_id && ctrl_id.length > 0
-			&& currentDraggable
-			&& currentDraggable.getHtmlID() == ctrl_id ){
+		if ( currentDraggable
+			&& ( ( ctrl_id && ctrl_id.length > 0 && currentDraggable.getHtmlID() == ctrl_id )
+				|| ( !ctrl_id && ev.type != 'drop' ) )
+			){
 			return true;
 		}
 		return false;

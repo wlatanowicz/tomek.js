@@ -17,6 +17,14 @@ klass( 'TDraggable', TWebControl, [ TEventResponderMixin ], {
 	
 	_uid : null,
 	
+	getPublicProperties : function(){
+		var arr = this.base();
+		arr.push( 
+					{ name: 'Group', type: 'string', default: 'Default' }
+				);
+		return arr;
+	},
+
 	createMainElement : function(){
 		var d = this.base();
 		
@@ -39,6 +47,7 @@ klass( 'TDraggable', TWebControl, [ TEventResponderMixin ], {
 		
 		this.ensureHtmlID();
 		TDraggable.currentDraggable = this;
+		ev.dataTransfer.dropEffect = 'move';
 		ev.dataTransfer.setData( "draggable_id", this.getHtmlID() );
 		this.triggerEvent( 'DragStart', {} );
 	},
