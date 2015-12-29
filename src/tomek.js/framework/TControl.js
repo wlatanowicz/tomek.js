@@ -13,7 +13,7 @@
 klass( 'TControl', {
 	
 	/**
-	 * TControl#_childControls -> Array[TControl]
+	 * TControl#_childControls -> Array@TControl
 	 * 
 	 * Keeps all direct child controls
 	 * 
@@ -21,7 +21,7 @@ klass( 'TControl', {
 	_childControls : [],
 	
 	/**
-	 * TControl#_childControlsHash -> Hash[TControl]
+	 * TControl#_childControlsHash -> Hash@TControl
 	 * 
  	 * Keeps track of child controls based on ID
 	 * 
@@ -38,7 +38,7 @@ klass( 'TControl', {
 	_childControlsCreated : false,
 	
 	/**
-	 * TControl#_templateControls -> Hash[TControl]
+	 * TControl#_templateControls -> Hash@TControl
 	 * 
 	 * Keeps track of controls initialized using XML template
 	 * 
@@ -46,7 +46,7 @@ klass( 'TControl', {
 	_templateControls : {},
 	
 	/**
-	 * TControl#_renderedNodes -> Array[DOMElement]
+	 * TControl#_renderedNodes -> Array@DOMElement
 	 * 
 	 * Keeps track of rendered DOMElements
 	 * that should be removed on rerender
@@ -190,7 +190,7 @@ klass( 'TControl', {
 	 **/
 	
 	/**
-	 * TControl#getPublicProperties() -> Array[String]
+	 * TControl#getPublicProperties() -> Array@String
 	 * 
 	 * Defines list of public properties
 	 * 
@@ -787,7 +787,7 @@ klass( 'TControl', {
 	},
 	
 	/**
-	 * TControl#findChildControlsByType( class_name ) -> Array[TControl]
+	 * TControl#findChildControlsByType( class_name ) -> Array@TControl
 	 * - class_name (String): control ID
 	 * 
 	 * Returns child control by type (excatly, excluding subclasses)
@@ -817,7 +817,7 @@ klass( 'TControl', {
 	},
 
 	/**
-	 * TControl#findChildControlsByKind( class_name ) -> Array[TControl]
+	 * TControl#findChildControlsByKind( class_name ) -> Array@TControl
 	 * - class_name (String): control ID
 	 * 
 	 * Returns child control by type (including subclassed)
@@ -847,7 +847,7 @@ klass( 'TControl', {
 	},
 
 	/**
-	 * TControl#findChildControlsByID( id ) -> Array[TControl]
+	 * TControl#findChildControlsByID( id ) -> Array@TControl
 	 * - id (String): control ID
 	 * 
 	 * Returns array of child controls by ID
@@ -879,6 +879,6 @@ klass( 'TControl', {
 
 TControl.prototype.$ = TControl.prototype.findChildControlByID;
 TControl.prototype.$$ = TControl.prototype.findChildControlsByID;
-TControl.prototype.$$type = TControl.prototype.findChildsControlByType;
-TControl.prototype.$$kind = TControl.prototype.findChildsControlByKind;
+TControl.prototype.$$type = TControl.prototype.findChildControlsByType;
+TControl.prototype.$$kind = TControl.prototype.findChildControlsByKind;
 

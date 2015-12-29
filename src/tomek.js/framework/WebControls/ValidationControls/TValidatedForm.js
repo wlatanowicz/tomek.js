@@ -10,7 +10,7 @@ klass( 'TValidatedForm', TControl, {
 	_isValidatedForm : true,
 	
 	/**
-	 * TValidatedForm#_validators -> Array[TBaseValidator]
+	 * TValidatedForm#_validators -> Array@TBaseValidator
 	 * 
 	 * List of all validators within this form
 	 * 

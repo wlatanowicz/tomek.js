@@ -12,7 +12,7 @@ klass( 'TBaseValidator', TWebControl, {
 	 **/
 	
 	/**
-	 * TBaseValidator#ValidationGroup -> Array[String]|String
+	 * TBaseValidator#ValidationGroup -> Array@String|String
 	 **/
 	
 	/**

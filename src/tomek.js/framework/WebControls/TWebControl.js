@@ -36,7 +36,7 @@ klass( 'TWebControl', TControl, {
 	_renderedMainElement : null,
 	
 	/**
-	 * TWebControl#Attributes -> Hash[String]
+	 * TWebControl#Attributes -> Hash@String
 	 * 
 	 * Stores additional HTML atributes to render
 	 * 

@@ -7,7 +7,7 @@
 mixin( 'TEventResponderMixin', {
 	
 	/**
-	 * TEventResponderMixin#_triggersEvents -> Array[String]
+	 * TEventResponderMixin#_triggersEvents -> Array@String
 	 *
 	 * List of events triggered by the control
 	 * 
@@ -15,7 +15,7 @@ mixin( 'TEventResponderMixin', {
 	_triggersEvents : [],
 	
 	/**
-	 * TEventResponderMixin#_eventResponders -> Hash[Array[Function]]
+	 * TEventResponderMixin#_eventResponders -> Hash@Array@Function
 	 * 
 	 * Keeps track of attached responder functions
 	 * 
@@ -23,7 +23,7 @@ mixin( 'TEventResponderMixin', {
 	_eventResponders : {},
 	
 	/**
-	 * TEventResponderMixin#_triggerElements -> Array[EventTrigger]
+	 * TEventResponderMixin#_triggerElements -> Array@EventTrigger
 	 * 
 	 * Keeps track of DOMElements, DOMEevents and triggered events
 	 * 

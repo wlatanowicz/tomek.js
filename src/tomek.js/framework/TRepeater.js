@@ -48,7 +48,7 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 	 **/
 	
 	/**
-	 * TRepeater#Items -> Array[TItem]
+	 * TRepeater#Items -> Array@TItem
 	 **/
 	
 	/**
