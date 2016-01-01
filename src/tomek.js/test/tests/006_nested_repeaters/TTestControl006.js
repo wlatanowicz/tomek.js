@@ -1,6 +1,6 @@
 //= require TTemplateControl
 
-var TTestControl006 = TTemplateControl.extend( {
+klass( 'TTestControl006', TTemplateControl, {
 	
 	itemCreated : function( sender, param ){
 		var r = param.item.findChildControlByID( 'InnerRep' );

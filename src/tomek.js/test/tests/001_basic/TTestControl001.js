@@ -1,6 +1,6 @@
 //= require TTemplateControl
 
-var TTestControl001 = TTemplateControl.extend( {
+klass( 'TTestControl001', TTemplateControl, {
 	
 	txt : null,
 	

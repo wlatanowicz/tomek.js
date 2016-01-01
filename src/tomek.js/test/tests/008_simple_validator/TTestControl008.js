@@ -1,6 +1,6 @@
 //= require TTemplateControl
 
-var TTestControl008 = TTemplateControl.extend( {
+klass( 'TTestControl008', TTemplateControl, {
 	
 	validationResult : null,
 	
