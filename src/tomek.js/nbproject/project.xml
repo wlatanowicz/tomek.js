@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://www.netbeans.org/ns/project/1">
-    <type>org.netbeans.modules.ruby.rubyproject</type>
+    <type>org.netbeans.modules.web.clientproject</type>
     <configuration>
-        <data xmlns="http://www.netbeans.org/ns/ruby-project/1">
+        <data xmlns="http://www.netbeans.org/ns/clientside-project/1">
             <name>tomek.js</name>
-            <source-roots>
-                <root id="src.app.dir" name="App"/>
-                <root id="src.compiler.dir" name="Compiler"/>
-                <root id="src.framework.dir" name="Framework"/>
-                <root id="src.build.dir" name="Build"/>
-            </source-roots>
-            <test-roots>
-                <root id="test.test.dir" name="Test"/>
-                <root id="test.test_build.dir" name="Test build"/>
-            </test-roots>
         </data>
     </configuration>
 </project>
