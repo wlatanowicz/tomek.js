@@ -1,9 +1,9 @@
 //= require TCase
 
 /** section: Controls
- * class TLiteral < TControl
+ * class TSwitchView < TCase
  * 
- * Simple control rendering text
+ * Switch view. Renders only one of it's [[TCase]] subviews.
  * 
  **/
 klass( 'TSwitchView', TCase, {

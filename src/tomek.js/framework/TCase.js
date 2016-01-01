@@ -3,7 +3,7 @@
 /** section: Controls
  * class TCase < TControl
  * 
- * Simple control rendering text
+ * Subview of [[TSwitchView]]
  * 
  **/
 klass( 'TCase', TControl, {
