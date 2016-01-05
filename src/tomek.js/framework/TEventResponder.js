@@ -219,7 +219,7 @@ mixin( 'TEventResponderMixin', {
 		};
 		this._triggerElements.push( e );
 		if ( this.respondsToEvent( tomek_event ) ){
-			this.addEventListener( e );
+			this.addEventListener( e.element, e.domEvent, e.boundFunction );
 		}
 	}
 	
