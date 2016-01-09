@@ -93,59 +93,7 @@ klass( 'TControl', {
 		this._positionMarker = null;
 		this._templateControls = {};
 		
-		this.registerPublicProperties();
-		
-		if ( options ){
-			for ( var opt in options ){
-				
-				if ( opt.indexOf( '.' ) > -1 ){
-					//handle nested properties like Attributes.Options.Color
-					var opts = opt.split( '.' );
-					
-					var obj = this;
-					var i;
-					
-					for ( i=0; i<(opts.length-1); i++ ){
-						
-						if ( obj["get"+opts[i]] ){
-							//use getter if available //IE8 fix
-							var next_obj = obj["get"+opts[i]]();
-							if ( ! next_obj ){
-								obj["set"+opts[i]]( {} );
-								next_obj = obj["get"+opts[i]]();
-							}
-							obj = next_obj;
-						}else{
-							//direct read
-							if ( ! obj[ opts[i] ] ){
-								obj[ opts[i] ] = {};
-							}
-							obj = obj[ opts[i] ];
-						}
-					
-					}
-					
-					if ( obj[ "set"+opts[i] ] ){
-						//use setter if available //IE8 fix
-						obj[ "set"+opts[i] ]( options[ opt ] );
-					}else{
-						//direct assignment
-						obj[ opts[i] ] = options[ opt ];
-					}
-					
-				}else{
-					//handle simple properties
-					if ( this["set"+opt] ){
-						//use setter if available
-						this["set"+opt]( options[ opt ] );
-					}else{
-						//direct assignment
-						this[opt] = options[ opt ];
-					}
-				}
-				
-			}
-		}
+		this.base( options );
 	},
 	
 	setID : function( id ){
@@ -158,14 +106,6 @@ klass( 'TControl', {
 		}
 	},
     
-    setId : function( id ){
-        this.setID( id );
-    },
-    
-    getId : function(){
-        return this.getID();
-    },
-	
 	/**
 	 * TControl#ID -> String
 	 **/
@@ -203,199 +143,6 @@ klass( 'TControl', {
 				{ name: 'CustomData', type: 'object' },
 				{ name: 'Visible', type: 'bool', default: true }
 				];
-	},
-	
-	/**
-	 * TControl#registerPublicProperties() -> void
-	 * 
-	 * Registers all public properties
-	 * defined by getPublicProperties()
-	 * 
-	 **/
-	registerPublicProperties : function(){
-		var props = this.getPublicProperties();
-		var i;
-		for ( i=0; i<props.length; i++ ){
-			this.registerPublicProperty( props[i] );
-		}
-	},
-	
-	/**
-	 * TControl#registerPublicProperty( name ) -> void
-	 * - property (String): property name
-	 * 
-	 * Registers public property
-	 * by creating object property,
-	 * setter and getter functions if necessary.
-	 * Automated call of setter and getter when accessing property
-	 * does not work in IE8.
-	 * 
-	 **/
-	registerPublicProperty : function( property ){
-		//http://johndyer.name/native-browser-get-set-properties-in-javascript/
-		
-        var name = '';
-        var can_get = true;
-        var can_set = true;
-        
-        if ( typeof property === 'string' ){
-			property = {
-					name : property
-				};
-        }
-		
-		property.name = property.name;
-		if ( typeof property.default == 'undefined' ){
-			property.default = null;
-		}
-		if ( typeof property.type == 'undefined' ){
-			// one of: int, integer, float, string, bool, boolean, object
-			property.type = 'string';
-		}
-		if ( typeof property.settype == 'undefined' ){
-			// one of: int, integer, float, string, bool, boolean, object
-			property.settype = 'none';
-		}
-		
-		this['_'+property.name] = property.default;
-		
-        var	getFn = null;
-        var	setFn = null;
-        
-        if ( can_get ){
-            if ( ! this['get'+property.name] ){
-				this.createGetterFunction( property );
-			}
-            var onGet = this['get'+property.name];
-            getFn = function () {
-                        return onGet.apply( this );
-                    };
-        }
-        
-        if ( can_set ){
-            if ( ! this['set'+property.name] ){
-				this.createSetterFunction( property );
-            }
-    		var onSet = this['set'+property.name];
-    		setFn = function (newValue) {
-    					return onSet.apply( this, [newValue]);
-        			};
-        }
-        
-        // Modern browsers, IE9+, and IE8 (must be a DOM object),
-		if ( Object.defineProperty ) {
-			
-			var props = {};
-            
-            if ( getFn ){
-                props['get'] = getFn;
-            }
-            
-            if ( setFn ){
-                props['set'] = setFn;
-            }
-			
-			try{
-				Object.defineProperty( this, property.name, props );
-			}catch( ex ){
-				// IE8 fix
-				// IE8 does not support Object.defineProperty for our objects :(
-			}
-
-		// Older Mozilla
-		} else if ( this.__defineGetter__ ) {
-            if ( getFn ){
-    			this.__defineGetter__( property.name, getFn );
-            }
-            if ( setFn ){
-                this.__defineSetter__( property.name, setFn );
-            }
-		}
-		
-	},
-	
-	createSetterFunction : function( property ){
-		if ( property.settype === 'none' ){
-			this['set'+property.name] = function( value ){
-				this['_'+property.name] = value;
-			};
-		}else
-		if ( property.settype === 'string' ){
-			this['set'+property.name] = function( value ){
-				this['_'+property.name] = value !== null
-											&& value !== undefined
-											? value.toString()
-											: '';
-			};
-		}else
-		if ( property.settype === 'int' || property.settype === 'integer' ){
-			this['set'+property.name] = function( value ){
-				this['_'+property.name] = parseInt( value );
-			};
-		}else
-		if ( property.settype === 'float' ){
-			this['set'+property.name] = function( value ){
-				this['_'+property.name] = parseFloat( value );
-			};
-		}else
-		if ( property.settype === 'bool' || property.settype === 'boolean' ){
-			this['set'+property.name] = function( value ){
-				this['_'+property.name] = parseBool( value.toString() );
-			};
-		}else
-		if ( property.settype === 'object' || property.settype === 'obj' ){
-			this['set'+property.name] = function( value ){
-				this['_'+property.name] = value !== null
-											&& value !== undefined
-											? value.valueOf()
-											: null;
-			};
-		}else
-		{
-			throw new TException( 'Bad setter type conversion: '+property.type );
-		}
-	},
-	
-	createGetterFunction : function( property ){
-		if ( property.type === 'none' ){
-			this['get'+property.name] = function(){
-				return this['_'+property.name];
-			};
-		}else
-		if ( property.type === 'string' ){
-			this['get'+property.name] = function(){
-				return this['_'+property.name] !== null
-						&& this['_'+property.name] !== undefined
-						? this['_'+property.name].toString()
-						: '';
-			};
-		}else
-		if ( property.type === 'int' || property.type === 'integer' ){
-			this['get'+property.name] = function(){
-				return parseInt( this['_'+property.name] );
-			};
-		}else
-		if ( property.type === 'float' ){
-			this['get'+property.name] = function(){
-				return parseFloat( this['_'+property.name] );
-			};
-		}else
-		if ( property.type === 'bool' || property.type === 'boolean' ){
-			this['get'+property.name] = function(){
-				return parseBool( this['_'+property.name] );
-			};
-		}else
-		if ( property.type === 'object' || property.type === 'obj' ){
-			this['get'+property.name] = function(){
-				return this['_'+property.name] !== null
-						&& this['_'+property.name] !== undefined
-						? this['_'+property.name].valueOf()
-						: null;
-			};
-		}else
-		{
-			throw new TException( 'Bad getter type conversion: '+property.type );
-		}
 	},
 	
 	/**
@@ -881,4 +628,6 @@ TControl.prototype.$ = TControl.prototype.findChildControlByID;
 TControl.prototype.$$ = TControl.prototype.findChildControlsByID;
 TControl.prototype.$$type = TControl.prototype.findChildControlsByType;
 TControl.prototype.$$kind = TControl.prototype.findChildControlsByKind;
+TControl.prototype.setId = TControl.prototype.setID;
+TControl.prototype.getId = TControl.prototype.getID;
 
