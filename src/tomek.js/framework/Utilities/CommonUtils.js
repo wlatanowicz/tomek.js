@@ -23,3 +23,10 @@ if ( ! Array.prototype.in_array ){
 		return false;
 	};
 }
+
+//fix for Safari
+if ( ! String.trim ){
+	String.trim = function( str ){
+		return str.trim();
+	};
+}

@@ -25,7 +25,7 @@ klass( 'TDroppable', TWebControl, [TEventResponderMixin], {
 	
 	setGroups : function( value ){
 		if ( value.length && value.split && value.substring ){
-			value = value.split(",").map( function( s ){ return s.trim() } );
+			value = value.split(",").map( String.trim );
 		}
 		this._Groups = value;
 	},
@@ -46,7 +46,9 @@ klass( 'TDroppable', TWebControl, [TEventResponderMixin], {
 		var hasDraggable = false;
 		var hasMatchingDraggable = false;
 		
-		var currentDraggable = TDraggable.currentDraggable;
+		var currentDraggable = window.TDraggable && TDraggable.currentDraggable
+									? TDraggable.currentDraggable
+									: null;
 		
 		if ( this.getAllowFiles()
 				&& this._dataTransferHasFiles( ev.dataTransfer ) ){

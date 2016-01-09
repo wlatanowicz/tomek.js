@@ -33,13 +33,13 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 	setPath : function( path ){
 		this.setMode( 'path' );
 		this._RelativePath = null;
-		this._Path = path.split("\n").map( function(el){ return el.trim(); } );
+		this._Path = path.split("\n").map( String.trim );
 	},
 	
 	setRelativePath : function( path ){
 		this.setMode( 'path' );
 		this._Path = null;
-		this._RelativePath = path.split("\n").map( function(el){ return el.trim(); } );
+		this._RelativePath = path.split("\n").map( String.trim );
 	},
 	
 	findParentRouteView : function(){
