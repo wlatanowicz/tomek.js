@@ -135,6 +135,12 @@ klass( 'THttp', TObject, {
 			});
 			return promise;
 		};
+		
+		promise.start = function(fn){
+			fn();
+			return promise;
+		};
+
 	}
 
 } );
