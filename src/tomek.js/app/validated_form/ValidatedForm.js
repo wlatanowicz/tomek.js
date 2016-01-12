@@ -15,6 +15,11 @@ klass( 'ValidatedForm', TTemplateControl, {
 		this.$( 'ValidationPassedLiteral' ).render();
 		this.$( 'ValidationFailedLiteral' ).render();
 		
+	},
+	
+	checkPasswordLength : function(){
+		return this.$('PasswordTB').getText().length === 0
+				|| this.$('PasswordTB').getText().length > 6;
 	}
 	
 } );

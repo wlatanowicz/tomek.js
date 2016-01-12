@@ -31,7 +31,7 @@ klass( 'TCustomValidator', TBaseValidator, [ TEventResponderMixin ], {
 	//@Override
 	performValidation : function(){
 		var results = this.triggerEvent( 'Validate', null );
-		var valid = getIsValid();
+		var valid = true;
 		var i = 0;
 		for ( i=0; i<results.length; i++ ){
 			valid = valid && results[i];

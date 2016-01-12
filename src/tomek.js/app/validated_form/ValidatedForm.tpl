@@ -24,6 +24,10 @@
 			<com:TRequiredValidator CssClass="err" ControlToValidate="PasswordTB" >
 				No password provided
 			</com:TRequiredValidator>
+			<com:TCustomValidator CssClass="err" ControlToValidate="PasswordTB"
+								  on:Validate=".checkPasswordLength" >
+				Password to short
+			</com:TCustomValidator>
 		</div>
 		<div>
 			<com:TLabel ForControl="ConfirmPasswordTB" Text="Confirm password:" />
