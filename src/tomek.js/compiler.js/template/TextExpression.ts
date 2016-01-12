@@ -102,7 +102,7 @@ export default class TextExpression {
 					var exploded_part = part.trim().split( '.' );
 					var property = exploded_part.pop();
 					var object = exploded_part.join(".");
-					var expr_part = "( new TModel( function(){ return (" + object + "); }.call( ExpressionContext ), " + (JSON.stringify(property)) +" ) )";
+					var expr_part = "( new TTwoWayBindingModel( function(){ return (" + object + "); }.call( ExpressionContext ), " + (JSON.stringify(property)) +" ) )";
 					parts.push( expr_part );
 				}
 				part = "";

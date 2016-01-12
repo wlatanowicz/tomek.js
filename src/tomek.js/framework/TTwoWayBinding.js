@@ -1,9 +1,4 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-//= require TModel
+//= require TTwoWayBindingModel
 
 mixin( 'TTwoWayBindingMixin', {
 	
@@ -33,7 +28,6 @@ mixin( 'TTwoWayBindingMixin', {
 	attachSyncFormToModelEvents : function(){
 		if ( ! this._syncEventsAttached ){
 			for( var i=0; i< this._syncTriggerEvents.length; i++ ){
-				console.log( this.getID(), this._syncTriggerEvents[i] );
 				this.attachEvent( this._syncTriggerEvents[i], this.syncFormToModel.bind( this ) );
 			}
 			this._syncEventsAttached = true;

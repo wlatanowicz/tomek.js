@@ -1,4 +1,4 @@
-klass( 'TModel', {
+klass( 'TTwoWayBindingModel', {
 	
 	_object : null,
 	_property : null,
