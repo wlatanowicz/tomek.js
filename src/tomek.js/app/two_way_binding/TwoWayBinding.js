@@ -1,6 +1,6 @@
 //= require TTemplateControl
 
-var TwoWayBinding = TTemplateControl.extend( {
+klass( 'TwoWayBinding', TTemplateControl, {
 	
 	text : 'asdf',
 	

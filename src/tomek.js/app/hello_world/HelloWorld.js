@@ -1,6 +1,6 @@
 //= require TTemplateControl
 
-var HelloWorld = TTemplateControl.extend( {
+klass( 'HelloWorld', TTemplateControl, {
 	
 	buttonClicked : function( sender, param ){
 		sender.setText( 'Hello world!' );

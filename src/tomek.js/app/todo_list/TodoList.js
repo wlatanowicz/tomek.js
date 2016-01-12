@@ -1,6 +1,6 @@
 //= require TTemplateControl
 
-var TodoList = TTemplateControl.extend( {
+klass( 'TodoList', TTemplateControl, {
 	
 	items : [],
 	

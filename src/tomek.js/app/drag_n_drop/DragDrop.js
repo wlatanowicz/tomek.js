@@ -1,6 +1,6 @@
 //= require TTemplateControl
 
-var DragDrop = TTemplateControl.extend( {
+klass( 'DragDrop', TTemplateControl, {
 	
 	items1 : [],
 	items2 : [],
