@@ -1,5 +1,5 @@
 //= require TTemplateControl
 
-klass( 'TTestControl00', TTemplateControl, {	
+klass( 'TTestControl000', TTemplateControl, {	
 	
 } );
