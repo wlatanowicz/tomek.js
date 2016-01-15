@@ -4,7 +4,8 @@
 
 <com:TContent>
 	
-<com:TValidatedForm ID="Form">
+	<com:TValidatedForm ID="Form">
+		
 		<div>
 			<com:TLabel ForControl="LoginTB" Text="Login:" />
 			<com:TTextBox ID="LoginTB" />
@@ -18,6 +19,7 @@
 				Login 'root' is reserved
 			</com:TCompareValidator>
 		</div>
+		
 		<div>
 			<com:TLabel ForControl="PasswordTB" Text="Password:" />
 			<com:TTextBox ID="PasswordTB" />
@@ -29,6 +31,7 @@
 				Password to short
 			</com:TCustomValidator>
 		</div>
+		
 		<div>
 			<com:TLabel ForControl="ConfirmPasswordTB" Text="Confirm password:" />
 			<com:TTextBox ID="ConfirmPasswordTB" />
@@ -39,6 +42,22 @@
 				Password confirmation does not match
 			</com:TCompareValidator>
 		</div>
+		
+		<div>
+			<com:TLabel ForControl="RoleDDL" Text="User role:" />
+			<com:TDropDownList ID="RoleDDL">
+				<com:TOption Text="Administrator" Value="admin" />
+				<com:TOption Text="User" Value="user" />
+				<com:TOption Text="Guest" Value="guest" />
+			</com:TDropDownList>
+			<com:TCompareValidator CssClass="err"
+								   ControlToValidate="RoleDDL"
+								   ValueToCompare="admin"
+								   Operator="NotEquals">
+				You cannot create administrators
+			</com:TCompareValidator>
+		</div>
+		
 		<div>
 			<com:TLabel ForControl="AgreeCB" Text="Agree to TOS:" />
 			<com:TCheckBox ID="AgreeCB" />
@@ -47,6 +66,7 @@
 				TOS agreement is mandatory
 			</com:TRequiredValidator>
 		</div>
+		
 	</com:TValidatedForm>
 	<div>
 		<com:TButton on:Click=".buttonClicked" Text="Click me!" />
