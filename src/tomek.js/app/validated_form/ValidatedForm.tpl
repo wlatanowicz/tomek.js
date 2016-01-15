@@ -39,6 +39,14 @@
 				Password confirmation does not match
 			</com:TCompareValidator>
 		</div>
+		<div>
+			<com:TLabel ForControl="AgreeCB" Text="Agree to TOS:" />
+			<com:TCheckBox ID="AgreeCB" />
+			<com:TRequiredValidator CssClass="err"
+									ControlToValidate="AgreeCB">
+				TOS agreement is mandatory
+			</com:TRequiredValidator>
+		</div>
 	</com:TValidatedForm>
 	<div>
 		<com:TButton on:Click=".buttonClicked" Text="Click me!" />

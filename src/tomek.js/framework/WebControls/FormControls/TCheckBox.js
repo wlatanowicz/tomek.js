@@ -14,7 +14,7 @@
  * `on:Change`
  * 
  **/
-klass( 'TCheckBox', TWebControl, [ TEventResponderMixin, TTwoWayBindingMixin ], {
+klass( 'TCheckBox', TWebControl, [ TEventResponderMixin, TValidatableMixin, TTwoWayBindingMixin ], {
 	
 	//@Override
 	_tagName : 'input',
@@ -43,9 +43,14 @@ klass( 'TCheckBox', TWebControl, [ TEventResponderMixin, TTwoWayBindingMixin ], 
 		var arr = this.base();
 		arr.push( 
 					{ name: 'Checked', type: 'bool', elementProperty: 'checked', fetchFromElement: true },
-					{ name:'Disabled', type:'bool', elementProperty:'disabled' }
+					{ name:'Disabled', type:'bool', elementProperty:'disabled' },
+					{ name: 'Value', type:'bool' }
 				);
 		return arr;
+	},
+
+	getValue : function(){
+		return this.getChecked();
 	},
 
 	//@Override
