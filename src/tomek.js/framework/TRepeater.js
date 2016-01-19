@@ -91,7 +91,7 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 					{ name: 'HeaderItem', type: 'none' },
 					{ name: 'FooterItem', type: 'none' },
 					{ name: 'EmptyItem', type: 'none' },
-					{ name: 'DataSource', type: 'none', default: [] },
+					{ name: 'DataSource', type: 'object', default: [] },
 					{ name: 'ShowHeaderWhenEmpty', type: 'bool', default: true },
 					{ name: 'ShowFooterWhenEmpty', type: 'bool', default: true },
 					{ name: 'ShowWrapperWhenEmpty', type: 'bool', default: true }
@@ -137,7 +137,7 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 	 **/
 	//@Override
 	createChildControls : function(){
-		var data_source = this._DataSource;
+		var data_source = this.getDataSource();
 		var hasData = data_source && data_source.length > 0;
 			
 		var placeholder = this;
