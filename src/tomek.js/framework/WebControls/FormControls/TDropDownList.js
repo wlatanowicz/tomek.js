@@ -36,7 +36,7 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 					'SelectedValue',
 					{ name: 'Options' },
 					{ name: 'SelectedIndex', type: 'integer', default: 0, elementProperty: 'selectedIndex', fetchFromElement: true },
-					{ name:'DataSource', type:'none', default: [] },
+					{ name:'DataSource', type:'object', default: [] },
 					{ name: 'TextFieldName', default: 'text' },
 					{ name: 'ValueFieldName', default: 'value' },
 					{ name:'Disabled', type:'bool', elementProperty:'disabled' }
@@ -104,7 +104,7 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 	 **/
 	//@Override
 	createChildControls : function(){
-		var data_source = this._DataSource;
+		var data_source = this.getDataSource();
 		var selected_index = this.getSelectedIndex();
 		for( var i =0; i<data_source.length; i++ ){
 			var data_item = data_source[i];
