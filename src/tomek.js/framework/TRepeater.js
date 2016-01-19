@@ -91,7 +91,10 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 					{ name: 'HeaderItem', type: 'none' },
 					{ name: 'FooterItem', type: 'none' },
 					{ name: 'EmptyItem', type: 'none' },
-					{ name: 'DataSource', type: 'none', default: [] } 
+					{ name: 'DataSource', type: 'none', default: [] },
+					{ name: 'ShowHeaderWhenEmpty', type: 'bool', default: true },
+					{ name: 'ShowFooterWhenEmpty', type: 'bool', default: true },
+					{ name: 'ShowWrapperWhenEmpty', type: 'bool', default: true }
 					);
 		return arr;
 	},	
@@ -135,78 +138,81 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 	//@Override
 	createChildControls : function(){
 		var data_source = this._DataSource;
-		
-		if ( data_source && data_source.length > 0 ){
+		var hasData = data_source && data_source.length > 0;
 			
-			var placeholder = this;
-			
-			if ( this._WrapperTemplate ){
-				var wrapper = new TItem({
-					'Type' : 'Wrapper',
-					'Repeater' : this
-				});
-				wrapper.useTemplate( this._WrapperTemplate );
-				var placeholders = wrapper.findChildControlsByKind( TPlaceHolder );
-				if ( placeholders.length > 0 ){
-					this.addChildControl( wrapper );
-					placeholder = placeholders[0];
-				}
-			}
-			
-			if ( this._HeaderTemplate ){
-				var header = new TItem({
-                        'Type' : 'Header',
-                        'Repeater' : this
-                    });
-				header.useTemplate( this._HeaderTemplate );
-				this._HeaderItem = header;
-				placeholder.addChildControl( header );
-			}
-			
-			if ( this._ItemTemplate ){
-				for( var i =0; i<data_source.length; i++ ){
-					var data_item = data_source[i];
-					var item = new TItem({
-                            'Type' : 'Item',
-                            'Repeater' : this,
-							'ItemIndex' : i,
-							'DataItem' : data_item
-						});
-					item.useTemplate( this._ItemTemplate );
-					this._Items.push( item );
-					placeholder.addChildControl( item );
-					var param = {
-						'domEvent' : null,
-						'event' : 'ItemCreated',
-						'item' : item,
-						'dataItem' : data_item,
-						'itemIndex' : i
-					};
-					this.triggerEvent( 'ItemCreated', param );
-				}
-			}
-			
-			if ( this._FooterTemplate ){
-				var footer = new TItem({
-                        'Type' : 'Footer',
-                        'Repeater' : this
-                    });
-				footer.useTemplate( this._FooterTemplate );
-				this._FooterItem = footer;
-				placeholder.addChildControl( footer );
-			}
-			
-		}else{
-			if ( this._EmptyTemplate ){
-				var empty = new TItem({
-                        'Type' : 'Empty',
-                        'Repeater' : this
-                    });
-				empty.useTemplate( this._EmptyTemplate );
-				this._EmptyItem = empty;
-				this.addChildControl( empty );
+		var placeholder = this;
+
+		if ( ( hasData || this.getShowWrapperWhenEmpty() )
+				&& this._WrapperTemplate ){
+			var wrapper = new TItem({
+				'Type' : 'Wrapper',
+				'Repeater' : this
+			});
+			wrapper.useTemplate( this._WrapperTemplate );
+			var placeholders = wrapper.findChildControlsByKind( TPlaceHolder );
+			if ( placeholders.length > 0 ){
+				this.addChildControl( wrapper );
+				placeholder = placeholders[0];
 			}
 		}
+
+		if ( ( hasData || this.getShowHeaderWhenEmpty() )
+				&& this._HeaderTemplate ){
+			var header = new TItem({
+					'Type' : 'Header',
+					'Repeater' : this
+				});
+			header.useTemplate( this._HeaderTemplate );
+			this._HeaderItem = header;
+			placeholder.addChildControl( header );
+		}
+
+		if ( hasData
+				&& this._ItemTemplate ){
+			for( var i =0; i<data_source.length; i++ ){
+				var data_item = data_source[i];
+				var item = new TItem({
+						'Type' : 'Item',
+						'Repeater' : this,
+						'ItemIndex' : i,
+						'DataItem' : data_item
+					});
+				item.useTemplate( this._ItemTemplate );
+				this._Items.push( item );
+				placeholder.addChildControl( item );
+				var param = {
+					'domEvent' : null,
+					'event' : 'ItemCreated',
+					'item' : item,
+					'dataItem' : data_item,
+					'itemIndex' : i
+				};
+				this.triggerEvent( 'ItemCreated', param );
+			}
+		}
+
+		if ( ( hasData || this.getShowFooterWhenEmpty() )
+				&& this._FooterTemplate ){
+			var footer = new TItem({
+					'Type' : 'Footer',
+					'Repeater' : this
+				});
+			footer.useTemplate( this._FooterTemplate );
+			this._FooterItem = footer;
+			placeholder.addChildControl( footer );
+		}
+			
+		if ( !hasData
+				&& this._EmptyTemplate ){
+			var empty = new TItem({
+					'Type' : 'Empty',
+					'Repeater' : this
+				});
+			empty.useTemplate( this._EmptyTemplate );
+			this._EmptyItem = empty;
+			this.addChildControl( empty );
+		}
+		
 	}
 	
 } );

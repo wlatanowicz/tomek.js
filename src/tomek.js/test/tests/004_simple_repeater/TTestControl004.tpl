@@ -3,7 +3,10 @@
 <template xmlns:com='component' xmlns:prop='property' xmlns:on='event' xmlns:temp='stencil'>
 
 <com:TContent>
-	<com:TRepeater ID="Rep">
+	<com:TRepeater ID="Rep"
+				   ShowFooterWhenEmpty="false"
+				   ShowHeaderWhenEmpty="false"
+				   >
 		<temp:Header>
 			<com:TControl>
 				<span class="header">
