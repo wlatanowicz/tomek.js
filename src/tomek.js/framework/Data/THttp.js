@@ -1,4 +1,5 @@
 //= require TObject
+//= require THttpPromise
 
 klass( 'THttp', TObject, {
 
@@ -6,8 +7,8 @@ klass( 'THttp', TObject, {
 		return JSON.stringify( body );
 	},
 	
-	getProcessesedResponse : function( xhttp ){
-		return JSON.parse( xhttp.response );
+	getProcessedResponse : function( xhttp ){
+		return JSON.parse( xhttp.responseText );
 	},
 	
 	getBodyContentType : function(){
@@ -32,10 +33,6 @@ klass( 'THttp', TObject, {
 		
 	},
 	
-	getErrorStatuses : function(){
-		return [401,403,404,500];
-	},
-	
 	get : function( url, queryParams ){
 		return this.performCallback( 'GET', url, undefined, queryParams );
 	},
@@ -57,35 +54,69 @@ klass( 'THttp', TObject, {
 							? queryParams
 							: [];
 		
-		var promise = new Promise( function( resolve, reject ){
-				var fullUrl = this.getBaseUrl() + url + this.prepareQuery( queryParams );
-				var xhttp = new XMLHttpRequest();
-				xhttp.open( method, fullUrl, true );
-				xhttp.onreadystatechange = function (aEvt) {
-					if ( xhttp.readyState == 4 ) {
-						if( xhttp.status == 200 ){
-							resolve( xhttp );
-						}else{
-							reject( xhttp );
-						}
-					}
-				};
+		var promise = this.createPromise();
 
-				this.applyHeaders( xhttp );
-
-				if ( body !== undefined ){
-					xhttp.setRequestHeader( "Content-type", this.getBodyContentType() );
-					xhttp.send( this.getPreparedBody( body ) );
-				}else{
-					xhttp.send( null );
+		var fullUrl = this.getBaseUrl() + url + this.prepareQuery( queryParams );
+		var xhttp = new XMLHttpRequest();
+		xhttp.open( method, fullUrl, true );
+		xhttp.onreadystatechange = function (aEvt) {
+				if ( xhttp.readyState == 4 ) {
+					this.processResponse( xhttp, promise );
 				}
+			}.bind(this);
 
-			}.bind( this ));
+		this.applyHeaders( xhttp );
+
+		if ( body !== undefined ){
+			xhttp.setRequestHeader( "Content-type", this.getBodyContentType() );
+			xhttp.send( this.getPreparedBody( body ) );
+		}else{
+			xhttp.send( null );
+		}
+
+		promise.setState( 'start', {
+			'xhttp' : xhttp
+		});
 		
-		this.wrapPromise( promise );
 		this.applyDefaultResolvers( promise );
 
 		return promise;
+	},
+	
+	createPromise : function(){
+		return new THttpPromise();
+	},
+	
+	processResponse : function( xhttp, promise ){
+		try{
+			var response = null;
+			try{
+				response = this.getProcessedResponse( xhttp );
+			}catch( ex ){
+				promise.setState( 'invalid-payload', {
+					'xhttp': xhttp 
+				});
+				throw new TException( 'Invalid payload' );
+			}
+			if( xhttp.status == 200 ){
+				promise.setState( 'done', {
+					'response': response,
+					'xhttp': xhttp 
+				});
+			}else{
+				promise.setState( xhttp.status, {
+					'response': response,
+					'xhttp': xhttp 
+				});
+				throw new TException( 'HTTP error' );
+			}
+		}catch( ex ){
+			promise.setState( 'error', {
+				'status' : xhttp.status,
+				'xhttp': xhttp,
+				'exception' : ex
+			});
+		}
 	},
 	
 	applyHeaders : function( xhttp ){
@@ -107,40 +138,6 @@ klass( 'THttp', TObject, {
 		return parts.length === 0
 						? ''
 						: '?'+parts.join( '&' );
-	},
-
-	wrapPromise : function( promise ){
-		var that = this;
-		var statuses = this.getErrorStatuses();
-		for ( var i=0; i<statuses.length; i++ ){
-			var status = statuses[i];
-			promise['on'+status] = function(fn) {
-				promise.catch(function(xhttp) {
-					if ( xhttp.status == status ){
-						fn( xhttp, that.getProcessesedResponse( xhttp ) );
-					}
-				});
-				return promise;
-			};
-		}
-		promise.success = function(fn) {
-			promise.then(function(xhttp) {
-				fn( xhttp, that.getProcessesedResponse( xhttp ) );
-			});
-			return promise;
-		};
-		promise.error = function(fn) {
-			promise.catch(function(xhttp) {
-				fn( xhttp );
-			});
-			return promise;
-		};
-		
-		promise.start = function(fn){
-			fn();
-			return promise;
-		};
-
 	}
 
 } );

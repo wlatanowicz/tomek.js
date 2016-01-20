@@ -15,7 +15,7 @@ klass( 'SimpleHttp', TTemplateControl, {
 							this.$('TemperatureL').setText( '...' );
 							this.render();
 						}.bind(this) )
-						.success( function( req, response ){
+						.done( function( response ){
 							this.$('TemperatureL').setText( response.main.temp );
 							this.render();
 						}.bind(this) )
