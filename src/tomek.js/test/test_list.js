@@ -1,1 +1,0 @@
-var TESTS = ["000_dummy","001_basic","002_control_order","003_nested_templates","004_simple_repeater","005_basic_events","006_nested_repeaters","008_simple_validator","009_web_control","010_input_controls"];

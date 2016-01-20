@@ -6,6 +6,8 @@ pushd $DIR
 
 $DIR/node_modules/tsc/bin/tsc --module commonjs test.ts && node test.js $@
 
-popd 
+popd
+
+ls -1 $DIR/../test/tests | awk -f $DIR/test_list.awk > $DIR/../test_build/test_list.js
 
 open $DIR/../test_build/index.html -a FireFox
