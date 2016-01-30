@@ -1,5 +1,6 @@
 //= require TWebControl
 //= require TEventResponder
+//= require TValidatable
 //= require TTwoWayBinding
 
 /** section: FormControls
