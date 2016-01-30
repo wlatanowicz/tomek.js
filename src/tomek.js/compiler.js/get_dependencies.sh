@@ -6,6 +6,7 @@ pushd $DIR
 
 npm install tsc
 npm install libxmljs glob minimist md5 mkdirp
+npm install uglify-js
 npm install ndoc
 
 npm install object.observe

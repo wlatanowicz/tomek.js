@@ -24,6 +24,8 @@ export default class Builder {
 	framework: string;
 	build: string;
 
+	minify: boolean;
+
 
 	constructor( base_dir: string, config, language:string = null ){
 		this.mains = config.mains;
@@ -39,6 +41,8 @@ export default class Builder {
 		this.framework = 'framework';
 		this.app = 'app';
 		this.build = 'build';
+
+		this.minify = false;
 	}
 
 	getSourcePaths(): string[]{
@@ -83,6 +87,7 @@ export default class Builder {
 		var includer = new Includer( this.getSourcePaths(), tmp, this.language );
 		var relPath:string = file.substring( path.join( this.base_dir, this.app ).length );
 		var target:string = path.join( this.base_dir, this.build, relPath );
+		includer.minify = this.minify;
 		includer.process( file, target );
 	}
 

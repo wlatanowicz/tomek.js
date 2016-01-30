@@ -6,6 +6,8 @@ import fs = require('fs');
 import md5 = require('md5');
 import mkdirp = require('mkdirp');
 
+import uglify = require("uglify-js");
+
 export default class Includer{
 
 	source_paths: string[];
@@ -15,12 +17,15 @@ export default class Includer{
 	included: string[];
 	compiled;
 
+	minify: boolean;
+
 	constructor( source_paths:string[], tmp: string, language: string ){
 		this.source_paths = source_paths;
 		this.included = [];
 		this.compiled = {};
 		this.tmp = tmp;
 		this.language = language;
+		this.minify = false;
 	}
 
 	process( source_file:string, target_file:string ){
@@ -29,6 +34,11 @@ export default class Includer{
 		contents = this.processContents( contents );
 		mkdirp.sync( path.dirname( target_file ) );
 		fs.writeFileSync( target_file, contents, "utf8" );
+		if ( this.minify ){
+			console.log( '  |- minify' );
+			var minified = uglify.minify( target_file ); // parse code and get the initial AST
+			fs.writeFileSync( target_file, minified.code, "utf8" );
+		}
 		console.log("  \\- done." );
 	}
 
