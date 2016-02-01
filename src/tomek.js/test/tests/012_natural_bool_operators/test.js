@@ -17,15 +17,15 @@ component( 'TTemplateControl', function(){
 			});
 			
 			then('Literal L1 should be rendered', function() {
-				expect( $('container').innerHTML.contains( 'L1' ) ).toBeTruthy();
+				expect( $('container').innerHTML.indexOf( 'L1' ) != -1 ).toBeTruthy();
 			});
 			
 			then('Literal L2 should NOT be rendered', function() {
-				expect( $('container').innerHTML.contains( 'L2' ) ).toBeFalsy();
+				expect( $('container').innerHTML.indexOf( 'L2' ) != -1 ).toBeFalsy();
 			});
 			
 			then('Literal L3 should be rendered', function() {
-				expect( $('container').innerHTML.contains( 'L3' ) ).toBeTruthy();
+				expect( $('container').innerHTML.indexOf( 'L3' ) != -1 ).toBeTruthy();
 			});
 			
 		});
