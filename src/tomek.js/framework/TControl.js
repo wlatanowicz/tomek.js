@@ -359,13 +359,17 @@ klass( 'TControl', {
 		
 		if ( this._positionMarker == null || this._positionMarker.parentNode != root ){
 			
-			/* normal place holder: */
-			this._positionMarker = document.createComment( "-" );
-			
-			/* debug, visible place holder: */
-			//this._positionMarker = document.createElement( "span" );
-			//this._positionMarker.appendChild( document.createTextNode("x"));
-			//this._positionMarker.style.color = 'red';
+			if ( true ){
+				/* normal place holder: */
+				this._positionMarker = document.createComment( "-" );
+			}else{
+				/* debug, visible place holder: */
+				this._positionMarker = document.createElement( "span" );
+				this._positionMarker.appendChild( document.createTextNode("⦿"));
+				this._positionMarker.style.color = 'red';
+				this._positionMarker.style.cursor = 'pointer';
+				this._positionMarker.title = 'Marker for <'+this.klass.klass_name+'> ID=' + ( this.getID() ? this.getID() : '(none)' );
+			}
 			
 			this._positionMarker.positionMarkerForControl = this;
 			root.appendChild( this._positionMarker );
