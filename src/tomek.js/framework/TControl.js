@@ -88,6 +88,7 @@ klass( 'TControl', {
 	constructor : function( options ){
 		this._childControls = [];
 		this._renderedNodes = [];
+		this._isRendered = false;
 		this._childControlsHash = {};
 		this._childControlsCreated = false;
 		this._positionMarker = null;
@@ -244,13 +245,25 @@ klass( 'TControl', {
 	 * 
 	 **/
 	render : function(){
-		this.ensureChildControls();
-		this.removeRenderedNodes();
-		this.ensurePositionMarker();
 		
-		if ( this.getVisible() ){
-			this.renderContents();
+		if ( this.getParent()
+				&& this.getParent()._isRendered === false ){
+			
+			this.getParent().render();
+			
+		}else{
+			
+			this.ensureChildControls();
+			this.removeRenderedNodes();
+			this.ensurePositionMarker();
+			this._isRendered = true;
+			
+			if ( this.getVisible() ){
+				this.renderContents();
+			}
+			
 		}
+		
 	},
 	
 	/**
