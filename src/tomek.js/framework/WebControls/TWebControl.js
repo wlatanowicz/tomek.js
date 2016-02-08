@@ -164,6 +164,16 @@ klass( 'TWebControl', TControl, {
 		return d;
 	},
 
+	appendMainElement : function( el ){
+		this._renderedNodes.push( el );
+		this.ensurePositionMarker();
+		this._positionMarker.parentNode.insertBefore( el, this._positionMarker );
+	},
+	
+	appendChild : function( el ){
+		this._renderedMainElement.appendChild( el );
+	},
+	
 	//@Override
 	renderContents : function(){
 		var d = this.createMainElement();
@@ -172,7 +182,7 @@ klass( 'TWebControl', TControl, {
 		if ( this._rendersChildControls ){
 			this.renderChildControls( d );
 		}
-		this.appendChild( d );
+		this.appendMainElement( d );
 	},
 	
 	setAttribute : function( el, property, value ){
