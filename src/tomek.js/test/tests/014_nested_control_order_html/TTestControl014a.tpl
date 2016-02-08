@@ -2,9 +2,18 @@
 
 <template xmlns:com='component' xmlns:prop='property' xmlns:on='event' xmlns:temp='stencil'>
 
-<com:TContent ID="cb">
+<com:TContent ID="ca">
 
-003
+	<div>
+		002
+	</div>
+	
+	<com:TTestControl014b ID="b" />
+
+	<div>
+		004
+	</div>
+
 
 </com:TContent>
 	
