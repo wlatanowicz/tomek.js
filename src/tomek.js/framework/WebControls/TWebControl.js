@@ -70,6 +70,11 @@ klass( 'TWebControl', TControl, {
 		return arr;
 	},
 	
+	constructor : function( options ){
+		this._renderedMainElement = null;
+		this.base( options );
+	},
+	
 	propFix : function( prop ){
 		switch( prop ){
 			case 'htmlFor': return 'for';
