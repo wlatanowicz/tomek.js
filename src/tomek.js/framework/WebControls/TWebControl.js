@@ -64,6 +64,7 @@ klass( 'TWebControl', TControl, {
 	getPublicProperties : function(){
 		var arr = this.base();
 		arr.push( { name: 'CssClass', default: '', elementProperty: 'className' },
+					{ name:'Style', default: {}, elementProperty: 'style', fetchFromElement: false, type: 'object' },
 					{ name:'HtmlID', default: '', elementProperty: 'id' },
 					{ name:'Attributes', type: 'none', default: this.getDefaultAttributes() },
 					{ name:'Element', type: 'object' } );
@@ -71,6 +72,7 @@ klass( 'TWebControl', TControl, {
 	},
 	
 	constructor : function( options ){
+		this._Style = {};
 		this._renderedMainElement = null;
 		this.base( options );
 	},
@@ -112,6 +114,21 @@ klass( 'TWebControl', TControl, {
 		return false;
 	},
 	
+	setStyle : function( style ){
+		var oldStyle = this._Style;
+		this._Style = style;
+		if ( this._renderedMainElement ){
+			for ( var k in this._Style ){
+				this._renderedMainElement.style[k] = this._Style[k];
+			}
+			for ( var k in oldStyle ){
+				if ( this._Style[k] === undefined ){
+					this._renderedMainElement.style[k] = "";
+				}
+			}
+		}
+	},
+	
 	ensureHtmlID : function(){
 		if ( this._HtmlID == null
 				|| this._HtmlID.length <= 0 ){
@@ -149,8 +166,7 @@ klass( 'TWebControl', TControl, {
 			if ( typeof( props[i] ) != 'string'
 					&& typeof( props[i].elementProperty ) == 'string' ){
 				
-				var value = this['get'+props[i].name]();
-				this.setAttribute( d, props[i], value );
+				this['set'+props[i].name]( this['get'+props[i].name]() );
 				
 			}
 		}
