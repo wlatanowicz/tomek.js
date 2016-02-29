@@ -166,11 +166,16 @@ klass( 'TWebControl', TControl, {
 			if ( typeof( props[i] ) != 'string'
 					&& typeof( props[i].elementProperty ) == 'string' ){
 				
-				this['set'+props[i].name]( this['get'+props[i].name]() );
+				var value = this['get'+props[i].name]();
+                this.setAttribute( d, props[i], value );	
 				
 			}
 		}
 		
+		for ( var k in this._Style ){
+			d.style[k] = this._Style[k];
+		}
+			
 		var attrs = this.getAttributes();
 		
 		for ( var attr in attrs ){
