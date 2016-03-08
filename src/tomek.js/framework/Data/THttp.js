@@ -130,10 +130,16 @@ klass( 'THttp', TObject, {
 	prepareQuery : function( queryParams ){
 		var parts = [];
 		for ( var k in queryParams ){
-			parts.push( encodeURIComponent( k ) + '=' + encodeURIComponent( queryParams[k] ) );
+			if ( typeof queryParams[k] !== 'function'
+					&& typeof queryParams[k] !== 'undefined' ){
+				parts.push( encodeURIComponent( k ) + '=' + encodeURIComponent( queryParams[k] ) );
+			}
 		}
 		for ( var k in this.getQueryParams() ){
-			parts.push( encodeURIComponent( k ) + '=' + encodeURIComponent( queryParams[k] ) );
+			if ( typeof queryParams[k] !== 'function'
+					&& typeof queryParams[k] !== 'undefined' ){
+				parts.push( encodeURIComponent( k ) + '=' + encodeURIComponent( queryParams[k] ) );
+			}
 		}
 		return parts.length === 0
 						? ''
