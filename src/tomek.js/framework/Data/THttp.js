@@ -68,6 +68,7 @@ klass( 'THttp', TObject, {
 
 		this.applyHeaders( xhttp );
 
+		this.prepareAndSend( xhttp, body );
 
 		promise.setState( 'start', {
 			'xhttp' : xhttp
