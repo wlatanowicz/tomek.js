@@ -3,18 +3,6 @@
 
 klass( 'THttp', TObject, {
 
-	getPreparedBody : function( body ){
-		return JSON.stringify( body );
-	},
-	
-	getProcessedResponse : function( xhttp ){
-		return JSON.parse( xhttp.responseText );
-	},
-	
-	getBodyContentType : function(){
-		return 'application/json';
-	},
-	
 	getPublicProperties : function(){
 		return [
 			'BaseUrl'
@@ -49,6 +37,19 @@ klass( 'THttp', TObject, {
 		return this.performCallback( 'DELETE', url, undefined, queryParams );
 	},
 	
+	prepareAndSend : function( xhttp, body ){
+		if ( body !== undefined ){
+			xhttp.setRequestHeader( "Content-type", "application/json" );
+			xhttp.send( JSON.stringify( body ) );
+		}else{
+			xhttp.send( null );
+		}
+	},
+
+	processResponse : function( xhttp ){
+		return JSON.parse( xhttp.responseText );
+	},
+	
 	performCallback : function( method, url, body, queryParams ){
 		queryParams = queryParams
 							? queryParams
@@ -61,18 +62,12 @@ klass( 'THttp', TObject, {
 		xhttp.open( method, fullUrl, true );
 		xhttp.onreadystatechange = function (aEvt) {
 				if ( xhttp.readyState == 4 ) {
-					this.processResponse( xhttp, promise );
+					this.postCallbackProcessing( xhttp, promise );
 				}
 			}.bind(this);
 
 		this.applyHeaders( xhttp );
 
-		if ( body !== undefined ){
-			xhttp.setRequestHeader( "Content-type", this.getBodyContentType() );
-			xhttp.send( this.getPreparedBody( body ) );
-		}else{
-			xhttp.send( null );
-		}
 
 		promise.setState( 'start', {
 			'xhttp' : xhttp
@@ -87,11 +82,11 @@ klass( 'THttp', TObject, {
 		return new THttpPromise();
 	},
 	
-	processResponse : function( xhttp, promise ){
+	postCallbackProcessing : function( xhttp, promise ){
 		try{
 			var response = null;
 			try{
-				response = this.getProcessedResponse( xhttp );
+				response = this.processResponse( xhttp );
 			}catch( ex ){
 				promise.setState( 'invalid-payload', {
 					'xhttp': xhttp 
