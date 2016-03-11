@@ -64,10 +64,17 @@ klass( 'TWebControl', TControl, {
 	getPublicProperties : function(){
 		var arr = this.base();
 		arr.push( { name: 'CssClass', default: '', elementProperty: 'className' },
+					{ name:'Style', default: {}, elementProperty: 'style', fetchFromElement: false, type: 'object' },
 					{ name:'HtmlID', default: '', elementProperty: 'id' },
 					{ name:'Attributes', type: 'none', default: this.getDefaultAttributes() },
 					{ name:'Element', type: 'object' } );
 		return arr;
+	},
+	
+	constructor : function( options ){
+		this._Style = {};
+		this._renderedMainElement = null;
+		this.base( options );
 	},
 	
 	propFix : function( prop ){
@@ -105,6 +112,21 @@ klass( 'TWebControl', TControl, {
 			}
 		}
 		return false;
+	},
+	
+	setStyle : function( style ){
+		var oldStyle = this._Style;
+		this._Style = style;
+		if ( this._renderedMainElement ){
+			for ( var k in this._Style ){
+				this._renderedMainElement.style[k] = this._Style[k];
+			}
+			for ( var k in oldStyle ){
+				if ( this._Style[k] === undefined ){
+					this._renderedMainElement.style[k] = "";
+				}
+			}
+		}
 	},
 	
 	ensureHtmlID : function(){
@@ -145,11 +167,15 @@ klass( 'TWebControl', TControl, {
 					&& typeof( props[i].elementProperty ) == 'string' ){
 				
 				var value = this['get'+props[i].name]();
-				this.setAttribute( d, props[i], value );
+                this.setAttribute( d, props[i], value );	
 				
 			}
 		}
 		
+		for ( var k in this._Style ){
+			d.style[k] = this._Style[k];
+		}
+			
 		var attrs = this.getAttributes();
 		
 		for ( var attr in attrs ){
@@ -164,6 +190,16 @@ klass( 'TWebControl', TControl, {
 		return d;
 	},
 
+	appendMainElement : function( el ){
+		this._renderedNodes.push( el );
+		this.ensurePositionMarker();
+		this._positionMarker.parentNode.insertBefore( el, this._positionMarker );
+	},
+	
+	appendChild : function( el ){
+		this._renderedMainElement.appendChild( el );
+	},
+	
 	//@Override
 	renderContents : function(){
 		var d = this.createMainElement();
@@ -172,7 +208,7 @@ klass( 'TWebControl', TControl, {
 		if ( this._rendersChildControls ){
 			this.renderChildControls( d );
 		}
-		this.appendChild( d );
+		this.appendMainElement( d );
 	},
 	
 	setAttribute : function( el, property, value ){

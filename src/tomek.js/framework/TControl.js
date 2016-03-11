@@ -55,12 +55,12 @@ klass( 'TControl', {
 	_renderedNodes : [],
 	
 	/**
-	 * TControl#_placeholder -> DOMElement
+	 * TControl#_Placeholder -> DOMElement
 	 * 
 	 * Control is rendered inside this element
 	 * 
 	 **/
-	_placeholder : null,
+	_Placeholder : null,
 	
 	/**
 	 * TControl#_positionMarker -> DOMElement
@@ -88,6 +88,7 @@ klass( 'TControl', {
 	constructor : function( options ){
 		this._childControls = [];
 		this._renderedNodes = [];
+		this._isRendered = false;
 		this._childControlsHash = {};
 		this._childControlsCreated = false;
 		this._positionMarker = null;
@@ -203,13 +204,12 @@ klass( 'TControl', {
 		for ( i=0; i<this._childControls.length; i++ ){
 			this._childControls[i].removeRenderedNodes();
 		}
-		//var x_el = document.createElement( "div" );
 		for ( i=0; i<this._renderedNodes.length; i++ ){
 			var n = this._renderedNodes[ i ];
-			//x_el.appendChild( n );
-			n.parentNode.removeChild(n);
+			if ( n.parentNode ){
+				n.parentNode.removeChild(n);
+			}
 		}
-		//x_el = null;
 		this._renderedNodes = [];
 	},
 	
@@ -245,13 +245,25 @@ klass( 'TControl', {
 	 * 
 	 **/
 	render : function(){
-		this.ensureChildControls();
-		this.removeRenderedNodes();
-		if ( this.getVisible() ){
-			this.renderContents();
+		
+		if ( this.getParent()
+				&& this.getParent()._isRendered === false ){
+			
+			this.getParent().render();
+			
 		}else{
+			
+			this.ensureChildControls();
+			this.removeRenderedNodes();
 			this.ensurePositionMarker();
+			this._isRendered = true;
+			
+			if ( this.getVisible() ){
+				this.renderContents();
+			}
+			
 		}
+		
 	},
 	
 	/**
@@ -264,14 +276,7 @@ klass( 'TControl', {
 	 **/
 	renderContentsInPlaceholder : function( placeholder ){
 		this.setPlaceholder( placeholder );
-		
-		this.ensureChildControls();
-		if ( this.getVisible() ){
-			this.renderContents();
-		}else{
-			this.ensurePositionMarker();
-		}
-
+		this.render();
 	},
 	
 	/**
@@ -337,15 +342,9 @@ klass( 'TControl', {
 	 * 
 	 **/
 	appendChild : function( el ){
-		
-		var root = this.getPlaceholder();
-		
 		this._renderedNodes.push( el );
-		
 		this.ensurePositionMarker();
-		
-		root.insertBefore( el, this._positionMarker );
-		
+		this._positionMarker.parentNode.insertBefore( el, this._positionMarker );
 	},
 	
 	/**
@@ -355,25 +354,46 @@ klass( 'TControl', {
 	 * 
 	 **/
 	ensurePositionMarker : function(){
-		var root = this.getPlaceholder();
+		var root = this._Placeholder
+						? this._Placeholder
+						: this.getParent()
+							? this.getParent()
+							: this.getPlaceholder();
 		
-		if ( this._positionMarker == null || this._positionMarker.parentNode != root ){
+		var markerNeedsRepositioning = false;
+		
+		if ( this._positionMarker === null ){
 			
 			if ( true ){
 				/* normal place holder: */
 				this._positionMarker = document.createComment( "-" );
 			}else{
 				/* debug, visible place holder: */
+				var label = 'Marker for <'+this.klass.klass_name+'> ID=' + ( this.getID() ? this.getID() : '(none)' );
 				this._positionMarker = document.createElement( "span" );
-				this._positionMarker.appendChild( document.createTextNode("⦿"));
+				this._positionMarker.appendChild( document.createTextNode( "⦿" ) );
 				this._positionMarker.style.color = 'red';
 				this._positionMarker.style.cursor = 'pointer';
-				this._positionMarker.title = 'Marker for <'+this.klass.klass_name+'> ID=' + ( this.getID() ? this.getID() : '(none)' );
+				this._positionMarker.title = label;
 			}
 			
 			this._positionMarker.positionMarkerForControl = this;
+			this._positionMarker.parentControl = null;
+			
+			markerNeedsRepositioning = true;
+			
+		}
+		
+		if ( this._positionMarker.parentNode == null
+			|| this._positionMarker.parentControl != root ){
+			markerNeedsRepositioning = true;
+		}
+		
+		if ( markerNeedsRepositioning ){
+			this._positionMarker.parentControl = root;
 			root.appendChild( this._positionMarker );
 		}
+		
 	},
 	
 	/**
@@ -441,12 +461,8 @@ klass( 'TControl', {
 	 **/
 	removePositionMarker : function(){
 		if ( this._positionMarker ){
-			if ( this._positionMarker.remove ){
-				this._positionMarker.remove();
-			}else{
-				var x_el = document.createElement( "div" );
-				x_el.appendChild( this._positionMarker );
-				x_el = null;
+			if ( this._positionMarker.parentNode ){
+				this._positionMarker.parentNode.removeChild( this._positionMarker );
 			}
 			this._positionMarker = null;
 		}
