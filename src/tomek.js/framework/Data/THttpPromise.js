@@ -19,11 +19,11 @@ klass( 'THttpPromise', TPromise, {
 		var statuses = this.getErrorStatuses();
 		for ( var i=0; i<statuses.length; i++ ){
 			var status = statuses[i];
-			promise['http'+status] = function(fn) {
+			promise['http'+status] = function( status, fn ) {
 				return promise.on( status, function(param) {
 					fn( param.response, param.xhttp, param );
 				});
-			};
+			}.bind( this, status );
 		}
 		
 		promise.done = function(fn) {
