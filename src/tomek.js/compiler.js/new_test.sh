@@ -1,0 +1,10 @@
+#!/bin/sh
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+pushd $DIR
+
+$DIR/node_modules/tsc/bin/tsc --module commonjs new_test.ts && node new_test.js $@
+
+popd
+
