@@ -42,7 +42,7 @@ klass( 'TRouteViewManager', {
 		var i;
 		this._CurrentPath = path;
 		for( i=0; i<this._routeViews.length; i++ ){
-			if ( ! activated.in_array( this._routeViews[i].control ) ){
+			if ( activated.indexOf( this._routeViews[i].control ) == -1 ){
 				if ( this._routeViews[i].regexp.test( path ) ){
 					
 					var params = this.processParams( this._routeViews[i], path );
