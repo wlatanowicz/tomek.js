@@ -13,6 +13,15 @@
 			<com:TLiteral ID="OptionL" />
 		</div>
 	</com:TRouteView>
+		
+	<com:TRouteView>
+		<prop:Path>
+			/tabs/three
+			/tabs/three/*
+			/tabs/trzy
+		</prop:Path>
+		<div id="t3">tab three</div>
+	</com:TRouteView>
 
 </com:TContent>
 	

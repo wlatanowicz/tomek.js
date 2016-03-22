@@ -69,6 +69,39 @@ component( 'TTemplateControl', function(){
 				expect( $('t2').textContent ).toEqual( "yyy" );
 			});
 			
+			when('Go to #/tabs/three/yyy', function() {
+				window.location.hash = "/tabs/three/yyy";
+				pausecomp( 500 );
+			});
+			
+			then('Tab Three should be visible, Tab One and Tab Two should not be visible', function() {
+				expect( $('t3') ).not.toBe( null );
+				expect( $('t2') ).toBe( null );
+				expect( $('t2') ).toBe( null );
+			});
+			
+			when('Go to #/tabs/three', function() {
+				window.location.hash = "/tabs/three";
+				pausecomp( 500 );
+			});
+			
+			then('Tab Three should be visible, Tab One and Tab Two should not be visible', function() {
+				expect( $('t3') ).not.toBe( null );
+				expect( $('t2') ).toBe( null );
+				expect( $('t2') ).toBe( null );
+			});
+			
+			when('Go to #/tabs/trzy', function() {
+				window.location.hash = "/tabs/trzy";
+				pausecomp( 500 );
+			});
+			
+			then('Tab Three should be visible, Tab One and Tab Two should not be visible', function() {
+				expect( $('t3') ).not.toBe( null );
+				expect( $('t2') ).toBe( null );
+				expect( $('t2') ).toBe( null );
+			});
+			
 		});
 		
 	});
