@@ -32,7 +32,9 @@ export default class BaseRenderer {
 		var indent = (new Array(this.indent + 1).join("\t"));
 		var lines = input.split("\n");
 		for ( var i = 0; i < lines.length; i++ ){
-			this.addOutputWithoutIndent(indent + lines[i]);
+			if ( lines[i].trim().length > 0 ){
+				this.addOutputWithoutIndent(indent + lines[i]);
+			}
 		}
 	}
 

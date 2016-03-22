@@ -72,7 +72,7 @@ export default class Renderer extends BaseRenderer {
 		if ( r.output.length > 0 ){
 			this.addOutput(this.getVarname(node) + ".renderTemplateChildControls = function( placeholder ){");
 			this.addOutput(r.output);
-			this.addOutput("}");
+			this.addOutput("};");
 		}
 
 		for (let i = 0; i < node.children.length; i++ ){
