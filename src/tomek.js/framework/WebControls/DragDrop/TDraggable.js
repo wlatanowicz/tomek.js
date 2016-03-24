@@ -49,12 +49,16 @@ klass( 'TDraggable', TWebControl, [ TEventResponderMixin ], {
 		TDraggable.currentDraggable = this;
 		ev.dataTransfer.dropEffect = 'move';
 		ev.dataTransfer.setData( "draggable_id", this.getHtmlID() );
-		this.triggerEvent( 'DragStart', {} );
+		this.triggerEvent( 'DragStart', {
+											domEvent : ev
+										} );
 	},
 	
 	_onDragEnd : function( ev ){
 		TDraggable.currentDraggable = null;
-		this.triggerEvent( 'DragEnd', {} );
+		this.triggerEvent( 'DragEnd', {
+											domEvent : ev
+										} );
 	}
 	
 });
