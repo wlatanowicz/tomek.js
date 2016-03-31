@@ -32,6 +32,8 @@ export default class Builder {
 		this.resources = config.resources;
 		this.dictionaries = config.dictionaries;
 		this.dictionary_function = config.dictionary_function;
+		this.build = config.target || 'build';
+		
 		this.base_dir = base_dir;
 
 		this.language = language;
@@ -40,7 +42,6 @@ export default class Builder {
 
 		this.framework = 'framework';
 		this.app = 'app';
-		this.build = 'build';
 
 		this.minify = false;
 	}
