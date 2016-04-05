@@ -1,7 +1,7 @@
 //= require TLink
 //= require TEventResponder
 
-/** section: FormControls
+/** section: WebControls_FormControls
  * class TLinkButton <  TLink
  * includes TEventResponderMixin
  * 

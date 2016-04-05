@@ -1,5 +1,9 @@
 //= require TTwoWayBindingModel
 
+/** section: Controls
+ * mixin TTwoWayBindingMixin
+ * 
+ **/
 mixin( 'TTwoWayBindingMixin', {
 	
 	_syncTriggerEvents : ['Change'],

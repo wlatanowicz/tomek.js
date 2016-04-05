@@ -1,5 +1,10 @@
 //= require TPromise
 
+/** section: Data
+ * class THttpPromise
+ * 
+ * 
+ **/
 klass( 'THttpPromise', TPromise, {
 	
 	constructor : function(){

@@ -1,3 +1,8 @@
+/** section: Controls
+ * class TTwoWayBindingModel < TObject
+ * 
+ * 
+ **/
 klass( 'TTwoWayBindingModel', {
 	
 	_object : null,

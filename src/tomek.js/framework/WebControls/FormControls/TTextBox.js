@@ -3,7 +3,7 @@
 //= require TValidatable
 //= require TTwoWayBinding
 
-/** section: FormControls
+/** section: WebControls_FormControls
  * class TTextBox < TWebControl
  * includes TEventResponderMixin
  * 

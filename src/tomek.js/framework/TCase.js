@@ -8,6 +8,10 @@
  **/
 klass( 'TCase', TControl, {
 
+	/**
+	 * TCase#Condition -> bool
+	 **/
+	
 	getPublicProperties : function(){
 		var arr = this.base();
 		arr.push( { name: 'Condition', type: 'bool', default: true } );

@@ -1,7 +1,12 @@
 //= require TObject
 //= require THttpPromise
 
-klass( 'THttp', TObject, {
+/** section: Data
+ * class THttp
+ * 
+ * 
+ **/
+klass( 'THttp', {
 
 	getPublicProperties : function(){
 		return [

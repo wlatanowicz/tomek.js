@@ -1,13 +1,14 @@
 //= require TWebControl
 //= require TEventResponder
 
-/** section: WebControls
- * class TPanel < TWebControl
+/** section: WebControls_DragDrop
+ * class TDroppable < TWebControl
+ * includes TEventResponderMixin
  * 
- * Control renders a div container
+ * Control creates a droppable container
  * 
  **/
-klass( 'TDroppable', TWebControl, [TEventResponderMixin], {
+klass( 'TDroppable', TWebControl, [ TEventResponderMixin ], {
 
 	//@Override
 	_tagName : 'span',

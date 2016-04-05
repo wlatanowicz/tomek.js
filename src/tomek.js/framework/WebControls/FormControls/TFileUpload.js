@@ -2,7 +2,7 @@
 //= require TEventResponder
 //= require TValidatable
 
-/** section: FormControls
+/** section: WebControls_FormControls
  * class TFileUpload < TWebControl
  * includes TEventResponderMixin
  * 

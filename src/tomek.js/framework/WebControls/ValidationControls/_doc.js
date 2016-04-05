@@ -1,4 +1,4 @@
 /**
- * == ValidationControls ==
+ * == WebControls_ValidationControls ==
  **/
 

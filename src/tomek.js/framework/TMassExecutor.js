@@ -3,6 +3,8 @@
 /** section: Utilities
  * class TMassExecutor
  * 
+ * Object executes method on all objects in the given array
+ * 
  **/
 klass( 'TMassExecutor', {
 	

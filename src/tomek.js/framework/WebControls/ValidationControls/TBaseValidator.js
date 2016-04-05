@@ -1,6 +1,6 @@
 //= require TWebControl
 
-/** section: ValidationControls
+/** section: WebControls_ValidationControls
  * class TBaseValidator < TControl
  * 
  * 

@@ -1,7 +1,7 @@
 //= require TControl
 //= require TRadioButton
 
-/** section: FormControls
+/** section: WebControls_FormControls
  * class TRadioButtonGroup < TControl
  * 
  * Control fetches value from radio button inputs

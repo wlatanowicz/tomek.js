@@ -1,7 +1,22 @@
 //= require TControl
 
+/** section: Controls
+ * class TAutoRefresh < TControl
+ * 
+ * 
+ * Control rerenders itself periodically
+ * 
+ **/
 klass( 'TAutoRefresh', TControl, {
 
+	/**
+	 * TAutoRefresh#Interval -> float
+	 **/
+	
+	/**
+	 * TAutoRefresh#Running -> bool
+	 **/
+	
 	getPublicProperties : function(){
 		var arr = this.base();
 		arr.push( { name: 'Interval', type: 'float', default: 1.0 },

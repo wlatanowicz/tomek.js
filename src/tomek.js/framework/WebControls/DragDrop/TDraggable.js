@@ -1,10 +1,11 @@
 //= require TWebControl
 //= require TEventResponder
 
-/** section: WebControls
- * class TPanel < TWebControl
+/** section: WebControls_DragDrop
+ * class TDraggable < TWebControl
+ * includes TEventResponderMixin
  * 
- * Control renders a div container
+ * Control creates a draggable container
  * 
  **/
 klass( 'TDraggable', TWebControl, [ TEventResponderMixin ], {

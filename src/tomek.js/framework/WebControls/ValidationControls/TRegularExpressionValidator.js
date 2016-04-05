@@ -1,6 +1,6 @@
 //= require TBaseValidator
 
-/** section: ValidationControls
+/** section: WebControls_ValidationControls
  * class TRegularExpressionValidator < TBaseValidator
  * 
  * 

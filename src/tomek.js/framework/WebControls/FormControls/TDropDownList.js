@@ -3,7 +3,7 @@
 //= require TValidatable
 //= require TOption
 
-/** section: FormControls
+/** section: WebControls_FormControls
  * class TDropDownList <  TWebControl
  * includes TEventResponderMixin
  * 

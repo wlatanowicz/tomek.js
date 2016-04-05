@@ -1,6 +1,6 @@
 //= require TControl
 
-/** section: ValidationControls
+/** section: WebControls_ValidationControls
  * class TValidatedForm < TControl
  * 
  * 

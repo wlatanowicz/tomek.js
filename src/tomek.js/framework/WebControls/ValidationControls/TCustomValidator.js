@@ -1,6 +1,6 @@
 //= require TBaseValidator
 
-/** section: ValidationControls
+/** section: WebControls_ValidationControls
  * class TCustomValidator < TBaseValidator
  * 
  * Validates based on value of IsValid property

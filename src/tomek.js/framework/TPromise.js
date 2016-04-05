@@ -1,4 +1,11 @@
+//= require TObject
 
+/** section: Utilities
+ * class TPromise
+ * 
+ * Multi-state promise implementation
+ * 
+ **/
 klass( 'TPromise', {
 	
 	_stateHistory : [],
@@ -10,6 +17,12 @@ klass( 'TPromise', {
 		this._callbacks = {};
 	},
 	
+	/**
+	 * TPromise#getCurrentState( e ) -> Object
+	 * 
+	 * Returns current state object
+	 * 
+	 **/
 	getCurrentState : function(){
 		if ( this._stateHistory.length > 0 ){
 			return this._stateHistory[ this._stateHistory.length - 1 ];
@@ -17,6 +30,13 @@ klass( 'TPromise', {
 		return null;
 	},
 	
+	/**
+	 * TPromise#getPreviousStateByName( state_name ) -> Object
+	 * - state_name (String): state name
+	 * 
+	 * Finds most recent occurance of a state by name
+	 * 
+	 **/
 	getPreviousStateByName : function( state_name ){
 		for ( var i=(this._stateHistory.length-1); i>=0; i-- ){
 			if ( this._stateHistory[i].state === state_name ){
@@ -26,6 +46,14 @@ klass( 'TPromise', {
 		return null;
 	},
 	
+	/**
+	 * TPromise#on( state, callback ) -> TPromise
+	 * - state (String): state name
+	 * - callback (Function): callback function
+	 * 
+	 * Binds callback function to state. Can be chained.
+	 * 
+	 **/
 	on : function( state, callback ){
 		
 		var previousState = this.getPreviousStateByName( state );
@@ -42,6 +70,14 @@ klass( 'TPromise', {
 		return this;
 	},
 	
+	/**
+	 * TPromise#setState( state, param )
+	 * - state (String): state name
+	 * - param (Object): parameter associated with state
+	 * 
+	 * Sets new state
+	 * 
+	 **/
 	setState : function( state, param ){
 		this._stateHistory.push({
 				'state' : state,

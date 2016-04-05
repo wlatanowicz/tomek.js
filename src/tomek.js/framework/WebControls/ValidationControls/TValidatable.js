@@ -1,4 +1,4 @@
-/** section: ValidationControls
+/** section: WebControls_ValidationControls
  * mixin TValidatableMixin
  * 
  * Mixin adding ability to be validated
