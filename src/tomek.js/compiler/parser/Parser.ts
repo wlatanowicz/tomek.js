@@ -25,8 +25,38 @@ export default class Parser {
 	parse(xmlString: string) {
 		var xml: libxmljs.Element = libxmljs.parseXmlString(xmlString).root();
 		var docNode: TemplateNode = new DocumentNode();
-		this.parseRecursive(docNode, xml);
+		if ( ! this.needsTopLevelContentControl( xml ) ){
+			this.parseRecursive( docNode, xml );
+		}else{
+			var topLevelContentControl = new ComponentNode( "TContent" );
+			docNode.addChild( topLevelContentControl );
+			this.parseRecursive( topLevelContentControl, xml );
+		}
 		return docNode;
+	}
+	
+	needsTopLevelContentControl( topXmlNode: libxmljs.Element ){
+		var children: libxmljs.Element[] = topXmlNode.childNodes();
+		var componentControlCount = 0;
+		for (var i = 0; i < children.length; i++) {
+			var xmlNode = children[i];
+			if (xmlNode.name() == 'text' ) {
+				if (xmlNode.text().length > 0) {
+					return true;
+				 }
+			}else
+			if (xmlNode.type() == 'element') {
+				if (xmlNode.namespace() !== null && xmlNode.namespace().href() == 'component') {
+					componentControlCount++;
+				}else if (xmlNode.namespace() !== null && xmlNode.namespace().href() == 'tomek'){
+					//skip
+				}else{
+					return true;
+				}
+			}
+		}
+		
+		return componentControlCount > 1;
 	}
 
 	parseRecursive(parsedParent: TemplateNode, xmlNode: libxmljs.Element) {
