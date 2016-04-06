@@ -19,6 +19,14 @@ export default class Parser {
 
 	parseFile(path: string) {
 		var content: string = fs.readFileSync(path, { "encoding": "UTF8" });
+		
+		if ( content.substring( 0, 5 ) !== "<?xml" ){
+			content = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" + "\n" +
+						"<template xmlns:prop='property' xmlns:com='component' xmlns:temp='stencil' xmlns:on='event' >" + "\n" +
+						content +
+						"</template>";
+		}
+		
 		return this.parse(content);
 	}
 
