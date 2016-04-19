@@ -36,11 +36,6 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin, TTwoW
 	
 	_syncControlProperty : 'Text',
 	
-	//@Override
-	getDefaultAttributes : function(){
-		return { type: 'text' };
-	},
-	
 	getValue : function(){
 		return this.getText();
 	},
@@ -60,7 +55,8 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin, TTwoW
 					'Value',
 					{ name: 'Rows', type: 'int', default: 1 },
 					{ name: 'Cols', type: 'int', default: 0 },
-					{ name:'Disabled', type:'bool', elementProperty:'disabled' }
+					{ name:'Disabled', type:'bool', elementProperty:'disabled' },
+					{ name:'Type', elementProperty:'type', default: 'text' }
 		);
 		return arr;
 	},
