@@ -144,7 +144,7 @@ klass( 'TRouteViewManager', {
 		var params = [];
 		var callback = function( m ){
 			params.push( m.substr( 1, m.length-2 ) );
-			return "([a-zA-Z0-9]+)";
+			return "([^/]+)";
 		};
 		var regexpPath = path.replace( re, callback );
 		if ( regexpPath.substr( regexpPath.length-2 ) === '/*' ){
