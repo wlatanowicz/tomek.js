@@ -113,7 +113,7 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 				"wasActive" : wasActive,
 				"isActive" : true
 				});
-		if ( this.getAutoRender() ){
+		if ( this.getAutoRender() && ! wasActive ){
 			this.render();
 		}
 	},
