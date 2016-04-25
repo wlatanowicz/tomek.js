@@ -1,4 +1,5 @@
 {
+	"target" : "www",
 	"mains": [
 		"main.js"
 	],
@@ -7,6 +8,12 @@
 	],
 	"resources": [
 		"**/*.html",
-		"**/*.css"
+		"**/*.css",
+		"common_lib/**/*.css",
+		"common_lib/**/*.js",
+		"common_lib/**/*.eot",
+		"common_lib/**/*.svg",
+		"common_lib/**/*.ttf",
+		"common_lib/**/*.woff"
   	]
 }
