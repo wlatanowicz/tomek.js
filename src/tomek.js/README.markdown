@@ -6,6 +6,12 @@ Tomek.js
 Tomek.js is a JavaScript framework that aims to ease development of dynamic 
 web applications.
 
+### Quick Start ###
+
+Run in your console:
+
+bash <(curl -s https://raw.githubusercontent.com/wlatanowicz/tomek.js/master/src/tomek.js/init.sh)
+
 ### Targeted platforms ###
 
 Tomek.js currently targets the following platforms:
