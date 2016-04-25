@@ -29,9 +29,9 @@ export default class Builder {
 
 	constructor( base_dir: string, config, language:string = null ){
 		this.mains = config.mains;
-		this.resources = config.resources;
-		this.dictionaries = config.dictionaries;
-		this.dictionary_function = config.dictionary_function;
+		this.resources = config.resources || [];
+		this.dictionaries = config.dictionaries || [];
+		this.dictionary_function = config.dictionary_function || null;
 		this.build = config.target || 'build';
 		
 		this.base_dir = base_dir;
