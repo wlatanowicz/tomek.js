@@ -24,13 +24,38 @@ export default class ResourceCopier {
 			let file = files[i];
 			let relPath = file.substr(this.full_app_dir.length);
 			let target = path.join(this.full_build_dir, relPath);
-			let targetDir = path.dirname(target);
-			mkdirp.sync(targetDir);
 
-			fs.createReadStream( file ).pipe(fs.createWriteStream( target ));
+			this.doCopy( file, target );
 
 		}
 
+	}
+	
+	doCopy( src: string, target: string ){
+		if ( fs.lstatSync( src ).isDirectory() ){
+			this.copyDir( src, target );
+		}else
+		if ( fs.lstatSync( src ).isFile() ){
+			this.copyFile( src, target );
+		}else{
+			throw "Unsupported resource type: "+src;
+		}
+	}
+	
+	copyFile( src: string, target: string ){
+		let targetDir = path.dirname( target );
+		mkdirp.sync( targetDir );
+		fs.createReadStream( src ).pipe(fs.createWriteStream( target ));
+	}
+
+	copyDir( src: string, target: string ){
+		mkdirp.sync( target );
+		var files = fs.readdirSync( src );
+		for (let i = 0; i < files.length; i++ ){
+			let innerSrc = path.join( src, files[i] );
+			let innerTarget = path.join( target, files[i] );
+			this.doCopy( innerSrc, innerTarget );
+		}
 	}
 
 }
