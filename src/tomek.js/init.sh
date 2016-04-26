@@ -42,13 +42,14 @@ cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/compatibility $WORK_DIR/compatibili
 if [ "$MOBILE" == "yes" ]
 then
 	cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/starters/mobile_hello_world $WORK_DIR/app
+	mkdir $WORK_DIR/www
+	ln -s $WORK_DIR/www $WORK_DIR/build
 else
 	cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/starters/hello_world $WORK_DIR/app
+	mkdir $WORK_DIR/build
 fi
 
 rm -Rf $WORK_DIR/tmp
-
 mkdir $WORK_DIR/tmp
-mkdir $WORK_DIR/build
 
 popd > /dev/null
