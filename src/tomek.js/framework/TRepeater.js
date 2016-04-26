@@ -23,21 +23,31 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 	//@Override
 	_ignoreTemplate : true,
 	
-//	//@Override
-//	constructor : function( options ){
-//		this.base( options );
-//		this._DataSource = [];
-//		
-//		this._Items = [];
-//		this._HeaderItem = null;
-//		this._FooterItem = null;
-//		this._EmptyItem = null;
-//		
-//		this._ItemTemplate = null;
-//		this._HeaderTemplate = null;
-//		this._FooterTemplate = null;
-//		this._EmptyTemplate = null;
-//	},
+	_DataSource : [],
+	_Items : [],
+	_HeaderItem : null,
+	_FooterItem : null,
+	_EmptyItem : null,
+	_ItemTemplate : null,
+	_HeaderTemplate : null,
+	_FooterTemplate : null,
+	_EmptyTemplate : null,
+	
+	//@Override
+	constructor : function( options ){
+		this.base( options );
+		this._DataSource = [];
+		
+		this._Items = [];
+		this._HeaderItem = null;
+		this._FooterItem = null;
+		this._EmptyItem = null;
+		
+		this._ItemTemplate = null;
+		this._HeaderTemplate = null;
+		this._FooterTemplate = null;
+		this._EmptyTemplate = null;
+	},
 	
 	/**
 	 * TRepeater#DataSource -> Array
