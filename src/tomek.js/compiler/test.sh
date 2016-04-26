@@ -2,11 +2,11 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-pushd $DIR
+pushd $DIR > /dev/null
 
 $DIR/node_modules/tsc/bin/tsc --module commonjs test.ts && node test.js $@
 
-popd
+popd > /dev/null
 
 ls -1 $DIR/../test/tests | awk -f $DIR/test_list.awk > $DIR/../test_build/test_list.js
 
