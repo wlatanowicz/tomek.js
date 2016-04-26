@@ -34,6 +34,7 @@ export default class Includer{
 		contents = this.processContents( contents );
 		mkdirp.sync( path.dirname( target_file ) );
 		fs.writeFileSync( target_file, contents, "utf8" );
+		console.log( "  |- include: "+source_file );
 		if ( this.minify ){
 			console.log( '  |- minify' );
 			var minified = uglify.minify( target_file ); // parse code and get the initial AST
@@ -132,7 +133,7 @@ export default class Includer{
 				var sourceStat = fs.statSync( file );
 
 				if ( targetStat.mtime >= sourceStat.mtime ){
-					console.log( "  |- not modified: "+file+" => "+target_file );
+					console.log( "  |- template (not modified): "+file+" => "+target_file );
 					return target_file;
 				}
 
@@ -140,7 +141,7 @@ export default class Includer{
 
  			let compiler = new Compiler( this.source_paths, this.language );
 			compiler.compile(file, target_file);
-			console.log( "  |- compile: "+file+" => "+target_file );
+			console.log( "  |- template (compiled): "+file+" => "+target_file );
 			this.compiled[key] = target_file;
 			return target_file;
 		}
