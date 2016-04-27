@@ -6,4 +6,8 @@ pushd $DIR > /dev/null
 
 $DIR/node_modules/tsc/bin/tsc --module commonjs build.ts && node build.js $@
 
+ec=$?
+
 popd > /dev/null
+
+exit $ec
