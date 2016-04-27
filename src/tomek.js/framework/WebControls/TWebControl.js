@@ -36,6 +36,14 @@ klass( 'TWebControl', TControl, {
 	_renderedMainElement : null,
 	
 	/**
+	 * TWebControl#_renderedContentPlaceholder -> DOMElement
+	 * 
+	 * Placeholder for child elements. In most cases null which means that TWebControl#_renderedMainElement is used instead.
+	 * 
+	 **/
+	_renderedContentPlaceholder : null,
+	
+	/**
 	 * TWebControl#Attributes -> Hash@String
 	 * 
 	 * Stores additional HTML atributes to render
@@ -74,6 +82,8 @@ klass( 'TWebControl', TControl, {
 	constructor : function( options ){
 		this._Style = {};
 		this._renderedMainElement = null;
+		this._renderedContentPlaceholder = null;
+		this._rendersChildControls = true;
 		this.base( options );
 	},
 	
@@ -202,13 +212,13 @@ klass( 'TWebControl', TControl, {
 	
 	//@Override
 	renderContents : function(){
-		var d = this.createMainElement();
-		d.TomekControlObject = this;
-		this._renderedMainElement = d;
+		this._renderedContentPlaceholder = null;
+		this._renderedMainElement = this.createMainElement();
+		this._renderedMainElement.TomekControlObject = this;
 		if ( this._rendersChildControls ){
-			this.renderChildControls( d );
+			this.renderChildControls( this._renderedContentPlaceholder || this._renderedMainElement );
 		}
-		this.appendMainElement( d );
+		this.appendMainElement( this._renderedMainElement );
 	},
 	
 	setAttribute : function( el, property, value ){
