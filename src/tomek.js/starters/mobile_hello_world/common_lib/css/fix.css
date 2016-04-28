@@ -1,0 +1,50 @@
+body, .ionic-body{
+	height: 100vh;
+}
+
+.content{
+	position: absolute;
+	left:0;
+	right: 0;
+}
+
+.content-with-scroll{
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.scroll-content{
+    overflow: hidden;
+    background: white;
+}
+
+.refresh-puller{
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 80px;
+}
+
+.refresh-puller.active{
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.refresh-puller{
+    text-align: center;
+}
+
+.refresh-puller .icon{
+    display: block;
+    font-size: 3em;
+}
+
+.refresh-puller .label{
+    display: block;
+}
+
+.refresh-puller.active .icon{
+    transform: rotate(-180deg);
+    transition-duration: 0.4s;
+}
