@@ -2,6 +2,13 @@
 //= require TEventResponder
 //= require TStencil
 
+/** section: WebControls_Mobile
+ * class TTouchScrollView < TPanel
+ * includes TEventResponderMixin
+ * 
+ * Control creates a scrollable container with pull-to-refresh function
+ * 
+ **/
 klass( 'TTouchScrollView', TPanel, [ TEventResponderMixin ], {
       
 	_triggersEvents : ['Scroll','Refresh'],
