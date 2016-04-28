@@ -7,39 +7,29 @@
  * in repeater and similiar contexts
  * 
  **/
-klass( 'TItem', TTemplateControl, {
+klass( 'TStencil', TTemplateControl, {
 
 	/**
-	 * TItem#DataItem -> Object
+	 * TStencil#DataItem -> Object
 	 **/
 	
 	/**
-	 * TItem#ItemIndex -> int
-	 **/
-	
-	/**
-	 * TItem#Repeater -> TRepeater
-	 **/
-	
-	/**
-	 * TItem#Type -> String
+	 * TStencil#Type -> String
      * 
-     * one of: `Header`, `Item`, `Footer` or `Empty`
+     * i.e. one of: `Header`, `Item`, `Footer` or `Empty`
 	 **/
 	
 	//@Override
 	getPublicProperties : function(){
 		var arr = this.base();
 		arr.push( { name:'DataItem', type: 'object' },
-				  { name:'ItemIndex', type: 'integer' },
-				  { name:'Repeater', type: 'object' },
 				  { name:'Type', type:'string'}
 				);
 		return arr;
 	},
 	
 	/**
-	 * TItem#useTemplate( template ) -> void
+	 * TStencil#useTemplate( template ) -> void
 	 * - template (Function): template
 	 * 
 	 * Sets template function

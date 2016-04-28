@@ -1,5 +1,5 @@
 //= require TControl
-//= require TItem
+//= require TRepeaterItem
 //= require TEventResponder
 //= require TPlaceHolder
 
@@ -58,19 +58,19 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 	 **/
 	
 	/**
-	 * TRepeater#Items -> Array@TItem
+	 * TRepeater#Items -> Array@TRepeaterItem
 	 **/
 	
 	/**
-	 * TRepeater#HeaderItem -> TItem
+	 * TRepeater#HeaderItem -> TRepeaterItem
 	 **/
 	
 	/**
-	 * TRepeater#FooterItem -> TItem
+	 * TRepeater#FooterItem -> TRepeaterItem
 	 **/
 	
 	/**
-	 * TRepeater#EmptyItem -> TItem
+	 * TRepeater#EmptyItem -> TRepeaterItem
 	 **/
 	
 	/**
@@ -154,7 +154,7 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 
 		if ( ( hasData || this.getShowWrapperWhenEmpty() )
 				&& this._WrapperTemplate ){
-			var wrapper = new TItem({
+			var wrapper = new TRepeaterItem({
 				'Type' : 'Wrapper',
 				'Repeater' : this
 			});
@@ -168,7 +168,7 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 
 		if ( ( hasData || this.getShowHeaderWhenEmpty() )
 				&& this._HeaderTemplate ){
-			var header = new TItem({
+			var header = new TRepeaterItem({
 					'Type' : 'Header',
 					'Repeater' : this
 				});
@@ -181,7 +181,7 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 				&& this._ItemTemplate ){
 			for( var i =0; i<data_source.length; i++ ){
 				var data_item = data_source[i];
-				var item = new TItem({
+				var item = new TRepeaterItem({
 						'Type' : 'Item',
 						'Repeater' : this,
 						'ItemIndex' : i,
@@ -203,7 +203,7 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 
 		if ( ( hasData || this.getShowFooterWhenEmpty() )
 				&& this._FooterTemplate ){
-			var footer = new TItem({
+			var footer = new TRepeaterItem({
 					'Type' : 'Footer',
 					'Repeater' : this
 				});
@@ -214,7 +214,7 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
 			
 		if ( !hasData
 				&& this._EmptyTemplate ){
-			var empty = new TItem({
+			var empty = new TRepeaterItem({
 					'Type' : 'Empty',
 					'Repeater' : this
 				});
@@ -241,7 +241,7 @@ klass( 'TRepeater', TControl, [ TEventResponderMixin ], {
  **/
 
 /**
- * RepeaterItemCreatedEventParameter.item -> TItem
+ * RepeaterItemCreatedEventParameter.item -> TRepeaterItem
  **/
 
 /**
