@@ -1,4 +1,4 @@
-//= require TPanel
+//= require TTouchView
 //= require TEventResponder
 //= require TStencil
 
@@ -9,7 +9,7 @@
  * Control creates a scrollable container with pull-to-refresh function
  * 
  **/
-klass( 'TTouchScrollView', TPanel, [ TEventResponderMixin ], {
+klass( 'TTouchScrollView', TTouchView, [ TEventResponderMixin ], {
       
 	_triggersEvents : ['Scroll','Refresh'],
 
@@ -33,8 +33,7 @@ klass( 'TTouchScrollView', TPanel, [ TEventResponderMixin ], {
 	getPublicProperties : function(){
 		var arr = this.base();
 		arr.push( { name: 'RefreshPullerHeight', type: 'int', default: 80 },
-                    { name: 'HasHeader', type: 'bool', default: true },
-                    { name: 'HasFooter', type: 'bool', default: true },
+                    { name: 'EnableRefresh', type: 'bool', default: true },
                     { name: 'RefreshPullerLabel', type: 'string', default: "Pull down to refresh" },
                     { name: 'RefreshPullerTemplate', type: 'none' } );
 		return arr;
@@ -52,7 +51,8 @@ klass( 'TTouchScrollView', TPanel, [ TEventResponderMixin ], {
 		var scroll = - param.domEvent.target.scrollTop;
 		var pullerHeight = this.getRefreshPullerHeight();
 		var headerHeight = this.getHasHeader() ? this._headerHeight : 0;
-		if ( scroll > pullerHeight ){
+		var enabled = this.getEnableRefresh();
+		if ( enabled && scroll > pullerHeight ){
             if ( ! this._refreshTriggered ){
                 this._refreshTriggered = true;
                 this.triggerEvent( 'Refresh', {} );
@@ -60,7 +60,7 @@ klass( 'TTouchScrollView', TPanel, [ TEventResponderMixin ], {
             this._refreshBox.style.top = (headerHeight)+"px";
 			this._refreshBox.className = 'refresh-puller active'+( this.getHasHeader() ? ' has-header' : '' );
 		}else
-		if ( scroll > 0 ){
+		if ( enabled && scroll > 0 ){
 			this._refreshBox.style.top = (headerHeight-pullerHeight+scroll)+"px";
 		}else{
             this._refreshTriggered = false;
@@ -69,12 +69,19 @@ klass( 'TTouchScrollView', TPanel, [ TEventResponderMixin ], {
 		}
 	},
 
+	setAdditionalCssClasses : function( class_string ){
+		class_string = this.base( class_string );
+		if ( class_string.indexOf( 'content-with-scroll' ) == -1 ){
+			class_string += ' content-with-scroll';
+		}
+		return class_string;
+	},
+	
 	createMainElement : function(){
-		var d = this.base();
-		var c = document.createElement( 'div' );
+		var d = document.createElement( 'div' );
+		var c = this.base();
 		var s = document.createElement( 'div' );
 
-		c.className = 'content content-with-scroll'+( this.getHasHeader() ? ' has-header' : '' )+( this.getHasFooter() ? ' has-footer' : '' );
 		s.className = 'scroll-content padding';
 
 		var r = document.createElement( 'div' );
@@ -107,20 +114,20 @@ klass( 'TTouchScrollView', TPanel, [ TEventResponderMixin ], {
 		var labelText = this.getRefreshPullerLabel();
 		return function( item ){
 			var ExpressionContext = item;
-			var c13 = new TContent( [] );
-			item.addTemplateChildControl( "c13", c13 );
-			c13.renderTemplateChildControls = function( placeholder ){
-				var h_c14 = document.createElement( "span" );
-				h_c14.setAttribute( "class", "icon" );
-				var h_c15 = document.createElement( "span" );
-				h_c15.setAttribute( "class", "ion-arrow-down-c" );
-				h_c14.appendChild( h_c15 );
-				placeholder.appendChild( h_c14 );
-				var h_c16 = document.createElement( "span" );
-				h_c16.setAttribute( "class", "label" );
-				var t_c17 = document.createTextNode( labelText );
-				h_c16.appendChild( t_c17 );
-				placeholder.appendChild( h_c16 );
+			var content = new TContent( [] );
+			item.addTemplateChildControl( "c13", content );
+			content.renderTemplateChildControls = function( placeholder ){
+				var icon_wrapper = document.createElement( "span" );
+				icon_wrapper.setAttribute( "class", "icon" );
+				var icon = document.createElement( "span" );
+				icon.setAttribute( "class", "ion-arrow-down-c" );
+				icon_wrapper.appendChild( icon );
+				placeholder.appendChild( icon_wrapper );
+				var label_wrapper = document.createElement( "span" );
+				label_wrapper.setAttribute( "class", "label" );
+				var label_text = document.createTextNode( labelText );
+				label_wrapper.appendChild( label_text );
+				placeholder.appendChild( label_wrapper );
 			};
 		};
     },

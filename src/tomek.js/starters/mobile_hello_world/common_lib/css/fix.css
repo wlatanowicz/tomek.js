@@ -6,6 +6,16 @@ body, .ionic-body{
 	position: absolute;
 	left:0;
 	right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.content.has-header{
+    top: 44px;
+}
+
+.content.has-footer{
+    bottom: 44px;
 }
 
 .content-with-scroll{
@@ -16,6 +26,8 @@ body, .ionic-body{
 .scroll-content{
     overflow: hidden;
     background: white;
+    position: static;
+    min-height: calc(100% + 2px);
 }
 
 .refresh-puller{
