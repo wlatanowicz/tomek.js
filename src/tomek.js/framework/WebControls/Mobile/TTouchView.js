@@ -49,7 +49,7 @@ klass( 'TTouchView', TPanel,  {
 	},
 	
 	setCssClass : function( value ){
-		var value = this.base( this.setAdditionalCssClasses( value ) );
+		var value = this.setAdditionalCssClasses( value );
 		this['_CssClass'] = value !== null && typeof( value ) != 'undefined' ? value.toString() : '';
 		if ( this._renderedMainElement ){
 			this._renderedMainElement['className'] = this['_CssClass'];

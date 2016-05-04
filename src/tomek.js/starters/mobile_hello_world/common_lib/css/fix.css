@@ -60,3 +60,12 @@ body, .ionic-body{
     transform: rotate(-180deg);
     transition-duration: 0.4s;
 }
+
+.menu.inactive {
+    opacity: 0;
+    transition-delay: 0.2s;
+}
+
+.menu.active+.menu-content{
+    transform: translate3d( 275px, 0, 0 );
+}
