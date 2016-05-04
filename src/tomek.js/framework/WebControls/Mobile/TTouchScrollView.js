@@ -71,6 +71,8 @@ klass( 'TTouchScrollView', TTouchView, [ TEventResponderMixin ], {
 
 	setAdditionalCssClasses : function( class_string ){
 		class_string = this.base( class_string );
+		class_string = class_string.replace( new RegExp( 'padding', 'g' ), '' );
+		
 		if ( class_string.indexOf( 'content-with-scroll' ) == -1 ){
 			class_string += ' content-with-scroll';
 		}
@@ -82,7 +84,7 @@ klass( 'TTouchScrollView', TTouchView, [ TEventResponderMixin ], {
 		var c = this.base();
 		var s = document.createElement( 'div' );
 
-		s.className = 'scroll-content padding';
+		s.className = 'scroll-content'+( this.getHasPadding() ? ' padding' : '' );
 
 		var r = document.createElement( 'div' );
 		r.className = 'refresh-puller inactive'+( this.getHasHeader() ? ' has-header' : '' );

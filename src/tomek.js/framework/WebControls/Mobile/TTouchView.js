@@ -5,7 +5,8 @@ klass( 'TTouchView', TPanel,  {
 	getPublicProperties : function(){
 		var arr = this.base();
 		arr.push( { name: 'HasHeader', type: 'bool', default: true },
-                    { name: 'HasFooter', type: 'bool', default: true }
+                    { name: 'HasFooter', type: 'bool', default: true },
+                    { name: 'HasPadding', type: 'bool', default: true }
 				);
 		return arr;
 	},
@@ -29,6 +30,14 @@ klass( 'TTouchView', TPanel,  {
 			}
 		}else{
 			class_string = class_string.replace( new RegExp( 'has-footer', 'g' ), '' );
+		}
+		
+		if ( this.getHasPadding() ){
+			if ( class_string.indexOf( 'padding' ) == -1 ){
+				class_string += ' padding';
+			}
+		}else{
+			class_string = class_string.replace( new RegExp( 'padding', 'g' ), '' );
 		}
 		
 		return class_string;
