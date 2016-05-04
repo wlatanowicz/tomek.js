@@ -2,26 +2,31 @@
 //= require TEventResponder
 
 /** section: WebControls_FormControls
- * class TButton <  TWebControl
+ * class TInputButton <  TWebControl
  * includes TEventResponderMixin
  * 
- * Control renders a button
+ * Control renders a button (input type button)
  * 
  * ##### Triggered events
  * 
  * `on:Click`
  * 
  **/
-klass( 'TButton', TWebControl, [ TEventResponderMixin ], {
+klass( 'TInputButton', TWebControl, [ TEventResponderMixin ], {
 	
 	//@Override
-	_tagName : 'button',
+	_tagName : 'input',
 	
 	//@Override
-	_rendersChildControls : true,
+	_rendersChildControls : false,
 	
 	//@Override
 	_triggersEvents : ['Click'],
+	
+	//@Override
+	getDefaultAttributes : function(){
+		return { type: 'button' };
+	},
 	
 	/**
 	 * TButton#Text -> String
@@ -31,7 +36,7 @@ klass( 'TButton', TWebControl, [ TEventResponderMixin ], {
 	getPublicProperties : function(){
 		var arr = this.base();
 		arr.push( 
-					'Text',
+					{ name:'Text', elementProperty: 'value' },
 					{ name:'Disabled', type:'bool', elementProperty:'disabled' }
 					);
 		return arr;
@@ -40,11 +45,6 @@ klass( 'TButton', TWebControl, [ TEventResponderMixin ], {
 	//@Override
 	createMainElement : function(){
 		var d = this.base();
-		
-		if ( this.getText().length > 0 ){
-			var t = document.createTextNode( this.getText() );
-			d.appendChild( t );
-		}
 		
 		this.registerTriggerElement( d, 'click', 'Click' );
 		
