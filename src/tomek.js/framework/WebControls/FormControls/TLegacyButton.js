@@ -2,7 +2,7 @@
 //= require TEventResponder
 
 /** section: WebControls_FormControls
- * class TInputButton <  TWebControl
+ * class TLegacyButton <  TWebControl
  * includes TEventResponderMixin
  * 
  * Control renders a button (input type button)
@@ -12,7 +12,7 @@
  * `on:Click`
  * 
  **/
-klass( 'TInputButton', TWebControl, [ TEventResponderMixin ], {
+klass( 'TLegacyButton', TWebControl, [ TEventResponderMixin ], {
 	
 	//@Override
 	_tagName : 'input',

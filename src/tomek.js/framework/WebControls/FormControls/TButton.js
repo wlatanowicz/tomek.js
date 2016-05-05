@@ -23,6 +23,13 @@ klass( 'TButton', TWebControl, [ TEventResponderMixin ], {
 	//@Override
 	_triggersEvents : ['Click'],
 	
+	_renderedTextNode : null,
+	
+	constructor : function( options ){
+		this.base( options );
+		this._renderedTextNode = null;
+	},
+	
 	/**
 	 * TButton#Text -> String
 	 **/
@@ -36,15 +43,21 @@ klass( 'TButton', TWebControl, [ TEventResponderMixin ], {
 					);
 		return arr;
 	},
+	
+	setText : function( value ){
+		this._Text = value !== null && typeof( value ) != 'undefined' ? value.toString() : '';
+		if ( this._renderedTextNode ){
+			this._renderedTextNode.textContent = this._Text;
+		}
+	},
 
 	//@Override
 	createMainElement : function(){
 		var d = this.base();
 		
-		if ( this.getText().length > 0 ){
-			var t = document.createTextNode( this.getText() );
-			d.appendChild( t );
-		}
+		var t = document.createTextNode( this.getText() );
+		d.appendChild( t );
+		this._renderedTextNode = t;
 		
 		this.registerTriggerElement( d, 'click', 'Click' );
 		
