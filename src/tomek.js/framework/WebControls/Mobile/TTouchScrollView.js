@@ -71,12 +71,15 @@ klass( 'TTouchScrollView', TTouchView, [ TEventResponderMixin ], {
 
 	setAdditionalCssClasses : function( class_string ){
 		class_string = this.base( class_string );
-		class_string = class_string.replace( new RegExp( 'padding', 'g' ), '' );
+		var class_a = class_string.split( ' ' );
 		
-		if ( class_string.indexOf( 'content-with-scroll' ) == -1 ){
-			class_string += ' content-with-scroll';
+		class_a = class_a.filter( function(e){ return e != 'padding' } );
+		
+		if ( class_a.indexOf( 'content-with-scroll' ) == -1 ){
+			class_a.push( 'content-with-scroll' );
 		}
-		return class_string;
+
+		return class_a.join( ' ' ) ;
 	},
 	
 	createMainElement : function(){

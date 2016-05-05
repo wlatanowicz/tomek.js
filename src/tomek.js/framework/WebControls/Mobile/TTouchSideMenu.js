@@ -22,12 +22,28 @@ klass( 'TTouchSideMenu', TPanel, {
 	},
 	
 	setAdditionalCssClasses : function( class_string ){
+		var class_a = class_string.split( ' ' );
 		
-		if ( class_string.indexOf( 'menu menu-left' ) == -1 ){
-			class_string += ' menu menu-left';
+		if ( class_a.indexOf( 'menu' ) == -1 ){
+			class_a.push( 'menu' );
+		}
+		if ( class_a.indexOf( 'menu-left' ) == -1 ){
+			class_a.push( 'menu-left' );
+		}
+		
+		if ( this.getIsActive() ){
+			class_a = class_a.filter( function(e){ return e != 'inactive' } );
+			if ( class_a.indexOf( 'active' ) == -1 ){
+				class_a.push( 'active' );
+			}
+		}else{
+			class_a = class_a.filter( function(e){ return e != 'active' } );
+			if ( class_a.indexOf( 'inactive' ) == -1 ){
+				class_a.push( 'inactive' );
+			}
 		}
 
-		return class_string;
+		return class_a.join( ' ' ) ;
 	},
 	
 	getCssClass : function(){

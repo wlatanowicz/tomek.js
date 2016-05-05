@@ -12,35 +12,39 @@ klass( 'TTouchView', TPanel,  {
 	},
 	
 	setAdditionalCssClasses : function( class_string ){
-		if ( class_string.indexOf( 'content' ) == -1 ){
-			class_string += ' content';
+		var class_a = class_string.split( ' ' );
+		
+		class_a = class_a.filter( function(e){ return e != 'padding' } );
+		
+		if ( class_a.indexOf( 'content' ) == -1 ){
+			class_a.push( 'content' );
 		}
 		
 		if ( this.getHasHeader() ){
-			if ( class_string.indexOf( 'has-header' ) == -1 ){
-				class_string += ' has-header'; 
+			if ( class_a.indexOf( 'has-header' ) == -1 ){
+				class_a.push( 'has-header' );
 			}
 		}else{
-			class_string = class_string.replace( new RegExp( 'has-header', 'g' ), '' );
+			class_a = class_a.filter( function(e){ return e != 'has-header' } );
 		}
 		
 		if ( this.getHasFooter() ){
-			if ( class_string.indexOf( 'has-footer' ) == -1 ){
-				class_string += ' has-footer';
+			if ( class_a.indexOf( 'has-footer' ) == -1 ){
+				class_a.push( 'has-footer' );
 			}
 		}else{
-			class_string = class_string.replace( new RegExp( 'has-footer', 'g' ), '' );
+			class_a = class_a.filter( function(e){ return e != 'has-footer' } );
 		}
 		
 		if ( this.getHasPadding() ){
-			if ( class_string.indexOf( 'padding' ) == -1 ){
-				class_string += ' padding';
+			if ( class_a.indexOf( 'padding' ) == -1 ){
+				class_a.push( 'padding' );
 			}
 		}else{
-			class_string = class_string.replace( new RegExp( 'padding', 'g' ), '' );
+			class_a = class_a.filter( function(e){ return e != 'padding' } );
 		}
 		
-		return class_string;
+		return class_a.join( ' ' ) ;
 	},
 	
 	getCssClass : function(){

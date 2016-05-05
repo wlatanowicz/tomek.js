@@ -3,16 +3,21 @@
 klass( 'TTouchMenuContent', TPanel, {
 	
 	setAdditionalCssClasses : function( class_string ){
+		var class_a = class_string.split( ' ' );
 		
-		if ( class_string.indexOf( 'content' ) == -1 ){
-			class_string += ' content';
+		if ( class_a.indexOf( 'content' ) == -1 ){
+			class_a.push( 'content' );
 		}
 		
-		if ( class_string.indexOf( 'menu-content menu-animated' ) == -1 ){
-			class_string += ' menu-content menu-animated';
+		if ( class_a.indexOf( 'menu-content' ) == -1 ){
+			class_a.push( 'menu-content' );
 		}
-
-		return class_string;
+		
+		if ( class_a.indexOf( 'menu-animated' ) == -1 ){
+			class_a.push( 'menu-animated' );
+		}
+		
+		return class_a.join( ' ' ) ;
 	},
 	
 	getCssClass : function(){
