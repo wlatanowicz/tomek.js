@@ -80,14 +80,6 @@ klass( 'TTouchScrollView', TTouchView, [ TEventResponderMixin ], {
 			class_a.push( 'content-with-scroll' );
 		}
 
-		if ( this.getForceScroll() ){
-			if ( class_a.indexOf( 'force-scroll' ) == -1 ){
-				class_a.push( 'force-scroll' );
-			}
-		}else{
-			class_a = class_a.filter( function(e){ return e != 'force-scroll' } );
-		}
-		
 		return class_a.join( ' ' ) ;
 	},
 	
@@ -96,7 +88,7 @@ klass( 'TTouchScrollView', TTouchView, [ TEventResponderMixin ], {
 		var c = this.base();
 		var s = document.createElement( 'div' );
 
-		s.className = 'scroll-content'+( this.getHasPadding() ? ' padding' : '' );
+		s.className = 'scroll-content'+( this.getHasPadding() ? ' padding' : '' )+( this.getForceScroll() ? ' force-scroll' : '' );
 
 		var r = document.createElement( 'div' );
 		r.className = 'refresh-puller inactive'+( this.getHasHeader() ? ' has-header' : '' );
