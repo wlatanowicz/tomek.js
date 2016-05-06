@@ -1,5 +1,6 @@
 body, .ionic-body{
 	height: 100vh;
+    position: absolute;
 }
 
 .content{
@@ -27,6 +28,9 @@ body, .ionic-body{
     overflow: hidden;
     background: white;
     position: static;
+}
+
+.scroll-content.force-scroll{
     min-height: calc(100% + 2px);
 }
 

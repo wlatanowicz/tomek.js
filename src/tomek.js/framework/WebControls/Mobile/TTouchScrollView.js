@@ -34,6 +34,7 @@ klass( 'TTouchScrollView', TTouchView, [ TEventResponderMixin ], {
 		var arr = this.base();
 		arr.push( { name: 'RefreshPullerHeight', type: 'int', default: 80 },
                     { name: 'EnableRefresh', type: 'bool', default: true },
+                    { name: 'ForceScroll', type: 'bool', default: true },
                     { name: 'RefreshPullerLabel', type: 'string', default: "Pull down to refresh" },
                     { name: 'RefreshPullerTemplate', type: 'none' } );
 		return arr;
@@ -79,6 +80,14 @@ klass( 'TTouchScrollView', TTouchView, [ TEventResponderMixin ], {
 			class_a.push( 'content-with-scroll' );
 		}
 
+		if ( this.getForceScroll() ){
+			if ( class_a.indexOf( 'force-scroll' ) == -1 ){
+				class_a.push( 'force-scroll' );
+			}
+		}else{
+			class_a = class_a.filter( function(e){ return e != 'force-scroll' } );
+		}
+		
 		return class_a.join( ' ' ) ;
 	},
 	
