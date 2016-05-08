@@ -221,9 +221,19 @@ klass( 'TControl', {
 	 **/
 	ensureChildControls : function(){
 		if ( ! this._childControlsCreated ){
+			this.preCreateChildControls();
 			this.createChildControls();
 			this._childControlsCreated = true;
+			this.postCreateChildControls();
 		}
+	},
+	
+	preCreateChildControls : function(){
+		
+	},
+	
+	postCreateChildControls : function(){
+		
 	},
 	
 	/**
