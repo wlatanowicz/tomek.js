@@ -33,7 +33,7 @@ klass( 'TAnimatedRouteView', TRouteView, {
 	
 	renderChildControls : function( placeholder ){
 		this._panel.renderContentsInPlaceholder( placeholder );
-		this.base( this._panel );
+		this.base( this._panel._renderedMainElement );
 	},
 
 	activate : function( params ){
