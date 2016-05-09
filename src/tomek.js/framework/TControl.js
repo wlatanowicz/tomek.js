@@ -228,10 +228,22 @@ klass( 'TControl', {
 		}
 	},
 	
+	/**
+	 * TControl#preCreateChildControls() -> void
+	 * 
+	 * @TODO
+	 * 
+	 **/
 	preCreateChildControls : function(){
 		
 	},
 	
+	/**
+	 * TControl#postCreateChildControls() -> void
+	 * 
+	 * @TODO
+	 * 
+	 **/
 	postCreateChildControls : function(){
 		
 	},
@@ -266,13 +278,35 @@ klass( 'TControl', {
 			this.ensureChildControls();
 			this.removeRenderedNodes();
 			this.ensurePositionMarker();
+			this.preRender();
 			this._isRendered = true;
 			
 			if ( this.getVisible() ){
 				this.renderContents();
 			}
+			this.postRender();
 			
 		}
+		
+	},
+	
+	/**
+	 * TControl#preRender() -> void
+	 * 
+	 * @TODO
+	 * 
+	 **/
+	preRender : function(){
+		
+	},
+	
+	/**
+	 * TControl#postRender() -> void
+	 * 
+	 * @TODO
+	 * 
+	 **/
+	postRender : function(){
 		
 	},
 	
@@ -293,7 +327,10 @@ klass( 'TControl', {
 	 * TControl#renderContents() -> void
 	 * 
 	 * Renders contents of control.
-	 * Should not be called directly.
+	 * Decides where to put child controls and runs renderChildControls();
+	 * In most cases child controls are rendered in 'this'. This may be changed to
+	 * a nested HTML element for controls like TWebControl.
+	 * Should not be called directly. Should be called only from render().
 	 * 
 	 **/
 	renderContents : function(){
@@ -305,7 +342,9 @@ klass( 'TControl', {
 	 * - placeholder (DOMElement): a placeholder
 	 * 
 	 * Renders contents of child controls.
-	 * Should not be called directly.
+	 * Render occurs in a specified placeholder. In most cases placeholder is the same as 'this'.
+	 * In some cases (i.e. TWebControl) it may be a nested element.
+	 * Should not be called directly. Should be called only from renderContents().
 	 * 
 	 **/
 	renderChildControls : function( placeholder ){
