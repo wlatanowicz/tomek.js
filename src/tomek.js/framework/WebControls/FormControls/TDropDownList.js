@@ -25,6 +25,13 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 	//@Override
 	_triggersEvents : ['Change'],
 	
+	_ValueToSet : null,
+	
+	constructor : function( options ){
+		this._ValueToSet = null;
+		this.base( options );
+	},
+	
 	/**
 	 * TDropDownList#DataSource -> Array
 	 **/
@@ -54,23 +61,38 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 	},
 	
 	setSelectedValue : function( v ){
-		var index_to_set = 0;
+		var index_to_set = -1;
 		var j;
 		for ( j=0; j<this.getOptions().length; j++ ){
 			var i = this.getOptions()[j];
-			if ( i.getValue() == v ){
+			if ( i.getValue() == v.toString() ){
 				index_to_set = j;
 			}
 		}
-		this.setSelectedIndex( index_to_set );
+		if ( index_to_set >= 0 ){
+			this.setSelectedIndex( index_to_set );
+		}else{
+			this._ValueToSet = v;
+		}
 	},
 	
 	getSelectedValue : function(){
+		if ( this._ValueToSet !== null ){
+			return this._ValueToSet.toString();
+		}
 		var idx = this.getSelectedIndex();
 		if ( this.getOptions()[ idx ] && this.getOptions()[ idx ].getValue ){
 			return this.getOptions()[ idx ].getValue();
 		}else{
 			return null;
+		}
+	},
+	
+	setSelectedIndex : function( value ){
+		this._ValueToSet = null;
+		this['_SelectedIndex'] = parseInt( value );
+		if ( this._renderedMainElement ){
+			this.setAttribute( this._renderedMainElement, { elementProperty: 'selectedIndex' }, this['_SelectedIndex'] );
 		}
 	},
 
@@ -106,7 +128,6 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 	//@Override
 	createChildControls : function(){
 		var data_source = this.getDataSource();
-		var selected_index = this.getSelectedIndex();
 		for( var i =0; i<data_source.length; i++ ){
 			var data_item = data_source[i];
 			var opt = new TOption();
@@ -115,9 +136,38 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 			if ( this.getDisabledFieldName() ){
 				opt.setDisabled( data_item[ this.getDisabledFieldName() ] );			
 			}
-			opt.setSelected( selected_index === i );
 			this.addChildControl( opt );
 		}
+	},
+	
+	preRender : function(){
+		var selected_index = this.getSelectedIndex();
+		var somethingSelected = false;
+		var options = this.$$kind( 'TOption' );
+		for( var i=0; i<options.length && !somethingSelected; i++ ){
+			var selected = false;
+			
+			if ( ! somethingSelected ){
+				
+				if ( this._ValueToSet !== null
+						&& this._ValueToSet.toString() == options[i].getValue() ){
+					selected = true;
+					this._SelectedIndex = i;
+				}else
+				if ( this._ValueToSet === null
+						&& selected_index === i ){
+					selected = true;
+				}
+				
+				if ( selected ){
+					options[i].setSelected( true );
+				}
+
+				somethingSelected = selected || somethingSelected;
+			}
+			
+		}
+		
 	},
 	
 	getOptions: function(){
