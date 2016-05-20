@@ -1,0 +1,1 @@
+<com:TButton on:Click=".buttonClicked" Text="Click me!" />
