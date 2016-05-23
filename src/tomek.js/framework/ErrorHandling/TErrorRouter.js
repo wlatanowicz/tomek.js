@@ -25,13 +25,15 @@ klass( 'TErrorRouter', TObject, [TEventResponderMixin], {
 	},
 	
 	errorOccured : function ( e ){
+		e.preventDefault();
+		
 		var line = e.lineno;
 		var column = e.colno;
 		var file = e.filename;
 		var message = e.message;
 
 		var error = this.extractErrorFromDescription( message );
-		
+				
 		for ( var i=0; i<this._handlers.length; i++ ){
 			if ( error ){
 				this._handlers[i].handleError( file, line, column, error.klass, error.message, error.stack, error, e );
