@@ -16,8 +16,8 @@ export default class Renderer extends BaseRenderer {
 
 	source_paths: string[];
 
-	constructor( controlName:string, source_paths:string[], language:string = null ){
-		super( language );
+	constructor( controlName:string, source_paths:string[], debug: boolean = true, language:string = null ){
+		super( debug, language );
 		this.controlName = controlName;
 		this.dependencies = [];
 		this.source_paths = source_paths;
@@ -64,10 +64,22 @@ export default class Renderer extends BaseRenderer {
 
 		for (let i = 0; i < node.events.length; i++ ){
 			let event = node.events[i];
-			this.addOutput(this.getVarname(node) + ".attachEvent( \"" + event.event + "\", " + event.getBoundFunction()+" );" );
+			if ( this.debug ){
+				this.addOutput( "if ( " + event.getFunction()+" ) {" );
+				this.pushIndent();
+			}
+			this.addOutput( this.getVarname(node) + ".attachEvent( \"" + event.event + "\", " + event.getBoundFunction()+" );" );
+			if ( this.debug ){
+				this.popIndent();
+				this.addOutput( "} else {" );
+				this.pushIndent();
+				this.addOutput( "throw new TException( \"Cannot attach event in control "+this.controlName+": function "+event.getFunction()+" does not exist. \" );" );
+				this.popIndent();
+				this.addOutput( "}" );
+			}
 		}
 
-		var r = new StencilRenderer( node, this.language );
+		var r = new StencilRenderer( node, this.debug, this.language );
 		r.render();
 		if ( r.output.length > 0 ){
 			this.addOutput(this.getVarname(node) + ".renderTemplateChildControls = function( placeholder ){");

@@ -7,15 +7,17 @@ import DocumentNode from '../template/DocumentNode';
 
 export default class BaseRenderer {
 	
+	debug: boolean;
 	language: string;
 
 	indent: number;
 	output: string;
 
-	constructor( language:string ){
+	constructor( debug: boolean, language:string ){
 		this.indent = 1;
 		this.output = "";
 		this.language = language;
+		this.debug = debug;
 	}
 
 	pushIndent(){

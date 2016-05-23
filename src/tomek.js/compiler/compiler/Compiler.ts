@@ -10,17 +10,19 @@ export default class Compiler {
 
 	source_paths: string[];
 	language: string;
+	debug: boolean;
 
-	constructor( source_paths:string[], language: string ) {
+	constructor( source_paths:string[], debug: boolean, language: string ) {
 		this.source_paths = source_paths;
 		this.language = language;
+		this.debug = debug;
 	}
 
 	compile( source_file: string, target_file: string ) {
 		var parser = new Parser();
 		var control = parser.parseFile( source_file );
 		var control_name = path.basename( source_file, '.tpl' );
-		var renderer = new Renderer( control_name, this.source_paths, this.language );
+		var renderer = new Renderer( control_name, this.source_paths, this.debug, this.language );
 
 		renderer.render( control );
 

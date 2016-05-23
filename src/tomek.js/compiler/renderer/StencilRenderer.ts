@@ -11,8 +11,8 @@ export default class StencilRenderer extends BaseRenderer {
 
 	root:TemplateNode;
 
-	constructor(node:TemplateNode, language: string ){
-		super( language );
+	constructor(node:TemplateNode, debug: boolean, language: string ){
+		super( debug, language );
 		this.root = node;
 	}
 

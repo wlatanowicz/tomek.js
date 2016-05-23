@@ -19,11 +19,16 @@ export default class EventAttribute {
 
 	}
 
-	getBoundFunction(){
-		var realFunction = this.function;
+	getFunction(){
+		var realFunction = this.function.trim();
 		if ( realFunction.substring( 0, 1 ) == '.' ){
 			realFunction = "SourceTemplateControl"+realFunction;
 		}
+		return realFunction;
+	}
+
+	getBoundFunction(){
+		var realFunction = this.getFunction();
 		var functionPath = realFunction.split(".");
 		functionPath.pop();
 		return realFunction + ".bind( " + (functionPath.join(".")) + " )";

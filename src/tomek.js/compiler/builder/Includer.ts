@@ -139,7 +139,7 @@ export default class Includer{
 
 			}
 
- 			let compiler = new Compiler( this.source_paths, this.language );
+ 			let compiler = new Compiler( this.source_paths, ! this.minify, this.language );
 			compiler.compile(file, target_file);
 			console.log( "  |- template (compiled): "+file+" => "+target_file );
 			this.compiled[key] = target_file;
