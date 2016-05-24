@@ -6,14 +6,14 @@ import HtmlNode from '../template/HtmlNode';
 import DocumentNode from '../template/DocumentNode';
 
 export default class BaseRenderer {
-	
-	debug: boolean;
+		
+	debug: number;
 	language: string;
 
 	indent: number;
 	output: string;
 
-	constructor( debug: boolean, language:string ){
+	constructor( debug: number, language:string ){
 		this.indent = 1;
 		this.output = "";
 		this.language = language;

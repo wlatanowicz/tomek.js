@@ -10,9 +10,9 @@ export default class Compiler {
 
 	source_paths: string[];
 	language: string;
-	debug: boolean;
+	debug: number;
 
-	constructor( source_paths:string[], debug: boolean, language: string ) {
+	constructor( source_paths:string[], debug: number, language: string ) {
 		this.source_paths = source_paths;
 		this.language = language;
 		this.debug = debug;

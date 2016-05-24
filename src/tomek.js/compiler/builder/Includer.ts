@@ -18,6 +18,7 @@ export default class Includer{
 	compiled;
 
 	minify: boolean;
+	debug: number;
 
 	constructor( source_paths:string[], tmp: string, language: string ){
 		this.source_paths = source_paths;
@@ -26,6 +27,7 @@ export default class Includer{
 		this.tmp = tmp;
 		this.language = language;
 		this.minify = false;
+		this.debug = 0;
 	}
 
 	process( source_file:string, target_file:string ){
@@ -125,7 +127,8 @@ export default class Includer{
 
 		if ( file != null ){
 			let chksum = md5(file).substring( 0, 10 );
-			let target_file = path.join(this.tmp, key + "."+chksum+".js" );
+			let debug = "debug-level-" + this.debug;
+			let target_file = path.join(this.tmp, key + "."+chksum+"."+debug+".js" );
 
 			if ( fs.existsSync( target_file ) ){
 
@@ -139,7 +142,7 @@ export default class Includer{
 
 			}
 
- 			let compiler = new Compiler( this.source_paths, ! this.minify, this.language );
+ 			let compiler = new Compiler( this.source_paths, this.debug, this.language );
 			compiler.compile(file, target_file);
 			console.log( "  |- template (compiled): "+file+" => "+target_file );
 			this.compiled[key] = target_file;

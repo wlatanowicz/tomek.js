@@ -16,7 +16,7 @@ export default class Renderer extends BaseRenderer {
 
 	source_paths: string[];
 
-	constructor( controlName:string, source_paths:string[], debug: boolean = true, language:string = null ){
+	constructor( controlName:string, source_paths:string[], debug: number, language:string ){
 		super( debug, language );
 		this.controlName = controlName;
 		this.dependencies = [];
@@ -64,12 +64,12 @@ export default class Renderer extends BaseRenderer {
 
 		for (let i = 0; i < node.events.length; i++ ){
 			let event = node.events[i];
-			if ( this.debug ){
+			if ( this.debug >= 1 ){
 				this.addOutput( "if ( " + event.getFunction()+" ) {" );
 				this.pushIndent();
 			}
 			this.addOutput( this.getVarname(node) + ".attachEvent( \"" + event.event + "\", " + event.getBoundFunction()+" );" );
-			if ( this.debug ){
+			if ( this.debug >= 1 ){
 				this.popIndent();
 				this.addOutput( "} else {" );
 				this.pushIndent();
