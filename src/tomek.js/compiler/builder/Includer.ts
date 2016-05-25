@@ -34,6 +34,9 @@ export default class Includer{
 		console.log( "Processing: "+source_file+" => "+target_file );
 		var contents : string = fs.readFileSync( source_file, "utf8" );
 		contents = this.processContents( contents );
+		if ( this.debug >= 4 ){
+			contents = contents.replace( "/**DEBUG_MARKER_ON**/", 'true ||' );
+		}
 		mkdirp.sync( path.dirname( target_file ) );
 		fs.writeFileSync( target_file, contents, "utf8" );
 		console.log( "  |- include: "+source_file );
