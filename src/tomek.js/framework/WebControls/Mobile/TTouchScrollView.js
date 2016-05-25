@@ -18,7 +18,8 @@ klass( 'TTouchScrollView', TTouchView, [ TEventResponderMixin ], {
 	_headerHeight : 44,
     _RefreshPullerTemplate : null,
     _RefreshPuller : null,
-    _refreshTriggered : false,
+    _willRefresh : false,
+	_boundTouchEnd : null,
 
 	constructor : function( options ){
 		this.base( options );
@@ -27,7 +28,7 @@ klass( 'TTouchScrollView', TTouchView, [ TEventResponderMixin ], {
 		this._refreshBox = null;
         this._RefreshPullerTemplate = null;
         this._RefreshPuller = null;
-        this._refreshTriggered = false;
+        this._willRefresh = false;
 	},
 
 	getPublicProperties : function(){
@@ -54,9 +55,12 @@ klass( 'TTouchScrollView', TTouchView, [ TEventResponderMixin ], {
 		var headerHeight = this.getHasHeader() ? this._headerHeight : 0;
 		var enabled = this.getEnableRefresh();
 		if ( enabled && scroll > pullerHeight ){
-            if ( ! this._refreshTriggered ){
-                this._refreshTriggered = true;
-                this.triggerEvent( 'Refresh', {} );
+            if ( ! this._willRefresh ){
+                this._willRefresh = true;
+				if ( this._boundTouchEnd == null ){
+					this._boundTouchEnd = this.touchended.bind( this );
+				}
+				this.addEventListener( this._renderedMainElement, 'touchend', this._boundTouchEnd );
             }
             this._refreshBox.style.top = (headerHeight)+"px";
 			this._refreshBox.className = 'refresh-puller active'+( this.getHasHeader() ? ' has-header' : '' );
@@ -64,10 +68,15 @@ klass( 'TTouchScrollView', TTouchView, [ TEventResponderMixin ], {
 		if ( enabled && scroll > 0 ){
 			this._refreshBox.style.top = (headerHeight-pullerHeight+scroll)+"px";
 		}else{
-            this._refreshTriggered = false;
+			this._willRefresh = false;
 			this._refreshBox.style.top = (headerHeight-pullerHeight)+"px";
 			this._refreshBox.className = 'refresh-puller inactive'+( this.getHasHeader() ? ' has-header' : '' );
 		}
+	},
+	
+	touchended : function( event ){
+		this.removeEventListener( this._renderedMainElement, 'touchend', this._boundTouchEnd );
+		this.triggerEvent( 'Refresh', {} );
 	},
 
 	setAdditionalCssClasses : function( class_string ){
@@ -99,6 +108,7 @@ klass( 'TTouchScrollView', TTouchView, [ TEventResponderMixin ], {
 
 		this._renderedContentPlaceholder = s;
 		this._refreshBox = r;
+		this._willRefresh = false;
 
 		var headerHeight = this.getHasHeader() ? this._headerHeight : 0;
 		this._refreshBox.style.top = (headerHeight-this.getRefreshPullerHeight())+"px";
@@ -109,11 +119,13 @@ klass( 'TTouchScrollView', TTouchView, [ TEventResponderMixin ], {
 	},
       
     createChildControls : function(){
-        var puller = new TStencil({
-                                 'Type' : 'RefreshPuller'
-                                 });
-        puller.useTemplate( this._RefreshPullerTemplate || this.getDefaultRefreshPuller() );
-        this._RefreshPuller = puller;
+		if ( this.getEnableRefresh() ){
+			var puller = new TStencil({
+									 'Type' : 'RefreshPuller'
+									 });
+			puller.useTemplate( this._RefreshPullerTemplate || this.getDefaultRefreshPuller() );
+			this._RefreshPuller = puller;
+		}
     },
       
     getDefaultRefreshPuller : function(){
