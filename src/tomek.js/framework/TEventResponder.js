@@ -159,7 +159,7 @@ mixin( 'TEventResponderMixin', {
 			for ( var e_rec_idx in this._triggerElements ){
 				var e_rec = this._triggerElements[e_rec_idx];
 				if ( e_rec.event == e ){
-					this.removeEventListener( e_rec );
+					this.removeEventListener( e_rec.element, e_rec.domEvent, e_rec.boundFunction );
 				}
 			}
 		}
@@ -168,7 +168,9 @@ mixin( 'TEventResponderMixin', {
 	
 	/**
 	 * TEventResponderMixin#addEventListener( event_rec ) -> void
-	 * - event_rec (EventTrigger): trigger
+	 * - element (DOMElement): element
+	 * - domEvent (String): name of HTML event
+	 * - boundFunction (Function): a function
 	 * 
 	 * Attaches event listener to trigger DOMElement
 	 * 
@@ -185,18 +187,20 @@ mixin( 'TEventResponderMixin', {
 	
 	/**
 	 * TEventResponderMixin#removeEventListener( event_rec ) -> void
-	 * - event_rec (EventTrigger): trigger
+	 * - element (DOMElement): element
+	 * - domEvent (String): name of HTML event
+	 * - boundFunction (Function): a function
 	 * 
 	 * Removes event listener from trigger DOMElement
 	 * 
 	 **/
-	removeEventListener : function( event_rec ){
-		if ( event_rec.element.removeEventListener ){
-			event_rec.element.removeEventListener( event_rec.domEvent, event_rec.boundFunction );
+	removeEventListener : function( element, domEvent, boundFunction ){
+		if ( element.removeEventListener ){
+			element.removeEventListener( domEvent, boundFunction );
 		}else
-		if ( event_rec.element.detachEvent ){
+		if ( element.detachEvent ){
 			//IE8 fix
-			event_rec.element.detachEvent( "on"+event_rec.domEvent, event_rec.boundFunction );
+			element.detachEvent( "on"+domEvent, boundFunction );
 		}
 	},
 	
