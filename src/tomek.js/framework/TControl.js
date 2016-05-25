@@ -413,10 +413,7 @@ klass( 'TControl', {
 		
 		if ( this._positionMarker === null ){
 			
-			if ( true ){
-				/* normal place holder: */
-				this._positionMarker = document.createComment( "-" );
-			}else{
+			if ( /**DEBUG_MARKER_ON**/ false ){
 				/* debug, visible place holder: */
 				var label = 'Marker for <'+this.klass.klass_name+'> ID=' + ( this.getID() ? this.getID() : '(none)' );
 				this._positionMarker = document.createElement( "span" );
@@ -424,6 +421,9 @@ klass( 'TControl', {
 				this._positionMarker.style.color = 'red';
 				this._positionMarker.style.cursor = 'pointer';
 				this._positionMarker.title = label;
+			}else{
+				/* normal place holder: */
+				this._positionMarker = document.createComment( "-" );
 			}
 			
 			this._positionMarker.positionMarkerForControl = this;
