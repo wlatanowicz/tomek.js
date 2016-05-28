@@ -40,8 +40,8 @@ klass( 'TAnimatedRouteView', TRouteView, {
 		this.base( params );
 		this.ensureChildControls();
 		
-		this._panel.removeCssClass( this.getInactiveCssClass() );
-		this._panel.addCssClass( this.getActiveCssClass() );
+		this._panel.setCssClass( this.getInactiveCssClass() );
+		this._panel.setCssClass( this.getActiveCssClass() );
 	},
 	
 	deactivate : function(){
@@ -56,8 +56,8 @@ klass( 'TAnimatedRouteView', TRouteView, {
 			"isActive" : false
 		});
 		
-		this._panel.removeCssClass( this.getActiveCssClass() );
-		this._panel.addCssClass( this.getInactiveCssClass() );
+		this._panel.setCssClass( this.getActiveCssClass() );
+		this._panel.setCssClass( this.getInactiveCssClass() );
 		
 		if ( this.getAutoRender() ){
 			setTimeout( this.render.bind(this), this._deactivateRenderDelay );
