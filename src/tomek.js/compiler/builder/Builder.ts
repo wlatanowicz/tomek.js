@@ -22,6 +22,8 @@ export default class Builder {
 
 	app: string;
 	framework: string;
+	lib: string;
+	
 	build: string;
 
 	minify: boolean;
@@ -42,6 +44,7 @@ export default class Builder {
 
 		this.framework = 'framework';
 		this.app = 'app';
+		this.lib = 'lib';
 
 		this.minify = false;
 		this.debug = 0;
@@ -50,7 +53,8 @@ export default class Builder {
 	getSourcePaths(): string[]{
 		return [
 			path.join(this.base_dir, this.app),
-			path.join(this.base_dir, this.framework)
+			path.join(this.base_dir, this.framework),
+			path.join(this.base_dir, this.lib)
 		];
 	}
 
