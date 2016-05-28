@@ -18,7 +18,6 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 		this.base( options );
 		this._Params = { _list : [] };
 		this._ComputedPaths = null;
-		TRouteViewManager.getInstance().registerRouteView( this );
 	},
 	
 	destroy : function(){
@@ -63,11 +62,15 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 	
 	setRegExp : function( regexp ){
 		this._RegExp = regexp;
+		TRouteViewManager.getInstance().deregisterRouteView( this );
+		TRouteViewManager.getInstance().registerRouteView( this );
 	},
 	
 	setPath : function( path ){
 		this._ComputedPaths = null;
 		this._Path = path.split("\n").map( String.trim );
+		TRouteViewManager.getInstance().deregisterRouteView( this );
+		TRouteViewManager.getInstance().registerRouteView( this );
 	},
 	
  	getComputedPaths : function(){
