@@ -8,7 +8,12 @@
 	],
 	"resources": [
 		"**/*.html",
-		"**/*.css"
+		"**/*.css",
+		"**/*.eot",
+		"**/*.svg",
+		"**/*.ttf",
+		"**/*.woff",
+		"mobile/common_lib"
   	],
   	"dictionaries": [
   		"translations/*.xml"

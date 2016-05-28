@@ -1,0 +1,60 @@
+
+@keyframes fade-in {
+	0%   { opacity: 0; }
+	100% { opacity: 1; }
+}
+
+.fade-in{
+	animation-fill-mode: both;
+	animation-name: fade-in;
+	animation-duration: 0.2s;
+	animation-timing-function: linear;
+	animation-direction: normal;
+}
+
+@keyframes fade-out {
+	0%   { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+.fade-out{
+	animation-fill-mode: both;
+	animation-name: fade-out;
+	animation-duration: 0.2s;
+	animation-timing-function: linear;
+	animation-direction: normal;
+}
+
+
+
+@keyframes slide-in-right {
+	0%   { left: 100%; }
+	100% { left: 0; }
+}
+
+.slide-in-right{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	animation-fill-mode: both;
+	animation-name: slide-in-right;
+	animation-duration: 0.2s;
+	animation-timing-function: linear;
+	animation-direction: normal;
+}
+
+@keyframes slide-out-right {
+	0%   { left: 0; }
+	100% { left: 100%; }
+}
+
+.slide-out-right{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	animation-fill-mode: both;
+	animation-name: slide-out-right;
+	animation-duration: 0.2s;
+	animation-timing-function: linear;
+	animation-direction: normal;
+}
