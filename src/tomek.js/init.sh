@@ -38,6 +38,7 @@ git clone $GIT_SOURCE $WORK_DIR/tmp/tomekjs.git
 cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/framework $WORK_DIR/framework
 cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/compiler $WORK_DIR/compiler
 cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/compatibility $WORK_DIR/compatibility
+cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/lib $WORK_DIR/lib
 
 if [ "$MOBILE" == "yes" ]
 then
