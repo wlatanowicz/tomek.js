@@ -11,11 +11,16 @@
 klass( 'TAnimatedRouteView', TRouteView, {
 	
 	_deactivateRenderDelay : 300,
+	_reactivateSecondStageDelay : 50,
+	_reactivateSecondStageAnimationDelay : "0.1s",
+	
 	_panel : null,
+	_div : null,
 	
 	constructor : function( options ){
 		this.base( options );
 		this._panel = null;
+		this._div = null;
 	},
 
 	//@Override
@@ -37,13 +42,42 @@ klass( 'TAnimatedRouteView', TRouteView, {
 	},
 
 	activate : function( params ){
-		this.base( params );
+		var wasActive = this._IsActive;
+		if ( wasActive ){
+			this._div = this._panel._renderedMainElement.cloneNode(true);
+			this._panel._renderedMainElement.parentNode.insertBefore( this._div, this._panel._renderedMainElement );
+
+			this._div.style.animationDelay = this._reactivateSecondStageAnimationDelay;
+			this._div.className = this.getInactiveCssClass();
+			setTimeout( this.reactivateSecondStage.bind( this, params, this.base.bind(this) ), this._reactivateSecondStageDelay );
+		}else{
+			this.base( params );
+			this.ensureChildControls();
+			this._panel.setCssClass( this.getActiveCssClass() );
+		}
+		
+	},
+
+	reactivateSecondStage : function( params, baseActivate ){
+		var wasActive = this._IsActive;
 		this.ensureChildControls();
 		
-		this._panel.setCssClass( this.getInactiveCssClass() );
+		baseActivate( params );
+		
 		this._panel.setCssClass( this.getActiveCssClass() );
+
+		setTimeout( this.reactivateThirdStage.bind(this), this._deactivateRenderDelay );
 	},
-	
+
+	reactivateThirdStage : function(){
+		if ( this._div ){
+			var el = document.createElement('div');
+			el.appendChild( this._div );
+			el = null;
+			this._div = null;
+		}
+	},
+
 	deactivate : function(){
 		var wasActive = this._IsActive;
 		var oldParams = this._Params;
@@ -56,7 +90,6 @@ klass( 'TAnimatedRouteView', TRouteView, {
 			"isActive" : false
 		});
 		
-		this._panel.setCssClass( this.getActiveCssClass() );
 		this._panel.setCssClass( this.getInactiveCssClass() );
 		
 		if ( this.getAutoRender() ){
