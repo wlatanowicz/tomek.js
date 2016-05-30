@@ -20,7 +20,6 @@ klass( 'TAnimatedRouteView', TRouteView, {
 	constructor : function( options ){
 		this.base( options );
 		this._panel = null;
-		this._div = null;
 	},
 
 	//@Override
@@ -44,12 +43,12 @@ klass( 'TAnimatedRouteView', TRouteView, {
 	activate : function( params ){
 		var wasActive = this._IsActive;
 		if ( wasActive ){
-			this._div = this._panel._renderedMainElement.cloneNode(true);
-			this._panel._renderedMainElement.parentNode.insertBefore( this._div, this._panel._renderedMainElement );
+			var div = this._panel._renderedMainElement.cloneNode(true);
+			this._panel._renderedMainElement.parentNode.insertBefore( div, this._panel._renderedMainElement );
 
-			this._div.style.animationDelay = this._reactivateSecondStageAnimationDelay;
-			this._div.className = this.getInactiveCssClass();
-			setTimeout( this.reactivateSecondStage.bind( this, params, this.base.bind(this) ), this._reactivateSecondStageDelay );
+			div.style.animationDelay = this._reactivateSecondStageAnimationDelay;
+			div.className = this.getInactiveCssClass();
+			setTimeout( this.reactivateSecondStage.bind( this, params, div, this.base.bind(this) ), this._reactivateSecondStageDelay );
 		}else{
 			this.base( params );
 			this.ensureChildControls();
@@ -58,7 +57,7 @@ klass( 'TAnimatedRouteView', TRouteView, {
 		
 	},
 
-	reactivateSecondStage : function( params, baseActivate ){
+	reactivateSecondStage : function( params, div, baseActivate ){
 		var wasActive = this._IsActive;
 		this.ensureChildControls();
 		
@@ -66,15 +65,14 @@ klass( 'TAnimatedRouteView', TRouteView, {
 		
 		this._panel.setCssClass( this.getActiveCssClass() );
 
-		setTimeout( this.reactivateThirdStage.bind(this), this._deactivateRenderDelay );
+		setTimeout( this.reactivateThirdStage.bind( this, div ), this._deactivateRenderDelay );
 	},
 
-	reactivateThirdStage : function(){
-		if ( this._div ){
+	reactivateThirdStage : function( div ){
+		if ( div ){
 			var el = document.createElement('div');
-			el.appendChild( this._div );
+			el.appendChild( div );
 			el = null;
-			this._div = null;
 		}
 	},
 
