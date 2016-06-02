@@ -3,6 +3,7 @@ import glob = require('glob');
 import path = require('path');
 import fs = require('fs');
 import mkdirp = require('mkdirp');
+import fse = require('fs-extra');
 
 export default class ResourceCopier {
 
@@ -45,7 +46,7 @@ export default class ResourceCopier {
 	copyFile( src: string, target: string ){
 		let targetDir = path.dirname( target );
 		mkdirp.sync( targetDir );
-		fs.createReadStream( src ).pipe(fs.createWriteStream( target ));
+		fse.copySync( src, target );
 	}
 
 	copyDir( src: string, target: string ){

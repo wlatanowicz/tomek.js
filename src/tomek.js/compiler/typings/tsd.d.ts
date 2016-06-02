@@ -5,3 +5,4 @@
 /// <reference path="minimist/minimist.d.ts" />
 /// <reference path="mkdirp/mkdirp.d.ts" />
 /// <reference path="uglify-js/uglify-js.d.ts" />
+/// <reference path="fs-extra/fs-extra.d.ts" />
