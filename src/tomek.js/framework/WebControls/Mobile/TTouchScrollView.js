@@ -14,12 +14,14 @@ klass( 'TTouchScrollView', TTouchView, [ TEventResponderMixin ], {
 	_triggersEvents : ['Scroll','Refresh'],
 
 	_refreshResponderAttached : false,
+	_refreshBoxHeight : 0,
 	_refreshBox : null,
 	_headerHeight : 44,
     _RefreshPullerTemplate : null,
     _RefreshPuller : null,
-    _willRefresh : false,
 	_boundTouchEnd : null,
+	_renderedScrollElement : null,
+    _willRefresh : false,
 
 	constructor : function( options ){
 		this.base( options );
@@ -28,6 +30,8 @@ klass( 'TTouchScrollView', TTouchView, [ TEventResponderMixin ], {
 		this._refreshBox = null;
         this._RefreshPullerTemplate = null;
         this._RefreshPuller = null;
+		this._boundTouchEnd = null;
+		this._renderedScrollElement = null;
         this._willRefresh = false;
 	},
 
@@ -108,6 +112,7 @@ klass( 'TTouchScrollView', TTouchView, [ TEventResponderMixin ], {
 
 		this._renderedContentPlaceholder = s;
 		this._refreshBox = r;
+		this._renderedScrollElement = c;
 		this._willRefresh = false;
 
 		var headerHeight = this.getHasHeader() ? this._headerHeight : 0;
