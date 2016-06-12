@@ -43,12 +43,23 @@ klass( 'TAnimatedRouteView', TRouteView, {
 	activate : function( params ){
 		var wasActive = this._IsActive;
 		if ( wasActive ){
+			var oldParams = this._Params;
+			this._Params = params;
+			this._IsActive = true;
+			this.setShouldRender( this.getAutoRender() && ! wasActive );
+			this.triggerEvent( 'BecameActive', {
+					"oldParams" : oldParams,
+					"newParams" : this._Params,
+					"wasActive" : wasActive,
+					"isActive" : true
+					});
+			
 			var div = this._panel._renderedMainElement.cloneNode(true);
 			this._panel._renderedMainElement.parentNode.insertBefore( div, this._panel._renderedMainElement );
-
 			div.style.animationDelay = this._reactivateSecondStageAnimationDelay;
 			div.className = this.getInactiveCssClass();
-			setTimeout( this.reactivateSecondStage.bind( this, params, div, this.base.bind(this) ), this._reactivateSecondStageDelay );
+			
+			setTimeout( this.reactivateSecondStage.bind( this, params, div ), this._reactivateSecondStageDelay );
 		}else{
 			this.base( params );
 			this.ensureChildControls();
@@ -57,11 +68,13 @@ klass( 'TAnimatedRouteView', TRouteView, {
 		
 	},
 
-	reactivateSecondStage : function( params, div, baseActivate ){
+	reactivateSecondStage : function( params, div ){
 		var wasActive = this._IsActive;
 		this.ensureChildControls();
 		
-		baseActivate( params );
+		if ( this.getShouldRender() ){
+			this.render();
+		}
 		
 		this._panel.setCssClass( this.getActiveCssClass() );
 
@@ -81,6 +94,7 @@ klass( 'TAnimatedRouteView', TRouteView, {
 		var oldParams = this._Params;
 		this._Params = {};
 		this._IsActive = false;
+		this.setShouldRender( this.getAutoRender() );
 		this.triggerEvent( 'BecameInactive', {
 			"oldParams" : oldParams,
 			"newParams" : this._Params,
@@ -90,7 +104,7 @@ klass( 'TAnimatedRouteView', TRouteView, {
 		
 		this._panel.setCssClass( this.getInactiveCssClass() );
 		
-		if ( this.getAutoRender() ){
+		if ( this.getShouldRender() ){
 			setTimeout( this.render.bind(this), this._deactivateRenderDelay );
 		}
 	},

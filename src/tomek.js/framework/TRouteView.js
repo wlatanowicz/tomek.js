@@ -52,6 +52,7 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 		arr.push( 'RegExpParams' );
 		arr.push( 'Path' );
 		arr.push( { name: 'AutoRender', type: 'bool', default: true } );
+		arr.push( { name: 'ShouldRender', type: 'bool', default: true } );
 		arr.push( { name: 'IsActive', type: 'bool', default: false } );
 		return arr;
 	},
@@ -110,13 +111,14 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 		var oldParams = this._Params;
 		this._Params = params;
 		this._IsActive = true;
+		this.setShouldRender( this.getAutoRender() && ! wasActive );
 		this.triggerEvent( 'BecameActive', {
 				"oldParams" : oldParams,
 				"newParams" : this._Params,
 				"wasActive" : wasActive,
 				"isActive" : true
 				});
-		if ( this.getAutoRender() && ! wasActive ){
+		if ( this.getShouldRender() ){
 			this.render();
 		}
 	},
@@ -126,13 +128,14 @@ klass( 'TRouteView', TControl, [ TEventResponderMixin ], {
 		var oldParams = this._Params;
 		this._Params = {};
 		this._IsActive = false;
+		this.setShouldRender( this.getAutoRender() );
 		this.triggerEvent( 'BecameInactive', {
 			"oldParams" : oldParams,
 			"newParams" : this._Params,
 			"wasActive" : wasActive,
 			"isActive" : false
 		});
-		if ( this.getAutoRender() ){
+		if ( this.getShouldRender() ){
 			this.render();
 		}
 	},
