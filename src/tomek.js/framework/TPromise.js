@@ -10,11 +10,13 @@ klass( 'TPromise', {
 	
 	_stateHistory : [],
 	_callbacks : {},
+	_terminated : false,
 	
 	constructor : function(){
 		this.base();
 		this._stateHistory = [];
 		this._callbacks = {};
+		this._terminated = false;
 	},
 	
 	/**
@@ -47,6 +49,16 @@ klass( 'TPromise', {
 	},
 	
 	/**
+	 * TPromise#terminate() -> void
+	 * 
+	 * Stops promise. No futher state changes will be effective.
+	 * 
+	 **/
+	terminate : function(){
+	 	this._terminated = true;
+	},
+	
+	/**
 	 * TPromise#on( state, callback ) -> TPromise
 	 * - state (String): state name
 	 * - callback (Function): callback function
@@ -57,8 +69,9 @@ klass( 'TPromise', {
 	on : function( state, callback ){
 		
 		var previousState = this.getPreviousStateByName( state );
-		if ( previousState !== null ){
-			setTimeout( function(){ callback( previousState.param ) }, 0 );
+		if ( previousState !== null && !this._terminated ){
+			var promise = this;
+			setTimeout( function(){ if ( !promise._terminated ) callback( previousState.param, promise ); }, 0 );
 		}
 		
 		if ( this._callbacks[ state ] == undefined ){
@@ -79,6 +92,9 @@ klass( 'TPromise', {
 	 * 
 	 **/
 	setState : function( state, param ){
+		if ( this._terminated ){
+			return false;
+		}
 		this._stateHistory.push({
 				'state' : state,
 				'param' : param
@@ -87,9 +103,11 @@ klass( 'TPromise', {
 		if ( this._callbacks[ state ] ){
 			for( var i=0; i<this._callbacks[ state ].length; i++ ){
 				var callback = this._callbacks[ state ][i];
-				setTimeout( function(){ callback( param ) }, 0 );
+				var promise = this;
+				setTimeout( function(){ if ( !promise._terminated ) callback( param, promise ); }, 0 );
 			}
 		}
+		return true;
 	}
 	
 } );
