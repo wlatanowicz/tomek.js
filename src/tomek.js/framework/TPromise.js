@@ -71,7 +71,7 @@ klass( 'TPromise', {
 		var previousState = this.getPreviousStateByName( state );
 		if ( previousState !== null && !this._terminated ){
 			var promise = this;
-			setTimeout( function(){ if ( !promise._terminated ) callback( previousState.param, promise ); }, 0 );
+			setTimeout( function(promise,callback){ if ( !promise._terminated ) callback( previousState.param, promise ); }.bind(this,promise,callback), 0 );
 		}
 		
 		if ( this._callbacks[ state ] == undefined ){
@@ -104,7 +104,7 @@ klass( 'TPromise', {
 			for( var i=0; i<this._callbacks[ state ].length; i++ ){
 				var callback = this._callbacks[ state ][i];
 				var promise = this;
-				setTimeout( function(){ if ( !promise._terminated ) callback( param, promise ); }, 0 );
+				setTimeout( function(promise,callback){ if ( !promise._terminated ) callback( param, promise ); }.bind(this,promise,callback), 0 );
 			}
 		}
 		return true;
