@@ -38,7 +38,9 @@ klass( 'TFileUpload', TWebControl, [ TEventResponderMixin, TValidatableMixin ], 
 		var arr = this.base();
 		arr.push( { name:'Value', elementProperty: 'value', fetchFromElement: true },
 					{ name:'Multiple', type:'bool', default: 'false', elementProperty:'multiple' },
-					{ name:'Disabled', type:'bool', elementProperty:'disabled' }
+					{ name:'Disabled', type:'bool', elementProperty:'disabled' },
+					{ name:'File', type:'none', elementProperty:'file', fetchFromElement: true },
+					{ name:'Files', type:'none', elementProperty:'files', fetchFromElement: true }
 		);
 		return arr;
 	},
