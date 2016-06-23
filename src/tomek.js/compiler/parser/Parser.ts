@@ -13,8 +13,20 @@ import DocumentNode from '../template/DocumentNode';
 
 export default class Parser {
 
+	entities = {
+		'nbsp' : '160'
+	};
+
 	constructor() {
 
+	}
+
+	fixEntities( str: string ){
+		for( let htmle in this.entities ){
+			let xmle = this.entities[htmle];
+			str = str.replace( new RegExp( '&'+htmle+';', 'g' ), '&#'+xmle+';' )
+		}
+		return str;
 	}
 
 	parseFile(path: string) {
@@ -27,7 +39,7 @@ export default class Parser {
 						"</template>";
 		}
 		
-		return this.parse(content);
+		return this.parse( this.fixEntities( content ) );
 	}
 
 	parse(xmlString: string) {
