@@ -44,8 +44,12 @@ klass( 'THttp', {
 	
 	prepareAndSend : function( xhttp, body ){
 		if ( body !== undefined ){
-			xhttp.setRequestHeader( "Content-type", "application/json" );
-			xhttp.send( JSON.stringify( body ) );
+			if ( body.constructor && body.constructor.name === 'FormData' ){
+				xhttp.send( body );
+			}else{
+				xhttp.setRequestHeader( "Content-type", "application/json" );
+				xhttp.send( JSON.stringify( body ) );
+			}
 		}else{
 			xhttp.send( null );
 		}
