@@ -1,13 +1,13 @@
 //= require TTemplateControl
 
 /** section: Controls
- * class TItem < TTemplateControl
+ * class TStencil < TControl
  * 
  * Control used to render multiple times the same template
  * in repeater and similiar contexts
  * 
  **/
-klass( 'TStencil', TTemplateControl, {
+klass( 'TStencil', TControl, {
 
 	/**
 	 * TStencil#DataItem -> Object
