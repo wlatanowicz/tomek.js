@@ -2,6 +2,7 @@
 //= require TEventResponder
 //= require TValidatable
 //= require TOption
+//= require TTwoWayBinding
 
 /** section: WebControls_FormControls
  * class TDropDownList <  TWebControl
@@ -14,7 +15,7 @@
  * `on:Change`
  * 
  **/
-klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ], {
+klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin, TTwoWayBindingMixin ], {
 	
 	//@Override
 	_tagName : 'select',
@@ -24,6 +25,10 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin ]
 	
 	//@Override
 	_triggersEvents : ['Change'],
+	
+	_syncTriggerEvents : ['Change'],
+	
+	_syncControlProperty : 'SelectedValue',
 	
 	_ValueToSet : null,
 	
