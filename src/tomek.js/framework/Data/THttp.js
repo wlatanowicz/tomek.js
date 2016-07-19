@@ -44,7 +44,8 @@ klass( 'THttp', {
 	
 	prepareAndSend : function( xhttp, body ){
 		if ( body !== undefined ){
-			if ( ( body.constructor && body.constructor.name === 'FormData' )
+			if ( body instanceof FormData
+				|| ( body.constructor && body.constructor.name === 'FormData' )
 				|| ( body.toString && body.toString() === '[object FormData]' ) ){
 				xhttp.send( body );
 			}else{
