@@ -12,18 +12,16 @@ klass( 'TLink', TWebControl, {
 	//@Override
 	_tagName : 'a',
 	
-	//@Override
-	_rendersChildControls : true,
-	
-	//@Override
-	_triggersEvents : ['Click'],
-	
 	/**
-	 * TButton#Text -> String
+	 * TLink#Text -> String
 	 **/
 	
 	/**
-	 * TButton#Href -> String
+	 * TLink#Href -> String
+	 **/
+	
+	/**
+	 * TLink#Target -> String
 	 **/
 	
 	//@Override
@@ -31,7 +29,7 @@ klass( 'TLink', TWebControl, {
 		var arr = this.base();
 		arr.push( 'Text',
 					{ name: 'Href', elementProperty: 'href', default: '#' },
-					{ name: 'Target', default: '_self', elementProperty: 'target' }
+					{ name: 'Target', elementProperty: 'target', default: '_self' }
 					);
 		return arr;
 	},
