@@ -1,11 +1,12 @@
 var gulp = require('gulp');
-var path = require('path');
-var minimist = require('minimist');
-var glob = require('glob');
-var fs = require('fs');
-var mkdirp = require('mkdirp');
 
 gulp.task('tomek-test-create', function () {
+	var path = require('path');
+	var minimist = require('minimist');
+	var glob = require('glob');
+	var fs = require('fs');
+	var mkdirp = require('mkdirp');
+
 	var argv = minimist(process.argv.slice(2));
 	if (argv['name'] && argv['name'].length > 0) {
 		var test_name = argv['name'];

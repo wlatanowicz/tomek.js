@@ -1,10 +1,11 @@
 var gulp = require('gulp');
-var Builder = require('./../builder/Builder');
-var DictionaryProvider = require('./../dictionary/DictionaryProvider');
-var path = require('path');
-var minimist = require('minimist');
 
 gulp.task('tomek-build', function () {
+	var Builder = require('./../builder/Builder');
+	var DictionaryProvider = require('./../dictionary/DictionaryProvider');
+	var path = require('path');
+	var minimist = require('minimist');
+	
 	var argv = minimist(process.argv.slice(2));
 	var config = require('./../../app/application.json');
 	var base_dir = path.resolve(".");
