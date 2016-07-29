@@ -71,6 +71,7 @@ klass( 'THttpActiveRecordQuery', {
 				.done( function(payload){
 					var active = this.makeActiveRecord( this.unwrapPayload( payload ) );
 					active.__status = 'loaded';
+					active.__query = this;
 					promise.setState( 'done', active );
 				}.bind(this) )
 				.error( function(){
