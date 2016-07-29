@@ -71,7 +71,6 @@ klass( 'THttpActiveRecordQuery', {
 				.done( function(payload){
 					var active = this.makeActiveRecord( this.unwrapPayload( payload ) );
 					active.__status = 'loaded';
-					active.__query = this;
 					promise.setState( 'done', active );
 				}.bind(this) )
 				.error( function(){
@@ -157,7 +156,7 @@ klass( 'THttpActiveRecordQuery', {
 			}else
 			if ( t === 'object' ){
 				if ( typeof dst[k] !== 'object' ){
-					dst[k] = {};
+					dst[k] = src[k] instanceof Array ? [] : {};
 				}
 				this.deepCopy( src[k], dst[k] );
 			}
