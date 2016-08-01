@@ -12,6 +12,10 @@
 		<com:TTextBox ID="SecondTextBox" Model="[%^ SourceTemplateControl.text %]"/>
 	</div>
 			
+	<div>
+		<com:TLiteral ID="Literal" Model="[%^ SourceTemplateControl.text %]"/>
+	</div>
+			
 </com:TContent>
 
 </template>
