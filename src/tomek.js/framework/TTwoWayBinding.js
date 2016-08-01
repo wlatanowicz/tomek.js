@@ -6,52 +6,69 @@
  **/
 mixin( 'TTwoWayBindingMixin', {
 	
-	_syncTriggerEvents : ['Change'],
-	_syncControlProperty : 'Value',
-	
-	_syncEventsAttached : false,
-	_Model : null,
+	_syncEventsAttached : {},
 	
 	constructor : function(options){
-		this._syncEventsAttached = false;
-		this._Model = null;
+		this._syncEventsAttached = {};
 		this.base(options);
 	},
+
+//  PROPERTY EXAMPLE:
+//  
+//	getPublicProperties : function(){
+//		var a = this.base();
+//		a.push({
+//			name: 'Model', type:'model', syncControlProperty: 'Value', syncTriggerEvents: ['Change']
+//		})
+//		return a;
+//	},
 	
-	setModel : function( model_object ){
-		this._Model = model_object;
-		this.attachSyncFormToModelEvents();
-		this.attachModelToFormEvent();
-		this.syncModelToForm();
-	},
-	
-	getModel : function(){
-		return this._Model;
-	},
-	
-	attachSyncFormToModelEvents : function(){
-		if ( ! this._syncEventsAttached ){
-			for( var i=0; i< this._syncTriggerEvents.length; i++ ){
-				this.attachEvent( this._syncTriggerEvents[i], this.syncFormToModel.bind( this ) );
+	attachSyncControlToModelEvents : function( property ){
+		if ( ! this._syncEventsAttached[ property.name ] ){
+			for( var i=0; i< property.syncTriggerEvents.length; i++ ){
+				this.attachEvent( property.syncTriggerEvents[i], this.syncControlToModel.bind( this, property ) );
 			}
-			this._syncEventsAttached = true;
+			this._syncEventsAttached[ property.name ] = true;
 		}
 	},
 	
-	attachModelToFormEvent : function(){
+	attachModelToControlEvent : function( property ){
 		if ( Object.observe ){
-			Object.observe( this.getModel().getObject(), this.syncModelToForm.bind( this ) );
+			Object.observe( this.getModel().getObject(), this.syncModelToControl.bind( this, property ) );
 		}else{
-			console.log( 'Object.observe not found. Model-to-form binding will not work.' );
+			console.log( 'Object.observe not found. Model-to-control binding will not work.' );
 		}
 	},
 	
-	syncFormToModel : function(){
-		this.getModel().setValue( this[ 'get'+this._syncControlProperty ]() );
+	syncControlToModel : function( property ){
+		this['get'+property.name]().setValue( this[ 'get'+property.syncControlProperty ]() );
 	},
 	
-	syncModelToForm : function(){
-		this[ 'set'+this._syncControlProperty ]( this.getModel().getValue() );
+	syncModelToControl : function( property ){
+		this[ 'set'+property.syncControlProperty ]( this['get'+property.name]().getValue() );
+	},
+	
+	createGetterFunction : function( property ){
+		if ( property.type !== 'model' ){
+			this.base( property );
+		}else{
+			this['get'+property.name] = function(){
+				return this['_'+property.name];
+			};			
+		}
+	},
+	
+	createSetterFunction : function( property ){
+		if ( property.type !== 'model' ){
+			this.base( property );
+		}else{
+			this['set'+property.name] = function( model_object ){
+				this['_'+property.name] = model_object;
+				this.attachSyncControlToModelEvents( property );
+				this.attachModelToControlEvent( property );
+				this.syncModelToControl( property );
+			};
+		}
 	}
 	
 });

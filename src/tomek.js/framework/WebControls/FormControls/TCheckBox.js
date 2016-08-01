@@ -31,10 +31,6 @@ klass( 'TCheckBox', TWebControl, [ TEventResponderMixin, TValidatableMixin, TTwo
 		return { type: 'checkbox' };
 	},
 	
-	_syncTriggerEvents : ['Change'],
-	
-	_syncControlProperty : 'Checked',
-	
 	/**
 	 * TCheckBox#Checked -> Boolean
 	 **/
@@ -44,8 +40,9 @@ klass( 'TCheckBox', TWebControl, [ TEventResponderMixin, TValidatableMixin, TTwo
 		var arr = this.base();
 		arr.push( 
 					{ name: 'Checked', type: 'bool', elementProperty: 'checked', fetchFromElement: true },
-					{ name:'Disabled', type:'bool', elementProperty:'disabled' },
-					{ name: 'Value', type:'bool' }
+					{ name: 'Disabled', type:'bool', elementProperty:'disabled' },
+					{ name: 'Value', type:'bool' },
+					{ name: 'Model', type:'model', syncControlProperty: 'Checked', syncTriggerEvents: ['Change'] }
 				);
 		return arr;
 	},

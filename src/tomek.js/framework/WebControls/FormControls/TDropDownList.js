@@ -25,11 +25,7 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin, 
 	
 	//@Override
 	_triggersEvents : ['Change'],
-	
-	_syncTriggerEvents : ['Change'],
-	
-	_syncControlProperty : 'SelectedValue',
-	
+		
 	_ValueToSet : null,
 	
 	constructor : function( options ){
@@ -52,7 +48,8 @@ klass( 'TDropDownList', TWebControl, [ TEventResponderMixin, TValidatableMixin, 
 					{ name: 'TextFieldName', default: 'text' },
 					{ name: 'ValueFieldName', default: 'value' },
 					{ name: 'DisabledFieldName', default: null },
-					{ name: 'Disabled', type:'bool', elementProperty:'disabled' }
+					{ name: 'Disabled', type:'bool', elementProperty:'disabled' },
+					{ name: 'Model', type:'model', syncControlProperty: 'SelectedValue', syncTriggerEvents: ['Change'] }
 					);
 		return arr;
 	},

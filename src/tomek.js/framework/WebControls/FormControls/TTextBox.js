@@ -32,10 +32,6 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin, TTwoW
 	//@Override
 	_triggersEvents : ['Change','KeyUp','KeyDown','Blur','Focus'],
 	
-	_syncTriggerEvents : ['Change','KeyUp'],
-	
-	_syncControlProperty : 'Text',
-	
 	getValue : function(){
 		return this.getText();
 	},
@@ -55,8 +51,9 @@ klass( 'TTextBox', TWebControl, [ TEventResponderMixin, TValidatableMixin, TTwoW
 					'Value',
 					{ name: 'Rows', type: 'int', default: 1 },
 					{ name: 'Cols', type: 'int', default: 0 },
-					{ name:'Disabled', type:'bool', elementProperty:'disabled' },
-					{ name:'Type', elementProperty:'type', default: 'text' }
+					{ name: 'Disabled', type:'bool', elementProperty:'disabled' },
+					{ name: 'Type', elementProperty:'type', default: 'text' },
+					{ name: 'Model', type:'model', syncControlProperty: 'Text', syncTriggerEvents: ['Change','KeyUp'] }
 		);
 		return arr;
 	},
