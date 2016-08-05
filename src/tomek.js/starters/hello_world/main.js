@@ -1,5 +1,5 @@
 
 //= require HelloWorld-tpl
 
-var c = new HelloWorld( { 'Placeholder' : 'container' } );
-c.render();
+var app = new HelloWorld( { 'Placeholder' : 'container' } );
+app.render();

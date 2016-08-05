@@ -1,5 +1,5 @@
 
 //= require MobileHelloWorld-tpl
 
-var c = new MobileHelloWorld( { 'Placeholder' : 'container' } );
-c.render();
+var app = new MobileHelloWorld( { 'Placeholder' : 'container' } );
+app.render();
