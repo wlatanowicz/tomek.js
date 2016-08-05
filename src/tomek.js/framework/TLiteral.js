@@ -1,5 +1,5 @@
 //= require TControl
-//= TTwoWayBinding
+//= require TTwoWayBinding
 
 /** section: Controls
  * class TLiteral < TControl
