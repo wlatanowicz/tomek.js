@@ -8,7 +8,7 @@ web applications.
 
 ### Quick Start ###
 
-* Run in your console: bash <(curl -s https://raw.githubusercontent.com/wlatanowicz/tomek.js/master/src/tomek.js/init.sh)
+* Run in your console: bash <(curl -s -L http://tomekjs.com/init.sh)
 * Run compiler/get_dependencies.sh
 * Run compiler/build.sh
 * Open build/index.html in your browser
