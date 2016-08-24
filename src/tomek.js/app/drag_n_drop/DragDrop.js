@@ -56,13 +56,13 @@ klass( 'DragDrop', TTemplateControl, {
 
 			var rpt = sender.findChildControlsByKind('TRepeater')[0];
 			rpt.getDataSource().push( obj );
-			rpt.dataBind();
+			rpt.cleanup();
 
 			var src = this.$( param.draggable.getCustomData().source );
 			var i = src.getDataSource().indexOf( obj )
 			if ( i >= 0 ){
 				src.getDataSource().splice( i, 1 );
-				src.dataBind();
+				src.cleanup();
 				src.render();
 			}
 
