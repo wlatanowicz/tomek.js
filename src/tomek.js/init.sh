@@ -38,6 +38,9 @@ git clone $GIT_SOURCE $WORK_DIR/tmp/tomekjs.git
 cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/framework $WORK_DIR/framework
 cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/compiler $WORK_DIR/compiler
 cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/lib $WORK_DIR/lib
+cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/gulpfile.js $WORK_DIR/gulpfile.js
+cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/package.json $WORK_DIR/package.json
+cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/.gitignore $WORK_DIR/.gitignore
 
 if [ "$MOBILE" == "yes" ]
 then
