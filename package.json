@@ -1,16 +1,29 @@
 {
-	"dependencies" : {
-		"gulp" : "*",
-		"require-dir" : "*",
-		
-		"tsc" : "*",
-		"libxmljs" : "*",
-		"glob" : "*",
-		"minimist" : "*",
-		"md5" : "*",
-		"mkdirp" : "*",
-		"fs-extra" : "*",
-		"uglify-js" : "*",
-		"ndoc" : "*"
-	}
+  "dependencies": {
+    "fs-extra": "^2.0.0",
+    "glob": "^7.1.1",
+    "gulp": "^3.9.1",
+    "libxmljs": "^0.18.4",
+    "md5": "^2.2.1",
+    "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "ndoc": "^5.0.1",
+    "require-dir": "^0.3.1",
+    "tsc": "^1.20150623.0",
+    "uglify-js": "^2.7.5"
+  },
+  "description": "A component based JavaScript frontend framework",
+  "homepage": "http://tomekjs.com",
+  "maintainers": [
+    {
+      "name": "Wiktor Latanowicz",
+      "email": "tomek.js@wiktor.latanowicz.com"
+    }
+  ],
+  "name": "tomek.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:wlatanowicz/tomek.js.git"
+  },
+  "version": "1.1.0"
 }
