@@ -9,8 +9,6 @@ web applications.
 ### Quick Start ###
 
 * Run in your console: **bash <(curl -s -L http://tomekjs.com/init.sh)**
-* Run **npm install** to install all tools
-* Run **gulp tsc** to prepare compiler (do this only once)
 * Run **gulp build** to build your project
 * Open **build/index.html** in your browser
 
