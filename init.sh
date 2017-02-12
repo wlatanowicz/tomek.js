@@ -1,7 +1,6 @@
 #!/bin/bash
 
-export PROJECT="MyProject"
-export GIT_SOURCE="https://github.com/wlatanowicz/tomek.js.git"
+export PROJECT="MyTomekProject"
 export MOBILE="no"
 
 ask_user() {
@@ -14,7 +13,6 @@ ask_user() {
 	fi
 }
 
-ask_user "GIT source" "GIT_SOURCE"
 ask_user "Project name" "PROJECT"
 
 export WORK_DIR=`pwd`/$PROJECT
@@ -31,29 +29,50 @@ fi
 
 pushd $WORK_DIR > /dev/null
 
-mkdir $WORK_DIR/tmp
+cat > package.json <<- EOM
+{
+    "private": true,
+    "dependencies":{
+	    "tomek.js" : "wlatanowicz/tomek.js"
+    }
+}
+EOM
 
-git clone $GIT_SOURCE $WORK_DIR/tmp/tomekjs.git
+cat > .gitignore <<- EOM
+build/*
+tmp/*
+node_modules
+EOM
 
-cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/framework $WORK_DIR/framework
-cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/compiler $WORK_DIR/compiler
-cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/lib $WORK_DIR/lib
-cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/gulpfile.js $WORK_DIR/gulpfile.js
-cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/package.json $WORK_DIR/package.json
-cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/.gitignore $WORK_DIR/.gitignore
+npm install
+
+ln -s node_modules/tomek.js/framework .
+ln -s node_modules/tomek.js/compiler .
+ln -s node_modules/tomek.js/lib .
+
+cp node_modules/tomek.js/gulpfile.js .
 
 if [ "$MOBILE" == "yes" ]
 then
-	cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/starters/mobile_hello_world $WORK_DIR/app
-	rm -Rf $WORK_DIR/www
-	mkdir $WORK_DIR/www
-	ln -s $WORK_DIR/www $WORK_DIR/build
+	cp -R node_modules/tomek.js/starters/mobile_hello_world app
+	rm -Rf www
+	mkdir www
+	ln -s www build
 else
-	cp -R $WORK_DIR/tmp/tomekjs.git/src/tomek.js/starters/hello_world $WORK_DIR/app
-	mkdir $WORK_DIR/build
+	cp -R node_modules/tomek.js/starters/hello_world app
+	mkdir build
 fi
 
-rm -Rf $WORK_DIR/tmp
-mkdir $WORK_DIR/tmp
+mkdir tmp
+
+gulp tsc
 
 popd > /dev/null
+
+echo "Project initialized"
+echo -e "Now run \033[1mgulp build\033[0m or \033[1mgulp build watch\033[0m in your work dir to build your project"
+if [ "$MOBILE" == "yes" ]
+    echo -e "Next open \033[1mbuild/index.html\033[0m in your browser or build cordova project"
+else
+    echo -e "Next open \033[1mbuild/index.html\033[0m in your browser"
+fi
