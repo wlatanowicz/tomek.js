@@ -72,6 +72,7 @@ popd > /dev/null
 echo "Project initialized"
 echo -e "Now run \033[1mgulp build\033[0m or \033[1mgulp build watch\033[0m in your work dir to build your project"
 if [ "$MOBILE" == "yes" ]
+then
     echo -e "Next open \033[1mbuild/index.html\033[0m in your browser or build cordova project"
 else
     echo -e "Next open \033[1mbuild/index.html\033[0m in your browser"
