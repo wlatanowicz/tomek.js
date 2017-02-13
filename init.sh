@@ -18,7 +18,25 @@ ask_user "Project name" "PROJECT"
 export WORK_DIR=`pwd`/$PROJECT
 
 ask_user "Working directory" "WORK_DIR"
-ask_user "Make mobile application and initialize Cordova" "MOBILE"
+
+echo "Select project to initialize:"
+echo " [hello] - simple Hello World"
+echo " [mobile] - mobile Hello World with Cordova"
+echo " [demo] - multiple demo apps"
+
+while \
+	[ "$TEMPLATE" != "hello" ] && \
+	[ "$TEMPLATE" != "mobile" ] && \
+	[ "$TEMPLATE" != "demo" ]
+do
+	export TEMPLATE="hello"
+	ask_user "Enter your choice" "TEMPLATE"
+done
+
+if [ "$TEMPLATE" == "mobile" ]
+then
+	export MOBILE="yes"
+fi
 
 if [ "$MOBILE" == "yes" ]
 then
@@ -52,14 +70,18 @@ ln -s node_modules/tomek.js/lib .
 
 cp node_modules/tomek.js/gulpfile.js .
 
+case "$TEMPLATE" in
+	"hello") cp -R node_modules/tomek.js/starters/hello_world app ;;
+	"mobile") cp -R node_modules/tomek.js/starters/mobile_hello_world app ;;
+	"demo") cp -R node_modules/tomek.js/app app ;;
+esac
+
 if [ "$MOBILE" == "yes" ]
 then
-	cp -R node_modules/tomek.js/starters/mobile_hello_world app
 	rm -Rf www
 	mkdir www
 	ln -s www build
 else
-	cp -R node_modules/tomek.js/starters/hello_world app
 	mkdir build
 fi
 
