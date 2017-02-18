@@ -3,6 +3,7 @@ var gulp = require('gulp');
 gulp.task('tomek-test-build', function () {
 	var path = require('path');
 	var minimist = require('minimist');
+	var fs = require('fs');
 	var Builder = require('./../builder/Builder');
 	var DictionaryProvider = require('./../dictionary/DictionaryProvider');
 	
@@ -18,4 +19,17 @@ gulp.task('tomek-test-build', function () {
 	builder.cleanupDestination();
 	builder.processMains();
 	builder.processResources();
+
+    var testList = fs.readdirSync('./test/tests');
+    var regexp = new RegExp('^[0-9]{3}_.+');
+    testList = testList.filter(function (e) {
+		return regexp.test(e);
+	});
+
+    var js = "var TESTS = " + JSON.stringify(testList) + ";";
+
+    fs.writeFileSync(
+    	base_dir + "/" + builder.build + "/" + "test_list.js",
+    	js
+	);
 });
