@@ -16,6 +16,8 @@ web applications.
 
 Tomek.js currently targets the following platforms:
 
-* Microsoft Internet Explorer for Windows, version 9.0 and higher (8.0 with hacks)
 * Mozilla Firefox 3.6 and higher
 * Apple Safari 5.0 and higher
+* Google Chrome
+* Microsoft Internet Explorer for Windows, version 9.0 and higher (8.0 with hacks)
+* not tested, but should work: Opera and other standards-compliant browsers
