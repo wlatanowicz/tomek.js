@@ -87,8 +87,6 @@ fi
 
 mkdir tmp
 
-gulp tsc
-
 popd > /dev/null
 
 echo "Project initialized"

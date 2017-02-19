@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 
-gulp.task('tomek-build', function () {
+gulp.task('tomek-build', ['tomek-check-tsc'], function () {
 	var Builder = require('./../builder/Builder');
 	var DictionaryProvider = require('./../dictionary/DictionaryProvider');
 	var path = require('path');

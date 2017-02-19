@@ -6,13 +6,14 @@ gulp.task('tomek-test-create', function () {
 	var glob = require('glob');
 	var fs = require('fs');
 	var mkdirp = require('mkdirp');
+    var gutil = require('gulp-util');
 
 	var argv = minimist(process.argv.slice(2));
 	if (argv['name'] && argv['name'].length > 0) {
 		var test_name = argv['name'];
 	}
 	else {
-		console.error("ERROR: --name argument needed");
+		gutil.log(gutil.colors.red('ERROR:'), gutil.colors.cyan('--name'), "argument needed");
 		process.exit(1);
 	}
 	var base_dir = path.resolve("./test/");
