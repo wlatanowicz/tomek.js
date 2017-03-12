@@ -1,36 +1,35 @@
-//= require Base
-
 /** section: Controls
  * class TExpression
- * 
+ *
  * Stores an expriession to be rendered
- * 
+ *
  **/
-klass( 'TExpression', {
-	
+export default class TExpression
+{
+
 	/**
 	 * TExpression#_expressionFunction -> Function
 	 **/
-	_expressionFunction : function(){return null},
-	
-	constructor : function( fun ){
+	_expressionFunction = function(){return null;};
+
+	constructor( fun ){
 		this._expressionFunction = fun;
-	},
-	
-	valueOf : function(){
+	}
+
+	valueOf(){
 		var exp = this._expressionFunction();
 		if ( exp == null ){
 			return null;
 		}
 		return exp.valueOf();
-	},
-	
-	toString : function(){
+	}
+
+	toString(){
 		var exp = this._expressionFunction();
 		if ( exp == null ){
 			return '!NULL!';
 		}
 		return exp.toString();
 	}
-	
-});
+
+}

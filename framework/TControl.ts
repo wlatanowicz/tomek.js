@@ -1,7 +1,6 @@
-//= require TObject
-//= require TException
-//= require CommonUtils
-//= require TExpression
+import TObject from "@framework/TObject";
+import TException from "@framework/TException";
+import TExpression from "@framework/TExpression";
 
 /** section: Controls
  * class TControl
@@ -10,15 +9,15 @@
  * handles all common dependency and rendering routines
  * 
  **/
-klass( 'TControl', {
-	
+export default class TControl extends TObject
+{
 	/**
 	 * TControl#_childControls -> Array@TControl
 	 * 
 	 * Keeps all direct child controls
 	 * 
 	 **/
-	_childControls : [],
+	private _childControls = [];
 	
 	/**
 	 * TControl#_childControlsHash -> Hash@TControl
@@ -26,7 +25,7 @@ klass( 'TControl', {
  	 * Keeps track of child controls based on ID
 	 * 
 	 **/
-	_childControlsHash : {},
+	private _childControlsHash = {};
 	
 	/**
 	 * TControl#_childControlsCreated -> Boolean
@@ -35,7 +34,7 @@ klass( 'TControl', {
 	 * afer running createChildControls()
 	 * 
 	 **/
-	_childControlsCreated : false,
+	private _childControlsCreated = false;
 	
 	/**
 	 * TControl#_templateControls -> Hash@TControl
@@ -43,7 +42,7 @@ klass( 'TControl', {
 	 * Keeps track of controls initialized using XML template
 	 * 
 	 **/
-	_templateControls : {},
+	private _templateControls = {};
 	
 	/**
 	 * TControl#_renderedNodes -> Array@DOMElement
@@ -52,15 +51,7 @@ klass( 'TControl', {
 	 * that should be removed on rerender
 	 * 
 	 **/
-	_renderedNodes : [],
-	
-	/**
-	 * TControl#_Placeholder -> DOMElement
-	 * 
-	 * Control is rendered inside this element
-	 * 
-	 **/
-	_Placeholder : null,
+	protected _renderedNodes = [];
 	
 	/**
 	 * TControl#_positionMarker -> DOMElement
@@ -68,7 +59,7 @@ klass( 'TControl', {
 	 * Keeps position of this control inside _placeholder
 	 * 
 	 **/
-	_positionMarker : null,
+	protected _positionMarker = null;
 	
 	/**
 	 * TControl#_ignoreTemplate -> Boolean
@@ -76,8 +67,10 @@ klass( 'TControl', {
 	 * Controls created in template are ignored if true.
 	 * 
 	 **/
-	_ignoreTemplate : false,
-	
+	private _ignoreTemplate = false;
+
+	private _isRendered = false;
+
 	/**
 	 *  new TControl([options])
 	 *  - options (Hash): hash of properties to be set
@@ -85,7 +78,8 @@ klass( 'TControl', {
 	 * Default control constructor
 	 * 
 	 **/
-	constructor : function( options ){
+	constructor( options ){
+		super(options);
 		this._childControls = [];
 		this._renderedNodes = [];
 		this._isRendered = false;
@@ -93,20 +87,25 @@ klass( 'TControl', {
 		this._childControlsCreated = false;
 		this._positionMarker = null;
 		this._templateControls = {};
-		
-		this.base( options );
-	},
-	
-	setID : function( id ){
+	}
+
+	private _ID;
+
+	set ID( id ){
 		if ( this._ID !== null ){
 			throw new TException( 'Cannot change ID' )
 		}
 		this._ID = id;
-		if ( this.getParent() ){
-			this.getParent()._childControlsHash[ this._ID ] = this;
+		if ( this.Parent ){
+			this.Parent._childControlsHash[ this._ID ] = this;
 		}
-	},
-    
+	}
+
+	get ID(){
+		return this.converters.string(this._ID);
+	}
+
+
 	/**
 	 * TControl#ID -> String
 	 **/
@@ -129,32 +128,17 @@ klass( 'TControl', {
 	/**
 	 * TControl#Visible -> Boolean
 	 **/
-	
+
 	/**
-	 * TControl#getPublicProperties() -> Array@String
-	 * 
-	 * Defines list of public properties
-	 * 
+	 * TControl#Placeholder -> DOMElement
+	 *
+	 * Control is rendered inside this element
+	 *
 	 **/
-	getPublicProperties : function(){
-		return ['ID',
-				'Id',
-				{ name: 'Placeholder', type: 'object' },
-				{ name: 'Parent', type: 'object' },
-				{ name: 'CustomData', type: 'object' },
-				{ name: 'Visible', type: 'bool', default: true }
-				];
-	},
-	
-	/**
-	 * TControl#setPlaceholder( placeholder ) -> void
-	 * - placeholder (String|DOMElement|TControl|null): a placeholder
-	 * 
-	 * Sets placholder for control
-	 * to be rendered in
-	 * 
-	 **/
-	setPlaceholder : function( root_node ){
+	private _Placeholder = null;
+
+	set Placeholder(root_node)
+	{
 		if ( ! root_node ){
 			this._Placeholder = null;
 		}else
@@ -165,32 +149,59 @@ klass( 'TControl', {
 				&& root_node.nodeType == Node.ELEMENT_NODE ){
 			this._Placeholder = root_node;
 		}else
-		if ( root_node.getPlaceholder ){
+		if ( root_node instanceof TControl){
 			this._Placeholder = null;
 		}else
 		{
+		    console.log(root_node);
 			throw new TException( 'Invalid Placeholder' )
 		}
-	},
+	}
 	
-	/**
-	 * TControl#getPlaceholder() -> DOMElement
-	 * 
-	 * Returns placeholder for control (a node to render control in)
-	 * fallbacks to parent control if required
-	 * 
-	 **/
-	getPlaceholder : function(){
+	get Placeholder()
+	{
 		return this._Placeholder
 			? this._Placeholder
-			: ( this.getParent()
-				? this.getParent().getPlaceholder()
+			: ( this.Parent
+				? this.Parent.Placeholder
 				: document.body );
-	},
-	
-	getVisible : function(){
-		return parseBool( this._Visible ) && ( this.getParent() === null || this.getParent().getVisible() );
-	},
+	}
+
+	private _Parent;
+
+	set Parent(value)
+	{
+		this._Parent = value;
+	}
+
+	get Parent(): TControl|null
+	{
+		return this.converters.object(this._Parent);
+	}
+
+	private _CustomData;
+
+	set CustomData(value)
+	{
+		this._CustomData = value;
+	}
+
+	get CustomData(): any|null
+	{
+		return this.converters.object(this._CustomData);
+	}
+
+	private _Visible = true;
+
+	set Visible(value)
+	{
+		this._Visible = this.converters.boolean(value);
+	}
+
+	get Visible(): boolean
+	{
+		return this.converters.boolean(this._Visible) && (this.Parent === null || this.Parent.Visible);
+	}
 	
 	/**
 	 * TControl#removeRenderedNodes() -> void
@@ -199,7 +210,8 @@ klass( 'TControl', {
 	 * before next render
 	 * 
 	 **/
-	removeRenderedNodes : function(){
+	removeRenderedNodes()
+	{
 		var i;
 		for ( i=0; i<this._childControls.length; i++ ){
 			this._childControls[i].removeRenderedNodes();
@@ -211,7 +223,7 @@ klass( 'TControl', {
 			}
 		}
 		this._renderedNodes = [];
-	},
+	}
 	
 	/**
 	 * TControl#ensureChildControls() -> void
@@ -219,14 +231,15 @@ klass( 'TControl', {
 	 * Initializes child controls if required.
 	 * 
 	 **/
-	ensureChildControls : function(){
-		if ( ! this._childControlsCreated ){
+	ensureChildControls()
+	{
+		if (!this._childControlsCreated){
 			this.preCreateChildControls();
 			this.createChildControls();
 			this._childControlsCreated = true;
 			this.postCreateChildControls();
 		}
-	},
+	}
 	
 	/**
 	 * TControl#preCreateChildControls() -> void
@@ -234,9 +247,7 @@ klass( 'TControl', {
 	 * @TODO
 	 * 
 	 **/
-	preCreateChildControls : function(){
-		
-	},
+	preCreateChildControls(){}
 	
 	/**
 	 * TControl#postCreateChildControls() -> void
@@ -244,9 +255,7 @@ klass( 'TControl', {
 	 * @TODO
 	 * 
 	 **/
-	postCreateChildControls : function(){
-		
-	},
+	postCreateChildControls(){}
 	
 	/**
 	 * TControl#createChildControls() -> void
@@ -255,9 +264,7 @@ klass( 'TControl', {
 	 * Should be overloaded.
 	 * 
 	 **/
-	createChildControls : function(){
-		
-	},
+	createChildControls(){}
 	
 	/**
 	 * TControl#render() -> void
@@ -266,12 +273,13 @@ klass( 'TControl', {
 	 * and all its child controls.
 	 * 
 	 **/
-	render : function(){
+	render()
+	{
 		
-		if ( this.getParent()
-				&& this.getParent()._isRendered === false ){
+		if ( this.Parent
+				&& this.Parent._isRendered === false ){
 			
-			this.getParent().render();
+			this.Parent.render();
 			
 		}else{
 			
@@ -281,14 +289,14 @@ klass( 'TControl', {
 			this.preRender();
 			this._isRendered = true;
 			
-			if ( this.getVisible() ){
+			if (this.Visible){
 				this.renderContents();
 			}
 			this.postRender();
 			
 		}
 		
-	},
+	}
 	
 	/**
 	 * TControl#preRender() -> void
@@ -296,9 +304,9 @@ klass( 'TControl', {
 	 * @TODO
 	 * 
 	 **/
-	preRender : function(){
+	preRender(){
 		
-	},
+	}
 	
 	/**
 	 * TControl#postRender() -> void
@@ -306,9 +314,9 @@ klass( 'TControl', {
 	 * @TODO
 	 * 
 	 **/
-	postRender : function(){
+	postRender(){
 		
-	},
+	}
 	
 	/**
 	 * TControl#renderContentsInPlaceholder( placeholder ) -> void
@@ -318,10 +326,10 @@ klass( 'TControl', {
 	 * Should not be called directly.
 	 * 
 	 **/
-	renderContentsInPlaceholder : function( placeholder ){
-		this.setPlaceholder( placeholder );
+	renderContentsInPlaceholder(placeholder){
+		this.Placeholder = placeholder;
 		this.render();
-	},
+	}
 	
 	/**
 	 * TControl#renderContents() -> void
@@ -333,9 +341,9 @@ klass( 'TControl', {
 	 * Should not be called directly. Should be called only from render().
 	 * 
 	 **/
-	renderContents : function(){
-		this.renderChildControls( this );
-	},
+	renderContents(){
+		this.renderChildControls(this);
+	}
 
 	/**
 	 * TControl#renderChildControls( placeholder ) -> void
@@ -347,13 +355,13 @@ klass( 'TControl', {
 	 * Should not be called directly. Should be called only from renderContents().
 	 * 
 	 **/
-	renderChildControls : function( placeholder ){
+	renderChildControls(placeholder){
 		if ( !this._ignoreTemplate && this.renderTemplateChildControls ){
-			this.renderTemplateChildControls( placeholder );
+			this.renderTemplateChildControls(placeholder);
 		}else{
-			this.renderStandardChildControls( placeholder );
+			this.renderStandardChildControls(placeholder);
 		}
-	},
+	}
 
 	/**
 	 * TControl#renderTemplateChildControls( placeholder ) -> void
@@ -365,7 +373,7 @@ klass( 'TControl', {
 	 * Should not be called directly.
 	 * 
 	 **/
-	renderTemplateChildControls : null,
+	renderTemplateChildControls: Function = null;
 	
 	/**
 	 * TControl#renderStandardChildControls( placeholder ) -> void
@@ -375,11 +383,11 @@ klass( 'TControl', {
 	 * Should not be called directly.
 	 * 
 	 **/
-	renderStandardChildControls : function( placeholder ){
-		for ( var i=0; i<this._childControls.length; i++ ){
-			this._childControls[ i ].renderContentsInPlaceholder( placeholder );
+	renderStandardChildControls(placeholder){
+		for (var i=0; i<this._childControls.length; i++){
+			this._childControls[i].renderContentsInPlaceholder(placeholder);
 		}
-	},
+	}
 	
 	/**
 	 * TControl#appendChild( el ) -> void
@@ -390,11 +398,11 @@ klass( 'TControl', {
 	 * keeps track it in _renderedNodes and adds position marker.
 	 * 
 	 **/
-	appendChild : function( el ){
-		this._renderedNodes.push( el );
+	appendChild(el){
+		this._renderedNodes.push(el);
 		this.ensurePositionMarker();
-		this._positionMarker.parentNode.insertBefore( el, this._positionMarker );
-	},
+		this._positionMarker.parentNode.insertBefore(el, this._positionMarker);
+	}
 	
 	/**
 	 * TControl#ensurePositionMarker() -> void
@@ -402,20 +410,20 @@ klass( 'TControl', {
 	 * Ensures position marker exists.
 	 * 
 	 **/
-	ensurePositionMarker : function(){
+	ensurePositionMarker(){
 		var root = this._Placeholder
 						? this._Placeholder
-						: this.getParent()
-							? this.getParent()
-							: this.getPlaceholder();
+						: this.Parent
+							? this.Parent
+							: this.Placeholder;
 		
 		var markerNeedsRepositioning = false;
 		
 		if ( this._positionMarker === null ){
 			
-			if ( /**DEBUG_MARKER_ON**/ false ){
+			if ( window['debug'] ){
 				/* debug, visible place holder: */
-				var label = 'Marker for <'+this.klass.klass_name+'> ID=' + ( this.getID() ? this.getID() : '(none)' );
+				let label = 'Marker for <'+this.klass.klass_name+'> ID=' + ( this.ID ? this.ID : '(none)' );
 				this._positionMarker = document.createElement( "span" );
 				this._positionMarker.appendChild( document.createTextNode( "⦿" ) );
 				this._positionMarker.style.color = 'red';
@@ -443,7 +451,7 @@ klass( 'TControl', {
 			root.appendChild( this._positionMarker );
 		}
 		
-	},
+	}
 	
 	/**
 	 * TControl#addChildControl( c ) -> void
@@ -453,13 +461,13 @@ klass( 'TControl', {
 	 * and sets relationship between controls.
 	 * 
 	 **/
-	addChildControl : function( c ){
-		c.setParent( this );
-		this._childControls.push( c );
-		if ( c.getID() ){
-			this._childControlsHash[ c.getID() ] = c;
+	addChildControl(c){
+		c.Parent = this;
+		this._childControls.push(c);
+		if (c.ID){
+			this._childControlsHash[c.ID] = c;
 		}
-	},
+	}
 	
 	/**
 	 * TControl#addTemplateChildControl( k, c ) -> void
@@ -471,10 +479,10 @@ klass( 'TControl', {
 	 * adds control to _templateControls hash
 	 * 
 	 **/
-	addTemplateChildControl : function( k, c ){
-		this._templateControls[ k ] = c;
-		this.addChildControl( c );
-	},
+	addTemplateChildControl(k, c){
+		this._templateControls[k] = c;
+		this.addChildControl(c);
+	}
 	
 	/**
 	 * TControl#removeChildControl( c ) -> void
@@ -483,14 +491,14 @@ klass( 'TControl', {
 	 * Removes child control
 	 * 
 	 **/
-	removeChildControl : function( c ){
+	removeChildControl(c){
 		var idx = this._childControls.indexOf( c );
 		
 		if ( idx > -1 ){
 			
 			this._childControls.splice( idx, 1 );
 			
-			var id = c.getID();
+			var id = c.ID;
 			if ( id ){
 				delete this._childControlsHash[ id ];
 			}
@@ -499,7 +507,7 @@ klass( 'TControl', {
 			throw new TException( 'No such control' );
 		}
 		
-	},
+	}
 	
 	/**
 	 * TControl#removePositionMarker() -> void
@@ -508,14 +516,14 @@ klass( 'TControl', {
 	 * from document tree
 	 * 
 	 **/
-	removePositionMarker : function(){
+	removePositionMarker(){
 		if ( this._positionMarker ){
 			if ( this._positionMarker.parentNode ){
 				this._positionMarker.parentNode.removeChild( this._positionMarker );
 			}
 			this._positionMarker = null;
 		}
-	},
+	}
 	
 	/**
 	 * TControl#destroy() -> void
@@ -524,10 +532,10 @@ klass( 'TControl', {
 	 * and cleans up
 	 * 
 	 **/
-	destroy : function(){
+	destroy(){
 		
-		if ( this.getParent() ){
-			this.getParent().removeChildControl( this );
+		if ( this.Parent ){
+			this.Parent.removeChildControl( this );
 		}
 		
 		for ( var i=0; i<this._childControls.length; i++ ){
@@ -537,7 +545,7 @@ klass( 'TControl', {
 		this.removeRenderedNodes();
 		this.removePositionMarker();
 		
-	},
+	}
 	
 	/**
 	 * TControl#getChildControl( id ) -> TControl|null
@@ -547,13 +555,13 @@ klass( 'TControl', {
 	 * if found or null if not found.
 	 * 
 	 **/
-	getChildControl : function( id ){
+	getChildControl(id){
 		this.ensureChildControls();
 		
 		return this._childControlsHash[ id ]
 				? this._childControlsHash[ id ]
 				: null;
-	},
+	}
 	
 	/**
 	 * TControl#findChildControlByID( id ) -> TControl|null
@@ -564,7 +572,7 @@ klass( 'TControl', {
 	 * Returns child control with particualar ID if found or null if not found
 	 * 
 	 **/
-	findChildControlByID : function( id ){
+	findChildControlByID( id ){
 		var i;
 		
 		this.ensureChildControls();
@@ -580,28 +588,29 @@ klass( 'TControl', {
 			}
 		}
 		return null;
-	},
-	
+	}
+
 	/**
 	 * TControl#findControlByID( id ) -> TControl|null
 	 * - id (String): control ID
-	 * 
+	 *
 	 * Returns a control by ID in current control tree
 	 * Function goes to the root parent
 	 * and searches recursively all child controls.
 	 * Returns control with particualar ID if found or null if not found
-	 * 
+	 *
 	 **/
-	findControlByID : function( id ){
+	findControlByID(id)
+	{
 		var c;
-		if ( this.getParent() ){
-			c = this.getParent().findControlByID( id );
+		if (this.Parent){
+			c = this.Parent.findControlByID( id );
 		}else{
 			c = this.findChildControlByID( id );
 		}
 		return c;
-	},
-	
+	}
+
 	/**
 	 * TControl#findChildControlsByType( class_name ) -> Array@TControl
 	 * - class_name (String): control ID
@@ -611,7 +620,7 @@ klass( 'TControl', {
 	 * Returns an array of child controls with particualar type
 	 * 
 	 **/
-	findChildControlsByType : function( class_name ){
+	findChildControlsByType(class_name){
 		var i;
         var j;
       
@@ -630,7 +639,7 @@ klass( 'TControl', {
             }
 		}
 		return ret;
-	},
+	}
 
 	/**
 	 * TControl#findChildControlsByKind( class_name ) -> Array@TControl
@@ -641,7 +650,7 @@ klass( 'TControl', {
 	 * Returns an array of child controls with particualar type
 	 * 
 	 **/
-	findChildControlsByKind : function( class_name ){
+	findChildControlsByKind( class_name ){
 		var i;
         var j;
       
@@ -660,7 +669,7 @@ klass( 'TControl', {
             }
 		}
 		return ret;
-	},
+	}
 
 	/**
 	 * TControl#findChildControlsByID( id ) -> Array@TControl
@@ -671,7 +680,7 @@ klass( 'TControl', {
 	 * Returns child controls with particualar ID if found or empty array not found
 	 * 
 	 **/
-	findChildControlsByID : function( id ){
+	findChildControlsByID( id ){
 		var i;
 		var ret = [];
 		
@@ -691,12 +700,8 @@ klass( 'TControl', {
 		return ret;
 	}
 
-} );
-
-TControl.prototype.$ = TControl.prototype.findChildControlByID;
-TControl.prototype.$$ = TControl.prototype.findChildControlsByID;
-TControl.prototype.$$type = TControl.prototype.findChildControlsByType;
-TControl.prototype.$$kind = TControl.prototype.findChildControlsByKind;
-TControl.prototype.setId = TControl.prototype.setID;
-TControl.prototype.getId = TControl.prototype.getID;
-
+	$ = this.findChildControlByID;
+	$$ = this.findChildControlsByID;
+	$$type = this.findChildControlsByType;
+	$$kind = this.findChildControlsByKind;
+}

@@ -1,4 +1,4 @@
-//= require TControl
+import TControl from "@framework/TControl";
 
 /** section: Controls
  * class TContent < TControl
@@ -7,6 +7,4 @@
  * Should be be used as root control in templates
  * 
  **/
-klass( 'TContent', TControl, {
-	
-});
+export default class TContent extends TControl {}

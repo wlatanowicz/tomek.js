@@ -68,7 +68,7 @@ export default class Renderer extends BaseRenderer {
 				this.addOutput( "if ( " + event.getFunction()+" ) {" );
 				this.pushIndent();
 			}
-			this.addOutput( this.getVarname(node) + ".attachEvent( \"" + event.event + "\", " + event.getBoundFunction()+" );" );
+			this.addOutput( this.getVarname(node) + ".event.attach( \"" + event.event + "\", " + event.getBoundFunction()+" );" );
 			if ( this.debug >= 1 ){
 				this.popIndent();
 				this.addOutput( "} else {" );
@@ -107,38 +107,57 @@ export default class Renderer extends BaseRenderer {
 
 		var txt: string = "";
 
-		for (var i = 0; i < this.dependencies.length; i++ ){
-			var dependency = this.dependencies[i];
-			if ( dependency !== this.controlName ){
+		let imports = this.getImports();
 
-				if ( this.existsFileByName( dependency + ".tpl" ) ){ //@TODO
-					txt += "//= require \"" + dependency + ".tpl\"\n";
-				} else {
-					txt += "//= require \"" + dependency + "\"\n";
-				}
-
-			}
+		for (let i in imports) {
+			txt += "import " + i + " from " + '"' + imports[i] + '"' + ";\n";
 		}
 
 		txt += "\n";
-		txt += "//= require \"" + this.controlName + "\"\n";
-		txt += "\n";
 
-		txt += this.controlName+".prototype.createChildControls = function(){\n" +
+		txt += "export default function template()\n" +
+				"{\n" +
 				"\tvar ExpressionContext = this;\n" +
 				"\tvar SourceTemplateControl = this;\n" +
 				this.output +
-				"};\n";
+				"}\n";
 
 		return txt;
 
+	}
+
+	getImports() {
+		var imports = {};
+		for (var i = 0; i < this.dependencies.length; i++ ){
+			var dependency = this.dependencies[i];
+			if ( dependency !== this.controlName ){
+				imports[dependency] = this.findImportForDependency(dependency);
+			}
+		}
+		return imports;
+	}
+
+	findImportForDependency(module: string): string{
+		var candidates = []
+		for (let i=0; i<this.source_paths.length; i++) {
+			let files = glob.sync(path.join(this.source_paths[i], "**", module+".ts"));
+			candidates = candidates.concat(files);
+		}
+
+		if (candidates.length == 1) {
+			return candidates[0].slice(0, -3);
+		}
+
+		//@TODO error when no control source found
+
+		return module;
 	}
 
 	existsFileByName( filename:string ):boolean{
 		var file: string = null;
 		for (let i = 0; i < this .source_paths.length; i++ ){						
 			let files = glob.sync(path.join(this.source_paths[i], '**', filename));
-			if (files.length > 0 ){
+				if (files.length > 0 ){
 				return true;
 			}
 		}

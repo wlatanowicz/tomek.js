@@ -1,6 +1,26 @@
 var gulp = require('gulp');
 
-gulp.task('tomek-build', ['tomek-check-tsc'], function () {
+gulp.task('tomek-compile', [], function(){
+	var glob = require("glob");
+    var path = require('path');
+    var Compiler = require('./../compiler/Compiler').default;
+
+    var base_dir = path.resolve(".");
+    var files = glob.sync(path.join(base_dir, "app", '**', "*.tpl"));
+
+    var source_paths = [
+        path.join(base_dir, "app"),
+        path.join(base_dir, "framework")
+	];
+
+    for (var i=0; i<files.length; i++) {
+        var compiler = new Compiler( source_paths, 0, 'en');
+        console.log( "  |- template (compiled): "+files[i]+" => "+files[i]+".ts" );
+        compiler.compile(files[i], files[i]+".ts");
+	}
+});
+
+gulp.task('tomek-build', ['tomek-check-tsc', 'tomek-compile'], function () {
 	var Builder = require('./../builder/Builder');
 	var DictionaryProvider = require('./../dictionary/DictionaryProvider');
 	var path = require('path');

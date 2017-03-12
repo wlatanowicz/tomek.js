@@ -1,18 +1,20 @@
+import TException from "@framework/TException";
+
 /** section: Controls
  * mixin TEventResponderMixin
  * 
  * Mixin adding ability to handle events
  * 
  **/
-mixin( 'TEventResponderMixin', {
-	
+export default class TEventResponder {
+
 	/**
 	 * TEventResponderMixin#_triggersEvents -> Array@String
 	 *
 	 * List of events triggered by the control
 	 * 
 	 **/
-	_triggersEvents : [],
+	_triggersEvents = [];
 	
 	/**
 	 * TEventResponderMixin#_eventResponders -> Hash@Array@Function
@@ -20,22 +22,26 @@ mixin( 'TEventResponderMixin', {
 	 * Keeps track of attached responder functions
 	 * 
 	 **/
-	_eventResponders : {},
-	
+	_eventResponders = {};
+
+	control = null;
+
 	/**
 	 * TEventResponderMixin#_triggerElements -> Array@EventTrigger
 	 * 
 	 * Keeps track of DOMElements, DOMEevents and triggered events
 	 * 
 	 **/
-	_triggerElements : [], 
+	_triggerElements = [];
 	
 	//@Override
-	constructor : function( options ){
+	constructor(control, events)
+	{
+		this.control = control;
+		this._triggersEvents = events;
 		this._eventResponders = {};
 		this._triggerElements = []; 
-		this.base( options );
-	},
+	}
 	
 	/**
 	 * TEventResponderMixin#triggersEvent( e ) -> Boolean
@@ -44,11 +50,12 @@ mixin( 'TEventResponderMixin', {
 	 * Checks if the control triggers particular event
 	 * 
 	 **/
-	triggersEvent : function( e ){
+	triggers( e )
+	{
 		return this._triggersEvents.indexOf( e ) >= 0
 				? true
 				: false;
-	},
+	}
 	
 	/**
 	 * TEventResponderMixin#respondsToEvent( e ) -> Boolean
@@ -59,13 +66,14 @@ mixin( 'TEventResponderMixin', {
 	 * function attached
 	 * 
 	 **/
-	respondsToEvent : function( e ){
-		return this.triggersEvent( e )
+	respondsTo( e )
+	{
+		return this.triggers( e )
 				&& this._eventResponders[e]
 				&& this._eventResponders[e].length > 0
 				? true
 				: false;
-	},
+	}
 	
 	/**
 	 * TEventResponderMixin#triggerEvent( e[, param] ) -> void
@@ -76,15 +84,16 @@ mixin( 'TEventResponderMixin', {
 	 * and calls attached event responder functions
 	 * 
 	 **/
-	triggerEvent : function( e, param ){
+	trigger(e, param)
+	{
 		var results = [];
 		if ( this._eventResponders[e] ){
 			for ( var i=0; i<this._eventResponders[e].length; i++ ){
-				results.push( this._eventResponders[e][i]( this, param ) );
+				results.push( this._eventResponders[e][i]( this.control, param ) );
 			}
 		}
 		return results;
-	},
+	}
 	
 	/**
 	 * TEventResponderMixin#triggerEventFromElement( e, dom_event ) -> void
@@ -96,7 +105,8 @@ mixin( 'TEventResponderMixin', {
 	 * Should not be called directly.
 	 * 
 	 **/
-	triggerEventFromElement : function( e, prevent_default, dom_event ){
+	triggerFromElement( e, prevent_default, dom_event )
+	{
 		if ( prevent_default ){
 			dom_event.preventDefault();
 		}
@@ -104,8 +114,8 @@ mixin( 'TEventResponderMixin', {
 				'event' : e,
 				'domEvent' : dom_event || window.event
 			};
-		return this.triggerEvent( e, param );
-	},
+		return this.trigger( e, param );
+	}
 	
 	/**
 	 * TEventResponderMixin#attachEvent( e, fun ) -> void
@@ -115,9 +125,10 @@ mixin( 'TEventResponderMixin', {
 	 * Attaches event responder function
 	 * 
 	 **/
-	attachEvent : function( e, fun ){
+	attach( e, fun )
+	{
 		
-		if ( ! this.triggersEvent( e ) ){
+		if ( ! this.triggers( e ) ){
 			throw new TException( 'Control does not trigger event '+e );
 		}
 		
@@ -132,7 +143,7 @@ mixin( 'TEventResponderMixin', {
 				this.addEventListener( e_rec.element, e_rec.domEvent, e_rec.boundFunction );
 			}
 		}
-	},
+	}
 	
 	/**
 	 * TEventResponderMixin#dettachEvent( e [, fun] ) -> void
@@ -142,7 +153,7 @@ mixin( 'TEventResponderMixin', {
 	 * Removes event responder function or all responder function if no one given
 	 * 
 	 **/
-	dettachEvent : function( e, fun ){
+	dettach( e, fun ){
 		if ( ! fun ){
 			this._eventResponders[e] = [];
 		}else{
@@ -155,7 +166,7 @@ mixin( 'TEventResponderMixin', {
 			this._eventResponders[e] = new_list;
 		}
 		
-		if ( ! this.respondsToEvent( e ) ){
+		if ( ! this.respondsTo( e ) ){
 			for ( var e_rec_idx in this._triggerElements ){
 				var e_rec = this._triggerElements[e_rec_idx];
 				if ( e_rec.event == e ){
@@ -164,7 +175,7 @@ mixin( 'TEventResponderMixin', {
 			}
 		}
 		
-	},
+	}
 	
 	/**
 	 * TEventResponderMixin#addEventListener( event_rec ) -> void
@@ -175,15 +186,9 @@ mixin( 'TEventResponderMixin', {
 	 * Attaches event listener to trigger DOMElement
 	 * 
 	 **/
-	addEventListener : function( element, domEvent, boundFunction ){
-		if ( element.addEventListener ){
-			element.addEventListener( domEvent, boundFunction );
-		}else
-		if ( element.attachEvent ){
-			//IE8 fix
-			element.attachEvent( "on"+domEvent, boundFunction );
-		}
-	},
+	addEventListener( element, domEvent, boundFunction ){
+		element.addEventListener( domEvent, boundFunction );
+	}
 	
 	/**
 	 * TEventResponderMixin#removeEventListener( event_rec ) -> void
@@ -194,15 +199,9 @@ mixin( 'TEventResponderMixin', {
 	 * Removes event listener from trigger DOMElement
 	 * 
 	 **/
-	removeEventListener : function( element, domEvent, boundFunction ){
-		if ( element.removeEventListener ){
-			element.removeEventListener( domEvent, boundFunction );
-		}else
-		if ( element.detachEvent ){
-			//IE8 fix
-			element.detachEvent( "on"+domEvent, boundFunction );
-		}
-	},
+	removeEventListener( element, domEvent, boundFunction ){
+		element.removeEventListener( domEvent, boundFunction );
+	}
 	
 	/**
 	 * TEventResponderMixin#registerTriggerElement( el, dom_event, tomek_event ) -> void
@@ -214,20 +213,20 @@ mixin( 'TEventResponderMixin', {
 	 * Registers DOMElement to trigger event on particular DOMEvent
 	 * 
 	 **/
-	registerTriggerElement : function( el, dom_event, tomek_event, prevent_default ){
+	registerTriggerElement( el, dom_event: string, tomek_event: string, prevent_default: boolean = false ){
 		var e = {
 			'element' : el,
 			'domEvent' : dom_event,
 			'event' : tomek_event,
-			'boundFunction' : this.triggerEventFromElement.bind( this, tomek_event, prevent_default )
+			'boundFunction' : this.triggerFromElement.bind( this, tomek_event, prevent_default )
 		};
 		this._triggerElements.push( e );
-		if ( this.respondsToEvent( tomek_event ) ){
+		if ( this.respondsTo( tomek_event ) ){
 			this.addEventListener( e.element, e.domEvent, e.boundFunction );
 		}
 	}
 	
-});
+}
 
 /** section: Utilities
  * class EventTrigger

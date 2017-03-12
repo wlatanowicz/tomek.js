@@ -1,0 +1,16 @@
+{
+  "compilerOptions" : {
+    "module": "commonjs",
+    "removeComments": true,
+    "target": "es5",
+    "baseUrl": "..",
+    "paths": {
+      "@framework/*": [
+        "./framework/*"
+      ],
+      "@app/*": [
+        "./app/*"
+      ]
+    }
+  }
+}
