@@ -1,13 +1,14 @@
-//= require TControl
+import TControl from "@framework/TControl";
 
 /** section: WebControls_ValidationControls
  * class TValidatedForm < TControl
  * 
  * 
  **/
-klass( 'TValidatedForm', TControl, {
+export default class TValidatedForm extends TControl
+{
 	
-	_isValidatedForm : true,
+	_isValidatedForm = true;
 	
 	/**
 	 * TValidatedForm#_validators -> Array@TBaseValidator
@@ -15,19 +16,22 @@ klass( 'TValidatedForm', TControl, {
 	 * List of all validators within this form
 	 * 
 	 **/
-	_validators : [],
+	_validators = [];
 	
 	//@Override
-	constructor : function( options ){
-		this.base( options );
-		this._validators = []; 
-	},
+	constructor()
+	{
+		super();
+		this._validators = [];
+	}
 	
-	addValidator : function( v ){
+	addValidator(v)
+	{
 		this._validators.push( v );
-	},
+	}
 	
-	validate : function( g ){
+	validate(g)
+	{
 		var i;
 		var all_valid = true;
 		for ( i=0; i<this._validators.length; i++ ){
@@ -42,4 +46,4 @@ klass( 'TValidatedForm', TControl, {
 		return all_valid;
 	}
 	
-});
+}

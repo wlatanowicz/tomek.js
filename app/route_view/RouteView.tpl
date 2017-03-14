@@ -19,9 +19,9 @@
 				<com:TLink Href="#/tab/four" ID="Tab4Button">Tab 4</com:TLink>
 			</li>
 		</ul>
-		<div class="tab">
+		<div class="tab tab-content">
 			
-			<com:TRouteView ID="Tab1" CssClass="tab-content" on:BecameActive=".tabBecameActive" on:BecameInactive=".tabBecameInactive" >
+			<com:TRouteView ID="Tab1" on:BecameActive=".tabBecameActive" on:BecameInactive=".tabBecameInactive" >
 				<prop:Path>
 					/tab/one
 				</prop:Path>
@@ -37,7 +37,7 @@
 				</p>
 			</com:TRouteView>
 			
-			<com:TRouteView ID="Tab2" CssClass="tab-content" on:BecameActive=".tabBecameActive" on:BecameInactive=".tabBecameInactive" >
+			<com:TRouteView ID="Tab2" on:BecameActive=".tabBecameActive" on:BecameInactive=".tabBecameInactive" >
 				<prop:Path>
 					/tab/two
 				</prop:Path>
@@ -51,7 +51,7 @@
 				</p>
 			</com:TRouteView>
 			
-			<com:TRouteView ID="Tab3" CssClass="tab-content" on:BecameActive=".tabBecameActive" on:BecameInactive=".tabBecameInactive" >
+			<com:TRouteView ID="Tab3" on:BecameActive=".tabBecameActive" on:BecameInactive=".tabBecameInactive" >
 				<prop:Path>
 					/tab/three
 				</prop:Path>
@@ -67,7 +67,7 @@
 				</p>
 			</com:TRouteView>
 			
-			<com:TRouteView ID="Tab4" CssClass="tab-content" on:BecameActive=".tabBecameActive" on:BecameInactive=".tabBecameInactive" >
+			<com:TRouteView ID="Tab4" on:BecameActive=".tabBecameActive" on:BecameInactive=".tabBecameInactive" >
 				<prop:Path>
 					/tab/four
 				</prop:Path>

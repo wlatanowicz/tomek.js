@@ -42,7 +42,6 @@
 				Password confirmation does not match
 			</com:TCompareValidator>
 		</div>
-		
 		<div>
 			<com:TLabel ForControl="RoleDDL" Text="User role:" />
 			<com:TDropDownList ID="RoleDDL">
@@ -57,7 +56,6 @@
 				You cannot create administrators
 			</com:TCompareValidator>
 		</div>
-		
 		<div>
 			<com:TLabel ForControl="AgreeCB" Text="Agree to TOS:" />
 			<com:TCheckBox ID="AgreeCB" />

@@ -27,8 +27,9 @@ gulp.task('tomek-build', ['tomek-check-tsc', 'tomek-compile'], function () {
 	var minimist = require('minimist');
 	
 	var argv = minimist(process.argv.slice(2));
-	var config = require('./../../app/application.json');
 	var base_dir = path.resolve(".");
+    var config_file = path.join(base_dir, 'app', 'application.json');
+    var config = require(config_file);
 
 	var language = null;
 	var minify = true;

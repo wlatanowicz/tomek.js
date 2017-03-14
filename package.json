@@ -9,10 +9,12 @@
     "mkdirp": "^0.5.1",
     "ndoc": "^5.0.1",
     "require-dir": "^0.3.1",
-    "tsc": "^1.20150623.0",
+    "typescript": "*",
     "uglify-js": "^2.7.5",
     "gulp-typescript": "*",
-    "pathmodify": "*"
+    "pathmodify": "*",
+    "browserify": "*",
+    "tsify": "*"
   },
   "description": "A component based JavaScript frontend framework",
   "homepage": "http://tomekjs.com",

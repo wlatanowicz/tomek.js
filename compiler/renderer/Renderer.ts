@@ -64,7 +64,7 @@ export default class Renderer extends BaseRenderer {
 		this.addOutput( "var "+ this.getVarname(node) + " = new " + node.classname + "();" );
 		for (let i = 0; i < node.attributes.length;i++){
 			let a = node.attributes[i];
-			this.addOutput(this.getVarname(node) + "." + a.name + " = " + a.value.getExpression( this.language ) );
+			this.addOutput(this.getVarname(node) + "." + a.name + " = " + a.value.getExpression( this.language ) ) + ";";
 		}
 		this.addOutput(init_in + ".addTemplateChildControl( \"" + this.getVarname(node) + "\", " + this.getVarname(node) + " );" );
 
@@ -96,12 +96,12 @@ export default class Renderer extends BaseRenderer {
 		for (let i = 0; i < node.children.length; i++ ){
 			let child = node.children[i];
 			if ( child instanceof StencilNode ){
-				this.addOutput(this.getVarname(node) + ".set" + child.propertyName + "Template( function( item ){");
+				this.addOutput(this.getVarname(node) + "." + child.propertyName + "Template = function( item ){");
 				this.pushIndent();
 				this.addOutput("var ExpressionContext = item;\n");
 				this.renderInitializers(child);
 				this.popIndent();
-				this.addOutput("} );");
+				this.addOutput("};");
 			}
 		}
 
@@ -147,17 +147,18 @@ export default class Renderer extends BaseRenderer {
 		var candidates = []
 		for (let i=0; i<this.source_paths.length; i++) {
 			let files = glob.sync(path.join(this.source_paths[i], "**", module+".ts"));
-			let files2 = glob.sync(path.join(this.source_paths[i], "**", module+".js"));
-			candidates = candidates.concat(files, files2);
+			candidates = candidates.concat(files);
 		}
 
-		if (candidates.length >= 1) {
+		if (candidates.length === 1) {
 			return candidates[0].slice(0, -3);
 		}
 
-		//@TODO error when no control source found
+		if (candidates.length > 1) {
+			throw "Too many candidates for " + module;
+		}
 
-		return module;
+		throw "No candidates for " + module;
 	}
 
 	existsFileByName( filename:string ):boolean{

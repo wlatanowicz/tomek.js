@@ -24,7 +24,7 @@ export default class Builder {
 	app: string;
 	framework: string;
 	lib: string;
-	
+
 	build: string;
 
 	minify: boolean;
@@ -36,7 +36,7 @@ export default class Builder {
 		this.dictionaries = config.dictionaries || [];
 		this.dictionary_function = config.dictionary_function || null;
 		this.build = config.target || 'build';
-		
+
 		this.base_dir = base_dir;
 
 		this.language = language;
@@ -67,7 +67,7 @@ export default class Builder {
 				this.loadDictionary(dicts[j]);
 			}
 		}
-		
+
 		if ( this.dictionary_function ){
 			var dp = new DictionaryProvider();
 			var dict = dp.getDynamicDictionary();
@@ -107,10 +107,9 @@ export default class Builder {
 			]
 		};
 
-		browserify()
-            .add(file)
-			.plugin(pathmodify, pathmodifyOptions)
-            .plugin("tsify", tsConfigOptions)
+		browserify(file)
+            .plugin(pathmodify, pathmodifyOptions)
+            .plugin("tsify")
             .bundle()
             .pipe(bundleFs);
 	}
@@ -125,12 +124,12 @@ export default class Builder {
 		var rc = new ResourceCopier( this.base_dir, this.app, this.build, path );
 		rc.copy();
 	}
-	
+
 	cleanupDestination(){
 		var dest = path.join( this.base_dir, this.build );
 		this.rmDir( dest, false );
 	}
-	
+
 	rmDir( dirPath, includeCurrent ){
 		try {
 			var files = fs.readdirSync(dirPath);
@@ -150,7 +149,7 @@ export default class Builder {
 		if ( includeCurrent ){
 			fs.rmdirSync( dirPath );
 		}
-    };
+	};
 
 
 }

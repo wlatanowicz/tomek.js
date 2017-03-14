@@ -128,7 +128,8 @@ export default class TWebControl extends TControl
 	applyProperty(element, propertyName: string)
 	{
 		let properties = this.getElementProperites();
-		this.setAttribute(element, properties[propertyName], this[propertyName]);
+		let objectField = '_' + propertyName;
+		this.setAttribute(element, properties[propertyName], this[objectField]);
 	}
 
 	fetchProperties(element)
@@ -310,10 +311,10 @@ export default class TWebControl extends TControl
 		}
 	}
 	
-	getAttribute( el, property, fallback = null )
+	getAttribute( el, propertyName, fallback = null )
 	{
 		return el
-			? el[ property.elementProperty ]
+			? el[propertyName]
 			: fallback;
 	}
 	

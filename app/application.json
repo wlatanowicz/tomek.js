@@ -2,7 +2,10 @@
 	"mains": {
 		"hello_world/main.ts" : "hello_world/main.js",
 		"simple_http/main.ts" : "simple_http/main.js",
-		"switch_case/main.ts" : "switch_case/main.js"
+		"switch_case/main.ts" : "switch_case/main.js",
+		"validated_form/main.ts" : "validated_form/main.js",
+		"simple_todo_list/main.ts" : "simple_todo_list/main.js",
+		"route_view/main.ts" : "route_view/main.js"
 	},
 	"templates": [
 		"**/*.tpl"

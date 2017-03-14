@@ -25,7 +25,7 @@ export default class TControl extends TObject
  	 * Keeps track of child controls based on ID
 	 * 
 	 **/
-	private _childControlsHash = {};
+	protected _childControlsHash = {};
 	
 	/**
 	 * TControl#_childControlsCreated -> Boolean
@@ -34,7 +34,7 @@ export default class TControl extends TObject
 	 * afer running createChildControls()
 	 * 
 	 **/
-	private _childControlsCreated = false;
+	protected _childControlsCreated = false;
 	
 	/**
 	 * TControl#_templateControls -> Hash@TControl
@@ -67,7 +67,7 @@ export default class TControl extends TObject
 	 * Controls created in template are ignored if true.
 	 * 
 	 **/
-	private _ignoreTemplate = false;
+	protected _ignoreTemplate = false;
 
 	private _isRendered = false;
 
@@ -169,7 +169,7 @@ export default class TControl extends TObject
 				: document.body );
 	}
 
-	private _Parent;
+	protected _Parent;
 
 	set Parent(value)
 	{
@@ -196,7 +196,7 @@ export default class TControl extends TObject
 		return this.converters.object(this._CustomData);
 	}
 
-	private _Visible = true;
+	protected _Visible = true;
 
 	set Visible(value)
 	{

@@ -1,9 +1,6 @@
-import TWebControl from "../TWebControl";
-import TEventResponderInterface from "../../TEventResponderInterface";
-import TEventResponder from "../../TEventResponder";
-
-//= require TWebControl
-//= require TEventResponder
+import TWebControl from "@framework/WebControls/TWebControl";
+import TEventResponderInterface from "@framework/TEventResponderInterface";
+import TEventResponder from "@framework/TEventResponder";
 
 /** section: WebControls_FormControls
  * class TButton <  TWebControl
@@ -35,7 +32,7 @@ export default class TButton extends TWebControl implements TEventResponderInter
 	get event():TEventResponder
 	{
 		if (this._event === null) {
-			this._event = new TEventResponder(this, ['Click'])
+			this._event = new TEventResponder(this, ['Click']);
 		}
 		return this._event;
 	}
