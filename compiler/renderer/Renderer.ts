@@ -19,7 +19,9 @@ export default class Renderer extends BaseRenderer {
 	constructor( controlName:string, source_paths:string[], debug: number, language:string ){
 		super( debug, language );
 		this.controlName = controlName;
-		this.dependencies = [];
+		this.dependencies = [
+			"TExpression"
+		];
 		this.source_paths = source_paths;
 	}
 
@@ -59,7 +61,11 @@ export default class Renderer extends BaseRenderer {
 			init_in = this.getVarname(parent_component);
 		}
 
-		this.addOutput( "var "+ this.getVarname(node) + " = new " + node.classname + "( " + this.getAttributesJson(node) + " );" );
+		this.addOutput( "var "+ this.getVarname(node) + " = new " + node.classname + "();" );
+		for (let i = 0; i < node.attributes.length;i++){
+			let a = node.attributes[i];
+			this.addOutput(this.getVarname(node) + "." + a.name + " = " + a.value.getExpression( this.language ) );
+		}
 		this.addOutput(init_in + ".addTemplateChildControl( \"" + this.getVarname(node) + "\", " + this.getVarname(node) + " );" );
 
 		for (let i = 0; i < node.events.length; i++ ){
@@ -141,10 +147,11 @@ export default class Renderer extends BaseRenderer {
 		var candidates = []
 		for (let i=0; i<this.source_paths.length; i++) {
 			let files = glob.sync(path.join(this.source_paths[i], "**", module+".ts"));
-			candidates = candidates.concat(files);
+			let files2 = glob.sync(path.join(this.source_paths[i], "**", module+".js"));
+			candidates = candidates.concat(files, files2);
 		}
 
-		if (candidates.length == 1) {
+		if (candidates.length >= 1) {
 			return candidates[0].slice(0, -3);
 		}
 

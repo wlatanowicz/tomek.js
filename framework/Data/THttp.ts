@@ -1,48 +1,54 @@
-//= require TObject
-//= require THttpPromise
+import THttpPromise from "@framework/Data/THttpPromise";
+import TException from "@framework/TException";
 
 /** section: Data
  * class THttp
  * 
  * 
  **/
-klass( 'THttp', {
+export default class THttp
+{
+    public BaseUrl: string;
 
-	getPublicProperties : function(){
-		return [
-			'BaseUrl'
-		];
-	},
+    constructor(baseUrl: string = null)
+    {
+        this.BaseUrl = baseUrl;
+    }
 
-	getHeaders : function(){
+	getHeaders()
+    {
 		return [];
-	},
+	}
 	
-	getQueryParams : function(){
+	getQueryParams()
+    {
 		return {};
-	},
+	}
 	
-	applyDefaultResolvers : function( promise ){
-		
-	},
+	applyDefaultResolvers(promise){}
 	
-	get : function( url, queryParams ){
-		return this.performCallback( 'GET', url, undefined, queryParams );
-	},
+	get(url, queryParams)
+    {
+		return this.performCallback('GET', url, undefined, queryParams);
+	}
 
-	put : function( url, body, queryParams ){
-		return this.performCallback( 'PUT', url, body, queryParams );
-	},
+	put(url, body, queryParams)
+    {
+		return this.performCallback('PUT', url, body, queryParams);
+	}
 	
-	post : function( url, body, queryParams ){
-		return this.performCallback( 'POST', url, body, queryParams );
-	},
+	post(url, body, queryParams)
+    {
+		return this.performCallback('POST', url, body, queryParams);
+	}
 	
-	delete : function( url, queryParams ){
-		return this.performCallback( 'DELETE', url, undefined, queryParams );
-	},
+	delete( url, queryParams )
+    {
+		return this.performCallback('DELETE', url, undefined, queryParams);
+	}
 	
-	prepareAndSend : function( xhttp, body ){
+	prepareAndSend(xhttp, body)
+    {
 		if ( body !== undefined ){
 			if ( body instanceof FormData
 				|| ( body.constructor && body.constructor.name === 'FormData' )
@@ -55,20 +61,22 @@ klass( 'THttp', {
 		}else{
 			xhttp.send( null );
 		}
-	},
+	}
 
-	processResponse : function( xhttp ){
+	processResponse( xhttp )
+    {
 		return JSON.parse( xhttp.responseText );
-	},
+	}
 	
-	performCallback : function( method, url, body, queryParams ){
+	performCallback( method, url, body, queryParams )
+    {
 		queryParams = queryParams
 							? queryParams
 							: [];
 		
 		var promise = this.createPromise();
 
-		var fullUrl = this.getBaseUrl() + url + this.prepareQuery( queryParams );
+		var fullUrl = this.BaseUrl + url + this.prepareQuery( queryParams );
 		var xhttp = new XMLHttpRequest();
 		xhttp.open( method, fullUrl, true );
 		xhttp.onreadystatechange = function (aEvt) {
@@ -88,13 +96,15 @@ klass( 'THttp', {
 		this.applyDefaultResolvers( promise );
 
 		return promise;
-	},
+	}
 	
-	createPromise : function(){
+	createPromise()
+    {
 		return new THttpPromise();
-	},
+	}
 	
-	postCallbackProcessing : function( xhttp, promise ){
+	postCallbackProcessing(xhttp, promise)
+    {
 		try{
 			var response = null;
 			try{
@@ -124,17 +134,19 @@ klass( 'THttp', {
 				'exception' : ex
 			});
 		}
-	},
+	}
 	
-	applyHeaders : function( xhttp ){
+	applyHeaders(xhttp)
+    {
 		var headers = this.getHeaders();
 		for ( var i=0; i<headers.length; i++ ){
-			var header = headers[i].split(":").map( String.trim );
+			var header = headers[i].split(":").map( function(e){ return e.trim(); } );
 			xhttp.setRequestHeader( header[0], header.length > 1 ? header[1] : null );
 		}
-	},
+	}
 	
-	prepareQuery : function( queryParams ){
+	prepareQuery(queryParams)
+    {
 		var parts = [];
 		for ( var k in queryParams ){
 			if ( typeof queryParams[k] !== 'function'
@@ -152,5 +164,4 @@ klass( 'THttp', {
 						? ''
 						: '?'+parts.join( '&' );
 	}
-
-} );
+}

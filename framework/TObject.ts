@@ -38,39 +38,6 @@ export default class TObject
 	};
 
 	/**
-	 *  new TObject([options])
-	 *  - options (Hash): hash of properties to be set
-	 * 
-	 * Default object constructor
-	 * 
-	 **/
-	constructor( options ){
-		if ( options ){
-			for ( var opt in options ){
-				
-				if ( opt.indexOf( '.' ) > -1 ){
-					//handle nested properties like Attributes.Options.Color
-					var opts = opt.split( '.' );
-					
-					var obj = this;
-					var i;
-					
-					for ( i=0; i<(opts.length-1); i++ ){
-						if ( ! obj[ opts[i] ] ){
-							obj[ opts[i] ] = {};
-						}
-						obj = obj[ opts[i] ];
-					}
-					
-					obj[ opts[i] ] = options[ opt ];
-				}else{
-					this[opt] = options[ opt ];
-				}
-			}
-		}
-	}
-	
-	/**
 	 * TObject#isTypeOf( klass ) -> Boolean
 	 * - klass (Object|String): class or class name
 	 * 

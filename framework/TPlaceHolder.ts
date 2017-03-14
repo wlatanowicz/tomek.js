@@ -1,4 +1,4 @@
-//= require TControl
+import TControl from "@framework/TControl";
 
 /** section: Controls
  * class TPlaceHolder < TControl
@@ -7,6 +7,4 @@
  * Should be be used as a place holder in templates
  * 
  **/
-klass( 'TPlaceHolder', TControl, {
-	
-});
+export default class TContent extends TControl {}

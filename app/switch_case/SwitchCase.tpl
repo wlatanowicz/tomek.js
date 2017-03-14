@@ -6,10 +6,10 @@
 	
 	<com:TAutoRefresh Interval="0.1">
 		<com:TSwitchView>
-			<com:TCase Condition="[%= (new Date()).getSeconds() % 2 == 0 %]">
+			<com:TCase ID="c1" Condition="[%= (new Date()).getSeconds() % 2 == 0 %]">
 				Even second
 			</com:TCase>
-			<com:TCase>
+			<com:TCase ID="c2">
 				Odd second
 			</com:TCase>
 		</com:TSwitchView>

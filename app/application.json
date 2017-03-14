@@ -1,6 +1,8 @@
 {
 	"mains": {
-		"hello_world/main.ts" : "hello_world/main.js"
+		"hello_world/main.ts" : "hello_world/main.js",
+		"simple_http/main.ts" : "simple_http/main.js",
+		"switch_case/main.ts" : "switch_case/main.js"
 	},
 	"templates": [
 		"**/*.tpl"

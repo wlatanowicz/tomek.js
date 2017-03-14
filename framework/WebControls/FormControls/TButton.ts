@@ -30,11 +30,6 @@ export default class TButton extends TWebControl implements TEventResponderInter
 	
 	_renderedTextNode = null;
 	
-	constructor( options )
-	{
-		super( options );
-	}
-
 	private _event = null;
 
 	get event():TEventResponder

@@ -17,7 +17,7 @@ export default class TControl extends TObject
 	 * Keeps all direct child controls
 	 * 
 	 **/
-	private _childControls = [];
+	protected _childControls = [];
 	
 	/**
 	 * TControl#_childControlsHash -> Hash@TControl
@@ -78,8 +78,8 @@ export default class TControl extends TObject
 	 * Default control constructor
 	 * 
 	 **/
-	constructor( options ){
-		super(options);
+	constructor(){
+		super();
 		this._childControls = [];
 		this._renderedNodes = [];
 		this._isRendered = false;
@@ -89,19 +89,21 @@ export default class TControl extends TObject
 		this._templateControls = {};
 	}
 
-	private _ID;
+	private _ID = null;
 
-	set ID( id ){
-		if ( this._ID !== null ){
+	set ID( id )
+	{
+		if ( this._ID != null ){
 			throw new TException( 'Cannot change ID' )
 		}
 		this._ID = id;
 		if ( this.Parent ){
-			this.Parent._childControlsHash[ this._ID ] = this;
+			this.Parent._childControlsHash[ this.ID ] = this;
 		}
 	}
 
-	get ID(){
+	get ID()
+	{
 		return this.converters.string(this._ID);
 	}
 
@@ -172,9 +174,12 @@ export default class TControl extends TObject
 	set Parent(value)
 	{
 		this._Parent = value;
+		if (this.ID) {
+			this.Parent._childControlsHash[this.ID] = this;
+		}
 	}
 
-	get Parent(): TControl|null
+	get Parent()
 	{
 		return this.converters.object(this._Parent);
 	}
@@ -186,7 +191,7 @@ export default class TControl extends TObject
 		this._CustomData = value;
 	}
 
-	get CustomData(): any|null
+	get CustomData()
 	{
 		return this.converters.object(this._CustomData);
 	}
@@ -195,10 +200,10 @@ export default class TControl extends TObject
 
 	set Visible(value)
 	{
-		this._Visible = this.converters.boolean(value);
+		this._Visible = value;
 	}
 
-	get Visible(): boolean
+	get Visible()
 	{
 		return this.converters.boolean(this._Visible) && (this.Parent === null || this.Parent.Visible);
 	}
@@ -578,7 +583,7 @@ export default class TControl extends TObject
 		this.ensureChildControls();
 		
 		if( this._childControlsHash[ id ]
-			&& this._childControlsHash[ id ].getID() == id ){
+			&& this._childControlsHash[ id ].ID == id ){
 			return this._childControlsHash[ id ];
 		}
 		for ( i=0; i<this._childControls.length; i++ ){
@@ -687,7 +692,7 @@ export default class TControl extends TObject
 		this.ensureChildControls();
 		
 		if( this._childControlsHash[ id ]
-			&& this._childControlsHash[ id ].getID() == id ){
+			&& this._childControlsHash[ id ].ID == id ){
 			ret.push( this._childControlsHash[ id ] );
 		}
 		for ( i=0; i<this._childControls.length; i++ ){

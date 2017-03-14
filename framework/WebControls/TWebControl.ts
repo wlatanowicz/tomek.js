@@ -63,9 +63,9 @@ export default class TWebControl extends TControl
 		return {};
 	}
 	
-	constructor(options)
+	constructor()
 	{
-		super(options);
+		super();
 		this._Style = {};
 		this._renderedMainElement = null;
 		this._renderedContentPlaceholder = null;

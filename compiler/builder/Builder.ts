@@ -96,9 +96,9 @@ export default class Builder {
 
 		var bundleFs = fs.createWriteStream(target);
 
-		var options = require(path.join(this.base_dir, this.app, "tsconfig.json")).compilerOptions;
+		var tsConfigOptions = require(path.join(this.base_dir, "tsconfig.json")).compilerOptions;
 
-		options.baseUrl = this.base_dir;
+		tsConfigOptions.baseUrl = this.base_dir;
 
 		let pathmodifyOptions = {
 			mods: [
@@ -110,7 +110,7 @@ export default class Builder {
 		browserify()
             .add(file)
 			.plugin(pathmodify, pathmodifyOptions)
-            .plugin("tsify", options)
+            .plugin("tsify", tsConfigOptions)
             .bundle()
             .pipe(bundleFs);
 	}
