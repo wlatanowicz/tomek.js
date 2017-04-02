@@ -61,7 +61,12 @@ export default class Renderer extends BaseRenderer {
 			init_in = this.getVarname(parent_component);
 		}
 
-		this.addOutput( "var "+ this.getVarname(node) + " = new " + node.classname + "();" );
+		if (node.classname[0] == '_') {
+			this.addOutput("var " + this.getVarname(node) + " = ServiceContainer.get(\"" + (node.classname.substr(1)) + "\");");
+		} else {
+			this.addOutput("var " + this.getVarname(node) + " = new " + node.classname + "();");
+		}
+
 		for (let i = 0; i < node.attributes.length;i++){
 			let a = node.attributes[i];
 			this.addOutput(this.getVarname(node) + "." + a.name + " = " + a.value.getExpression( this.language ) ) + ";";
@@ -136,7 +141,10 @@ export default class Renderer extends BaseRenderer {
 		var imports = {};
 		for (var i = 0; i < this.dependencies.length; i++ ){
 			var dependency = this.dependencies[i];
-			if ( dependency !== this.controlName ){
+			if (dependency[0] === '_') {
+			    this.dependencies.push('ServiceContainer');
+            }
+            else if (dependency !== this.controlName && !imports[dependency]) {
 				imports[dependency] = this.findImportForDependency(dependency);
 			}
 		}
