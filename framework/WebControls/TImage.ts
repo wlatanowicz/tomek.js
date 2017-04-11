@@ -1,4 +1,5 @@
 import TWebControl from "@framework/WebControls/TWebControl";
+import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
 
 /** section: WebControls
  * class TImage < TWebControl
@@ -14,8 +15,8 @@ export default class TImage extends TWebControl {
  	getElementProperites(): any
     {
 		let properties = super.getElementProperites();
-		properties['Src'] = 'src';
-		properties['Alt'] = 'alt';
+		properties['Src'] = new TWebControlProperty("src", "_Src", this.converters.string);
+		properties['Alt'] = new TWebControlProperty("alt", "_Alt", this.converters.string);
 		return properties;
 	}
 

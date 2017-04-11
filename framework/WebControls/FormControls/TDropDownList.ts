@@ -3,6 +3,7 @@ import TEventResponderInterface from "@framework/TEventResponderInterface";
 import TEventResponder from "@framework/TEventResponder";
 import TValidatableInterface from "@framework/WebControls/ValidationControls/TValidatableInterface";
 import TOption from "@framework/WebControls/FormControls/TOption";
+import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
 
 /** section: WebControls_FormControls
  * class TDropDownList <  TWebControl
@@ -175,7 +176,7 @@ export default class TDropDownList extends TWebControl implements TEventResponde
     getElementProperites()
     {
         var props = super.getElementProperites();
-        props['SelectedIndex'] = 'selectedIndex';
+        props['SelectedIndex'] = new TWebControlProperty("selectedIndex", "_SelectedIndex", this.converters.int, true);
         return props;
     }
 

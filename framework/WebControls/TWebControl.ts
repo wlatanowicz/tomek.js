@@ -1,4 +1,5 @@
-import TControl from "../TControl";
+import TControl from "@framework/TControl";
+import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
 
 export default class TWebControl extends TControl
 {
@@ -112,8 +113,8 @@ export default class TWebControl extends TControl
 	getElementProperites()
 	{
 		return {
-			"CssClass": "className",
-			"HtmlID": "id"
+			"CssClass": new TWebControlProperty("className", "_CssClass", this.converters.string),
+			"HtmlID": new TWebControlProperty("id", "_HtmlID", this.converters.string)
 		};
 	}
 
@@ -121,37 +122,46 @@ export default class TWebControl extends TControl
 	{
 		let properties = this.getElementProperites();
 		for (let propertyName in properties) {
-			this.setAttribute(element, properties[propertyName], this[propertyName]);
+			let property: TWebControlProperty = properties[propertyName];
+			if (property.Applicable) {
+                this.setAttribute(element, property.ElementPropertyName, property.Converter(this[property.ObjectFieldName]));
+            }
 		}
 	}
 
 	applyProperty(element, propertyName: string)
 	{
 		let properties = this.getElementProperites();
-		let objectField = '_' + propertyName;
-		this.setAttribute(element, properties[propertyName], this[objectField]);
+		let property: TWebControlProperty = properties[propertyName];
+		if (property.Applicable) {
+            this.setAttribute(element, property.ElementPropertyName, property.Converter(this[property.ObjectFieldName]));
+        }
 	}
 
 	fetchProperties(element)
 	{
 		let properties = this.getElementProperites();
 		for (let propertyName in properties) {
-			let newValue = this.getAttribute(element, properties[propertyName], null);
-			if (newValue !== null) {
-				let objectField = '_' + propertyName;
-				this[objectField] = newValue;
-			}
+			let property: TWebControlProperty = properties[propertyName];
+			if (property.Fetchable) {
+                let newValue = this.getAttribute(element, property.ElementPropertyName, null);
+                if (newValue !== null) {
+                    this[property.ObjectFieldName] = newValue;
+                }
+            }
 		}
 	}
 
-	fetchProperty(element, propertyName: string, objectField = null)
+	fetchProperty(element, propertyName: string)
 	{
 		let properties = this.getElementProperites();
-		let newValue = this.getAttribute(element, properties[propertyName], null);
-		if (newValue !== null) {
-			objectField = objectField || ('_' + propertyName);
-			this[objectField] = newValue;
-		}
+		let property: TWebControlProperty = properties[propertyName];
+		if (property.Fetchable) {
+            let newValue = this.getAttribute(element, property.ElementPropertyName, null);
+            if (newValue !== null) {
+                this[property.ObjectFieldName] = newValue;
+            }
+        }
 	}
 
 	propFix(prop: string): string

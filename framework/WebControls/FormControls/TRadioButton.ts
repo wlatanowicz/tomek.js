@@ -1,6 +1,7 @@
 import TWebControl from "@framework/WebControls/TWebControl";
 import TEventResponderInterface from "@framework/TEventResponderInterface";
 import TEventResponder from "@framework/TEventResponder";
+import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
 
 /** section: WebControls_FormControls
  * class TRadioButton < TWebControl
@@ -86,9 +87,9 @@ class TRadioButton extends TWebControl implements TEventResponderInterface
     getElementProperites()
     {
         var props = super.getElementProperites();
-        props['Checked'] = 'checked';
-        props['Disabled'] = 'disabled';
-        props['Group'] = 'group';
+        props['Checked'] = new TWebControlProperty("checked", "_Checked", this.converters.boolean, true);
+        props['Disabled'] = new TWebControlProperty("disabled", "_Disabled", this.converters.boolean);
+        props['Group'] = new TWebControlProperty("name", "_Group", this.converters.string);
         return props;
     }
 

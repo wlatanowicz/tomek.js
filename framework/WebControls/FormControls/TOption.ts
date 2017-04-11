@@ -1,4 +1,5 @@
 import TWebControl from "@framework/WebControls/TWebControl";
+import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
 
 /** section: WebControls_FormControls
  * class TOption < TWebControl
@@ -74,9 +75,9 @@ export default class TOption extends TWebControl
 	getElementProperites()
     {
         var props = super.getElementProperites();
-        props['Value'] = 'value';
-        props['Selected'] = 'selected';
-        props['Disabled'] = 'disabled';
+        props['Value'] = new TWebControlProperty("value", "_Value", this.converters.string);
+        props['Selected'] = new TWebControlProperty("selected", "_Selected", this.converters.int, true);
+        props['Disabled'] = new TWebControlProperty("disabled", "_Disabled", this.converters.boolean);
         return props;
     }
 

@@ -1,4 +1,5 @@
 import TWebControl from "@framework/WebControls/TWebControl";
+import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
 
 /** section: WebControls
  * class TRawHtmlPanel < TWebControl
@@ -27,7 +28,7 @@ class TRawHtmlPanel extends TWebControl
 	getElementProperites(): any
 	{
 		let properties = super.getElementProperites();
-		properties['RawHTML'] = 'innerHTML';
+		properties['RawHTML'] = new TWebControlProperty("innerHtml", "_RawHTML", this.converters.string);
 		return properties;
 	}
 }

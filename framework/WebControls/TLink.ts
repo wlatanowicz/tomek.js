@@ -1,4 +1,5 @@
 import TWebControl from "@framework/WebControls/TWebControl";
+import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
 
 //= require TWebControl
 //= require TEventResponder
@@ -69,8 +70,8 @@ export default class TLink extends TWebControl
 	getElementProperites(): any
 	{
 		let properties = super.getElementProperites();
-		properties['Href'] = 'href';
-		properties['Target'] = 'target';
+		properties['Href'] = new TWebControlProperty("href", "_Href", this.converters.string);
+		properties['Target'] = new TWebControlProperty("target", "_Target", this.converters.string);
 		return properties;
 	}
 

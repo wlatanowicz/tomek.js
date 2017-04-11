@@ -2,6 +2,7 @@ import TWebControl from "@framework/WebControls/TWebControl";
 import TValidatableInterface from "@framework/WebControls/ValidationControls/TValidatableInterface";
 import TEventReposnderInterface from "@framework/TEventResponderInterface";
 import TEventResponder from "@framework/TEventResponder";
+import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
 
 //= require TEventResponder
 //= require TValidatable
@@ -19,7 +20,8 @@ import TEventResponder from "@framework/TEventResponder";
  * `on:Change`
  * 
  **/
-export default class TCheckBox extends TWebControl implements TValidatableInterface, TEventReposnderInterface {
+export default class TCheckBox extends TWebControl implements TValidatableInterface, TEventReposnderInterface
+{
 	
 	//@Override
 	_tagName = 'input';
@@ -86,8 +88,8 @@ export default class TCheckBox extends TWebControl implements TValidatableInterf
     getElementProperites()
     {
         var props = super.getElementProperites();
-        props['Checked'] = 'checked';
-        props['Disabled'] = 'disabled';
+        props['Checked'] =  new TWebControlProperty("checked", "_Checked", this.converters.boolean, true);
+        props['Disabled'] =  new TWebControlProperty("disabled", "_Disabled", this.converters.boolean);
         return props;
     }
 

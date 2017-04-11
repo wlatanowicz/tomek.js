@@ -1,6 +1,7 @@
 import TWebControl from "@framework/WebControls/TWebControl";
 import TEventResponderInterface from "@framework/TEventResponderInterface";
 import TEventResponder from "@framework/TEventResponder";
+import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
 
 /** section: WebControls_FormControls
  * class TButton <  TWebControl
@@ -43,7 +44,7 @@ export default class TButton extends TWebControl implements TEventResponderInter
 	
 	private _Text;
 
-	set Text( value )
+	set Text(value:any)
 	{
 		this._Text = value;
 		if ( this._renderedTextNode ){
@@ -51,25 +52,30 @@ export default class TButton extends TWebControl implements TEventResponderInter
 		}
 	}
 
-	get Text(): string
+	get Text()
 	{
 		return this.converters.string(this._Text);
 	}
 
 	private _Disabled;
 
-	set Disabled(value)
+	set Disabled(value: any)
 	{
 		this._Disabled = value;
 		this.applyProperty(this._renderedMainElement, 'Disabled');
 	}
 
-	get Disabled(): boolean
+	get Disabled()
 	{
-		this.fetchProperty(this._renderedMainElement, 'Disabled');
 		return this.converters.boolean(this._Disabled);
 	}
 
+	getElementProperites()
+	{
+		var props = super.getElementProperites();
+		props['Disabled'] = new TWebControlProperty("disabled", "_Disabled", this.converters.boolean);
+		return props;
+	}
 
 	//@Override
 	createMainElement()

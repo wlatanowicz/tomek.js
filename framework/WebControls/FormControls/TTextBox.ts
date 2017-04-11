@@ -2,6 +2,7 @@ import TWebControl from "@framework/WebControls/TWebControl";
 import TEventResponderInterface from "@framework/TEventResponderInterface";
 import TEventResponder from "@framework/TEventResponder";
 import TValidatableInterface from "@framework/WebControls/ValidationControls/TValidatableInterface";
+import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
 
 /** section: WebControls_FormControls
  * class TTextBox < TWebControl
@@ -121,8 +122,8 @@ export default class TTextBox extends TWebControl implements TEventResponderInte
     getElementProperites()
     {
         var props = super.getElementProperites();
-        props['Text'] = 'value';
-        props['Type'] = 'type';
+        props['Text'] = new TWebControlProperty("value", "_Text", this.converters.string, true);
+        props['Type'] = new TWebControlProperty("type", "_Type", this.converters.string);
         return props;
     }
     
