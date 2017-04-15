@@ -51,7 +51,7 @@ cat > package.json <<- EOM
 {
     "private": true,
     "dependencies":{
-	    "tomek.js" : "wlatanowicz/tomek.js"
+	    "tomek.js" : "wlatanowicz/tomek.js#tomek-ts"
     }
 }
 EOM
@@ -69,6 +69,7 @@ ln -s node_modules/tomek.js/compiler .
 ln -s node_modules/tomek.js/lib .
 
 cp node_modules/tomek.js/gulpfile.js .
+cp node_modules/tomek.js/tsconfig.json .
 
 case "$TEMPLATE" in
 	"hello") cp -R node_modules/tomek.js/starters/hello_world app ;;
