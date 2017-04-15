@@ -2,7 +2,7 @@ var gulp = require('gulp');
 
 function compileTypeScript() {
     var exec = require( 'child_process' ).execSync;
-    exec('./node_modules/tsc/bin/tsc --project compiler', {stdio:[0,1,2]});
+    exec('./node_modules/.bin/tsc --project compiler', {stdio:[0,1,2]});
 }
 
 gulp.task( 'tomek-tsc', function () {
