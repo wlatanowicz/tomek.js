@@ -80,15 +80,26 @@ export default class Builder {
 		dl.loadXml( path );
 	}
 
-	processMains(){
+	processMains(done: Function){
+		let mainCount = 0;
+		let finishedCount = 0;
+		for (let source in this.mains){
+			mainCount++;
+		}
 		for (let source in this.mains){
 			let sourceFile = path.join(this.base_dir, this.app, source);
 			let targetFile = path.join(this.base_dir, this.build, this.mains[source]);
-			this.processMain(sourceFile, targetFile);
+			this.processMain(sourceFile, targetFile, function () {
+				finishedCount++;
+				if (finishedCount >= mainCount) {
+					done();
+				}
+			});
 		}
 	}
 
-	processMain( file:string, target:string){
+	processMain( file:string, target:string, done: Function){
+		console.log("  |- bundle (webpack): " + file + " => " + target);
 		var webpack = require("webpack");
 		var webpackConfig = {
 			entry: file, //"./app/hello_world/main.ts",
@@ -131,6 +142,7 @@ export default class Builder {
 			}
 		};
 		webpack(webpackConfig, function(err, stats) {
+			done();
 			if (err) {
 				throw err;
 			}

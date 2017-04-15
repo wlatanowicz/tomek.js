@@ -20,7 +20,7 @@ gulp.task('tomek-compile', [], function(){
 	}
 });
 
-gulp.task('tomek-build', ['tomek-check-tsc', 'tomek-compile'], function () {
+gulp.task('tomek-build', ['tomek-check-tsc', 'tomek-compile'], function (done) {
 	var Builder = require('./../builder/Builder');
 	var DictionaryProvider = require('./../dictionary/DictionaryProvider');
 	var path = require('path');
@@ -61,6 +61,8 @@ gulp.task('tomek-build', ['tomek-check-tsc', 'tomek-compile'], function () {
 	builder.debug = debug_level;
 	builder.loadDictionaries();
 	builder.cleanupDestination();
-	builder.processMains();
+	builder.processMains(function(){
+		done();
+	});
 	builder.processResources();
 });

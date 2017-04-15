@@ -14,7 +14,7 @@ gulp.task( 'tomek-check-tsc', function () {
     var gutil = require('gulp-util');
     var searchPath = "./compiler/index.js";
     if (! fs.existsSync(searchPath)) {
-        gutil.log("TypeScript needs compilation");
+        gutil.log("Tomek compiler needs compilation");
         compileTypeScript();
     }
 } );
