@@ -93,9 +93,9 @@ export default class TTextBox extends TWebControl implements TEventResponderInte
         return this.converters.int(this._Cols);
     }
 
-    private _Disabled;
+    private _Disabled: any = false;
 
-    set Disabled(value)
+    set Disabled(value: any)
     {
         this._Disabled = value;
         this.applyProperty(this._renderedMainElement, 'Disabled');
