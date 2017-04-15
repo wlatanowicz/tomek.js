@@ -88,30 +88,57 @@ export default class Builder {
 		}
 	}
 
-	processMain( file:string, target:string ){
-		var browserify = require("browserify");
-		var pathmodify = require('pathmodify');
+	processMain( file:string, target:string){
+		var webpack = require("webpack");
+		var webpackConfig = {
+			entry: file, //"./app/hello_world/main.ts",
+			output: {
+				filename: path.basename(target),//"main.js",
+				path: path.dirname(target)//__dirname + "/build/hello_world/"
+			},
 
-		mkdirp.sync( path.dirname( target ) );
+				// Enable sourcemaps for debugging webpack's output.
+			devtool: "source-map",
 
-		var bundleFs = fs.createWriteStream(target);
+			resolve: {
+				// Add '.ts' and '.tsx' as resolvable extensions.
+				extensions: [".ts"],
+//				root: path.resolve(__dirname),
+				alias: {
+					"@app": path.resolve('./app'),
+					"@framework": path.resolve('./framework')
+				}
+			},
 
-		var tsConfigOptions = require(path.join(this.base_dir, "tsconfig.json")).compilerOptions;
+			module: {
+				loaders: [
+					// All files with a '.ts' extension will be handled by 'ts-loader'.
+					{
+						test: /\.ts$/,
+						loader: "ts-loader",
+						options: {
+							transpileOnly: true
+						}
+					},
 
-		tsConfigOptions.baseUrl = this.base_dir;
-
-		let pathmodifyOptions = {
-			mods: [
-				pathmodify.mod.dir('@app', path.join(this.base_dir, this.app)),
-				pathmodify.mod.dir('@framework', path.join(this.base_dir, this.framework)),
-			]
+					// All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
+					{
+						enforce: "pre",
+						test: /\.js$/,
+						loader: "source-map-loader"
+					}
+				]
+			}
 		};
-
-		browserify(file)
-            .plugin(pathmodify, pathmodifyOptions)
-            .plugin("tsify")
-            .bundle()
-            .pipe(bundleFs);
+		webpack(webpackConfig, function(err, stats) {
+			if (err) {
+				throw err;
+			}
+			if (stats.hasErrors()) {
+				var jsonStats = stats.toJson();
+				console.log(jsonStats.errors);
+			}
+		});
 	}
 
 	processResources(){
