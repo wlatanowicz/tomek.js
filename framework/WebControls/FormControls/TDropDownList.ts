@@ -235,7 +235,7 @@ export default class TDropDownList extends TWebControl implements TEventResponde
 				}
 				
 				if ( selected ){
-					options[i].setSelected( true );
+					options[i].Selected = true;
 				}
 
 				somethingSelected = selected || somethingSelected;
