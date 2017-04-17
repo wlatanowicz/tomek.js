@@ -33,7 +33,7 @@ export default class Builder {
 
 	compiler: Compiler;
 
-	constructor( base_dir: string, config, language:string = null ){
+	constructor( base_dir: string, config, language:string = null, debug_level: number = 0 ){
 		this.mains = config.mains;
 		this.resources = config.resources || [];
 		this.dictionaries = config.dictionaries || [];
@@ -51,7 +51,9 @@ export default class Builder {
 		this.lib = 'lib';
 
 		this.minify = false;
-		this.debug = 0;
+		this.debug = debug_level;
+
+		this.compiler = null;
 	}
 
 	getSourcePaths(): string[]{
@@ -61,6 +63,14 @@ export default class Builder {
 			path.join(this.base_dir, this.lib)
 		];
 	}
+
+	getCompiler(): Compiler
+    {
+        if (this.compiler === null) {
+            this.compiler = new Compiler(this.getSourcePaths(), this.debug, this.language);
+        }
+        return this.compiler;
+    }
 
 	loadDictionaries(){
 		for (let i = 0; i < this.dictionaries.length; i++ ){
@@ -86,12 +96,31 @@ export default class Builder {
 	processMains(done: Function){
 		let mainCount = 0;
 		let finishedCount = 0;
-		for (let source in this.mains){
+		let mains = {};
+
+		for (let source in this.mains) {
+		    if (typeof source == 'number' || source.match(/[0-9]+/)) {
+                let extended = glob.sync(path.join(this.base_dir, this.app, this.mains[source]));
+                for (let j = 0; j < extended.length; j++) {
+                    let source = extended[j];
+                    source = source.substr(path.join(this.base_dir, this.app).length)
+                    mains[source] = source.replace(/\.ts$/, ".js");
+                }
+            } else {
+		        mains[source] = this.mains[source];
+            }
+        }
+
+		for (let source in mains){
 			mainCount++;
 		}
-		for (let source in this.mains){
+        if (finishedCount >= mainCount) {
+            done();
+        }
+
+		for (let source in mains){
 			let sourceFile = path.join(this.base_dir, this.app, source);
-			let targetFile = path.join(this.base_dir, this.build, this.mains[source]);
+			let targetFile = path.join(this.base_dir, this.build, mains[source]);
 			this.processMain(sourceFile, targetFile, function () {
 				finishedCount++;
 				if (finishedCount >= mainCount) {
@@ -123,7 +152,8 @@ export default class Builder {
 //				root: path.resolve(__dirname),
 				alias: {
 					"@app": path.resolve('./app'),
-					"@framework": path.resolve('./framework')
+					"@framework": path.resolve('./framework'),
+					"@tests": path.resolve('./test/tests')
 				}
 			},
 
@@ -145,7 +175,7 @@ export default class Builder {
                             callback: function (src) {
                                 var path = this.resourcePath;
                                 console.log("|- template (compile): " + path);
-                                return builder.compiler.compileToStr(path);
+                                return builder.getCompiler().compileToStr(path);
                             }
                         }
                     },

@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 
 gulp.task('tomek-test-build', ['tomek-check-tsc'], function () {
+gulp.task('tomek-test-build', ['tomek-check-tsc'], function (done) {
 	var path = require('path');
 	var minimist = require('minimist');
 	var fs = require('fs');
@@ -17,7 +18,9 @@ gulp.task('tomek-test-build', ['tomek-check-tsc'], function () {
 	builder.build = 'test_build';
 	//builder.loadDictionaries();
 	builder.cleanupDestination();
-	builder.processMains();
+	builder.processMains(function () {
+		done();
+    });
 	builder.processResources();
 
     var testList = fs.readdirSync('./test/tests');

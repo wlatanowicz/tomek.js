@@ -23,7 +23,6 @@ gulp.task('tomek-compile', [], function(){
 gulp.task('tomek-build', ['tomek-check-tsc'], function (done) {
 	var Builder = require('./../builder/Builder');
 	var DictionaryProvider = require('./../dictionary/DictionaryProvider');
-    var Compiler = require('./../compiler/Compiler').default;
 	var path = require('path');
 	var minimist = require('minimist');
 	
@@ -63,8 +62,6 @@ gulp.task('tomek-build', ['tomek-check-tsc'], function (done) {
 	}
 	
 	var builder = new Builder["default"]( base_dir, config, language );
-	builder.compiler = new Compiler( source_paths, 0, 'en');
-
     builder.minify = minify;
 	builder.debug = debug_level;
 	builder.loadDictionaries();

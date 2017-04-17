@@ -152,7 +152,7 @@ export default class Renderer extends BaseRenderer {
 	}
 
 	findImportForDependency(module: string): string{
-		var candidates = []
+		var candidates = [];
 		for (let i=0; i<this.source_paths.length; i++) {
 			let files = glob.sync(path.join(this.source_paths[i], "**", module+".ts"));
 			candidates = candidates.concat(files);
@@ -163,9 +163,11 @@ export default class Renderer extends BaseRenderer {
 		}
 
 		if (candidates.length > 1) {
-			throw "Too many candidates for " + module;
+			console.error("Too many candidates for " + module);
+			throw "ERROR: Too many candidates for " + module;
 		}
 
+		console.error("ERROR: No candidates for " + module);
 		throw "No candidates for " + module;
 	}
 
