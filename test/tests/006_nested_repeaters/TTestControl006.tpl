@@ -27,12 +27,12 @@
 		</temp:Empty>
 		<temp:Item>
 			<com:TControl>
-				<span class="item" id="item_[%= this.getItemIndex() %]">
+				<span class="item" id="item_[%= this.ItemIndex %]">
 					<com:TRepeater ID="InnerRep" >
 						<temp:Item>
 							<com:TControl>
-								<p class="inneritem inneritem_[%= this.getItemIndex() %]" >
-									Item_[%= this.getDataItem() %]
+								<p class="inneritem inneritem_[%= this.ItemIndex %]" >
+									Item_[%= this.DataItem %]
 								</p>
 							</com:TControl>
 						</temp:Item>

@@ -15,8 +15,9 @@ component( 'TRepeater', function(){
 			$( 'container' ).update('');
 
 			given('Create new template with nested repeaters and bind 2-dim array to repeater', function() {
-				c = new TTestControl006( { 'Placeholder' : 'container' } );
-				c.findChildControlByID('Rep').setDataSource( ds );
+				c = new TTestControl006();
+				c.Placeholder = 'container';
+				c.findChildControlByID('Rep').DataSource = ds;
 			});
 			
 			when('Render the control', function() {

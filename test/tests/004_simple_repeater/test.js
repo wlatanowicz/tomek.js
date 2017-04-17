@@ -9,7 +9,8 @@ component( 'TRepeater', function(){
 			$( 'container' ).update('');
 
 			given('Create new template with repeater', function() {
-				c = new TTestControl004( { 'Placeholder' : 'container' } );
+				c = new TTestControl004();
+				c.Placeholder = 'container';
 			});
 			
 			when('Render the control', function() {
@@ -40,11 +41,12 @@ component( 'TRepeater', function(){
 			$( 'container' ).update('');
 
 			given('Create new template with repeater', function() {
-				c = new TTestControl004( { 'Placeholder' : 'container' } );
+                c = new TTestControl004();
+                c.Placeholder = 'container';
 			});
 			
 			when('Set the data and render the control', function() {
-				c.findChildControlByID('Rep').setDataSource( ds );
+				c.findChildControlByID('Rep').DataSource = ds;
 				c.render();
 			});
 			
@@ -80,11 +82,12 @@ component( 'TRepeater', function(){
 			$( 'container' ).update('');
 
 			given('Create new template with repeater', function() {
-				c = new TTestControl004( { 'Placeholder' : 'container' } );
+                c = new TTestControl004();
+                c.Placeholder = 'container';
 			});
 			
 			when('Set the data and render the control', function() {
-				c.findChildControlByID('Rep').setDataSource( ds );
+				c.findChildControlByID('Rep').DataSource = ds;
 				c.render();
 			});
 			
@@ -93,7 +96,7 @@ component( 'TRepeater', function(){
 			});
 			
 			when('Set the new data and render the control', function() {
-				c.findChildControlByID('Rep').setDataSource( ds2 );
+				c.findChildControlByID('Rep').DataSource = ds2;
 				c.render();
 			});
 			
@@ -128,11 +131,12 @@ component( 'TRepeater', function(){
 			$( 'container' ).update('');
 
 			given('Create new template with repeater', function() {
-				c = new TTestControl004( { 'Placeholder' : 'container' } );
+                c = new TTestControl004();
+                c.Placeholder = 'container';
 			});
 			
 			when('Set the data and render the control', function() {
-				c.findChildControlByID('Rep').setDataSource( ds );
+				c.findChildControlByID('Rep').DataSource = ds;
 				c.render();
 			});
 			
@@ -141,7 +145,7 @@ component( 'TRepeater', function(){
 			});
 			
 			when('Set the new data and render the control', function() {
-				c.findChildControlByID('Rep').setDataSource( [] );
+				c.findChildControlByID('Rep').DataSource = [];
 				c.render();
 			});
 
