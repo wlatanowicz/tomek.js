@@ -1,6 +1,6 @@
 import TTemplateControl from "@framework/TTemplateControl";
 
-import template from "@app/drag_n_drop/DragDrop.tpl.ts";
+import template from "./DragDrop.tpl";
 import TRepeater from "@framework/TRepeater";
 
 export default class DragDrop extends TTemplateControl

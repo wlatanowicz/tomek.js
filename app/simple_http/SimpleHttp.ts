@@ -1,7 +1,7 @@
 import TTemplateControl from "@framework/TTemplateControl";
 import THttp from "@framework/Data/THttp";
 
-import template from "@app/simple_http/SimpleHttp.tpl.ts";
+import template from "./SimpleHttp.tpl";
 
 export default class SimpleHttp extends  TTemplateControl
 {

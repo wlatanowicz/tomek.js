@@ -1,5 +1,5 @@
 import TTemplateControl from "@framework/TTemplateControl";
-import template from "@app/validated_form/ValidatedForm.tpl.ts";
+import template from "./ValidatedForm.tpl";
 
 export default class ValidatedForm extends TTemplateControl
 {

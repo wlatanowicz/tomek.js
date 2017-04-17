@@ -1,5 +1,5 @@
 import TTemplateControl from "@framework/TTemplateControl";
-import template from "@app/route_view/RouteView.tpl.ts";
+import template from "./RouteView.tpl";
 
 export default class RouteView extends TTemplateControl
 {

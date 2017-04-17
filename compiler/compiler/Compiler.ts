@@ -19,14 +19,18 @@ export default class Compiler {
 	}
 
 	compile( source_file: string, target_file: string ) {
-		var parser = new Parser();
-		var control = parser.parseFile( source_file );
-		var control_name = path.basename( source_file, '.tpl' );
-		var renderer = new Renderer( control_name, this.source_paths, this.debug, this.language );
+		fs.writeFileSync( target_file, this.compileToStr(source_file), 'utf8' );
+	}
 
-		renderer.render( control );
+	compileToStr(sourceFile: string): string
+	{
+        var parser = new Parser();
+        var control = parser.parseFile( sourceFile );
+        var control_name = path.basename( sourceFile, '.tpl' );
+        var renderer = new Renderer( control_name, this.source_paths, this.debug, this.language );
 
-		fs.writeFileSync( target_file, renderer.getOutput(), 'utf8' );
+        renderer.render( control );
+        return renderer.getOutput();
 	}
 
 }

@@ -7,6 +7,7 @@ import glob = require('glob');
 import path = require('path');
 import fs = require('fs');
 import mkdirp = require('mkdirp');
+import Compiler from "../compiler/Compiler";
 
 export default class Builder {
 
@@ -29,6 +30,8 @@ export default class Builder {
 
 	minify: boolean;
 	debug: number;
+
+	compiler: Compiler;
 
 	constructor( base_dir: string, config, language:string = null ){
 		this.mains = config.mains;
@@ -100,6 +103,9 @@ export default class Builder {
 
 	processMain( file:string, target:string, done: Function){
 		console.log("  |- bundle (webpack): " + file + " => " + target);
+
+		var builder = this;
+
 		var webpack = require("webpack");
 		var webpackConfig = {
 			entry: file, //"./app/hello_world/main.ts",
@@ -131,6 +137,18 @@ export default class Builder {
 							transpileOnly: true
 						}
 					},
+
+                    {
+                        test: /\.tpl$/,
+                        loader: "webpack-callback-loader",
+                        query: {
+                            callback: function (src) {
+                                var path = this.resourcePath;
+                                console.log("|- template (compile): " + path);
+                                return builder.compiler.compileToStr(path);
+                            }
+                        }
+                    },
 
 					// All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
 					{

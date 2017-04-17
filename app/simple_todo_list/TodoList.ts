@@ -1,5 +1,5 @@
 import TTemplateControl from "@framework/TTemplateControl";
-import template from "@app/simple_todo_list/TodoList.tpl.ts";
+import template from "./TodoList.tpl";
 
 export default class TodoList extends TTemplateControl
 {

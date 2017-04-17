@@ -1,4 +1,4 @@
-import template from "@app/dependency_injection/DependencyInjection.tpl.ts";
+import template from "./DependencyInjection.tpl";
 import TTemplateControl from "@framework/TTemplateControl";
 import GreetingsProvider from "@app/dependency_injection/GreetingsProvider";
 

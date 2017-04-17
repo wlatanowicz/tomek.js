@@ -12,7 +12,8 @@
     "typescript": "^2.2.2",
     "uglify-js": "^2.7.5",
     "webpack": "^2.4.1",
-    "ts-loader": "^2.0.3"
+    "ts-loader": "^2.0.3",
+    "webpack-callback-loader" : "wlatanowicz/webpack-callback-loader"
   },
   "description": "A component based JavaScript frontend framework",
   "homepage": "http://tomekjs.com",

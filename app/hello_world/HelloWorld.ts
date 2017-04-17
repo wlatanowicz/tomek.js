@@ -1,4 +1,4 @@
-import template from "@app/hello_world/HelloWorld.tpl.ts";
+import template from "./HelloWorld.tpl";
 import TTemplateControl from "@framework/TTemplateControl";
 
 export default class HelloWorld extends TTemplateControl {

@@ -1,4 +1,4 @@
-import template from "@app/dependency_injection/MainApp.tpl.ts";
+import template from "./MainApp.tpl";
 import TTemplateControl from "@framework/TTemplateControl";
 
 export default class MainApp extends TTemplateControl {
