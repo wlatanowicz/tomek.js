@@ -174,8 +174,7 @@ export default class Builder {
                         query: {
                             callback: function (src) {
                                 var path = this.resourcePath;
-                                console.log("|- template (compile): " + path);
-                                return builder.getCompiler().compileToStr(path);
+                                return builder.getCompiler().compileToStrCached(path, path + ".ts");
                             }
                         }
                     },

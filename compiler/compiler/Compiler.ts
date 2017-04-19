@@ -5,6 +5,7 @@ import Renderer from "../renderer/Renderer";
 import path = require('path');
 import fs = require('fs');
 import glob = require('glob');
+import {Md5} from 'ts-md5/dist/md5';
 
 export default class Compiler {
 
@@ -33,4 +34,47 @@ export default class Compiler {
         return renderer.getOutput();
 	}
 
+	compileToStrCached(sourceFile: string, cacheFile: string): string
+	{
+		let compiled: string = null;
+        let md5 = Md5.hashAsciiStr(fs.readFileSync(sourceFile, 'utf-8'));
+        let now = new Date();
+        let header = {
+            "source" : sourceFile,
+            "md5" : md5,
+            "mtime": fs.statSync(sourceFile).mtime.toISOString(),
+            "date" : now.toISOString()
+        };
+        let headerText = "/*" + JSON.stringify(header) + "*/\n";
+
+		if (fs.existsSync(cacheFile)) {
+		    let cachedFile = fs.readFileSync(cacheFile).toString('utf-8').split("\n", 2);
+            let firstLine = cachedFile[0];
+            if (firstLine.substr(0, 3) == "/*{"
+                && firstLine.substr(-3) == "}*/") {
+
+
+                try{
+                    let cachedHeader = JSON.parse(firstLine.substr(2, firstLine.length - 4));
+                    if (cachedHeader.source == header.source
+                        && cachedHeader.md5 == header.md5
+                        && cachedHeader.mtime == header.mtime) {
+                        compiled = cacheFile[1];
+                        console.log("  |- template (cached): " + sourceFile);
+                    }
+                }catch(ex) {
+                    compiled = null;
+                }
+
+            }
+		}
+
+		if (compiled == null) {
+			console.log("  |- template (compiled): " + sourceFile);
+			compiled = this.compileToStr(sourceFile);
+			console.log("  | \\ save compiled template: " + cacheFile);
+			fs.writeFileSync(cacheFile, headerText + compiled);
+		}
+		return compiled;
+	}
 }
