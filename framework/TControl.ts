@@ -155,7 +155,6 @@ export default class TControl extends TObject
 			this._Placeholder = null;
 		}else
 		{
-		    console.log(root_node);
 			throw new TException( 'Invalid Placeholder' )
 		}
 	}

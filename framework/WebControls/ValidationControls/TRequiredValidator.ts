@@ -10,11 +10,6 @@ export default class TRequiredValidator extends TBaseValidator
 	//@Override
 	performValidation()
 	{
-	    console.log(this.ControlToValidate);
-	    console.log(this.ControlToValidate.Text);
-	    console.log(this.ControlToValidate.Value);
-		let ret = this.ControlToValidate.Value ? true : false;
-	    console.log(ret);
-	    return ret;
+		return this.ControlToValidate.Value ? true : false;
 	}
 }
