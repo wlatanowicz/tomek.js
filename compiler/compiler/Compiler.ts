@@ -48,8 +48,8 @@ export default class Compiler {
         let headerText = "/*" + JSON.stringify(header) + "*/\n";
 
 		if (fs.existsSync(cacheFile)) {
-		    let cachedFile = fs.readFileSync(cacheFile).toString('utf-8').split("\n", 2);
-            let firstLine = cachedFile[0];
+		    let cachedFile = fs.readFileSync(cacheFile).toString('utf-8');
+            let firstLine = cachedFile.split("\n", 1)[0];
             if (firstLine.substr(0, 3) == "/*{"
                 && firstLine.substr(-3) == "}*/") {
 
@@ -59,7 +59,7 @@ export default class Compiler {
                     if (cachedHeader.source == header.source
                         && cachedHeader.md5 == header.md5
                         && cachedHeader.mtime == header.mtime) {
-                        compiled = cacheFile[1];
+                        compiled = cachedFile;
                         console.log("  |- template (cached): " + sourceFile);
                     }
                 }catch(ex) {
