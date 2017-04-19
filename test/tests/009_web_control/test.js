@@ -33,7 +33,7 @@ component( 'TTemplateControl', function(){
 			});
 			
 			when('Class changed', function() {
-				wc.setCssClass( 'green' );
+				wc.CssClass = 'green';
 				c.render();
 			});
 			
