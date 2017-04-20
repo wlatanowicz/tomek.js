@@ -47,19 +47,6 @@ export default class TRouteView extends TControl implements TEventResponderInter
 	/**
 	 * TRouteView#IsActive -> bool
 	 **/
-	
-	//@Override
-	getPublicProperties(){
-		var arr = [];//this.base();
-		arr.push( 'RegExp' );
-		arr.push( 'Path' );
-		arr.push( { name: 'AutoRender', type: 'bool', default: true } );
-		arr.push( { name: 'ShouldRender', type: 'bool', default: true } );
-		arr.push( { name: 'IsActive', type: 'bool', default: false } );
-		return arr;
-	}
-
-
 
 	get CurrentPath()
 	{
