@@ -1,4 +1,4 @@
-import "@app/MobileHelloWorld";
+import MobileHelloWorld from "@app/MobileHelloWorld";
 
 var app = new MobileHelloWorld();
 app.Placeholder = "container";
