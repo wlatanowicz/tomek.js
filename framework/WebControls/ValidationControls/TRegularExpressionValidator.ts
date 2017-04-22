@@ -28,10 +28,10 @@ class TRegularExpressionValidator extends TBaseValidator
         this._Modifiers = value;
     }
 
-	//@Override
-	performValidation()
+    //@Override
+    performValidation()
     {
-		return (new RegExp(this.Pattern, this.Modifiers)).test(this.ControlToValidate.Value);
-	}	
-	
+        return (new RegExp(this.Pattern, this.Modifiers)).test(this.ControlToValidate.Value);
+    }
+
 }

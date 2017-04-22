@@ -10,19 +10,19 @@ import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
 export default class TOption extends TWebControl
 {
 
-	//@Override
-	_tagName = 'option';
-	
-	//@Override
-	_rendersChildControls = true;
+    //@Override
+    _tagName = 'option';
 
-	/**
-	 * TOption#Text -> String
-	 **/
+    //@Override
+    _rendersChildControls = true;
 
-	private _Text;
+    /**
+     * TOption#Text -> String
+     **/
 
-	set Text(value)
+    private _Text;
+
+    set Text(value)
     {
         this._Text = value;
     }
@@ -34,7 +34,7 @@ export default class TOption extends TWebControl
 
     private _Value;
 
-	set Value(value)
+    set Value(value)
     {
         this._Value = value;
         this.applyProperty(this._renderedMainElement, 'Value');
@@ -47,7 +47,7 @@ export default class TOption extends TWebControl
 
     private _Selected;
 
-	set Selected(value)
+    set Selected(value)
     {
         this._Selected = value;
         this.applyProperty(this._renderedMainElement, 'Selected');
@@ -61,7 +61,7 @@ export default class TOption extends TWebControl
 
     private _Disabled;
 
-	set Disabled(value)
+    set Disabled(value)
     {
         this._Disabled = value;
         this.applyProperty(this._renderedMainElement, 'Disabled');
@@ -72,7 +72,7 @@ export default class TOption extends TWebControl
         return this.converters.boolean(this._Disabled);
     }
 
-	getElementProperites()
+    getElementProperites()
     {
         var props = super.getElementProperites();
         props['Value'] = new TWebControlProperty("value", "_Value", this.converters.string);
@@ -81,16 +81,16 @@ export default class TOption extends TWebControl
         return props;
     }
 
-	//@Override
-	createMainElement()
+    //@Override
+    createMainElement()
     {
-		var d = super.createMainElement();
-		
-		if (this.Text){
-			var t = document.createTextNode(this.Text);
-			d.appendChild(t);
-		}
-		
-		return d;
-	}
+        var d = super.createMainElement();
+
+        if (this.Text){
+            var t = document.createTextNode(this.Text);
+            d.appendChild(t);
+        }
+
+        return d;
+    }
 }

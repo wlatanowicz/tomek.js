@@ -7,9 +7,9 @@ import TBaseValidator from "@framework/WebControls/ValidationControls/TBaseValid
  **/
 export default class TRequiredValidator extends TBaseValidator
 {
-	//@Override
-	performValidation()
-	{
-		return this.ControlToValidate.Value ? true : false;
-	}
+    //@Override
+    performValidation()
+    {
+        return this.ControlToValidate.Value ? true : false;
+    }
 }

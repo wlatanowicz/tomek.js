@@ -21,16 +21,16 @@ import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
  **/
 export default class TTextBox extends TWebControl implements TEventResponderInterface, TValidatableInterface
 {
-	//@Override
-	_tagName = 'input';
-	
-	_singleLineTagName = 'input';
-	_multiLineTagName = 'textarea';
-	
-	//@Override
-	_rendersChildControls = false;
+    //@Override
+    _tagName = 'input';
 
-	public IsValid;
+    _singleLineTagName = 'input';
+    _multiLineTagName = 'textarea';
+
+    //@Override
+    _rendersChildControls = false;
+
+    public IsValid;
 
     private _event = null;
 
@@ -42,22 +42,22 @@ export default class TTextBox extends TWebControl implements TEventResponderInte
         return this._event;
     }
 
-	get Value()
+    get Value()
     {
-		return this.Text;
-	}
-	
-	set Value( v )
+        return this.Text;
+    }
+
+    set Value( v )
     {
-		this.Text = v;
-	}
+        this.Text = v;
+    }
 
     /**
      * TTextBox#Text -> String
      **/
-	private _Text;
-	
-	set Text(value)
+    private _Text;
+
+    set Text(value)
     {
         this._Text = value;
         this.applyProperty(this._renderedMainElement, 'Text');
@@ -70,12 +70,12 @@ export default class TTextBox extends TWebControl implements TEventResponderInte
     }
     
     private _Rows;
-	
-	set Rows(value)
+
+    set Rows(value)
     {
         this._Rows = value;
     }
-	
+
     get Rows()
     {
         return this.converters.int(this._Rows);   
@@ -128,39 +128,39 @@ export default class TTextBox extends TWebControl implements TEventResponderInte
         return props;
     }
     
-	//@Override
-	createMainElement()
+    //@Override
+    createMainElement()
     {
-		
-		var rows = this.Rows;
-		var cols = this.Cols;
-		
-		if ( rows > 1 ){
-			this._tagName = this._multiLineTagName;
-		}else{
-			this._tagName = this._singleLineTagName;
-		}
-		
-		var d = super.createMainElement();
-		
-		if (rows > 1){
-			if (cols > 0){
-				d['cols'] = cols;
-			}
-			d['rows'] = rows;
-			d.removeAttribute( 'type' );
-		}else{
-			if (cols > 0){
-				d['size'] = cols;
-			}
-		}
-		
-		this.event.registerTriggerElement(d, 'change', 'Change');
-		this.event.registerTriggerElement(d, 'keyup', 'KeyUp');
-		this.event.registerTriggerElement(d, 'keydown', 'KeyDown');
-		this.event.registerTriggerElement(d, 'blur', 'Blur');
-		this.event.registerTriggerElement(d, 'focus', 'Focus');
-		
-		return d;
-	}
+
+        var rows = this.Rows;
+        var cols = this.Cols;
+
+        if ( rows > 1 ){
+            this._tagName = this._multiLineTagName;
+        }else{
+            this._tagName = this._singleLineTagName;
+        }
+
+        var d = super.createMainElement();
+
+        if (rows > 1){
+            if (cols > 0){
+                d['cols'] = cols;
+            }
+            d['rows'] = rows;
+            d.removeAttribute( 'type' );
+        }else{
+            if (cols > 0){
+                d['size'] = cols;
+            }
+        }
+
+        this.event.registerTriggerElement(d, 'change', 'Change');
+        this.event.registerTriggerElement(d, 'keyup', 'KeyUp');
+        this.event.registerTriggerElement(d, 'keydown', 'KeyDown');
+        this.event.registerTriggerElement(d, 'blur', 'Blur');
+        this.event.registerTriggerElement(d, 'focus', 'Focus');
+
+        return d;
+    }
 }

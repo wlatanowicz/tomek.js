@@ -18,12 +18,12 @@ import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
  **/
 export default class TDropDownList extends TWebControl implements TEventResponderInterface, TValidatableInterface
 {
-	
-	//@Override
-	_tagName = 'select';
-	
-	//@Override
-	_rendersChildControls = true;
+
+    //@Override
+    _tagName = 'select';
+
+    //@Override
+    _rendersChildControls = true;
 
     public IsValid;
 
@@ -37,61 +37,61 @@ export default class TDropDownList extends TWebControl implements TEventResponde
         return this._event;
     }
 
-	/**
-	 * TDropDownList#DataSource -> Array
-	 **/
-	
-	set Value(v)
-    {
-		this.SelectedValue = v;
-	}
-	
-	get Value()
-    {
-		return this.SelectedValue;
-	}
-	
-	set SelectedValue(v)
-    {
-		var indexToSet = -1;
-		var j;
-		var stringValue = this.converters.string(v);
-        for ( j=0; j<this.Options.length; j++ ){
-			var i = this.Options[j];
-			if ( i.Value == stringValue ){
-				indexToSet = j;
-			}
-		}
-		if ( indexToSet >= 0 ){
-			this.SelectedIndex = indexToSet;
-		}else{
-			this._ValueToSet = v;
-		}
-	}
+    /**
+     * TDropDownList#DataSource -> Array
+     **/
 
-	get SelectedValue()
+    set Value(v)
     {
-		if ( this._ValueToSet !== null ){
-			return this._ValueToSet.toString();
-		}
-		var idx = this.SelectedIndex;
-		if ( this.Options[ idx ] && this.Options[ idx ].Value ){
-			return this.Options[ idx ].Value;
-		}else{
-			return null;
-		}
-	}
+        this.SelectedValue = v;
+    }
+
+    get Value()
+    {
+        return this.SelectedValue;
+    }
+
+    set SelectedValue(v)
+    {
+        var indexToSet = -1;
+        var j;
+        var stringValue = this.converters.string(v);
+        for ( j=0; j<this.Options.length; j++ ){
+            var i = this.Options[j];
+            if ( i.Value == stringValue ){
+                indexToSet = j;
+            }
+        }
+        if ( indexToSet >= 0 ){
+            this.SelectedIndex = indexToSet;
+        }else{
+            this._ValueToSet = v;
+        }
+    }
+
+    get SelectedValue()
+    {
+        if ( this._ValueToSet !== null ){
+            return this._ValueToSet.toString();
+        }
+        var idx = this.SelectedIndex;
+        if ( this.Options[ idx ] && this.Options[ idx ].Value ){
+            return this.Options[ idx ].Value;
+        }else{
+            return null;
+        }
+    }
 
     private _SelectedIndex;
 
-	set SelectedIndex(value:any)
+    set SelectedIndex(value:any)
     {
-		this._ValueToSet = null;
-		this._SelectedIndex = value;
-		this.applyProperty(this._renderedMainElement, 'SelectedIndex');
-	}
+        this._ValueToSet = null;
+        this._SelectedIndex = value;
+        this.applyProperty(this._renderedMainElement, 'SelectedIndex');
+    }
 
-	get SelectedIndex()
+    get SelectedIndex()
     {
         this.fetchProperty(this._renderedMainElement, 'SelectedIndex');
         return this.converters.int(this._SelectedIndex);
@@ -99,16 +99,16 @@ export default class TDropDownList extends TWebControl implements TEventResponde
 
     private _Disabled;
 
-	set Disabled(v)
-	{
-		this._Disabled = v;
-		this.applyProperty(this._renderedMainElement, 'Disabled');
-	}
+    set Disabled(v)
+    {
+        this._Disabled = v;
+        this.applyProperty(this._renderedMainElement, 'Disabled');
+    }
 
-	get Disabled()
-	{
-		return this.converters.boolean(this._Disabled);
-	}
+    get Disabled()
+    {
+        return this.converters.boolean(this._Disabled);
+    }
 
     private _DataSource = [];
 
@@ -132,46 +132,46 @@ export default class TDropDownList extends TWebControl implements TEventResponde
         return this.converters.object(this._DataSource);
     }
 
-	get Options()
-	{
-		return this.findChildControlsByKind(TOption);
-	}
+    get Options()
+    {
+        return this.findChildControlsByKind(TOption);
+    }
 
-	private _TextFieldName = "text";
+    private _TextFieldName = "text";
 
     set TextFieldName(v)
-	{
-		this._TextFieldName = v;
-	}
+    {
+        this._TextFieldName = v;
+    }
 
-	get TextFieldName()
-	{
-		return this.converters.string(this._TextFieldName);
-	}
+    get TextFieldName()
+    {
+        return this.converters.string(this._TextFieldName);
+    }
 
-	private _ValueFieldName = "value";
+    private _ValueFieldName = "value";
 
-	set ValueFieldName(v)
-	{
-		this._ValueFieldName = v;
-	}
+    set ValueFieldName(v)
+    {
+        this._ValueFieldName = v;
+    }
 
-	get ValueFieldName()
-	{
-		return this.converters.string(this._ValueFieldName);
-	}
+    get ValueFieldName()
+    {
+        return this.converters.string(this._ValueFieldName);
+    }
 
-	private _DisabledFieldName = "disabled";
+    private _DisabledFieldName = "disabled";
 
-	set DisabledFieldName(v)
-	{
-		this._DisabledFieldName = v;
-	}
+    set DisabledFieldName(v)
+    {
+        this._DisabledFieldName = v;
+    }
 
-	get DisabledFieldName()
-	{
-		return this.converters.string(this._DisabledFieldName);
-	}
+    get DisabledFieldName()
+    {
+        return this.converters.string(this._DisabledFieldName);
+    }
 
     getElementProperites()
     {
@@ -180,75 +180,75 @@ export default class TDropDownList extends TWebControl implements TEventResponde
         return props;
     }
 
-	//@Override
-	createMainElement()
+    //@Override
+    createMainElement()
     {
-		var d = super.createMainElement();
-		
-		this.event.registerTriggerElement( d, 'change', 'Change' );
-		
-		return d;
-	}
-	
-	/**
-	 * TDropDownList#createChildControls() -> void
-	 * 
-	 * Creates child controls based on contents of DataSource
-	 * 
-	 **/
-	//@Override
-	createChildControls()
+        var d = super.createMainElement();
+
+        this.event.registerTriggerElement( d, 'change', 'Change' );
+
+        return d;
+    }
+
+    /**
+     * TDropDownList#createChildControls() -> void
+     *
+     * Creates child controls based on contents of DataSource
+     *
+     **/
+    //@Override
+    createChildControls()
     {
-		var data_source = this.DataSource;
-		for( var i =0; i<data_source.length; i++ ){
-			var data_item = data_source[i];
-			var opt = new TOption();
-			opt.Text = data_item[this.TextFieldName];
-			opt.Value = data_item[this.ValueFieldName];
-			if (this.DisabledFieldName){
-				opt.Disabled = data_item[this.DisabledFieldName];
-			}
-			this.addChildControl( opt );
-		}
-	}
+        var data_source = this.DataSource;
+        for( var i =0; i<data_source.length; i++ ){
+            var data_item = data_source[i];
+            var opt = new TOption();
+            opt.Text = data_item[this.TextFieldName];
+            opt.Value = data_item[this.ValueFieldName];
+            if (this.DisabledFieldName){
+                opt.Disabled = data_item[this.DisabledFieldName];
+            }
+            this.addChildControl( opt );
+        }
+    }
 
     protected _ValueToSet = null;
 
-	preRender()
+    preRender()
     {
-		var selected_index = this.SelectedIndex;
-		var somethingSelected = false;
-		var options = this.$$kind(TOption);
-		for( var i=0; i<options.length && !somethingSelected; i++ ){
-			var selected = false;
-			
-			if ( ! somethingSelected ){
-				
-				if ( this._ValueToSet !== null
-						&& this._ValueToSet.toString() == options[i].getValue() ){
-					selected = true;
-					this._SelectedIndex = i;
-				}else
-				if ( this._ValueToSet === null
-						&& selected_index === i ){
-					selected = true;
-				}
-				
-				if ( selected ){
-					options[i].Selected = true;
-				}
+        var selected_index = this.SelectedIndex;
+        var somethingSelected = false;
+        var options = this.$$kind(TOption);
+        for( var i=0; i<options.length && !somethingSelected; i++ ){
+            var selected = false;
 
-				somethingSelected = selected || somethingSelected;
-			}
-			
-		}
-		
-	}
-	
-	renderContents()
+            if ( ! somethingSelected ){
+
+                if ( this._ValueToSet !== null
+                        && this._ValueToSet.toString() == options[i].getValue() ){
+                    selected = true;
+                    this._SelectedIndex = i;
+                }else
+                if ( this._ValueToSet === null
+                        && selected_index === i ){
+                    selected = true;
+                }
+
+                if ( selected ){
+                    options[i].Selected = true;
+                }
+
+                somethingSelected = selected || somethingSelected;
+            }
+
+        }
+
+    }
+
+    renderContents()
     {
-		var si = this.SelectedIndex;
-		super.renderContents();
-		this.SelectedIndex = si;
-	}
+        var si = this.SelectedIndex;
+        super.renderContents();
+        this.SelectedIndex = si;
+    }
 }

@@ -9,10 +9,10 @@ import TControl from "@framework/TControl";
 export default class TCase extends TControl
 {
 
-	/**
-	 * TCase#Condition -> bool
-	 **/
-	
+    /**
+     * TCase#Condition -> bool
+     **/
+
     private _Condition = true;
 
     set Condition(value:any)

@@ -10,19 +10,19 @@ import TControl from "@framework/TControl";
 export default class TStencil extends TControl
 {
 
-	/**
-	 * TStencil#DataItem -> Object
-	 **/
-	
-	/**
-	 * TStencil#Type -> String
+    /**
+     * TStencil#DataItem -> Object
+     **/
+
+    /**
+     * TStencil#Type -> String
      * 
      * i.e. one of: `Header`, `Item`, `Footer` or `Empty`
-	 **/
+     **/
 
-	protected _DataItem;
+    protected _DataItem;
 
-	set DataItem(v)
+    set DataItem(v)
     {
         this._DataItem = v;
     }
@@ -32,9 +32,9 @@ export default class TStencil extends TControl
         return this.converters.object(this._DataItem);
     }
 
-	protected _Type;
+    protected _Type;
 
-	set Type(v)
+    set Type(v)
     {
         this._Type = v;
     }
@@ -45,20 +45,20 @@ export default class TStencil extends TControl
     }
 
     protected _Template = null;
-	
-	/**
-	 * TStencil#useTemplate( template ) -> void
-	 * - template (Function): template
-	 * 
-	 * Sets template function
-	 * 
-	 **/
-	useTemplate(template)
-    {
-		this._Template = template;
-	}
 
-	createChildControls()
+    /**
+     * TStencil#useTemplate( template ) -> void
+     * - template (Function): template
+     *
+     * Sets template function
+     *
+     **/
+    useTemplate(template)
+    {
+        this._Template = template;
+    }
+
+    createChildControls()
     {
         if (this._Template) {
             this._Template.call(this, this);

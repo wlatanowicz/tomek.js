@@ -13,9 +13,9 @@ export default class TDraggable extends TWebControl implements TEventResponderIn
 {
     public static currentDraggable : TDraggable = null;
 
-	//@Override
-	_tagName = 'span';
-	
+    //@Override
+    _tagName = 'span';
+
     private _event = null;
 
     get event():TEventResponder
@@ -26,11 +26,11 @@ export default class TDraggable extends TWebControl implements TEventResponderIn
         return this._event;
     }
 
-	_uid = null;
-	
-	private _Group = "Default";
+    _uid = null;
 
-	set Group(v: any)
+    private _Group = "Default";
+
+    set Group(v: any)
     {
         this._Group = v;
     }
@@ -40,49 +40,49 @@ export default class TDraggable extends TWebControl implements TEventResponderIn
         return this.converters.string(this._Group);
     }
 
-	createMainElement()
+    createMainElement()
     {
-		var d = super.createMainElement();
-		
-		d.setAttribute( 'draggable', "true" );
-		
-		this.event.addEventListener( d, 'dragstart', this._onDragStart.bind( this ) );
-		this.event.addEventListener( d, 'dragend', this._onDragEnd.bind( this ) );
-		
-		
-		return d;
-	}
-	
-	_onDragStart(ev)
+        var d = super.createMainElement();
+
+        d.setAttribute( 'draggable', "true" );
+
+        this.event.addEventListener( d, 'dragstart', this._onDragStart.bind( this ) );
+        this.event.addEventListener( d, 'dragend', this._onDragEnd.bind( this ) );
+
+
+        return d;
+    }
+
+    _onDragStart(ev)
     {
-		// http://stackoverflow.com/questions/6186844/clear-a-selection-in-firefox/6187098#6187098
-		if ( window['selection'] && window['selection'].empty ){
-			window['selection'].empty();
-		}else{
-			window.getSelection().removeAllRanges();
-		}
-		
-		this.ensureHtmlID();
-		TDraggable.currentDraggable = this;
-		ev.dataTransfer.dropEffect = 'move';
-		ev.dataTransfer.setData("draggable_id", this.HtmlID);
-		this.event.trigger(
-		    'DragStart',
+        // http://stackoverflow.com/questions/6186844/clear-a-selection-in-firefox/6187098#6187098
+        if ( window['selection'] && window['selection'].empty ){
+            window['selection'].empty();
+        }else{
+            window.getSelection().removeAllRanges();
+        }
+
+        this.ensureHtmlID();
+        TDraggable.currentDraggable = this;
+        ev.dataTransfer.dropEffect = 'move';
+        ev.dataTransfer.setData("draggable_id", this.HtmlID);
+        this.event.trigger(
+            'DragStart',
             {
-			    domEvent : ev
-			}
-			);
-	}
-	
-	_onDragEnd( ev )
-    {
-		TDraggable.currentDraggable = null;
-		this.event.trigger(
-		    'DragEnd',
-            {
-				domEvent : ev
+                domEvent : ev
             }
             );
-	}
-	
+    }
+
+    _onDragEnd( ev )
+    {
+        TDraggable.currentDraggable = null;
+        this.event.trigger(
+            'DragEnd',
+            {
+                domEvent : ev
+            }
+            );
+    }
+
 }

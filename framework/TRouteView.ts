@@ -23,70 +23,70 @@ export default class TRouteView extends TControl implements TEventResponderInter
         return this._event;
     }
 
-	_ComputedPaths = null;
+    _ComputedPaths = null;
     _Params:any = {_list: []};
-	
-	destroy()
+
+    destroy()
     {
-		TRouteViewManager.getInstance().deregisterRouteView( this );
-		super.destroy();
-	}
-	
-	/**
-	 * TRouteView#RegExp -> string
-	 **/
-	
-	/**
-	 * TRouteView#Path -> string
-	 **/
-	
-	/**
-	 * TRouteView#AutoRender -> bool
-	 **/
-	
-	/**
-	 * TRouteView#IsActive -> bool
-	 **/
+        TRouteViewManager.getInstance().deregisterRouteView( this );
+        super.destroy();
+    }
 
-	get CurrentPath()
-	{
-		return TRouteViewManager.getInstance().CurrentPath;
-	}
+    /**
+     * TRouteView#RegExp -> string
+     **/
 
-	protected _RegExp;
+    /**
+     * TRouteView#Path -> string
+     **/
 
-	set RegExp(regexp)
-	{
-		this._RegExp = regexp;
-		TRouteViewManager.getInstance().deregisterRouteView(this);
-		TRouteViewManager.getInstance().registerRouteView(this);
-	}
+    /**
+     * TRouteView#AutoRender -> bool
+     **/
 
-	get RegExp()
+    /**
+     * TRouteView#IsActive -> bool
+     **/
+
+    get CurrentPath()
+    {
+        return TRouteViewManager.getInstance().CurrentPath;
+    }
+
+    protected _RegExp;
+
+    set RegExp(regexp)
+    {
+        this._RegExp = regexp;
+        TRouteViewManager.getInstance().deregisterRouteView(this);
+        TRouteViewManager.getInstance().registerRouteView(this);
+    }
+
+    get RegExp()
     {
         return this.converters.string(this._RegExp);
     }
 
     protected _Path;
 
-	set Path(path)
-	{
-		this._ComputedPaths = null;
-		this._Path = path.split("\n").map(function(e){
-			return e.trim()
-		});;
-		TRouteViewManager.getInstance().deregisterRouteView( this );
-		TRouteViewManager.getInstance().registerRouteView( this );
-	}
+    set Path(path)
+    {
+        this._ComputedPaths = null;
+        this._Path = path.split("\n").map(function(e){
+            return e.trim()
+        });;
+        TRouteViewManager.getInstance().deregisterRouteView( this );
+        TRouteViewManager.getInstance().registerRouteView( this );
+    }
 
-	get Path()
+    get Path()
     {
         return this._Path;
     }
 
     protected _AutoRender = true;
 
-	set AutoRender(v)
+    set AutoRender(v)
     {
         this._AutoRender = v;
     }
@@ -98,7 +98,7 @@ export default class TRouteView extends TControl implements TEventResponderInter
 
     protected _ShouldRender = true;
 
-	set ShouldRender(v)
+    set ShouldRender(v)
     {
         this._ShouldRender = v;
     }
@@ -110,86 +110,86 @@ export default class TRouteView extends TControl implements TEventResponderInter
 
     protected _IsActive = false;
 
-	get IsActive()
+    get IsActive()
     {
         return this._IsActive;
     }
 
- 	get ComputedPaths()
+     get ComputedPaths()
     {
-		if ( this._ComputedPaths === null ){
-			if ( this._Path !== null ){
-				this._ComputedPaths = [];
-				for ( var k=0; k<this._Path.length; k++ ){
-					if ( this._Path[k].trim().length > 0 ){
-						this._ComputedPaths.push( this._Path[k].trim() );
-					}
-				}
-			}else{
-				this._ComputedPaths = [];
-			}
-		}
-		return this._ComputedPaths;
-	}
-	
-	get Visible()
-	{
+        if ( this._ComputedPaths === null ){
+            if ( this._Path !== null ){
+                this._ComputedPaths = [];
+                for ( var k=0; k<this._Path.length; k++ ){
+                    if ( this._Path[k].trim().length > 0 ){
+                        this._ComputedPaths.push( this._Path[k].trim() );
+                    }
+                }
+            }else{
+                this._ComputedPaths = [];
+            }
+        }
+        return this._ComputedPaths;
+    }
+
+    get Visible()
+    {
         return this.converters.boolean(this._Visible)
             && (this.Parent === null || this.Parent.Visible)
             && this.IsActive;
-	}
-	
-	/**
-	 * TRouteView#getParam( name ) -> string
-	 * - name (String|Integer): param name or index
-	 * 
-	 **/
-	getParam(name)
-	{
-		if (/[0-9]+/.test( name )) {
-			return this._Params._list[name] ? this._Params._list[name] : null;
-		}
-		return this._Params[name] ? this._Params[name] : null;
-	}
-	
-	activate(params)
-	{
-		var wasActive = this._IsActive;
-		var oldParams = this._Params;
-		this._Params = params;
-		this._IsActive = true;
-		this.ShouldRender = (this.AutoRender && ! wasActive);
-		this.event.trigger('BecameActive', {
-				"oldParams" : oldParams,
-				"newParams" : this._Params,
-				"wasActive" : wasActive,
-				"isActive" : true
-				});
-		if (this.ShouldRender) {
-			this.render();
-		}
-	}
-	
-	deactivate()
-	{
-		var wasActive = this._IsActive;
-		var oldParams = this._Params;
-		this._Params = {};
-		this._IsActive = false;
-		this.ShouldRender = this.AutoRender;
-		this.event.trigger('BecameInactive', {
-			"oldParams" : oldParams,
-			"newParams" : this._Params,
-			"wasActive" : wasActive,
-			"isActive" : false
-		});
-		if (this.ShouldRender){
-			this.render();
-		}
-	}
-	
-	checkForCurrentPath ()
-	{
-		TRouteViewManager.getInstance().checkControlForCurrentPath(this);
-	}
+    }
+
+    /**
+     * TRouteView#getParam( name ) -> string
+     * - name (String|Integer): param name or index
+     *
+     **/
+    getParam(name)
+    {
+        if (/[0-9]+/.test( name )) {
+            return this._Params._list[name] ? this._Params._list[name] : null;
+        }
+        return this._Params[name] ? this._Params[name] : null;
+    }
+
+    activate(params)
+    {
+        var wasActive = this._IsActive;
+        var oldParams = this._Params;
+        this._Params = params;
+        this._IsActive = true;
+        this.ShouldRender = (this.AutoRender && ! wasActive);
+        this.event.trigger('BecameActive', {
+                "oldParams" : oldParams,
+                "newParams" : this._Params,
+                "wasActive" : wasActive,
+                "isActive" : true
+                });
+        if (this.ShouldRender) {
+            this.render();
+        }
+    }
+
+    deactivate()
+    {
+        var wasActive = this._IsActive;
+        var oldParams = this._Params;
+        this._Params = {};
+        this._IsActive = false;
+        this.ShouldRender = this.AutoRender;
+        this.event.trigger('BecameInactive', {
+            "oldParams" : oldParams,
+            "newParams" : this._Params,
+            "wasActive" : wasActive,
+            "isActive" : false
+        });
+        if (this.ShouldRender){
+            this.render();
+        }
+    }
+
+    checkForCurrentPath ()
+    {
+        TRouteViewManager.getInstance().checkControlForCurrentPath(this);
+    }
 }

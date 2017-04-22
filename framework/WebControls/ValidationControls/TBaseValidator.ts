@@ -9,28 +9,28 @@ import TValidatableInterface from "@framework/WebControls/ValidationControls/TVa
  **/
 export default class TBaseValidator extends TWebControl
 {
-	
-	/**
-	 * TBaseValidator#ControlToValidate -> TControl
-	 **/
-	
-	/**
-	 * TBaseValidator#ValidationGroup -> Array@String|String
-	 **/
-	
-	/**
-	 * TBaseValidator#Enabled -> Boolean
-	 **/
-	
-	//@Override
-	constructor()
-    {
-		super();
-		this.Visible = false;
-	};
 
-	private _ControlToValidate;
-	private _ControlToValidateID;
+    /**
+     * TBaseValidator#ControlToValidate -> TControl
+     **/
+
+    /**
+     * TBaseValidator#ValidationGroup -> Array@String|String
+     **/
+
+    /**
+     * TBaseValidator#Enabled -> Boolean
+     **/
+
+    //@Override
+    constructor()
+    {
+        super();
+        this.Visible = false;
+    };
+
+    private _ControlToValidate;
+    private _ControlToValidateID;
 
     set ControlToValidate(c)
     {
@@ -95,72 +95,72 @@ export default class TBaseValidator extends TWebControl
         return this._ValidatedForm;
     }
 
-	//@Override
-	set Parent( p )
+    //@Override
+    set Parent( p )
     {
-		this._Parent = p;
-		
-		var validatedForm = p;
-		while ( validatedForm.Parent && !validatedForm._isValidatedForm ){
-			validatedForm = validatedForm.Parent;
-		}
+        this._Parent = p;
 
-		if ( !validatedForm._isValidatedForm ){
-			throw new TException( 'ControlToValidate not withing TValidatedForm' );
-		}
+        var validatedForm = p;
+        while ( validatedForm.Parent && !validatedForm._isValidatedForm ){
+            validatedForm = validatedForm.Parent;
+        }
 
-		validatedForm.addValidator( this );
-		this._ValidatedForm = validatedForm;
-	}
+        if ( !validatedForm._isValidatedForm ){
+            throw new TException( 'ControlToValidate not withing TValidatedForm' );
+        }
 
-	get Parent()
+        validatedForm.addValidator( this );
+        this._ValidatedForm = validatedForm;
+    }
+
+    get Parent()
     {
         return this._Parent;
     }
 
-	/**
-	 * TBaseValidator#isInValidationGroup() -> Boolean
-	 * 
-	 * Checks if validator belongs to validation group
-	 * 
-	 **/
-	isInValidationGroup(g)
+    /**
+     * TBaseValidator#isInValidationGroup() -> Boolean
+     *
+     * Checks if validator belongs to validation group
+     *
+     **/
+    isInValidationGroup(g)
     {
-		return this._ValidationGroup.in_array(g);
-	}
-	
-	/**
-	 * TBaseValidator#validate() -> void
-	 * 
-	 * Runs validation.
-	 * Is called from TValidatedForm and SHOULD NOT be called directly.
-	 * 
-	 **/
-	validate()
+        return this._ValidationGroup.in_array(g);
+    }
+
+    /**
+     * TBaseValidator#validate() -> void
+     *
+     * Runs validation.
+     * Is called from TValidatedForm and SHOULD NOT be called directly.
+     *
+     **/
+    validate()
     {
-		var valid = true;
-		if (this.Enabled){
-			valid = this.performValidation();
-		}
-		
-		this.Visible = !valid;
-		this.ControlToValidate.IsValid = valid;
-		
-		this.render();
-		
-		return valid;
-	}
-	
-	/**
-	 * TBaseValidator#performValidation() -> void
-	 * 
-	 * Performs validation logic.
-	 * Returns true when no errors occured.
-	 * Should be overriden in validator implementations.
-	 * 
-	 **/
-	performValidation()
+        var valid = true;
+        if (this.Enabled){
+            valid = this.performValidation();
+        }
+
+        this.Visible = !valid;
+        this.ControlToValidate.IsValid = valid;
+
+        this.render();
+
+        return valid;
+    }
+
+    /**
+     * TBaseValidator#performValidation() -> void
+     *
+     * Performs validation logic.
+     * Returns true when no errors occured.
+     * Should be overriden in validator implementations.
+     *
+     **/
+    performValidation()
     {
-		return false;
-	}
+        return false;
+    }
 }

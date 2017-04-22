@@ -10,13 +10,13 @@ import TException from "@framework/TException";
  **/
 export default class TTemplateControl extends TControl
 {
-	protected template: Function = null;
+    protected template: Function = null;
 
-	//@Override
-	createChildControls(){
-		if (this.template === null) {
-			throw new TException('Template not loaded');
-		}
-		this.template.apply(this);
-	}
+    //@Override
+    createChildControls(){
+        if (this.template === null) {
+            throw new TException('Template not loaded');
+        }
+        this.template.apply(this);
+    }
 }

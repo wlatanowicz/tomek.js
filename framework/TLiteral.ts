@@ -8,37 +8,37 @@ import TControl from "@framework/TControl";
  **/
 export default class TLiteral extends TControl {
 
-	_textNode = null;
+    _textNode = null;
 
-	constructor()
-	{
-		super();
-		this._textNode = null;
-	};
-
-	/**
-	 * TLiteral#Text -> String
-	 **/
-
-	private _Text;
-
-	set Text(value)
+    constructor()
     {
-		this._Text = value;
-		if (this._textNode){
-			this._textNode.textContent = this.Text;
-		}
-	}
+        super();
+        this._textNode = null;
+    };
 
-	get Text(): string
+    /**
+     * TLiteral#Text -> String
+     **/
+
+    private _Text;
+
+    set Text(value)
+    {
+        this._Text = value;
+        if (this._textNode){
+            this._textNode.textContent = this.Text;
+        }
+    }
+
+    get Text(): string
     {
         return this.converters.string(this._Text);
     }
-		
-	//@Override
-	renderContents(){
-		var t = document.createTextNode( this.Text );
-		this._textNode = t;
-		this.appendChild( t );
-	}
+
+    //@Override
+    renderContents(){
+        var t = document.createTextNode( this.Text );
+        this._textNode = t;
+        this.appendChild( t );
+    }
 }

@@ -10,17 +10,17 @@ import TStencil from "@framework/TStencil";
 export default class TRepeaterItem extends TStencil
 {
 
-	/**
-	 * TRepeaterItem#ItemIndex -> int
-	 **/
-	
-	/**
-	 * TRepeaterItem#Repeater -> TRepeater
-	 **/
+    /**
+     * TRepeaterItem#ItemIndex -> int
+     **/
 
-	protected _ItemIndex;
+    /**
+     * TRepeaterItem#Repeater -> TRepeater
+     **/
 
-	set ItemIndex(v)
+    protected _ItemIndex;
+
+    set ItemIndex(v)
     {
         this._ItemIndex = v;
     }
@@ -30,9 +30,9 @@ export default class TRepeaterItem extends TStencil
         return this.converters.int(this._ItemIndex);
     }
 
-	protected _Repeater;
+    protected _Repeater;
 
-	set Repeater(v)
+    set Repeater(v)
     {
         this._Repeater = v;
     }

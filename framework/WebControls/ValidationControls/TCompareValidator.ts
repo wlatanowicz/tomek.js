@@ -8,37 +8,37 @@ import TException from "@framework/TException";
  **/
 export default class TCompareValidator extends TBaseValidator
 {
-	
-	private _ControlToCompareID;
-	private _ControlToCompare = null;
 
-	set ControlToCompare(c)
-	{
-		if ( typeof c == 'string' ){
-			this._ControlToCompareID = c;
-		}else{
-			this._ControlToCompare = c;
-		}
-	}
-	
-	get ControlToCompare()
-	{
-		if ( this._ControlToCompare === null
-				&& this._ControlToCompareID !== null
-				&& this._ControlToCompareID !== undefined ){
-				
-			var ctrl = this.ValidatedForm.findChildControlByID(this._ControlToCompareID);
-			if ( ctrl === null ){
-				throw new TException( 'Cannot find control: '+this._ControlToCompareID );
-			}
-			this.ControlToCompare = ctrl;
-		}
-		return this._ControlToCompare;
-	}
+    private _ControlToCompareID;
+    private _ControlToCompare = null;
 
-	private _ValueToCompare;
+    set ControlToCompare(c)
+    {
+        if ( typeof c == 'string' ){
+            this._ControlToCompareID = c;
+        }else{
+            this._ControlToCompare = c;
+        }
+    }
 
-	set ValueToCompare(v)
+    get ControlToCompare()
+    {
+        if ( this._ControlToCompare === null
+                && this._ControlToCompareID !== null
+                && this._ControlToCompareID !== undefined ){
+
+            var ctrl = this.ValidatedForm.findChildControlByID(this._ControlToCompareID);
+            if ( ctrl === null ){
+                throw new TException( 'Cannot find control: '+this._ControlToCompareID );
+            }
+            this.ControlToCompare = ctrl;
+        }
+        return this._ControlToCompare;
+    }
+
+    private _ValueToCompare;
+
+    set ValueToCompare(v)
     {
         this._ValueToCompare = v;
     }
@@ -48,9 +48,9 @@ export default class TCompareValidator extends TBaseValidator
         return this.converters.object(this._ValueToCompare);
     }
 
-	private _Operator;
+    private _Operator;
 
-	set Operator(v)
+    set Operator(v)
     {
         this._Operator = v;
     }
@@ -59,43 +59,43 @@ export default class TCompareValidator extends TBaseValidator
     {
         return this.converters.string(this._Operator);
     }
-	
-	//@Override
-	performValidation()
-	{
-		
-		var leftValue = this.ControlToValidate.Value;
-		
-		var rightValue = null;
-		
-		if ( this.ControlToCompare !== null ){
-			rightValue = this.ControlToCompare.Value;
-		} else {
-			rightValue = this.ValueToCompare;
-		}
-		
-		switch( this.Operator.toLowerCase().replace( "-", "" ) ){
-			
-			case 'equals' :
-			case 'equal' :
-				return leftValue == rightValue;
 
-			case 'notequals' :
-			case 'notequal' :
-			case 'differ' :
-			case 'differs' :
-				return leftValue != rightValue;
+    //@Override
+    performValidation()
+    {
 
-			case 'greater' :
-			case 'greaterthan' :
-				return leftValue > rightValue;
+        var leftValue = this.ControlToValidate.Value;
 
-			case 'less' :
-			case 'lessthan' :
-				return leftValue < rightValue;
+        var rightValue = null;
 
-		}
-		return false;
-	}
-	
+        if ( this.ControlToCompare !== null ){
+            rightValue = this.ControlToCompare.Value;
+        } else {
+            rightValue = this.ValueToCompare;
+        }
+
+        switch( this.Operator.toLowerCase().replace( "-", "" ) ){
+
+            case 'equals' :
+            case 'equal' :
+                return leftValue == rightValue;
+
+            case 'notequals' :
+            case 'notequal' :
+            case 'differ' :
+            case 'differs' :
+                return leftValue != rightValue;
+
+            case 'greater' :
+            case 'greaterthan' :
+                return leftValue > rightValue;
+
+            case 'less' :
+            case 'lessthan' :
+                return leftValue < rightValue;
+
+        }
+        return false;
+    }
+
 }

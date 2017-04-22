@@ -9,26 +9,26 @@ import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
  **/
 class TRawHtmlPanel extends TWebControl
 {
-	//@Override
-	_tagName = 'div';
+    //@Override
+    _tagName = 'div';
 
-	private _RawHTML;
+    private _RawHTML;
 
-	set RawHTML(value)
-	{
-		this._RawHTML = value;
-	}
+    set RawHTML(value)
+    {
+        this._RawHTML = value;
+    }
 
-	get RawHTML()
-	{
-		this.fetchProperty(this._renderedMainElement, 'RawHTML');
-		return this.converters.string(this._RawHTML);
-	}
+    get RawHTML()
+    {
+        this.fetchProperty(this._renderedMainElement, 'RawHTML');
+        return this.converters.string(this._RawHTML);
+    }
 
-	getElementProperites(): any
-	{
-		let properties = super.getElementProperites();
-		properties['RawHTML'] = new TWebControlProperty("innerHtml", "_RawHTML", this.converters.string);
-		return properties;
-	}
+    getElementProperites(): any
+    {
+        let properties = super.getElementProperites();
+        properties['RawHTML'] = new TWebControlProperty("innerHtml", "_RawHTML", this.converters.string);
+        return properties;
+    }
 }

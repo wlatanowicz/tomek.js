@@ -8,6 +8,6 @@ import TWebControl from "@framework/WebControls/TWebControl";
  **/
 export default class TPanel extends TWebControl
 {
-	//@Override
-	_tagName : 'div'
+    //@Override
+    _tagName : 'div'
 }
