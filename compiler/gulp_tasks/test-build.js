@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 
-gulp.task('tomek-test-build', ['tomek-check-tsc'], function () {
 gulp.task('tomek-test-build', ['tomek-check-tsc'], function (done) {
 	var path = require('path');
 	var minimist = require('minimist');
