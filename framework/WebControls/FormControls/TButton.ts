@@ -16,79 +16,79 @@ import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
  **/
 export default class TButton extends TWebControl implements TEventResponderInterface
 {
-	
-	//@Override
-	_tagName = 'button';
-	
-	//@Override
-	_rendersChildControls = true;
-	
-	//@Override
-	_triggersEvents = ['Click'];
-	
-	_renderedTextNode = null;
-	
-	private _event = null;
 
-	get event():TEventResponder
-	{
-		if (this._event === null) {
-			this._event = new TEventResponder(this, ['Click']);
-		}
-		return this._event;
-	}
+    //@Override
+    _tagName = 'button';
 
-	/**
-	 * TButton#Text -> String
-	 **/
-	
-	private _Text;
+    //@Override
+    _rendersChildControls = true;
 
-	set Text(value:any)
-	{
-		this._Text = value;
-		if ( this._renderedTextNode ){
-			this._renderedTextNode.textContent = this.converters.string(value);
-		}
-	}
+    //@Override
+    _triggersEvents = ['Click'];
 
-	get Text()
-	{
-		return this.converters.string(this._Text);
-	}
+    _renderedTextNode = null;
 
-	private _Disabled;
+    private _event = null;
 
-	set Disabled(value: any)
-	{
-		this._Disabled = value;
-		this.applyProperty(this._renderedMainElement, 'Disabled');
-	}
+    get event():TEventResponder
+    {
+        if (this._event === null) {
+            this._event = new TEventResponder(this, ['Click']);
+        }
+        return this._event;
+    }
 
-	get Disabled()
-	{
-		return this.converters.boolean(this._Disabled);
-	}
+    /**
+     * TButton#Text -> String
+     **/
 
-	getElementProperites()
-	{
-		var props = super.getElementProperites();
-		props['Disabled'] = new TWebControlProperty("disabled", "_Disabled", this.converters.boolean);
-		return props;
-	}
+    private _Text;
 
-	//@Override
-	createMainElement()
-	{
-		var d = super.createMainElement();
-		
-		var t = document.createTextNode( this.Text );
-		d.appendChild( t );
-		this._renderedTextNode = t;
+    set Text(value:any)
+    {
+        this._Text = value;
+        if ( this._renderedTextNode ){
+            this._renderedTextNode.textContent = this.converters.string(value);
+        }
+    }
 
-		this.event.registerTriggerElement( d, 'click', 'Click' );
-		
-		return d;
-	}
-	
+    get Text()
+    {
+        return this.converters.string(this._Text);
+    }
+
+    private _Disabled;
+
+    set Disabled(value: any)
+    {
+        this._Disabled = value;
+        this.applyProperty(this._renderedMainElement, 'Disabled');
+    }
+
+    get Disabled()
+    {
+        return this.converters.boolean(this._Disabled);
+    }
+
+    getElementProperites()
+    {
+        var props = super.getElementProperites();
+        props['Disabled'] = new TWebControlProperty("disabled", "_Disabled", this.converters.boolean);
+        return props;
+    }
+
+    //@Override
+    createMainElement()
+    {
+        var d = super.createMainElement();
+
+        var t = document.createTextNode( this.Text );
+        d.appendChild( t );
+        this._renderedTextNode = t;
+
+        this.event.registerTriggerElement( d, 'click', 'Click' );
+
+        return d;
+    }
+
 }

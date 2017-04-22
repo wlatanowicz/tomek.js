@@ -9,51 +9,51 @@ import TControl from "@framework/TControl";
  **/
 export default class TAutoRefresh extends TControl {
 
-	/**
-	 * TAutoRefresh#Interval -> float
-	 **/
-	
-	/**
-	 * TAutoRefresh#Running -> bool
-	 **/
+    /**
+     * TAutoRefresh#Interval -> float
+     **/
 
-	private _Interval = 1.0;
+    /**
+     * TAutoRefresh#Running -> bool
+     **/
 
-	set Interval(value:any)
-	{
-		this._Interval = value;
-	}
+    private _Interval = 1.0;
 
-	get Interval()
-	{
-		return this.converters.float(this._Interval);
-	}
+    set Interval(value:any)
+    {
+        this._Interval = value;
+    }
 
-	private _Running = true;
+    get Interval()
+    {
+        return this.converters.float(this._Interval);
+    }
 
-	set Running(value)
-	{
-		this._Running = value;
-	}
+    private _Running = true;
 
-	get Running()
-	{
-		return this.converters.boolean(this._Running);
-	}
-	
-	renderContents(){
-		super.renderContents();
-		this.setupRefresh();
-	}
-	
-	refresh(){
-		this.render();
-	}
-	
-	setupRefresh(){
-		if (this.Running){
-			setTimeout(this.refresh.bind( this ), this.Interval * 1000.0);
-		}
-	}
+    set Running(value)
+    {
+        this._Running = value;
+    }
+
+    get Running()
+    {
+        return this.converters.boolean(this._Running);
+    }
+
+    renderContents(){
+        super.renderContents();
+        this.setupRefresh();
+    }
+
+    refresh(){
+        this.render();
+    }
+
+    setupRefresh(){
+        if (this.Running){
+            setTimeout(this.refresh.bind( this ), this.Interval * 1000.0);
+        }
+    }
 
 }

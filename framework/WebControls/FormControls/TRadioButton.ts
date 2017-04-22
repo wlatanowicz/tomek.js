@@ -17,11 +17,11 @@ import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
  **/
 class TRadioButton extends TWebControl implements TEventResponderInterface
 {
-	//@Override
-	_tagName = 'input';
+    //@Override
+    _tagName = 'input';
 
-	//@Override
-	_rendersChildControls = false;
+    //@Override
+    _rendersChildControls = false;
 
     private _event = null;
 
@@ -33,30 +33,30 @@ class TRadioButton extends TWebControl implements TEventResponderInterface
         return this._event;
     }
 
-	//@Override
-	getDefaultAttributes()
+    //@Override
+    getDefaultAttributes()
     {
-		return { type: 'radio' };
-	}
+        return { type: 'radio' };
+    }
 
     /**
      * TRadioButton#Checked -> Boolean
      **/
 
-	private _Checked:any = false;
+    private _Checked:any = false;
 
-	set Checked(v)
+    set Checked(v)
     {
         this._Checked = v;
         this.applyProperty(this._renderedMainElement, 'Checked');
-	}
-	
-	get Checked(){
-	    this.fetchProperty(this._renderedMainElement, 'Checked');
-	    return this.converters.boolean(this._Checked);
-	}
+    }
 
-	set Value(v)
+    get Checked(){
+        this.fetchProperty(this._renderedMainElement, 'Checked');
+        return this.converters.boolean(this._Checked);
+    }
+
+    set Value(v)
     {
         this.Checked = v;
     }
@@ -72,7 +72,7 @@ class TRadioButton extends TWebControl implements TEventResponderInterface
 
     private _Group;
 
-	set Group(v)
+    set Group(v)
     {
         this._Group = v;
         this.applyProperty(this._renderedMainElement, 'Group')
@@ -83,7 +83,7 @@ class TRadioButton extends TWebControl implements TEventResponderInterface
         this.fetchProperty(this._renderedMainElement, 'Group');
         return this.converters.string(this._Group);
     }
-	
+
     getElementProperites()
     {
         var props = super.getElementProperites();
@@ -93,14 +93,14 @@ class TRadioButton extends TWebControl implements TEventResponderInterface
         return props;
     }
 
-	//@Override
-	createMainElement()
+    //@Override
+    createMainElement()
     {
-		var d = super.createMainElement();
-		
-		this.event.registerTriggerElement( d, 'click', 'Click' );
-		this.event.registerTriggerElement( d, 'change', 'Change' );
-		
-		return d;
-	}
+        var d = super.createMainElement();
+
+        this.event.registerTriggerElement( d, 'click', 'Click' );
+        this.event.registerTriggerElement( d, 'change', 'Change' );
+
+        return d;
+    }
 }

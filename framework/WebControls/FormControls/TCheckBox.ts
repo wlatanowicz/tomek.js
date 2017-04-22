@@ -22,13 +22,13 @@ import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
  **/
 export default class TCheckBox extends TWebControl implements TValidatableInterface, TEventReposnderInterface
 {
-	
-	//@Override
-	_tagName = 'input';
-	
-	//@Override
-	_rendersChildControls = false;
-	
+
+    //@Override
+    _tagName = 'input';
+
+    //@Override
+    _rendersChildControls = false;
+
     private _event = null;
 
     get event():TEventResponder
@@ -48,19 +48,19 @@ export default class TCheckBox extends TWebControl implements TValidatableInterf
         return this.Checked;
     }
 
-	//@Override
-	getDefaultAttributes()
+    //@Override
+    getDefaultAttributes()
     {
-		return { type: 'checkbox' };
-	}
+        return { type: 'checkbox' };
+    }
 
-	/**
-	 * TCheckBox#Checked -> Boolean
-	 **/
+    /**
+     * TCheckBox#Checked -> Boolean
+     **/
 
-	private _Checked;
+    private _Checked;
 
-	set Checked(value: any)
+    set Checked(value: any)
     {
         this._Checked = value;
         this.applyProperty(this._renderedMainElement, 'Checked');
@@ -72,9 +72,9 @@ export default class TCheckBox extends TWebControl implements TValidatableInterf
         return this.converters.boolean(this._Checked);
     }
 
-	private _Disabled;
+    private _Disabled;
 
-	set Disabled(value)
+    set Disabled(value)
     {
         this._Disabled = value;
         this.applyProperty(this._renderedMainElement, 'Disabled');
@@ -93,13 +93,13 @@ export default class TCheckBox extends TWebControl implements TValidatableInterf
         return props;
     }
 
-	//@Override
-	createMainElement(){
-		var d = super.createMainElement();
-		
-		this.event.registerTriggerElement( d, 'click', 'Click' );
-		this.event.registerTriggerElement( d, 'change', 'Change' );
-		
-		return d;
-	}
+    //@Override
+    createMainElement(){
+        var d = super.createMainElement();
+
+        this.event.registerTriggerElement( d, 'click', 'Click' );
+        this.event.registerTriggerElement( d, 'change', 'Change' );
+
+        return d;
+    }
 }

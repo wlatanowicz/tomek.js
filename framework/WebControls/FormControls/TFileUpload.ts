@@ -16,29 +16,29 @@ import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
  **/
 export default class TFileUpload extends TWebControl implements TEventResponderInterface, TValidatableInterface
 {
-	
-	//@Override
-	_tagName = 'input';
-	
-	//@Override
-	_rendersChildControls = false;
 
-	private _event = null;
+    //@Override
+    _tagName = 'input';
 
-	get event():TEventResponder {
-		if (this._event === null) {
-			this._event = new TEventResponder(this, ['Change']);
-		}
-		return this._event;
-	}
+    //@Override
+    _rendersChildControls = false;
 
-	public IsValid;
-	
-	//@Override
-	getDefaultAttributes()
-	{
-		return { type: 'file' };
-	}
+    private _event = null;
+
+    get event():TEventResponder {
+        if (this._event === null) {
+            this._event = new TEventResponder(this, ['Change']);
+        }
+        return this._event;
+    }
+
+    public IsValid;
+
+    //@Override
+    getDefaultAttributes()
+    {
+        return { type: 'file' };
+    }
 
     private _Disabled = false;
 
@@ -70,23 +70,23 @@ export default class TFileUpload extends TWebControl implements TEventResponderI
 
     private _Value;
 
-	get Value()
+    get Value()
     {
         this.fetchProperty(this._renderedMainElement, 'Value');
         return this.converters.string(this._Value);
     }
 
-	private _File;
+    private _File;
 
-	get File()
+    get File()
     {
         this.fetchProperty(this._renderedMainElement, 'File');
         return this.converters.string(this._File);
     }
 
-	private _Files;
+    private _Files;
 
-	get Files()
+    get Files()
     {
         this.fetchProperty(this._renderedMainElement, 'Files');
         return this.converters.string(this._Files);
@@ -103,13 +103,13 @@ export default class TFileUpload extends TWebControl implements TEventResponderI
         return props;
     }
 
-	//@Override
-	createMainElement()
+    //@Override
+    createMainElement()
     {
-		var d = super.createMainElement();
-		
-		this.event.registerTriggerElement( d, 'change', 'Change' );
-		
-		return d;
-	}
+        var d = super.createMainElement();
+
+        this.event.registerTriggerElement( d, 'change', 'Change' );
+
+        return d;
+    }
 }

@@ -15,23 +15,23 @@ import TEventResponder from "@framework/TEventResponder";
  **/
 export default class TLinkButton extends TLink implements TEventResponderInterface{
 
-	private _event = null;
+    private _event = null;
 
-	get event():TEventResponder
-	{
-		if (this._event === null) {
-			this._event = new TEventResponder(this, ['Click']);
-		}
-		return this._event;
-	}
-	
-	//@Override
-	createMainElement()
-	{
-		var d = super.createMainElement();
+    get event():TEventResponder
+    {
+        if (this._event === null) {
+            this._event = new TEventResponder(this, ['Click']);
+        }
+        return this._event;
+    }
 
-		this.event.registerTriggerElement( d, 'click', 'Click', true );
-		
-		return d;
-	}
+    //@Override
+    createMainElement()
+    {
+        var d = super.createMainElement();
+
+        this.event.registerTriggerElement( d, 'click', 'Click', true );
+
+        return d;
+    }
 }

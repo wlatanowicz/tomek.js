@@ -7,21 +7,21 @@ import TPromise from "@framework/TPromise";
  **/
 export default class THttpPromise extends TPromise
 {
-	constructor()
-	{
-		super();
-		this.wrapPromise();
-	}
-	
-	getErrorStatuses()
-	{
-		return [
-				400,401,402,403,404,406,409,412,415,
-				500,503
-				];
-	}
-	
-	wrapPromise() {
+    constructor()
+    {
+        super();
+        this.wrapPromise();
+    }
+
+    getErrorStatuses()
+    {
+        return [
+                400,401,402,403,404,406,409,412,415,
+                500,503
+                ];
+    }
+
+    wrapPromise() {
         var promise = this;
         var statuses = this.getErrorStatuses();
         for (var i = 0; i < statuses.length; i++) {
@@ -40,25 +40,25 @@ export default class THttpPromise extends TPromise
             fn( param.response, param.xhttp, param );
         });
     }
-		
+
     error(fn)
     {
         return this.on( 'error', function(param) {
             fn( param.response, param.xhttp, param );
         });
     }
-		
+
     start(fn)
     {
         return this.on( 'start', function(param) {
             fn( param.code, param.xhttp, param );
         });
-	}
-		
+    }
+
     invalidPayload(fn)
     {
-		return this.on( 'invalid-payload', function(param) {
-				fn( param.xhttp, param );
-			});
+        return this.on( 'invalid-payload', function(param) {
+                fn( param.xhttp, param );
+            });
     }
 }

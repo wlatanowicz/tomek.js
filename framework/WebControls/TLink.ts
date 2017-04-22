@@ -13,78 +13,78 @@ import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
 export default class TLink extends TWebControl
 {
 
-	//@Override
-	_tagName = 'a';
+    //@Override
+    _tagName = 'a';
 
-	/**
-	 * TLink#Text -> String
-	 **/
+    /**
+     * TLink#Text -> String
+     **/
 
-	/**
-	 * TLink#Href -> String
-	 **/
+    /**
+     * TLink#Href -> String
+     **/
 
-	/**
-	 * TLink#Target -> String
-	 **/
+    /**
+     * TLink#Target -> String
+     **/
 
-	private _Text;
+    private _Text;
 
-	set Text(value)
-	{
-		this._Text = value;
-	}
+    set Text(value)
+    {
+        this._Text = value;
+    }
 
-	get Text()
-	{
-		return this.converters.string(this._Text);
-	}
+    get Text()
+    {
+        return this.converters.string(this._Text);
+    }
 
-	private _Href:any = '#';
+    private _Href:any = '#';
 
-	set Href(value)
-	{
-		this.applyProperty(this._renderedMainElement, 'Href');
-		this._Href = value;
-	}
+    set Href(value)
+    {
+        this.applyProperty(this._renderedMainElement, 'Href');
+        this._Href = value;
+    }
 
-	get Href()
-	{
-		this.fetchProperty(this._renderedMainElement, 'Href');
-		return this.converters.string(this._Href);
-	}
+    get Href()
+    {
+        this.fetchProperty(this._renderedMainElement, 'Href');
+        return this.converters.string(this._Href);
+    }
 
-	private _Target:any = '_self';
+    private _Target:any = '_self';
 
-	set Target(value)
-	{
-		this._Target = value;
-	}
+    set Target(value)
+    {
+        this._Target = value;
+    }
 
-	get Target()
-	{
-		this.fetchProperty(this._renderedMainElement, 'Target');
-		return this.converters.string(this._Target);
-	}
+    get Target()
+    {
+        this.fetchProperty(this._renderedMainElement, 'Target');
+        return this.converters.string(this._Target);
+    }
 
-	getElementProperites(): any
-	{
-		let properties = super.getElementProperites();
-		properties['Href'] = new TWebControlProperty("href", "_Href", this.converters.string);
-		properties['Target'] = new TWebControlProperty("target", "_Target", this.converters.string);
-		return properties;
-	}
+    getElementProperites(): any
+    {
+        let properties = super.getElementProperites();
+        properties['Href'] = new TWebControlProperty("href", "_Href", this.converters.string);
+        properties['Target'] = new TWebControlProperty("target", "_Target", this.converters.string);
+        return properties;
+    }
 
-	//@Override
-	createMainElement()
-	{
-		var d = super.createMainElement();
+    //@Override
+    createMainElement()
+    {
+        var d = super.createMainElement();
 
-		if (this.Text.length > 0) {
-			var t = document.createTextNode(this.Text);
-			d.appendChild(t);
-		}
+        if (this.Text.length > 0) {
+            var t = document.createTextNode(this.Text);
+            d.appendChild(t);
+        }
 
-		return d;
-	}
+        return d;
+    }
 }
