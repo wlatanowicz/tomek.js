@@ -5,12 +5,12 @@ import TemplateNode from './TemplateNode';
 
 export default class DocumentNode extends TemplateNode {
 
-	constructor(){
-		super(null);
-	}
+    constructor(){
+        super(null);
+    }
 
-	getVariableName(){
-		return "placeholder";
-	}	
+    getVariableName(){
+        return "placeholder";
+    }
 
 }
