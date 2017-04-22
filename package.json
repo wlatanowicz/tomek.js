@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "hammerjs": "^2.0.8"
+  },
+  "devDependencies": {
     "fs-extra": "^2.0.0",
     "glob": "^7.1.1",
     "gulp": "^3.9.1",
@@ -9,6 +12,7 @@
     "mkdirp": "^0.5.1",
     "ndoc": "^5.0.1",
     "require-dir": "^0.3.1",
+    "source-map-loader": "^0.2.1",
     "ts-loader": "^2.0.3",
     "ts-md5": "^1.2.0",
     "typescript": "^2.2.2",

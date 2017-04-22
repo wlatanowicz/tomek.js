@@ -1,12 +1,15 @@
 import TException from "@framework/TException";
 
+//@TODO split to common TEventHandler and TDomElementEventHandler
+
 /** section: Controls
  * mixin TEventResponderMixin
  * 
  * Mixin adding ability to handle events
  * 
  **/
-export default class TEventResponder {
+export default class TEventResponder
+{
 
     /**
      * TEventResponderMixin#_triggersEvents -> Array@String
@@ -50,11 +53,9 @@ export default class TEventResponder {
      * Checks if the control triggers particular event
      *
      **/
-    triggers( e )
+    triggers(e): boolean
     {
-        return this._triggersEvents.indexOf( e ) >= 0
-                ? true
-                : false;
+        return this._triggersEvents.indexOf( e ) >= 0;
     }
 
     /**
@@ -66,13 +67,11 @@ export default class TEventResponder {
      * function attached
      *
      **/
-    respondsTo( e )
+    respondsTo(e): boolean
     {
         return this.triggers( e )
                 && this._eventResponders[e]
-                && this._eventResponders[e].length > 0
-                ? true
-                : false;
+                && this._eventResponders[e].length > 0;
     }
 
     /**
@@ -105,7 +104,7 @@ export default class TEventResponder {
      * Should not be called directly.
      *
      **/
-    triggerFromElement( e, prevent_default, dom_event )
+    triggerFromElement(e, prevent_default, dom_event)
     {
         if ( prevent_default ){
             dom_event.preventDefault();

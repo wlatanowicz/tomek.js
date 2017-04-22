@@ -1,14 +1,19 @@
-//= require TTemplateControl
+import TTemplateControl from "@framework/TTemplateControl";
+import template from "./MobileGestures.tpl";
 
-klass( 'MobileGestures', TTemplateControl, {
+export default class MobileGestures extends TTemplateControl
+{
+    template = template;
+
+	_direction : string = 'up';
 	
-	_direction : 'up',
-	
-	getDirection : function(){
+	get Direction(): string
+    {
 		return this._direction;
-	},
+	}
 	
-	swipe: function( sender, param ){
+	swipe(sender, param)
+    {
 		if ( param.domEvent.direction === Hammer.DIRECTION_UP ){
 			this._direction = 'up';
 		}
@@ -23,5 +28,4 @@ klass( 'MobileGestures', TTemplateControl, {
 		}
 		sender.render();
 	}
-	
-} );
+}
