@@ -80,16 +80,28 @@ class TRadioButton extends TWebControl implements TEventResponderInterface
 
     get Group()
     {
-        this.fetchProperty(this._renderedMainElement, 'Group');
         return this.converters.string(this._Group);
+    }
+
+    private _Disabled;
+
+    set Disabled(value)
+    {
+        this._Disabled = value;
+        this.applyProperty(this._renderedMainElement, 'Disabled');
+    }
+
+    get Disabled()
+    {
+        return this.converters.boolean(this._Disabled);
     }
 
     getElementProperites()
     {
         var props = super.getElementProperites();
         props['Checked'] = new TWebControlProperty("checked", "_Checked", this.converters.boolean, true);
-        props['Disabled'] = new TWebControlProperty("disabled", "_Disabled", this.converters.boolean);
-        props['Group'] = new TWebControlProperty("name", "_Group", this.converters.string);
+        props['Disabled'] = new TWebControlProperty("disabled", "_Disabled", "Disabled");
+        props['Group'] = new TWebControlProperty("name", "_Group", "Group");
         return props;
     }
 

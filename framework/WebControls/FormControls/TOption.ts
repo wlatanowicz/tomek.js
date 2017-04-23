@@ -75,9 +75,9 @@ export default class TOption extends TWebControl
     getElementProperites()
     {
         var props = super.getElementProperites();
-        props['Value'] = new TWebControlProperty("value", "_Value", this.converters.string);
+        props['Value'] = new TWebControlProperty("value", "_Value", "Value");
         props['Selected'] = new TWebControlProperty("selected", "_Selected", this.converters.int, true);
-        props['Disabled'] = new TWebControlProperty("disabled", "_Disabled", this.converters.boolean);
+        props['Disabled'] = new TWebControlProperty("disabled", "_Disabled", "Disabled");
         return props;
     }
 

@@ -17,18 +17,18 @@ class TRawHtmlPanel extends TWebControl
     set RawHTML(value)
     {
         this._RawHTML = value;
+        this.applyProperty(this._renderedMainElement, 'RawHTML')
     }
 
     get RawHTML()
     {
-        this.fetchProperty(this._renderedMainElement, 'RawHTML');
         return this.converters.string(this._RawHTML);
     }
 
     getElementProperites(): any
     {
         let properties = super.getElementProperites();
-        properties['RawHTML'] = new TWebControlProperty("innerHtml", "_RawHTML", this.converters.string);
+        properties['RawHTML'] = new TWebControlProperty("innerHtml", "_RawHTML", 'RawHTML');
         return properties;
     }
 }

@@ -73,7 +73,7 @@ export default class TButton extends TWebControl implements TEventResponderInter
     getElementProperites()
     {
         var props = super.getElementProperites();
-        props['Disabled'] = new TWebControlProperty("disabled", "_Disabled", this.converters.boolean);
+        props['Disabled'] = new TWebControlProperty("disabled", "_Disabled", "Disabled");
         return props;
     }
 

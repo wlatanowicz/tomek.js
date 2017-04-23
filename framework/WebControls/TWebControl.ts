@@ -96,7 +96,7 @@ export default class TWebControl extends TControl
         return this._Style;
     }
 
-    private _CssClass = '';
+    protected _CssClass = '';
 
     set CssClass(cls)
     {
@@ -106,15 +106,14 @@ export default class TWebControl extends TControl
 
     get CssClass(): string
     {
-        this.fetchProperty(this._renderedMainElement, 'CssClass');
         return this.converters.string(this._CssClass);
     }
 
     getElementProperites()
     {
         return {
-            "CssClass": new TWebControlProperty("className", "_CssClass", this.converters.string),
-            "HtmlID": new TWebControlProperty("id", "_HtmlID", this.converters.string)
+            "CssClass": new TWebControlProperty("className", "_CssClass", 'CssClass'),
+            "HtmlID": new TWebControlProperty("id", "_HtmlID", 'HtmlID')
         };
     }
 
@@ -124,7 +123,13 @@ export default class TWebControl extends TControl
         for (let propertyName in properties) {
             let property: TWebControlProperty = properties[propertyName];
             if (property.Applicable) {
-                this.setAttribute(element, property.ElementPropertyName, property.Converter(this[property.ObjectFieldName]));
+                let newValue;
+                if (property.Converter instanceof Function) {
+                    newValue = property.Converter(this[property.ObjectFieldName]);
+                } else {
+                    newValue = this[property.Converter];
+                }
+                this.setAttribute(element, property.ElementPropertyName, newValue);
             }
         }
     }
@@ -134,7 +139,13 @@ export default class TWebControl extends TControl
         let properties = this.getElementProperites();
         let property: TWebControlProperty = properties[propertyName];
         if (property.Applicable) {
-            this.setAttribute(element, property.ElementPropertyName, property.Converter(this[property.ObjectFieldName]));
+            let newValue;
+            if (property.Converter instanceof Function) {
+                newValue = property.Converter(this[property.ObjectFieldName]);
+            } else {
+                newValue = this[property.Converter];
+            }
+            this.setAttribute(element, property.ElementPropertyName, newValue);
         }
     }
 
@@ -209,7 +220,6 @@ export default class TWebControl extends TControl
 
     get HtmlID()
     {
-        this.fetchProperty(this._renderedMainElement, 'HtmlID');
         return this.converters.string(this._HtmlID);
     }
 

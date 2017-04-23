@@ -123,8 +123,8 @@ export default class TTextBox extends TWebControl implements TEventResponderInte
     {
         var props = super.getElementProperites();
         props['Text'] = new TWebControlProperty("value", "_Text", this.converters.string, true);
-        props['Type'] = new TWebControlProperty("type", "_Type", this.converters.string);
-        props['Disabled'] = new TWebControlProperty("disabled", "_Disabled", this.converters.boolean);
+        props['Type'] = new TWebControlProperty("type", "_Type", "Type");
+        props['Disabled'] = new TWebControlProperty("disabled", "_Disabled", "Disabled");
         return props;
     }
     

@@ -89,7 +89,7 @@ export default class TCheckBox extends TWebControl implements TValidatableInterf
     {
         var props = super.getElementProperites();
         props['Checked'] =  new TWebControlProperty("checked", "_Checked", this.converters.boolean, true);
-        props['Disabled'] =  new TWebControlProperty("disabled", "_Disabled", this.converters.boolean);
+        props['Disabled'] =  new TWebControlProperty("disabled", "_Disabled", "Disabled");
         return props;
     }
 

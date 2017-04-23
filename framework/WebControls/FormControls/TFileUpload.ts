@@ -50,7 +50,6 @@ export default class TFileUpload extends TWebControl implements TEventResponderI
 
     get Disabled()
     {
-        this.fetchProperty(this._renderedMainElement, 'Disabled');
         return this.converters.boolean(this._Disabled);
     }
 
@@ -96,10 +95,10 @@ export default class TFileUpload extends TWebControl implements TEventResponderI
     {
         var props = super.getElementProperites();
         props['Multiple'] = new TWebControlProperty("multiple", "_Multiple", this.converters.boolean);
-        props['Disabled'] = new TWebControlProperty("disabled", "_Disabled", this.converters.boolean);
-        props['Value'] = new TWebControlProperty("disabled", "_Disabled", this.converters.string, true, false);
-        props['Files'] = new TWebControlProperty("disabled", "_Disabled", this.converters.none, true, false);
-        props['File'] = new TWebControlProperty("disabled", "_Disabled", this.converters.none, true, false);
+        props['Disabled'] = new TWebControlProperty("disabled", "_Disabled", "Disabled");
+        props['Value'] = new TWebControlProperty("value", "_Value", this.converters.string, true, false);
+        props['Files'] = new TWebControlProperty("files", "_Files", this.converters.none, true, false);
+        props['File'] = new TWebControlProperty("file", "_File", this.converters.none, true, false);
         return props;
     }
 

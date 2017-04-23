@@ -44,13 +44,12 @@ export default class TLink extends TWebControl
 
     set Href(value)
     {
-        this.applyProperty(this._renderedMainElement, 'Href');
         this._Href = value;
+        this.applyProperty(this._renderedMainElement, 'Href');
     }
 
     get Href()
     {
-        this.fetchProperty(this._renderedMainElement, 'Href');
         return this.converters.string(this._Href);
     }
 
@@ -59,19 +58,19 @@ export default class TLink extends TWebControl
     set Target(value)
     {
         this._Target = value;
+        this.applyProperty(this._renderedMainElement, 'Target');
     }
 
     get Target()
     {
-        this.fetchProperty(this._renderedMainElement, 'Target');
         return this.converters.string(this._Target);
     }
 
     getElementProperites(): any
     {
         let properties = super.getElementProperites();
-        properties['Href'] = new TWebControlProperty("href", "_Href", this.converters.string);
-        properties['Target'] = new TWebControlProperty("target", "_Target", this.converters.string);
+        properties['Href'] = new TWebControlProperty("href", "_Href", 'Href');
+        properties['Target'] = new TWebControlProperty("target", "_Target", 'Target');
         return properties;
     }
 
