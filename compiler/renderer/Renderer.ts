@@ -69,7 +69,7 @@ export default class Renderer extends BaseRenderer {
 
         for (let i = 0; i < node.attributes.length;i++){
             let a = node.attributes[i];
-            this.addOutput(this.getVarname(node) + "." + a.name + " = " + a.value.getExpression( this.language ) ) + ";";
+            this.addOutput(this.getVarname(node) + "." + a.name + " = " + a.value.getExpression( this.language ) + ";");
         }
         this.addOutput(init_in + ".addTemplateChildControl( \"" + this.getVarname(node) + "\", " + this.getVarname(node) + " );" );
 
