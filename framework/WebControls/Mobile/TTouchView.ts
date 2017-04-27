@@ -1,5 +1,4 @@
 import TPanel from "@framework/WebControls/TPanel";
-import TWebControlProperty from "@framework/WebControls/TWebControlProperty";
 
 export default class TTouchView extends TPanel
 {
@@ -92,5 +91,10 @@ export default class TTouchView extends TPanel
     {
         var cssClass = this.converters.string(this._CssClass);
         return this.setAdditionalCssClasses(cssClass);
+    }
+
+    set CssClass(value: any)
+    {
+        this._CssClass = value;
     }
 }
