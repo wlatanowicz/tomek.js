@@ -2,7 +2,7 @@ import TPanel from "@framework/WebControls/TPanel";
 
 export default class TTouchView extends TPanel
 {
-    private _HasHeader: any;
+    private _HasHeader: any = true;
 
     get HasHeader()
     {
@@ -14,7 +14,7 @@ export default class TTouchView extends TPanel
         this._HasHeader = value;
     }
 
-    private _HasFooter: any;
+    private _HasFooter: any = true;
 
     get HasFooter()
     {
@@ -26,7 +26,7 @@ export default class TTouchView extends TPanel
         this._HasFooter = value;
     }
 
-    private _HasPadding: any;
+    private _HasPadding: any = true;
 
     get HasPadding()
     {

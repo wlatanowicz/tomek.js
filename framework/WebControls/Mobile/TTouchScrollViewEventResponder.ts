@@ -11,7 +11,7 @@ export default class TTouchScrollViewEventResponder extends TEventResponder
         if (e == 'Refresh'
             && !this._refreshResponderAttached
             && this.control instanceof TTouchScrollView) {
-            this.attach('Scroll', this.control.scrolled.bind(this));
+            this.attach('Scroll', this.control.scrolled.bind(this.control));
             this._refreshResponderAttached = true;
         }
     }

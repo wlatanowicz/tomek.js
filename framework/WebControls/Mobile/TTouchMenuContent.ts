@@ -30,5 +30,6 @@ export default class TTouchMenuContent extends TPanel
     set CssClass(value: any)
     {
         this._CssClass = value;
+        this.applyProperty(this._renderedMainElement, 'CssClass');
     }
 }

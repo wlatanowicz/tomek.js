@@ -7,7 +7,7 @@ export default class TTouchSideMenu extends TPanel
     set IsActive(value: any)
     {
         this._IsActive = value;
-        if (this.IsActive) {
+        if (this.converters.boolean(this.IsActive)) {
             this.addCssClass('active');
             this.removeCssClass('inactive');
         } else {
@@ -60,5 +60,6 @@ export default class TTouchSideMenu extends TPanel
     set CssClass(value: any)
     {
         this._CssClass = value;
+        this.applyProperty(this._renderedMainElement, 'CssClass');
     }
 }

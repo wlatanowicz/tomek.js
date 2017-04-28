@@ -42,7 +42,7 @@ export default class TLink extends TWebControl
 
     private _Href:any = '#';
 
-    set Href(value)
+    set Href(value: any)
     {
         this._Href = value;
         this.applyProperty(this._renderedMainElement, 'Href');

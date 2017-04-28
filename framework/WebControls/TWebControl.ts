@@ -119,8 +119,27 @@ export default class TWebControl extends TControl
 
     applyProperties(element)
     {
-        let properties = this.getElementProperites();
-        for (let propertyName in properties) {
+        if (element !== null) {
+            let properties = this.getElementProperites();
+            for (let propertyName in properties) {
+                let property: TWebControlProperty = properties[propertyName];
+                if (property.Applicable) {
+                    let newValue;
+                    if (property.Converter instanceof Function) {
+                        newValue = property.Converter(this[property.ObjectFieldName]);
+                    } else {
+                        newValue = this[property.Converter];
+                    }
+                    this.setAttribute(element, property.ElementPropertyName, newValue);
+                }
+            }
+        }
+    }
+
+    applyProperty(element, propertyName: string)
+    {
+        if (element !== null) {
+            let properties = this.getElementProperites();
             let property: TWebControlProperty = properties[propertyName];
             if (property.Applicable) {
                 let newValue;
@@ -131,21 +150,6 @@ export default class TWebControl extends TControl
                 }
                 this.setAttribute(element, property.ElementPropertyName, newValue);
             }
-        }
-    }
-
-    applyProperty(element, propertyName: string)
-    {
-        let properties = this.getElementProperites();
-        let property: TWebControlProperty = properties[propertyName];
-        if (property.Applicable) {
-            let newValue;
-            if (property.Converter instanceof Function) {
-                newValue = property.Converter(this[property.ObjectFieldName]);
-            } else {
-                newValue = this[property.Converter];
-            }
-            this.setAttribute(element, property.ElementPropertyName, newValue);
         }
     }
 
@@ -323,7 +327,11 @@ export default class TWebControl extends TControl
     {
         if (el) {
             if (value) {
-                el[propertyName] = value;
+                if (propertyName === 'style') {
+                    el.style.cssText = value;
+                } else {
+                    el[propertyName] = value;
+                }
             } else {
                 el[propertyName] = value;
                 el.removeAttribute(this.propFix(propertyName));

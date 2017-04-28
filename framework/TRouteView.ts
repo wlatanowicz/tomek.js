@@ -115,7 +115,7 @@ export default class TRouteView extends TControl implements TEventResponderInter
         return this._IsActive;
     }
 
-     get ComputedPaths()
+    get ComputedPaths()
     {
         if ( this._ComputedPaths === null ){
             if ( this._Path !== null ){
@@ -137,6 +137,11 @@ export default class TRouteView extends TControl implements TEventResponderInter
         return this.converters.boolean(this._Visible)
             && (this.Parent === null || this.Parent.Visible)
             && this.IsActive;
+    }
+
+    set Visible(v)
+    {
+        this._Visible = v;
     }
 
     /**

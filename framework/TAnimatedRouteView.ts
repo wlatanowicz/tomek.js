@@ -40,13 +40,13 @@ export default class TAnimatedRouteView extends TRouteView
     createChildControls()
     {
         this._panel = new TPanel();
-        this._panel.setParent(this);
+        this._panel.Parent = this;
     }
 
     renderChildControls(placeholder)
     {
         this._panel.renderContentsInPlaceholder(placeholder);
-        super.removeChildControl(this._panel._renderedMainElement);
+        super.renderChildControls(this._panel._renderedMainElement);
     }
 
     activate(params)
@@ -73,7 +73,7 @@ export default class TAnimatedRouteView extends TRouteView
         }else{
             super.activate(params);
             this.ensureChildControls();
-            this._panel.setCssClass(this.ActiveCssClass);
+            this._panel.CssClass = this.ActiveCssClass;
         }
     }
 
@@ -86,7 +86,7 @@ export default class TAnimatedRouteView extends TRouteView
             this.render();
         }
 
-        this._panel.setCssClass(this.ActiveCssClass);
+        this._panel.CssClass = this.ActiveCssClass;
 
         setTimeout(this.reactivateThirdStage.bind(this, div), this._deactivateRenderDelay);
     }

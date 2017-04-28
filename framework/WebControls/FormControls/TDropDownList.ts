@@ -32,7 +32,7 @@ export default class TDropDownList extends TWebControl implements TEventResponde
     get event():TEventResponder
     {
         if (this._event === null) {
-            this._event = new TEventResponder(this, ['Click']);
+            this._event = new TEventResponder(this, ['Change']);
         }
         return this._event;
     }
@@ -224,8 +224,8 @@ export default class TDropDownList extends TWebControl implements TEventResponde
 
             if ( ! somethingSelected ){
 
-                if ( this._ValueToSet !== null
-                        && this._ValueToSet.toString() == options[i].getValue() ){
+                if (this._ValueToSet !== null
+                        && this._ValueToSet.toString() == options[i].Value){
                     selected = true;
                     this._SelectedIndex = i;
                 }else
