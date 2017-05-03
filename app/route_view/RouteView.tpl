@@ -2,26 +2,26 @@
 
 <template xmlns:prop='property' xmlns:com='component' xmlns:temp='stencil' xmlns:on='event' >
 
-<com:TContent>
+<com:Content>
 
 	<div id="tabs-container">
 		<ul class="tabs-menu">
 			<li>
-				<com:TLink Href="#/tab/one" ID="Tab1Button">Tab 1</com:TLink>
+				<com:Link Href="#/tab/one" ID="Tab1Button">Tab 1</com:Link>
 			</li>
 			<li>
-				<com:TLink Href="#/tab/two" ID="Tab2Button">Tab 2</com:TLink>
+				<com:Link Href="#/tab/two" ID="Tab2Button">Tab 2</com:Link>
 			</li>
 			<li>
-				<com:TLink Href="#/tab/three" ID="Tab3Button">Tab 3</com:TLink>
+				<com:Link Href="#/tab/three" ID="Tab3Button">Tab 3</com:Link>
 			</li>
 			<li>
-				<com:TLink Href="#/tab/four" ID="Tab4Button">Tab 4</com:TLink>
+				<com:Link Href="#/tab/four" ID="Tab4Button">Tab 4</com:Link>
 			</li>
 		</ul>
 		<div class="tab tab-content">
 			
-			<com:TRouteView ID="Tab1" on:BecameActive=".tabBecameActive" on:BecameInactive=".tabBecameInactive" >
+			<com:RouteView ID="Tab1" on:BecameActive=".tabBecameActive" on:BecameInactive=".tabBecameInactive" >
 				<prop:Path>
 					/tab/one
 				</prop:Path>
@@ -35,9 +35,9 @@
 					dui euismod enim, ac ultricies arcu risus at tellus. Donec imperdiet congue ligula, quis vulputate mauris ultrices non.
 					Aliquam rhoncus, arcu a bibendum congue, augue risus tincidunt massa, vel vehicula diam dolor eget felis.
 				</p>
-			</com:TRouteView>
+			</com:RouteView>
 			
-			<com:TRouteView ID="Tab2" on:BecameActive=".tabBecameActive" on:BecameInactive=".tabBecameInactive" >
+			<com:RouteView ID="Tab2" on:BecameActive=".tabBecameActive" on:BecameInactive=".tabBecameInactive" >
 				<prop:Path>
 					/tab/two
 				</prop:Path>
@@ -49,9 +49,9 @@
 					at ullamcorper eget, sagittis sed eros. Proin tortor tellus, pulvinar at imperdiet in, egestas sed nisl. Aenean tempor
 					neque ut felis dignissim ac congue felis viverra.
 				</p>
-			</com:TRouteView>
+			</com:RouteView>
 			
-			<com:TRouteView ID="Tab3" on:BecameActive=".tabBecameActive" on:BecameInactive=".tabBecameInactive" >
+			<com:RouteView ID="Tab3" on:BecameActive=".tabBecameActive" on:BecameInactive=".tabBecameInactive" >
 				<prop:Path>
 					/tab/three
 				</prop:Path>
@@ -65,9 +65,9 @@
 					risus dui, nec sagittis arcu. Nullam tortor enim, placerat quis eleifend in, viverra ac lacus. Ut aliquam sapien ut metus
 					hendrerit auctor dapibus justo porta.
 				</p>
-			</com:TRouteView>
+			</com:RouteView>
 			
-			<com:TRouteView ID="Tab4" on:BecameActive=".tabBecameActive" on:BecameInactive=".tabBecameInactive" >
+			<com:RouteView ID="Tab4" on:BecameActive=".tabBecameActive" on:BecameInactive=".tabBecameInactive" >
 				<prop:Path>
 					/tab/four
 				</prop:Path>
@@ -79,11 +79,11 @@
 					enim at lacus pretium iaculis sit amet vel nunc. Praesent sapien felis, tincidunt vitae blandit ut, mattis at diam. Suspendisse
 					ac sapien eget eros venenatis tempor quis id odio. Donec lacus leo, tincidunt eget molestie at, pharetra cursus odio.
 				</p>
-			</com:TRouteView>
+			</com:RouteView>
 			
 		</div>
 	</div>
 	
-</com:TContent>
+</com:Content>
 
 </template>

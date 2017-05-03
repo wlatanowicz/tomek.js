@@ -91,7 +91,7 @@ export default class TextExpression {
                     //@TODO //@DONE ?
                     var replaced = part.replace( /([^\w])(and)([^\w])/g, function( x, s1, op, s2 ){ return s1+'&&'+s2; } );
                     replaced = replaced.replace( /([^\w])(or)([^\w])/g, function( x, s1, op, s2 ){ return s1+'||'+s2; } );
-                    var expr_part = "( new TExpression( function(){ return (" + replaced + "); }.bind( ExpressionContext ) ) )";
+                    var expr_part = "( new Expression( function(){ return (" + replaced + "); }.bind( ExpressionContext ) ) )";
                     parts.push( expr_part );
                 }
                 part = "";

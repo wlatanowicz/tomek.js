@@ -12,7 +12,7 @@ export default class StencilNode extends TemplateNode {
     constructor( xmlNode: libxmljs.Element ){
         super();
         this.propertyName = xmlNode.name();
-        this.placeholderNode = new ComponentNode("TContent");
+        this.placeholderNode = new ComponentNode("Content");
         this.placeholderNode.parent = this;
         this.children.push( this.placeholderNode );
     }

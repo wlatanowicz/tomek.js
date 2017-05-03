@@ -1,15 +1,15 @@
-import TTemplateControl from "@framework/TTemplateControl";
-import THttp from "@framework/Data/THttp";
+import TemplateControl from "@framework/TemplateControl";
+import Http from "@framework/Data/Http";
 
 import template from "./SimpleHttp.tpl";
 
-export default class SimpleHttp extends  TTemplateControl
+export default class SimpleHttp extends  TemplateControl
 {
     template = template;
 	
 	buttonClicked( sender, param ){
 							
-		var http = new THttp('http://api.openweathermap.org/data/2.5/');
+		var http = new Http('http://api.openweathermap.org/data/2.5/');
 		
 		http.get('weather', {
 					'lat' : '35',

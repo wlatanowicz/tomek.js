@@ -1,7 +1,7 @@
 import template from "./HelloWorld.tpl";
-import TTemplateControl from "@framework/TTemplateControl";
+import TemplateControl from "@framework/TemplateControl";
 
-export default class HelloWorld extends TTemplateControl {
+export default class HelloWorld extends TemplateControl {
 
 	template = template;
 

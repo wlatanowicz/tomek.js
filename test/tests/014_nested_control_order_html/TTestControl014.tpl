@@ -2,7 +2,7 @@
 
 <template xmlns:com='component' xmlns:prop='property' xmlns:on='event' xmlns:temp='stencil'>
 
-<com:TContent ID="c">
+<com:Content ID="c">
 
 	001
 
@@ -12,6 +12,6 @@
 
 	005
 
-</com:TContent>
+</com:Content>
 	
 </template>

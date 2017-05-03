@@ -1,5 +1,5 @@
 import ServiceDefinitionInterface from "@framework/DependencyInjection/Definition/ServiceDefinitionInterface";
-import TException from "@framework/TException";
+import Exception from "@framework/Exception";
 
 export default class ServiceContainer
 {
@@ -68,6 +68,6 @@ export default class ServiceContainer
         if (this.definitions[name]){
             return this.definitions[name].compile(this);
         }
-        throw new TException("Undefined service " + name);
+        throw new Exception("Undefined service " + name);
     }
 }

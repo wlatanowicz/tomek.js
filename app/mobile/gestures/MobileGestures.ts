@@ -1,7 +1,7 @@
-import TTemplateControl from "@framework/TTemplateControl";
+import TemplateControl from "@framework/TemplateControl";
 import template from "./MobileGestures.tpl";
 
-export default class MobileGestures extends TTemplateControl
+export default class MobileGestures extends TemplateControl
 {
     template = template;
 

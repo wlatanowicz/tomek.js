@@ -2,13 +2,13 @@
 
 <template xmlns:com='component' xmlns:prop='property' xmlns:on='event' xmlns:temp='stencil'>
 
-<com:TContent>
-	<com:TButton ID="Button"
+<com:Content>
+	<com:Button ID="Button"
 				 Attributes.id="button"
 				 on:Click="SourceTemplateControl.buttonClicked" />
-	<com:TButton ID="Button2"
+	<com:Button ID="Button2"
 				 Attributes.id="button2"
 				 on:Click="SourceTemplateControl.buttonClicked" />
-</com:TContent>
+</com:Content>
 	
 </template>

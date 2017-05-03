@@ -2,40 +2,40 @@
 
 <template xmlns:com='component' xmlns:prop='property' xmlns:on='event' xmlns:temp='stencil'>
 
-<com:TContent>
-	<com:TRepeater ID="Rep"
+<com:Content>
+	<com:Repeater ID="Rep"
 				   ShowFooterWhenEmpty="false"
 				   ShowHeaderWhenEmpty="false"
 				   >
 		<temp:Header>
-			<com:TControl>
+			<com:Control>
 				<span class="header">
 					Header
 				</span>
-			</com:TControl>
+			</com:Control>
 		</temp:Header>
 		<temp:Footer>
-			<com:TControl>
+			<com:Control>
 				<span class="footer">
 					Footer
 				</span>
-			</com:TControl>
+			</com:Control>
 		</temp:Footer>
 		<temp:Empty>
-			<com:TControl>
+			<com:Control>
 				<span class="empty">
 					Empty
 				</span>
-			</com:TControl>
+			</com:Control>
 		</temp:Empty>
 		<temp:Item>
-			<com:TControl>
+			<com:Control>
 				<span class="item" id="item_[%= this.ItemIndex %]">
 					Item-[%= this.DataItem %]
 				</span>
-			</com:TControl>
+			</com:Control>
 		</temp:Item>
-	</com:TRepeater>
-</com:TContent>
+	</com:Repeater>
+</com:Content>
 	
 </template>

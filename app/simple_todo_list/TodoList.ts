@@ -1,7 +1,7 @@
-import TTemplateControl from "@framework/TTemplateControl";
+import TemplateControl from "@framework/TemplateControl";
 import template from "./TodoList.tpl";
 
-export default class TodoList extends TTemplateControl
+export default class TodoList extends TemplateControl
 {
     template = template;
 

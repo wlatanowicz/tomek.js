@@ -1,7 +1,7 @@
-import TTemplateControl from "@framework/TTemplateControl";
+import TemplateControl from "@framework/TemplateControl";
 import template from "./TTestControl005.tpl";
 
-export default class TTestControl005 extends TTemplateControl
+export default class TTestControl005 extends TemplateControl
 {
 	template = template;
 

@@ -2,18 +2,18 @@
 
 <template xmlns:com='component' xmlns:prop='property' xmlns:on='event' xmlns:temp='stencil'>
 
-<com:TContent>
+<com:Content>
 
-	<com:TTextBox />
+	<com:TextBox />
 	
-	<com:TCheckBox />
+	<com:CheckBox />
 
-	<com:TDropDownList >
-		<com:TOption Value="a">opt 1</com:TOption>
-		<com:TOption Value="b">opt 2</com:TOption>
-		<com:TOption Value="c">opt 3</com:TOption>
-	</com:TDropDownList>
+	<com:DropDownList >
+		<com:Option Value="a">opt 1</com:Option>
+		<com:Option Value="b">opt 2</com:Option>
+		<com:Option Value="c">opt 3</com:Option>
+	</com:DropDownList>
 	
-</com:TContent>
+</com:Content>
 	
 </template>

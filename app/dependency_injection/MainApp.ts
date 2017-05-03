@@ -1,7 +1,7 @@
 import template from "./MainApp.tpl";
-import TTemplateControl from "@framework/TTemplateControl";
+import TemplateControl from "@framework/TemplateControl";
 
-export default class MainApp extends TTemplateControl {
+export default class MainApp extends TemplateControl {
 
     template = template;
 

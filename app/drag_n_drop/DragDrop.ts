@@ -1,9 +1,9 @@
-import TTemplateControl from "@framework/TTemplateControl";
+import TemplateControl from "@framework/TemplateControl";
 
 import template from "./DragDrop.tpl";
-import TRepeater from "@framework/TRepeater";
+import Repeater from "@framework/Repeater";
 
-export default class DragDrop extends TTemplateControl
+export default class DragDrop extends TemplateControl
 {
 
     template = template;
@@ -62,7 +62,7 @@ export default class DragDrop extends TTemplateControl
 		
 			var obj = param.draggable.CustomData.obj;
 
-			var rpt = sender.findChildControlsByKind(TRepeater)[0];
+			var rpt = sender.findChildControlsByKind(Repeater)[0];
 			rpt.DataSource.push(obj);
 			rpt.cleanup();
 

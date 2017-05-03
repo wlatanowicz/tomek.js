@@ -2,45 +2,45 @@
 
 <template xmlns:com='component' xmlns:prop='property' xmlns:on='event' xmlns:temp='stencil'>
 
-<com:TContent>
-	<com:TRepeater ID="Rep" on:ItemCreated="SourceTemplateControl.itemCreated" >
+<com:Content>
+	<com:Repeater ID="Rep" on:ItemCreated="SourceTemplateControl.itemCreated" >
 		<temp:Header>
-			<com:TControl>
+			<com:Control>
 				<span class="header">
 					Header
 				</span>
-			</com:TControl>
+			</com:Control>
 		</temp:Header>
 		<temp:Footer>
-			<com:TControl>
+			<com:Control>
 				<span class="footer">
 					Footer
 				</span>
-			</com:TControl>
+			</com:Control>
 		</temp:Footer>
 		<temp:Empty>
-			<com:TControl>
+			<com:Control>
 				<span class="empty">
 					Empty
 				</span>
-			</com:TControl>
+			</com:Control>
 		</temp:Empty>
 		<temp:Item>
-			<com:TControl>
+			<com:Control>
 				<span class="item" id="item_[%= this.ItemIndex %]">
-					<com:TRepeater ID="InnerRep" >
+					<com:Repeater ID="InnerRep" >
 						<temp:Item>
-							<com:TControl>
+							<com:Control>
 								<p class="inneritem inneritem_[%= this.ItemIndex %]" >
 									Item_[%= this.DataItem %]
 								</p>
-							</com:TControl>
+							</com:Control>
 						</temp:Item>
-					</com:TRepeater>
+					</com:Repeater>
 				</span>
-			</com:TControl>
+			</com:Control>
 		</temp:Item>
-	</com:TRepeater>
-</com:TContent>
+	</com:Repeater>
+</com:Content>
 	
 </template>

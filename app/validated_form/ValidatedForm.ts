@@ -1,7 +1,7 @@
-import TTemplateControl from "@framework/TTemplateControl";
+import TemplateControl from "@framework/TemplateControl";
 import template from "./ValidatedForm.tpl";
 
-export default class ValidatedForm extends TTemplateControl
+export default class ValidatedForm extends TemplateControl
 {
 	template = template;
 

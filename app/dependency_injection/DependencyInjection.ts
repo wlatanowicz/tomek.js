@@ -1,8 +1,8 @@
 import template from "./DependencyInjection.tpl";
-import TTemplateControl from "@framework/TTemplateControl";
+import TemplateControl from "@framework/TemplateControl";
 import GreetingsProvider from "@app/dependency_injection/GreetingsProvider";
 
-export default class DependencyInjection extends TTemplateControl {
+export default class DependencyInjection extends TemplateControl {
 
 	template = template;
 

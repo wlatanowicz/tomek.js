@@ -1,19 +1,19 @@
-<com:TContent>
+<com:Content>
 
     <ul>
-        <com:TRepeater ID="ListRepeater">
+        <com:Repeater ID="ListRepeater">
             <temp:Item>
                 <li>
-                    <com:TCheckBox ID="DoneCheckBox" Checked="[%= this.DataItem.done %]" />
+                    <com:CheckBox ID="DoneCheckBox" Checked="[%= this.DataItem.done %]" />
                     [%= this.DataItem.description %]
                 </li>
             </temp:Item>
-        </com:TRepeater>
+        </com:Repeater>
     </ul>
 
     <div>
-        <com:TTextBox ID="NewItemTextBox" />
-        <com:TButton on:Click=".buttonClicked" Text="Add" />
+        <com:TextBox ID="NewItemTextBox" />
+        <com:Button on:Click=".buttonClicked" Text="Add" />
     </div>
 
-</com:TContent>
+</com:Content>

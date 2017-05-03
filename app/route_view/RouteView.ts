@@ -1,7 +1,7 @@
-import TTemplateControl from "@framework/TTemplateControl";
+import TemplateControl from "@framework/TemplateControl";
 import template from "./RouteView.tpl";
 
-export default class RouteView extends TTemplateControl
+export default class RouteView extends TemplateControl
 {
 	template = template;
 

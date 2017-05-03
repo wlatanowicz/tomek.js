@@ -2,16 +2,16 @@
 
 <template xmlns:com='component' xmlns:prop='property' xmlns:on='event' xmlns:temp='stencil'>
 
-<com:TContent>
-	<com:TValidatedForm ID="Form">
+<com:Content>
+	<com:ValidatedForm ID="Form">
 		<div>
-			<com:TTextBox ID="TB" />
-			<com:TRequiredValidator CssClass="err" ControlToValidate="TB" >
+			<com:TextBox ID="TB" />
+			<com:RequiredValidator CssClass="err" ControlToValidate="TB" >
 				No text in textbox
-			</com:TRequiredValidator>
+			</com:RequiredValidator>
 		</div>
-	</com:TValidatedForm>
-	<com:TButton ID="B" on:Click="SourceTemplateControl.buttonClicked" />
-</com:TContent>
+	</com:ValidatedForm>
+	<com:Button ID="B" on:Click="SourceTemplateControl.buttonClicked" />
+</com:Content>
 	
 </template>

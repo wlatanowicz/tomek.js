@@ -21,7 +21,7 @@ export default class Renderer extends BaseRenderer {
         super( debug, language );
         this.controlName = controlName;
         this.dependencies = [
-            "TExpression"
+            "Expression"
         ];
         this.source_paths = source_paths;
     }

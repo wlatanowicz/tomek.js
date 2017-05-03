@@ -292,7 +292,7 @@ export default class Parser {
         if ( ! this.needsTopLevelContentControl( xml ) ){
             this.parseRecursive( docNode, xml );
         }else{
-            var topLevelContentControl = new ComponentNode( "TContent" );
+            var topLevelContentControl = new ComponentNode( "Content" );
             docNode.addChild( topLevelContentControl );
             this.parseRecursive( topLevelContentControl, xml );
         }

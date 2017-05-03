@@ -15,9 +15,9 @@ component( 'TTemplateControl', function(){
 			given('Create new control', function() {
 				c = new TTestControl010();
 				c.Placeholder = 'container';
-				c_tb = c.findChildControlsByType( TTextBox )[0];
-				c_cb = c.findChildControlsByType( TCheckBox )[0];
-				c_ddl = c.findChildControlsByType( TDropDownList )[0];
+				c_tb = c.findChildControlsByType( TextBox )[0];
+				c_cb = c.findChildControlsByType( CheckBox )[0];
+				c_ddl = c.findChildControlsByType( DropDownList )[0];
 			});
 			
 			when('Set initial values', function() {
