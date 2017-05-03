@@ -133,9 +133,14 @@ export default class Builder {
     processMain( file:string, target:string, done: Function){
         console.log("  |- bundle (webpack): " + file + " => " + target);
 
-        var builder = this;
-
         var webpack = require("webpack");
+
+        var pluginList = [];
+        if (this.minify) {
+            pluginList.push(new webpack.optimize.UglifyJsPlugin({minimize: true}));
+        }
+
+        var builder = this;
         var webpackConfig = {
             entry: file, //"./app/hello_world/main.ts",
             output: {
@@ -188,10 +193,10 @@ export default class Builder {
                 ]
             },
 
-            plugins: [
-                new webpack.optimize.UglifyJsPlugin({minimize: true})
-            ]
+            plugins: pluginList
         };
+
+
         webpack(webpackConfig, function(err, stats) {
             done();
             if (err) {
