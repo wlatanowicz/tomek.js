@@ -1,1 +1,1 @@
-<com:_dependecyInjected />
+<srv:dependecyInjected/>

@@ -8,6 +8,7 @@ import StencilRenderer from "./StencilRenderer";
 
 import glob = require('glob');
 import path = require('path');
+import ServiceNode from "../template/ServiceNode";
 
 export default class Renderer extends BaseRenderer {
 
@@ -49,8 +50,6 @@ export default class Renderer extends BaseRenderer {
         var init_in:string = "this";
         var parent_component: TemplateNode = node.parent;
 
-        this.addDependency(node.classname);
-
         while ( parent_component !== null
             && ! ( parent_component instanceof ComponentNode || parent_component instanceof StencilNode )){
             parent_component = parent_component.parent;
@@ -61,9 +60,11 @@ export default class Renderer extends BaseRenderer {
             init_in = this.getVarname(parent_component);
         }
 
-        if (node.classname[0] == '_') {
-            this.addOutput("var " + this.getVarname(node) + " = ServiceContainer.get(\"" + (node.classname.substr(1)) + "\");");
+        if (node instanceof ServiceNode) {
+            this.addDependency("ServiceContainer");
+            this.addOutput("var " + this.getVarname(node) + " = ServiceContainer.get(\"" + node.classname + "\");");
         } else {
+            this.addDependency(node.classname);
             this.addOutput("var " + this.getVarname(node) + " = new " + node.classname + "();");
         }
 
@@ -141,10 +142,7 @@ export default class Renderer extends BaseRenderer {
         var imports = {};
         for (var i = 0; i < this.dependencies.length; i++ ){
             var dependency = this.dependencies[i];
-            if (dependency[0] === '_') {
-                this.dependencies.push('ServiceContainer');
-            }
-            else if (dependency !== this.controlName && !imports[dependency]) {
+            if (dependency !== this.controlName && !imports[dependency]) {
                 imports[dependency] = this.findImportForDependency(dependency);
             }
         }
@@ -183,12 +181,9 @@ export default class Renderer extends BaseRenderer {
     }
 
     addDependency(dependency:string){
-        for (var i = 0; i < this.dependencies.length;i++){
-            if ( this.dependencies[i] == dependency ){
-                return;
-            }
+        if (this.dependencies.indexOf(dependency) < 0) {
+            this.dependencies.push(dependency);
         }
-        this.dependencies.push(dependency);
     }
 
 }

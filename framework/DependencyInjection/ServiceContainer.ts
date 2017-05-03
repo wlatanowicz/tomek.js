@@ -21,6 +21,16 @@ export default class ServiceContainer
         ServiceContainer.getInstance().defineService(name, definition);
     }
 
+    static batchDefine(definitions: any)
+    {
+        for (var serviceName in definitions) {
+            ServiceContainer.define(
+                serviceName,
+                definitions[serviceName]
+            );
+        }
+    }
+
     static get(name: string): any
     {
         return ServiceContainer.getInstance().getService(name);

@@ -186,7 +186,11 @@ export default class Builder {
                         loader: "source-map-loader"
                     }
                 ]
-            }
+            },
+
+            plugins: [
+                new webpack.optimize.UglifyJsPlugin({minimize: true})
+            ]
         };
         webpack(webpackConfig, function(err, stats) {
             done();
