@@ -1,7 +1,7 @@
-import TTemplateControl from "@framework/TTemplateControl";
+import TemplateControl from "@framework/TemplateControl";
 import template from "./MobileHelloWorld.tpl";
 
-export default class MobileHelloWorld extends TTemplateControl
+export default class MobileHelloWorld extends TemplateControl
 {
     template = template;
 

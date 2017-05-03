@@ -3,7 +3,7 @@
 </div>
 <div class="content has-header has-footer padding">
 	<p>
-		<com:TButton CssClass="button button-positive"
+		<com:Button CssClass="button button-positive"
 					 on:Click=".buttonClicked"
 					 Text="Click me!" />
 	</p>
