@@ -6,76 +6,61 @@ import HtmlNode from '../template/HtmlNode';
 import DocumentNode from '../template/DocumentNode';
 
 export default class BaseRenderer {
-		
-	debug: number;
-	language: string;
 
-	indent: number;
-	output: string;
+    debug: number;
+    language: string;
 
-	constructor( debug: number, language:string ){
-		this.indent = 1;
-		this.output = "";
-		this.language = language;
-		this.debug = debug;
-	}
+    indent: number;
+    output: string;
 
-	pushIndent(){
-		this.indent += 1;
-	}
+    constructor( debug: number, language:string ){
+        this.indent = 1;
+        this.output = "";
+        this.language = language;
+        this.debug = debug;
+    }
 
-	popIndent(){
-		if ( this.indent > 1 ){
-			this.indent -= 1;
-		}
-	}
+    pushIndent(){
+        this.indent += 1;
+    }
 
-	addOutput( input:string ){
-		var indent = (new Array(this.indent + 1).join("\t"));
-		var lines = input.split("\n");
-		for ( var i = 0; i < lines.length; i++ ){
-			if ( lines[i].trim().length > 0 ){
-				this.addOutputWithoutIndent(indent + lines[i]);
-			}
-		}
-	}
+    popIndent(){
+        if ( this.indent > 1 ){
+            this.indent -= 1;
+        }
+    }
 
-	addOutputWithoutIndent( input:string ){
-		this.output += input + "\n";
-	}
+    addOutput( input:string ){
+        var indent = (new Array(this.indent + 1).join("\t"));
+        var lines = input.split("\n");
+        for ( var i = 0; i < lines.length; i++ ){
+            if ( lines[i].trim().length > 0 ){
+                this.addOutputWithoutIndent(indent + lines[i]);
+            }
+        }
+    }
 
-	getVarname( n ):string{
-		if ( n === null ){
-			return "placeholdeer";
-		}
-		if (n instanceof HtmlNode) {
-			return "h_" + n.getVariableName();
-		}
-		if (n instanceof ComponentNode) {
-			return n.getVariableName();
-		}
-		if ( n instanceof StencilNode ){
-			return "item";
-		}
-		if ( n instanceof TextNode ){
-			return "t_" + n.getVariableName();
-		}
-		throw "error";
-		
-	}
+    addOutputWithoutIndent( input:string ){
+        this.output += input + "\n";
+    }
 
-	getAttributesJson(node:TemplateNode):string{
-		if (node.attributes.length == 0) {
-			return '[]';
-		}
+    getVarname( n ):string{
+        if ( n === null ){
+            return "placeholdeer";
+        }
+        if (n instanceof HtmlNode) {
+            return "h_" + n.getVariableName();
+        }
+        if (n instanceof ComponentNode) {
+            return n.getVariableName();
+        }
+        if ( n instanceof StencilNode ){
+            return "item";
+        }
+        if ( n instanceof TextNode ){
+            return "t_" + n.getVariableName();
+        }
+        throw "error";
 
-		var attrs = [];
-		for (let i = 0; i < node.attributes.length;i++){
-			let a = node.attributes[i];
-			attrs.push( "\"" + a.name + "\" : " + a.value.getExpression( this.language ) );
-		}
-
-		return " {\n\t\t\t\t" + attrs.join( ",\n\t\t\t\t" )+"\n\t\t\t\t} ";
-	}
-
+    }
 }

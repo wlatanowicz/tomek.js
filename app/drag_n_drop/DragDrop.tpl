@@ -2,67 +2,67 @@
 
 <template xmlns:prop='property' xmlns:com='component' xmlns:temp='stencil' xmlns:on='event' >
 
-<com:TContent>
+<com:Content>
 	
 	
-	<com:TDroppable ID="DropZone1"
+	<com:Droppable ID="DropZone1"
 					on:Drop=".onDrop"
 					CssClass="droppable yellow">
-		<com:TRepeater ID="Repeater1">
+		<com:Repeater ID="Repeater1">
 			<temp:Item>
-				<com:TDraggable CustomData="[%= { obj: this.DataItem, source: 'Repeater1' } %]"
+				<com:Draggable CustomData="[%= { obj: this.DataItem, source: 'Repeater1' } %]"
 								Group="[%= this.DataItem.color.charAt(0).toUpperCase() + this.DataItem.color.slice(1) %]"
 								CssClass="draggable [%= this.DataItem.color %]">
 					[%= this.DataItem.id %]
-				</com:TDraggable>
+				</com:Draggable>
 			</temp:Item>
-		</com:TRepeater>
-	</com:TDroppable>
+		</com:Repeater>
+	</com:Droppable>
 			
-	<com:TDroppable ID="DropZone2"
+	<com:Droppable ID="DropZone2"
 					on:Drop=".onDrop"
 					Groups='Red'
 					CssClass="droppable red">
-		<com:TRepeater ID="Repeater2">
+		<com:Repeater ID="Repeater2">
 			<temp:Item>
-				<com:TDraggable CustomData="[%= { obj: this.DataItem, source: 'Repeater2' } %]"
+				<com:Draggable CustomData="[%= { obj: this.DataItem, source: 'Repeater2' } %]"
 								Group="[%= this.DataItem.color.charAt(0).toUpperCase() + this.DataItem.color.slice(1) %]"
 								CssClass="draggable [%= this.DataItem.color %]">
 					[%= this.DataItem.id %]
-				</com:TDraggable>
+				</com:Draggable>
 			</temp:Item>
-		</com:TRepeater>
-	</com:TDroppable>
+		</com:Repeater>
+	</com:Droppable>
 			
-	<com:TDroppable ID="DropZone3"
+	<com:Droppable ID="DropZone3"
 					on:Drop=".onDrop"
 					Groups='Green'
 					CssClass="droppable green">
-		<com:TRepeater ID="Repeater3">
+		<com:Repeater ID="Repeater3">
 			<temp:Item>
-				<com:TDraggable CustomData="[%= { obj: this.DataItem, source: 'Repeater3' } %]"
+				<com:Draggable CustomData="[%= { obj: this.DataItem, source: 'Repeater3' } %]"
 								Group="[%= this.DataItem.color.charAt(0).toUpperCase() + this.DataItem.color.slice(1) %]"
 								CssClass="draggable [%= this.DataItem.color %]">
 					[%= this.DataItem.id %]
-				</com:TDraggable>
+				</com:Draggable>
 			</temp:Item>
-		</com:TRepeater>
-	</com:TDroppable>
+		</com:Repeater>
+	</com:Droppable>
 			
-	<com:TDroppable ID="DropZone4"
+	<com:Droppable ID="DropZone4"
 					on:Drop=".onDrop"
 					Groups='Blue'
 					CssClass="droppable blue">
-		<com:TRepeater ID="Repeater4">
+		<com:Repeater ID="Repeater4">
 			<temp:Item>
-				<com:TDraggable CustomData="[%= { obj: this.DataItem, source: 'Repeater4' } %]"
+				<com:Draggable CustomData="[%= { obj: this.DataItem, source: 'Repeater4' } %]"
 								CssClass="draggable [%= this.DataItem.color %]">
 					[%= this.DataItem.id %]
-				</com:TDraggable>
+				</com:Draggable>
 			</temp:Item>
-		</com:TRepeater>
-	</com:TDroppable>
+		</com:Repeater>
+	</com:Droppable>
 			
-</com:TContent>
+</com:Content>
 
 </template>

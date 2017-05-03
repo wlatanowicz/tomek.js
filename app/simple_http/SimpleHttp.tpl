@@ -2,13 +2,13 @@
 
 <template xmlns:prop='property' xmlns:com='component' xmlns:temp='stencil' xmlns:on='event' >
 
-<com:TContent>
+<com:Content>
 	
 	<div>
-		Temp: <com:TLiteral ID="TemperatureL" />
+		Temp: <com:Literal ID="TemperatureL" />
 	</div>
-	<com:TButton on:Click=".buttonClicked" Text="Check temperature" />
+	<com:Button on:Click=".buttonClicked" Text="Check temperature" />
 			
-</com:TContent>
+</com:Content>
 
 </template>

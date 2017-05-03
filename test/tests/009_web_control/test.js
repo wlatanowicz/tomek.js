@@ -10,7 +10,8 @@ component( 'TTemplateControl', function(){
 			var wc;
 
 			given('Create new control', function() {
-				c = new TTestControl009( { 'Placeholder' : 'container' } );
+				c = new TTestControl009();
+				c.Placeholder = 'container';
 				wc = c.findChildControlByID( 'WC' );
 			});
 			
@@ -19,25 +20,25 @@ component( 'TTemplateControl', function(){
 			});
 			
 			then('Expression text should be rendered', function() {
-				expect( $( wc.getElement() ).innerHTML.trim() ).toEqual( 'test' );
+				expect( $( wc.Element ).innerHTML.trim() ).toEqual( 'test' );
 			});
 			
 			when('Class added', function() {
-				wc.setCssClass( 'red' );
+				wc.CssClass = 'red';
 				c.render();
 			});
 			
 			then('className should change', function() {
-				expect( $( wc.getElement() ).className ).toEqual( 'red' );
+				expect( $( wc.Element ).className ).toEqual( 'red' );
 			});
 			
 			when('Class changed', function() {
-				wc.setCssClass( 'green' );
+				wc.CssClass = 'green';
 				c.render();
 			});
 			
 			then('className should change again', function() {
-				expect( $( wc.getElement() ).className ).toEqual( 'green' );
+				expect( $( wc.Element ).className ).toEqual( 'green' );
 			});
 			
 		});

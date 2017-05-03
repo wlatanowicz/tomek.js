@@ -18,12 +18,12 @@ component( 'TTemplateControl', function(){
 			var c;
 
 			given('Create new control', function() {
-				c = new TTestControl015( { 'Placeholder' : 'container' } );
+				c = new TTestControl015();
+				c.Placeholder = 'container';
 			});
 			
 			when('Render control', function() {
 				c.render();
-				new TMassExecutor( c.$$kind( 'TRouteView' ) ).checkForCurrentPath();
 			});
 			
 			then('No routeview control should be visible', function() {

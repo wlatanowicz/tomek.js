@@ -2,12 +2,12 @@
 
 <template xmlns:com='component' xmlns:prop='property' xmlns:on='event' xmlns:temp='stencil'>
 
-<com:TContent>
+<com:Content>
 
 
-	<com:TDropDownList DataSource="[%= SourceTemplateControl.getDdlOptions() %]" DisabledFieldName="disabled">
-	</com:TDropDownList>
+	<com:DropDownList DataSource="[%= SourceTemplateControl.getDdlOptions() %]" DisabledFieldName="disabled">
+	</com:DropDownList>
 
-</com:TContent>
+</com:Content>
 	
 </template>

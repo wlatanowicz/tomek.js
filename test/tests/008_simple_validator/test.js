@@ -9,7 +9,8 @@ component( 'TTemplateControl', function(){
 			var c;
 
 			given('Create new control', function() {
-				c = new TTestControl008( { 'Placeholder' : 'container' } );
+				c = new TTestControl008();
+				c.Placeholder = 'container';
 			});
 			
 			when('Render control', function() {
@@ -21,7 +22,7 @@ component( 'TTemplateControl', function(){
 			});
 			
 			when('Click the button', function() {
-				c.$('B').getElement().click();
+				c.$('B').Element.click();
 			});
 			
 			then('Should be one error', function() {
@@ -29,8 +30,8 @@ component( 'TTemplateControl', function(){
 			});
 			
 			when('Fill form and click the button', function() {
-				c.$('TB').getElement().value = "test";
-				c.$('B').getElement().click();
+				c.$('TB').Element.value = "test";
+				c.$('B').Element.click();
 			});
 			
 			then('Should be no errors', function() {

@@ -9,7 +9,8 @@ component( 'TTemplateControl', function(){
 			var c;
 
 			given('Create new control', function() {
-				c = new TTestControl001( { 'Placeholder' : 'container' } );
+				c = new TTestControl001();
+				c.Placeholder = 'container';
 			});
 			
 			when('Render control', function() {
@@ -32,7 +33,8 @@ component( 'TTemplateControl', function(){
 			var e2 = 'expression text two';
 
 			given('Create new control', function() {
-				c = new TTestControl001( { 'Placeholder' : 'container' } );
+                c = new TTestControl001();
+                c.Placeholder = 'container';
 			});
 			
 			when('Set value and render control', function() {

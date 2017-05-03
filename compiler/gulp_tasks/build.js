@@ -1,14 +1,40 @@
 var gulp = require('gulp');
 
-gulp.task('tomek-build', ['tomek-check-tsc'], function () {
+gulp.task('tomek-compile', [], function(){
+    var glob = require("glob");
+    var path = require('path');
+    var Compiler = require('./../compiler/Compiler').default;
+
+    var base_dir = path.resolve(".");
+    var files = glob.sync(path.join(base_dir, "app", '**', "*.tpl"));
+
+    var source_paths = [
+        path.join(base_dir, "app"),
+        path.join(base_dir, "framework")
+    ];
+
+    for (var i=0; i<files.length; i++) {
+        var compiler = new Compiler( source_paths, 0, 'en');
+        console.log( "  |- template (compiled): "+files[i]+" => "+files[i]+".ts" );
+        compiler.compile(files[i], files[i]+".ts");
+    }
+});
+
+gulp.task('tomek-build', ['tomek-check-tsc'], function (done) {
 	var Builder = require('./../builder/Builder');
 	var DictionaryProvider = require('./../dictionary/DictionaryProvider');
 	var path = require('path');
 	var minimist = require('minimist');
 	
 	var argv = minimist(process.argv.slice(2));
-	var config = require('./../../app/application.json');
 	var base_dir = path.resolve(".");
+    var config_file = path.join(base_dir, 'app', 'application.json');
+    var config = require(config_file);
+
+    var source_paths = [
+        path.join(base_dir, "app"),
+        path.join(base_dir, "framework")
+    ];
 
 	var language = null;
 	var minify = true;
@@ -36,10 +62,12 @@ gulp.task('tomek-build', ['tomek-check-tsc'], function () {
 	}
 	
 	var builder = new Builder["default"]( base_dir, config, language );
-	builder.minify = minify;
+    builder.minify = minify;
 	builder.debug = debug_level;
 	builder.loadDictionaries();
 	builder.cleanupDestination();
-	builder.processMains();
+	builder.processMains(function(){
+		done();
+	});
 	builder.processResources();
 });

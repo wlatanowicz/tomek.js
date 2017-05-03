@@ -1,7 +1,7 @@
 {
 
 	"mains": [
-		"tests/**/main.js"
+		"tests/**/main.ts"
 	],
 	"templates": [
 		"**/*.tpl"

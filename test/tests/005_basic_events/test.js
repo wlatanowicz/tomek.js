@@ -9,7 +9,8 @@ component( 'TEventResponderMixin', function(){
 			$( 'container' ).update('');
 
 			given('Create new template with button and render', function() {
-				c = new TTestControl005( { 'Placeholder' : 'container' } );
+				c = new TTestControl005();
+				c.Placeholder = 'container';
 				c.render();
 				c.clicks = 0;
 				c.lastSender = null;
@@ -61,14 +62,15 @@ component( 'TEventResponderMixin', function(){
 			$( 'container' ).update('');
 
 			given('Create new template with button and render', function() {
-				c = new TTestControl005( { 'Placeholder' : 'container' } );
+                c = new TTestControl005();
+                c.Placeholder = 'container';
 				c.render();
 				c.clicks = 0;
 				c.lastSender = null;
 			});
 			
 			when('Run triggerEvent()', function() {
-				c.findChildControlByID( 'Button' ).triggerEvent( 'Click', null );
+				c.findChildControlByID( 'Button' ).event.trigger( 'Click', null );
 			});
 			
 			then('Click counter should be increased', function() {
@@ -79,7 +81,7 @@ component( 'TEventResponderMixin', function(){
 			});
 			
 			when('Run triggerEvent() on button 2', function() {
-				c.findChildControlByID( 'Button2' ).triggerEvent( 'Click', null );
+				c.findChildControlByID( 'Button2' ).event.trigger( 'Click', null );
 			});
 			
 			then('Click counter should be increased more', function() {
@@ -90,7 +92,7 @@ component( 'TEventResponderMixin', function(){
 			});
 			
 			when('Run triggerEvent() on button 1 again', function() {
-				c.findChildControlByID( 'Button' ).triggerEvent( 'Click', null );
+				c.findChildControlByID( 'Button' ).event.trigger( 'Click', null );
 			});
 			
 			then('Click counter should be increased even more', function() {

@@ -9,7 +9,8 @@ component( 'TTemplateControl', function(){
 			var c;
 
 			given('Create new control', function() {
-				c = new TTestControl011( { 'Placeholder' : 'container' } );
+				c = new TTestControl011();
+				c.Placeholder = 'container';
 			});
 			
 			when('Render control', function() {

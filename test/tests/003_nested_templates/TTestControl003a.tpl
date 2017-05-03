@@ -2,12 +2,12 @@
 
 <template xmlns:com='component' xmlns:prop='property' xmlns:on='event' xmlns:temp='stencil'>
 
-<com:TContent>
+<com:Content>
 	
 	<div id="outer_div">
 		<com:TTestControl003b />
 	</div>
 	
-</com:TContent>
+</com:Content>
 	
 </template>

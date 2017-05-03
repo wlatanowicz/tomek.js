@@ -1,8 +1,15 @@
 {
-
-	"mains": [
-		"**/main.js"
-	],
+	"mains": {
+		"hello_world/main.ts" : "hello_world/main.js",
+		"simple_http/main.ts" : "simple_http/main.js",
+		"switch_case/main.ts" : "switch_case/main.js",
+		"validated_form/main.ts" : "validated_form/main.js",
+		"simple_todo_list/main.ts" : "simple_todo_list/main.js",
+		"route_view/main.ts" : "route_view/main.js",
+		"dependency_injection/main.ts" : "dependency_injection/main.js",
+		"drag_n_drop/main.ts" : "drag_n_drop/main.js",
+		"mobile/gestures/main.ts" : "mobile/gestures/main.js"
+	},
 	"templates": [
 		"**/*.tpl"
 	],
@@ -18,5 +25,4 @@
   	"dictionaries": [
   		"translations/*.xml"
   	]
-
 }

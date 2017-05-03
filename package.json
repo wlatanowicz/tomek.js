@@ -9,8 +9,14 @@
     "mkdirp": "^0.5.1",
     "ndoc": "^5.0.1",
     "require-dir": "^0.3.1",
-    "tsc": "^1.20150623.0",
-    "uglify-js": "^2.7.5"
+    "source-map-loader": "^0.2.1",
+    "ts-loader": "^2.0.3",
+    "ts-md5": "^1.2.0",
+    "typescript": "^2.2.2",
+    "uglify-js": "^2.7.5",
+    "webpack": "^2.4.1",
+    "webpack-callback-loader": "wlatanowicz/webpack-callback-loader",
+    "hammerjs": "^2.0.8"
   },
   "description": "A component based JavaScript frontend framework",
   "homepage": "http://tomekjs.com",

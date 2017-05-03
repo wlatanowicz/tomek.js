@@ -2,10 +2,10 @@
 
 <template xmlns:com='component' xmlns:prop='property' xmlns:on='event' xmlns:temp='stencil'>
 
-<com:TContent>
+<com:Content>
 	
 	<div id="inner_div">ok</div>
 	
-</com:TContent>
+</com:Content>
 	
 </template>

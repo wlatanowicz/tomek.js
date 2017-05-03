@@ -2,19 +2,19 @@
 
 <template xmlns:prop='property' xmlns:com='component' xmlns:temp='stencil' xmlns:on='event' >
 
-<com:TContent>
+<com:Content>
 	
-	<com:TAutoRefresh Interval="0.1">
-		<com:TSwitchView>
-			<com:TCase Condition="[%= (new Date()).getSeconds() % 2 == 0 %]">
+	<com:AutoRefresh Interval="0.1">
+		<com:SwitchView>
+			<com:Case ID="c1" Condition="[%= (new Date()).getSeconds() % 2 == 0 %]">
 				Even second
-			</com:TCase>
-			<com:TCase>
+			</com:Case>
+			<com:Case ID="c2">
 				Odd second
-			</com:TCase>
-		</com:TSwitchView>
-	</com:TAutoRefresh>
+			</com:Case>
+		</com:SwitchView>
+	</com:AutoRefresh>
 			
-</com:TContent>
+</com:Content>
 
 </template>
