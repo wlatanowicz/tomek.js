@@ -1,0 +1,11 @@
+{
+  "ignore": [
+    "node_modules/**",
+    "app/mobile/common_lib/**",
+    "starters/mobile_hello_world/common_lib/**",
+    "test/lib/**"
+  ],
+  "test": [
+    "test/**"
+  ]
+}
