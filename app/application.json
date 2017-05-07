@@ -8,6 +8,7 @@
 		"route_view/main.ts" : "route_view/main.js",
 		"dependency_injection/main.ts" : "dependency_injection/main.js",
 		"drag_n_drop/main.ts" : "drag_n_drop/main.js",
+		"mobile/hello_world/main.ts" : "mobile/hello_world/main.js",
 		"mobile/gestures/main.ts" : "mobile/gestures/main.js"
 	},
 	"templates": [
