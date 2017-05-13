@@ -7,14 +7,14 @@ import EventResponderInterface from "@framework/EventResponderInterface";
 /** section: Controls
  * class Repeater < Control
  * includes EventResponderMixin
- * 
+ *
  * Control renders it's contents multiple times
  * based on data source
- * 
+ *
  * ##### Triggered events
- * 
+ *
  * `on:ItemCreated`
- * 
+ *
  **/
 export default class Repeater extends Control implements EventResponderInterface
 {
@@ -174,7 +174,7 @@ export default class Repeater extends Control implements EventResponderInterface
 
     get DataSource()
     {
-        return this._DataSource;
+        return this.converters.object(this._DataSource);
     }
 
     get Items()
