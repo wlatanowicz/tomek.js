@@ -1,8 +1,11 @@
 {
   "dependencies": {
+    "@types/libxmljs": "^0.14.30",
+    "@types/node": "^8.0.22",
     "fs-extra": "^2.0.0",
     "glob": "^7.1.1",
     "gulp": "^3.9.1",
+    "hammerjs": "^2.0.8",
     "libxmljs": "^0.18.4",
     "md5": "^2.2.1",
     "minimist": "^1.2.0",
@@ -12,11 +15,10 @@
     "source-map-loader": "^0.2.1",
     "ts-loader": "^2.0.3",
     "ts-md5": "^1.2.0",
-    "typescript": "2.2.2",
+    "typescript": "^2.4.2",
     "uglify-js": "^2.7.5",
     "webpack": "^2.4.1",
-    "webpack-callback-loader": "wlatanowicz/webpack-callback-loader",
-    "hammerjs": "^2.0.8"
+    "webpack-callback-loader": "wlatanowicz/webpack-callback-loader"
   },
   "description": "A component based JavaScript frontend framework",
   "homepage": "http://tomekjs.com",

@@ -1,6 +1,3 @@
-/// <reference path="../typings/libxmljs/libxmljs.d.ts" />
-/// <reference path="../typings/node/node.d.ts" />
-
 import fs = require('fs');
 import libxmljs = require('libxmljs');
 

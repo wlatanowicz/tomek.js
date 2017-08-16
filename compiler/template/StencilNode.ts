@@ -1,5 +1,3 @@
-/// <reference path="../typings/libxmljs/libxmljs.d.ts" />
-
 import libxmljs  = require('libxmljs');
 import TemplateNode from './TemplateNode';
 import ComponentNode from './ComponentNode';

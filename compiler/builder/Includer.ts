@@ -38,12 +38,12 @@ export default class Includer{
             contents = contents.replace( "/**DEBUG_MARKER_ON**/", 'true ||' );
         }
         mkdirp.sync( path.dirname( target_file ) );
-        fs.writeFileSync( target_file, contents, "utf8" );
+        fs.writeFileSync( target_file, contents, {encoding: "utf8"} );
         console.log( "  |- include: "+source_file );
         if ( this.minify ){
             console.log( '  |- minify' );
             var minified = uglify.minify( target_file ); // parse code and get the initial AST
-            fs.writeFileSync( target_file, minified.code, "utf8" );
+            fs.writeFileSync( target_file, minified.code, {encoding: "utf8"} );
         }
         console.log("  \\- done." );
     }

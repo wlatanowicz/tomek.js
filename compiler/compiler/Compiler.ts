@@ -20,7 +20,7 @@ export default class Compiler {
     }
 
     compile( source_file: string, target_file: string ) {
-        fs.writeFileSync( target_file, this.compileToStr(source_file), 'utf8' );
+        fs.writeFileSync(target_file, this.compileToStr(source_file), {encoding: "utf8"});
     }
 
     compileToStr(sourceFile: string): string
