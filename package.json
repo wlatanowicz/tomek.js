@@ -12,7 +12,7 @@
     "source-map-loader": "^0.2.1",
     "ts-loader": "^2.0.3",
     "ts-md5": "^1.2.0",
-    "typescript": "^2.2.2",
+    "typescript": "2.2.2",
     "uglify-js": "^2.7.5",
     "webpack": "^2.4.1",
     "webpack-callback-loader": "wlatanowicz/webpack-callback-loader",
