@@ -8,6 +8,7 @@ import StencilNode from '../template/StencilNode';
 import HtmlNode from '../template/HtmlNode';
 import DocumentNode from '../template/DocumentNode';
 import ServiceNode from "../template/ServiceNode";
+import DefinitionNode from "../template/DefinitionNode";
 
 export default class Parser {
 
@@ -269,7 +270,7 @@ export default class Parser {
 
         if ( content.substring( 0, 5 ) !== "<?xml" ){
             content = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" + "\n" +
-                        "<template xmlns:prop='property' xmlns:com='component' xmlns:srv='service' xmlns:temp='stencil' xmlns:on='event'>" + "\n" +
+                        "<template xmlns:prop='property' xmlns:com='component' xmlns:srv='service' xmlns:def='definition' xmlns:temp='stencil' xmlns:on='event'>" + "\n" +
                         content +
                         "</template>";
         }
@@ -343,6 +344,9 @@ export default class Parser {
             }
             else if (xmlNode.namespace() !== null && xmlNode.namespace().href() == 'service') {
                 return new ServiceNode(xmlNode);
+            }
+            else if (xmlNode.namespace() !== null && xmlNode.namespace().href() == 'definition') {
+                return new DefinitionNode(xmlNode);
             }
             else if (xmlNode.namespace() !== null && xmlNode.namespace().href() == 'stencil') {
                 return new StencilNode(xmlNode);

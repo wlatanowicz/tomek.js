@@ -9,6 +9,7 @@ import StencilRenderer from "./StencilRenderer";
 import glob = require('glob');
 import path = require('path');
 import ServiceNode from "../template/ServiceNode";
+import DefinitionNode from "../template/DefinitionNode";
 
 export default class Renderer extends BaseRenderer {
 
@@ -63,6 +64,10 @@ export default class Renderer extends BaseRenderer {
         if (node instanceof ServiceNode) {
             this.addDependency("ServiceContainer");
             this.addOutput("var " + this.getVarname(node) + " = ServiceContainer.get(\"" + node.classname + "\");");
+        } else
+        if (node instanceof DefinitionNode) {
+            this.addDependency("ServiceContainer");
+            this.addOutput("var " + this.getVarname(node) + " = ServiceContainer.create(\"" + node.classname + "\");");
         } else {
             this.addDependency(node.classname);
             this.addOutput("var " + this.getVarname(node) + " = new " + node.classname + "();");
