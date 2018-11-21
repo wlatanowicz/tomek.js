@@ -51,7 +51,7 @@ cat > package.json <<- EOM
 {
     "private": true,
     "dependencies":{
-	    "tomek.js" : "wlatanowicz/tomek.js#tomek-ts"
+	    "tomek.js" : "wlatanowicz/tomek.js#master"
     }
 }
 EOM
