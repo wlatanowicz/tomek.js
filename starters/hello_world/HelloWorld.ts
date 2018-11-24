@@ -1,5 +1,5 @@
 import TemplateControl from "@framework/TemplateControl";
-import template from "@app/HelloWorld.tpl.ts";
+import template from "@app/HelloWorld.tpl";
 
 export default class HelloWorld extends TemplateControl {
 
