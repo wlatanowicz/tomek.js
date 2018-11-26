@@ -308,9 +308,10 @@ export default class Parser {
                  }
             }else
             if (xmlNode.type() == 'element') {
-                if (xmlNode.namespace() !== null && xmlNode.namespace().href() == 'component') {
+                let href = xmlNode.namespace() !== null ? xmlNode.namespace().href() : null;
+                if (href == 'component') {
                     componentControlCount++;
-                }else if (xmlNode.namespace() !== null && xmlNode.namespace().href() == 'tomek'){
+                }else if (href == 'tomek'){
                     //skip
                 }else{
                     return true;
@@ -339,22 +340,23 @@ export default class Parser {
              }
         }else
         if (xmlNode.type() == 'element') {
-            if (xmlNode.namespace() !== null && xmlNode.namespace().href() == 'component') {
+            let href = xmlNode.namespace() !== null ? xmlNode.namespace().href() : null;
+            if (href == 'component') {
                 return new ComponentNode(xmlNode);
             }
-            else if (xmlNode.namespace() !== null && xmlNode.namespace().href() == 'service') {
+            else if (href == 'service') {
                 return new ServiceNode(xmlNode);
             }
-            else if (xmlNode.namespace() !== null && xmlNode.namespace().href() == 'definition') {
+            else if (href == 'definition') {
                 return new DefinitionNode(xmlNode);
             }
-            else if (xmlNode.namespace() !== null && xmlNode.namespace().href() == 'stencil') {
+            else if (href == 'stencil') {
                 return new StencilNode(xmlNode);
             }
-            else if (xmlNode.namespace() !== null && xmlNode.namespace().href() == 'property') {
+            else if (href == 'property') {
                 //skip
             }
-            else if (xmlNode.namespace() !== null && xmlNode.namespace().href() == 'tomek'){
+            else if (href == 'tomek'){
                 //skip
             }
             else {

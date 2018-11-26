@@ -132,10 +132,8 @@ export default class Renderer extends BaseRenderer {
 
         txt += "\n";
 
-        txt += "export default function template()\n" +
+        txt += "export default function template(ExpressionContext, SourceTemplateControl)\n" +
                 "{\n" +
-                "\tvar ExpressionContext = this;\n" +
-                "\tvar SourceTemplateControl = this;\n" +
                 this.output +
                 "}\n";
 

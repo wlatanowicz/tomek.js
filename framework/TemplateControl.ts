@@ -17,6 +17,6 @@ export default class TemplateControl extends Control
         if (this.template === null) {
             throw new Exception('Template not loaded');
         }
-        this.template.apply(this);
+        this.template.call(this, this, this);
     }
 }
