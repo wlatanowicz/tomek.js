@@ -15,104 +15,92 @@ import WebControlProperty from "@framework/WebControls/WebControlProperty";
  * `on:Change`
  * 
  **/
-class RadioButton extends WebControl implements EventResponderInterface
-{
-    //@Override
-    _tagName = 'input';
+class RadioButton extends WebControl implements EventResponderInterface {
+  //@Override
+  _tagName = 'input';
 
-    //@Override
-    _rendersChildControls = false;
+  //@Override
+  _rendersChildControls = false;
 
-    private _event = null;
+  private _event = null;
 
-    get event():EventResponder
-    {
-        if (this._event === null) {
-            this._event = new EventResponder(this, ['Click', 'Change']);
-        }
-        return this._event;
+  get event(): EventResponder {
+    if (this._event === null) {
+      this._event = new EventResponder(this, ['Click', 'Change']);
     }
+    return this._event;
+  }
 
-    //@Override
-    getDefaultAttributes()
-    {
-        return { type: 'radio' };
-    }
+  //@Override
+  getDefaultAttributes() {
+    return { type: 'radio' };
+  }
 
-    /**
-     * RadioButton#Checked -> Boolean
-     **/
+  /**
+   * RadioButton#Checked -> Boolean
+   **/
 
-    private _Checked:any = false;
+  private _Checked: any = false;
 
-    set Checked(v)
-    {
-        this._Checked = v;
-        this.applyProperty(this._renderedMainElement, 'Checked');
-    }
+  set Checked(v) {
+    this._Checked = v;
+    this.applyProperty(this._renderedMainElement, 'Checked');
+  }
 
-    get Checked(){
-        this.fetchProperty(this._renderedMainElement, 'Checked');
-        return this.converters.boolean(this._Checked);
-    }
+  get Checked() {
+    this.fetchProperty(this._renderedMainElement, 'Checked');
+    return this.converters.boolean(this._Checked);
+  }
 
-    set Value(v)
-    {
-        this.Checked = v;
-    }
+  set Value(v) {
+    this.Checked = v;
+  }
 
-    get Value()
-    {
-        return this.Checked;
-    }
+  get Value() {
+    return this.Checked;
+  }
 
-    /**
-     * RadioButton#Group -> String
-     **/
+  /**
+   * RadioButton#Group -> String
+   **/
 
-    private _Group;
+  private _Group;
 
-    set Group(v)
-    {
-        this._Group = v;
-        this.applyProperty(this._renderedMainElement, 'Group')
-    }
+  set Group(v) {
+    this._Group = v;
+    this.applyProperty(this._renderedMainElement, 'Group')
+  }
 
-    get Group()
-    {
-        return this.converters.string(this._Group);
-    }
+  get Group() {
+    return this.converters.string(this._Group);
+  }
 
-    private _Disabled;
+  private _Disabled;
 
-    set Disabled(value)
-    {
-        this._Disabled = value;
-        this.applyProperty(this._renderedMainElement, 'Disabled');
-    }
+  set Disabled(value) {
+    this._Disabled = value;
+    this.applyProperty(this._renderedMainElement, 'Disabled');
+  }
 
-    get Disabled()
-    {
-        return this.converters.boolean(this._Disabled);
-    }
+  get Disabled() {
+    return this.converters.boolean(this._Disabled);
+  }
 
-    getElementProperites()
-    {
-        var props = super.getElementProperites();
-        props['Checked'] = new WebControlProperty("checked", "_Checked", this.converters.boolean, true);
-        props['Disabled'] = new WebControlProperty("disabled", "_Disabled", "Disabled");
-        props['Group'] = new WebControlProperty("name", "_Group", "Group");
-        return props;
-    }
+  getElementProperites() {
+    var props = super.getElementProperites();
+    props['Checked'] = new WebControlProperty("checked", "_Checked", this.converters.boolean, true);
+    props['Disabled'] = new WebControlProperty("disabled", "_Disabled", "Disabled");
+    props['Group'] = new WebControlProperty("name", "_Group", "Group");
+    return props;
+  }
 
-    //@Override
-    createMainElement()
-    {
-        var d = super.createMainElement();
+  //@Override
+  createMainElement() {
+    var d = super.createMainElement();
 
-        this.event.registerTriggerElement( d, 'click', 'Click' );
-        this.event.registerTriggerElement( d, 'change', 'Change' );
+    this.event.registerTriggerElement(d, 'click', 'Click');
+    this.event.registerTriggerElement(d, 'change', 'Change');
 
-        return d;
-    }
+    return d;
+  }
 }

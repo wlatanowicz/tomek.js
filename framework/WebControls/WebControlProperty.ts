@@ -1,53 +1,46 @@
 import Exception from "@framework/Exception";
 
-export default class WebControlProperty
-{
-    constructor(elementPropertyName: string,
-                objectFieldName: string,
-                converter: Function | string,
-                fetchable: boolean = false,
-                applicable: boolean = true)
-    {
-        this._elementPropertyName = elementPropertyName;
-        this._objectFieldName = objectFieldName;
+export default class WebControlProperty {
+  constructor(elementPropertyName: string,
+    objectFieldName: string,
+    converter: Function | string,
+    fetchable: boolean = false,
+    applicable: boolean = true) {
+    this._elementPropertyName = elementPropertyName;
+    this._objectFieldName = objectFieldName;
 
-        if (fetchable && converter === null) {
-            throw new Exception("Property " + elementPropertyName + " is set as fetchable and uses standard getter");
-        }
-
-        this._converter = converter;
-        this._fetchable = fetchable;
-        this._applicable = applicable;
+    if (fetchable && converter === null) {
+      throw new Exception("Property " + elementPropertyName + " is set as fetchable and uses standard getter");
     }
 
-    get ElementPropertyName(): string
-    {
-        return this._elementPropertyName;
-    }
+    this._converter = converter;
+    this._fetchable = fetchable;
+    this._applicable = applicable;
+  }
 
-    get ObjectFieldName(): string
-    {
-        return this._objectFieldName;
-    }
+  get ElementPropertyName(): string {
+    return this._elementPropertyName;
+  }
 
-    get Converter(): Function | string
-    {
-        return this._converter;
-    }
+  get ObjectFieldName(): string {
+    return this._objectFieldName;
+  }
 
-    get Fetchable(): boolean
-    {
-        return this._fetchable;
-    }
+  get Converter(): Function | string {
+    return this._converter;
+  }
 
-    get Applicable(): boolean
-    {
-        return this._applicable;
-    }
+  get Fetchable(): boolean {
+    return this._fetchable;
+  }
 
-    private _elementPropertyName: string;
-    private _objectFieldName: string;
-    private _converter: Function | string;
-    private _fetchable: boolean;
-    private _applicable: boolean;
+  get Applicable(): boolean {
+    return this._applicable;
+  }
+
+  private _elementPropertyName: string;
+  private _objectFieldName: string;
+  private _converter: Function | string;
+  private _fetchable: boolean;
+  private _applicable: boolean;
 }

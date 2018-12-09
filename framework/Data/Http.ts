@@ -6,162 +6,147 @@ import Exception from "@framework/Exception";
  * 
  * 
  **/
-export default class Http
-{
-    public BaseUrl: string;
+export default class Http {
+  public BaseUrl: string;
 
-    constructor(baseUrl: string = null)
-    {
-        this.BaseUrl = baseUrl;
+  constructor(baseUrl: string = null) {
+    this.BaseUrl = baseUrl;
+  }
+
+  getHeaders() {
+    return [];
+  }
+
+  getQueryParams() {
+    return {};
+  }
+
+  applyDefaultResolvers(promise) { }
+
+  get(url, queryParams) {
+    return this.performCallback('GET', url, undefined, queryParams);
+  }
+
+  put(url, body, queryParams) {
+    return this.performCallback('PUT', url, body, queryParams);
+  }
+
+  post(url, body, queryParams) {
+    return this.performCallback('POST', url, body, queryParams);
+  }
+
+  delete(url, queryParams) {
+    return this.performCallback('DELETE', url, undefined, queryParams);
+  }
+
+  prepareAndSend(xhttp, body) {
+    if (body !== undefined) {
+      if (body instanceof FormData
+        || (body.constructor && body.constructor.name === 'FormData')
+        || (body.toString && body.toString() === '[object FormData]')) {
+        xhttp.send(body);
+      } else {
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(body));
+      }
+    } else {
+      xhttp.send(null);
     }
+  }
 
-    getHeaders()
-    {
-        return [];
-    }
+  processResponse(xhttp) {
+    return JSON.parse(xhttp.responseText);
+  }
 
-    getQueryParams()
-    {
-        return {};
-    }
+  performCallback(method, url, body, queryParams) {
+    queryParams = queryParams
+      ? queryParams
+      : [];
 
-    applyDefaultResolvers(promise){}
+    var promise = this.createPromise();
 
-    get(url, queryParams)
-    {
-        return this.performCallback('GET', url, undefined, queryParams);
-    }
+    var fullUrl = this.BaseUrl + url + this.prepareQuery(queryParams);
+    var xhttp = new XMLHttpRequest();
+    xhttp.open(method, fullUrl, true);
+    xhttp.onreadystatechange = function(aEvt) {
+      if (xhttp.readyState == 4) {
+        this.postCallbackProcessing(xhttp, promise);
+      }
+    }.bind(this);
 
-    put(url, body, queryParams)
-    {
-        return this.performCallback('PUT', url, body, queryParams);
-    }
+    this.applyHeaders(xhttp);
 
-    post(url, body, queryParams)
-    {
-        return this.performCallback('POST', url, body, queryParams);
-    }
+    this.prepareAndSend(xhttp, body);
 
-    delete( url, queryParams )
-    {
-        return this.performCallback('DELETE', url, undefined, queryParams);
-    }
+    promise.setState('start', {
+      'xhttp': xhttp
+    });
 
-    prepareAndSend(xhttp, body)
-    {
-        if ( body !== undefined ){
-            if ( body instanceof FormData
-                || ( body.constructor && body.constructor.name === 'FormData' )
-                || ( body.toString && body.toString() === '[object FormData]' ) ){
-                xhttp.send( body );
-            }else{
-                xhttp.setRequestHeader( "Content-type", "application/json" );
-                xhttp.send( JSON.stringify( body ) );
-            }
-        }else{
-            xhttp.send( null );
-        }
-    }
+    this.applyDefaultResolvers(promise);
 
-    processResponse( xhttp )
-    {
-        return JSON.parse( xhttp.responseText );
-    }
+    return promise;
+  }
 
-    performCallback( method, url, body, queryParams )
-    {
-        queryParams = queryParams
-                            ? queryParams
-                            : [];
+  createPromise() {
+    return new HttpPromise();
+  }
 
-        var promise = this.createPromise();
-
-        var fullUrl = this.BaseUrl + url + this.prepareQuery( queryParams );
-        var xhttp = new XMLHttpRequest();
-        xhttp.open( method, fullUrl, true );
-        xhttp.onreadystatechange = function (aEvt) {
-                if ( xhttp.readyState == 4 ) {
-                    this.postCallbackProcessing( xhttp, promise );
-                }
-            }.bind(this);
-
-        this.applyHeaders( xhttp );
-
-        this.prepareAndSend( xhttp, body );
-
-        promise.setState( 'start', {
-            'xhttp' : xhttp
+  postCallbackProcessing(xhttp, promise) {
+    try {
+      var response = null;
+      try {
+        response = this.processResponse(xhttp);
+      } catch (ex) {
+        promise.setState('invalid-payload', {
+          'xhttp': xhttp
         });
-
-        this.applyDefaultResolvers( promise );
-
-        return promise;
+        throw new Exception('Invalid payload');
+      }
+      if (xhttp.status == 200) {
+        promise.setState('done', {
+          'response': response,
+          'xhttp': xhttp
+        });
+      } else {
+        promise.setState(xhttp.status, {
+          'response': response,
+          'xhttp': xhttp
+        });
+        throw new Exception('HTTP error');
+      }
+    } catch (ex) {
+      promise.setState('error', {
+        'status': xhttp.status,
+        'xhttp': xhttp,
+        'exception': ex
+      });
     }
+  }
 
-    createPromise()
-    {
-        return new HttpPromise();
+  applyHeaders(xhttp) {
+    var headers = this.getHeaders();
+    for (var i = 0; i < headers.length; i++) {
+      var header = headers[i].split(":").map(function(e) { return e.trim(); });
+      xhttp.setRequestHeader(header[0], header.length > 1 ? header[1] : null);
     }
+  }
 
-    postCallbackProcessing(xhttp, promise)
-    {
-        try{
-            var response = null;
-            try{
-                response = this.processResponse( xhttp );
-            }catch( ex ){
-                promise.setState( 'invalid-payload', {
-                    'xhttp': xhttp
-                });
-                throw new Exception( 'Invalid payload' );
-            }
-            if( xhttp.status == 200 ){
-                promise.setState( 'done', {
-                    'response': response,
-                    'xhttp': xhttp
-                });
-            }else{
-                promise.setState( xhttp.status, {
-                    'response': response,
-                    'xhttp': xhttp
-                });
-                throw new Exception( 'HTTP error' );
-            }
-        }catch( ex ){
-            promise.setState( 'error', {
-                'status' : xhttp.status,
-                'xhttp': xhttp,
-                'exception' : ex
-            });
-        }
+  prepareQuery(queryParams) {
+    var parts = [];
+    for (var k in queryParams) {
+      if (typeof queryParams[k] !== 'function'
+        && typeof queryParams[k] !== 'undefined') {
+        parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(queryParams[k]));
+      }
     }
-
-    applyHeaders(xhttp)
-    {
-        var headers = this.getHeaders();
-        for ( var i=0; i<headers.length; i++ ){
-            var header = headers[i].split(":").map( function(e){ return e.trim(); } );
-            xhttp.setRequestHeader( header[0], header.length > 1 ? header[1] : null );
-        }
+    for (var k in this.getQueryParams()) {
+      if (typeof queryParams[k] !== 'function'
+        && typeof queryParams[k] !== 'undefined') {
+        parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(queryParams[k]));
+      }
     }
-
-    prepareQuery(queryParams)
-    {
-        var parts = [];
-        for ( var k in queryParams ){
-            if ( typeof queryParams[k] !== 'function'
-                    && typeof queryParams[k] !== 'undefined' ){
-                parts.push( encodeURIComponent( k ) + '=' + encodeURIComponent( queryParams[k] ) );
-            }
-        }
-        for ( var k in this.getQueryParams() ){
-            if ( typeof queryParams[k] !== 'function'
-                    && typeof queryParams[k] !== 'undefined' ){
-                parts.push( encodeURIComponent( k ) + '=' + encodeURIComponent( queryParams[k] ) );
-            }
-        }
-        return parts.length === 0
-                        ? ''
-                        : '?'+parts.join( '&' );
-    }
+    return parts.length === 0
+      ? ''
+      : '?' + parts.join('&');
+  }
 }

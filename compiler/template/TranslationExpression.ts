@@ -1,9 +1,9 @@
 export default class TranslationExpression {
 
-    text: string;
+  text: string;
 
-    constructor( str:string ){
-        this.text = str;
-    }
+  constructor(str: string) {
+    this.text = str;
+  }
 
 }

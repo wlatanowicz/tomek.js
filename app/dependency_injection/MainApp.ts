@@ -3,11 +3,10 @@ import TemplateControl from "@framework/TemplateControl";
 
 export default class MainApp extends TemplateControl {
 
-    template = template;
+  template = template;
 
-    constructor(placeholder)
-    {
-        super();
-        this.Placeholder = placeholder;
-    }
+  constructor(placeholder) {
+    super();
+    this.Placeholder = placeholder;
+  }
 }

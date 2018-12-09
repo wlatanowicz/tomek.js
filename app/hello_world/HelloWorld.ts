@@ -3,10 +3,10 @@ import TemplateControl from "@framework/TemplateControl";
 
 export default class HelloWorld extends TemplateControl {
 
-	template = template;
+  template = template;
 
-	buttonClicked(sender, param){
-		console.log(this);
-		sender.Text = 'Hello world!';
-	}
+  buttonClicked(sender, param) {
+    console.log(this);
+    sender.Text = 'Hello world!';
+  }
 }

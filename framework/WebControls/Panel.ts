@@ -6,8 +6,7 @@ import WebControl from "@framework/WebControls/WebControl";
  * Control renders a div container
  * 
  **/
-export default class Panel extends WebControl
-{
-    //@Override
-    _tagName : 'div'
+export default class Panel extends WebControl {
+  //@Override
+  _tagName: 'div'
 }

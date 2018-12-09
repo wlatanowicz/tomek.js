@@ -7,38 +7,33 @@ import Stencil from "@framework/Stencil";
  * in repeater and similiar contexts
  * 
  **/
-export default class RepeaterItem extends Stencil
-{
+export default class RepeaterItem extends Stencil {
 
-    /**
-     * RepeaterItem#ItemIndex -> int
-     **/
+  /**
+   * RepeaterItem#ItemIndex -> int
+   **/
 
-    /**
-     * RepeaterItem#Repeater -> Repeater
-     **/
+  /**
+   * RepeaterItem#Repeater -> Repeater
+   **/
 
-    protected _ItemIndex;
+  protected _ItemIndex;
 
-    set ItemIndex(v)
-    {
-        this._ItemIndex = v;
-    }
+  set ItemIndex(v) {
+    this._ItemIndex = v;
+  }
 
-    get ItemIndex()
-    {
-        return this.converters.int(this._ItemIndex);
-    }
+  get ItemIndex() {
+    return this.converters.int(this._ItemIndex);
+  }
 
-    protected _Repeater;
+  protected _Repeater;
 
-    set Repeater(v)
-    {
-        this._Repeater = v;
-    }
+  set Repeater(v) {
+    this._Repeater = v;
+  }
 
-    get Repeater()
-    {
-        return this.converters.object(this._Repeater);
-    }
+  get Repeater() {
+    return this.converters.object(this._Repeater);
+  }
 }

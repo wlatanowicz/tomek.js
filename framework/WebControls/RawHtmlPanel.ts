@@ -7,28 +7,24 @@ import WebControlProperty from "@framework/WebControls/WebControlProperty";
  * Control returns the HTML content
  * 
  **/
-class RawHtmlPanel extends WebControl
-{
-    //@Override
-    _tagName = 'div';
+class RawHtmlPanel extends WebControl {
+  //@Override
+  _tagName = 'div';
 
-    private _RawHTML;
+  private _RawHTML;
 
-    set RawHTML(value)
-    {
-        this._RawHTML = value;
-        this.applyProperty(this._renderedMainElement, 'RawHTML')
-    }
+  set RawHTML(value) {
+    this._RawHTML = value;
+    this.applyProperty(this._renderedMainElement, 'RawHTML')
+  }
 
-    get RawHTML()
-    {
-        return this.converters.string(this._RawHTML);
-    }
+  get RawHTML() {
+    return this.converters.string(this._RawHTML);
+  }
 
-    getElementProperites(): any
-    {
-        let properties = super.getElementProperites();
-        properties['RawHTML'] = new WebControlProperty("innerHtml", "_RawHTML", 'RawHTML');
-        return properties;
-    }
+  getElementProperites(): any {
+    let properties = super.getElementProperites();
+    properties['RawHTML'] = new WebControlProperty("innerHtml", "_RawHTML", 'RawHTML');
+    return properties;
+  }
 }
