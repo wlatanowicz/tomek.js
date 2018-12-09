@@ -9,51 +9,47 @@ import Control from "@framework/Control";
  **/
 export default class AutoRefresh extends Control {
 
-    /**
-     * AutoRefresh#Interval -> float
-     **/
+  /**
+   * AutoRefresh#Interval -> float
+   **/
 
-    /**
-     * AutoRefresh#Running -> bool
-     **/
+  /**
+   * AutoRefresh#Running -> bool
+   **/
 
-    private _Interval = 1.0;
+  private _Interval = 1.0;
 
-    set Interval(value:any)
-    {
-        this._Interval = value;
+  set Interval(value: any) {
+    this._Interval = value;
+  }
+
+  get Interval() {
+    return this.converters.float(this._Interval);
+  }
+
+  private _Running = true;
+
+  set Running(value) {
+    this._Running = value;
+  }
+
+  get Running() {
+    return this.converters.boolean(this._Running);
+  }
+
+  renderContents() {
+    super.renderContents();
+    this.setupRefresh();
+  }
+
+  refresh() {
+    this.render();
+  }
+
+  setupRefresh() {
+    if (this.Running) {
+      setTimeout(this.refresh.bind(this), this.Interval * 1000.0);
     }
-
-    get Interval()
-    {
-        return this.converters.float(this._Interval);
-    }
-
-    private _Running = true;
-
-    set Running(value)
-    {
-        this._Running = value;
-    }
-
-    get Running()
-    {
-        return this.converters.boolean(this._Running);
-    }
-
-    renderContents(){
-        super.renderContents();
-        this.setupRefresh();
-    }
-
-    refresh(){
-        this.render();
-    }
-
-    setupRefresh(){
-        if (this.Running){
-            setTimeout(this.refresh.bind( this ), this.Interval * 1000.0);
-        }
-    }
+  }
 
 }

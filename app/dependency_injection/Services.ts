@@ -6,22 +6,22 @@ import ByName from "@framework/DependencyInjection/Definition/ByName";
 import GreetingsProvider from "@app/dependency_injection/GreetingsProvider";
 
 export default {
-    "app": new ByConstructor(
-        MainApp,
-        [
-            new ByValue("container")
-        ]
-    ),
-    "dependecyInjected": new ByConstructor(
-        DependencyInjection,
-        [
-            new ByName("greetings_provider")
-        ]
-    ),
-    "greetings_provider": new ByConstructor(
-        GreetingsProvider,
-        [
-            new ByValue("Hello injected World!")
-        ]
-    )
+  "app": new ByConstructor(
+    MainApp,
+    [
+      new ByValue("container")
+    ]
+  ),
+  "dependecyInjected": new ByConstructor(
+    DependencyInjection,
+    [
+      new ByName("greetings_provider")
+    ]
+  ),
+  "greetings_provider": new ByConstructor(
+    GreetingsProvider,
+    [
+      new ByValue("Hello injected World!")
+    ]
+  )
 };

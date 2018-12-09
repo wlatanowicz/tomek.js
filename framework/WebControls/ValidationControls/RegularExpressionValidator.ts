@@ -5,33 +5,31 @@ import BaseValidator from "@framework/WebControls/ValidationControls/BaseValidat
  *
  *
  **/
-class RegularExpressionValidator extends BaseValidator
-{
-    private _Pattern;
+class RegularExpressionValidator extends BaseValidator {
+  private _Pattern;
 
-    private _Modifiers;
+  private _Modifiers;
 
 
-    get Pattern() {
-        return this.converters.string(this._Pattern);
-    }
+  get Pattern() {
+    return this.converters.string(this._Pattern);
+  }
 
-    set Pattern(value) {
-        this._Pattern = value;
-    }
+  set Pattern(value) {
+    this._Pattern = value;
+  }
 
-    get Modifiers() {
-        return this.converters.string(this._Modifiers);
-    }
+  get Modifiers() {
+    return this.converters.string(this._Modifiers);
+  }
 
-    set Modifiers(value) {
-        this._Modifiers = value;
-    }
+  set Modifiers(value) {
+    this._Modifiers = value;
+  }
 
-    //@Override
-    performValidation()
-    {
-        return (new RegExp(this.Pattern, this.Modifiers)).test(this.ControlToValidate.Value);
-    }
+  //@Override
+  performValidation() {
+    return (new RegExp(this.Pattern, this.Modifiers)).test(this.ControlToValidate.Value);
+  }
 
 }

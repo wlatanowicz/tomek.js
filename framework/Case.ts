@@ -6,22 +6,19 @@ import Control from "@framework/Control";
  * Subview of [[SwitchView]]
  * 
  **/
-export default class Case extends Control
-{
+export default class Case extends Control {
 
-    /**
-     * Case#Condition -> bool
-     **/
+  /**
+   * Case#Condition -> bool
+   **/
 
-    private _Condition = true;
+  private _Condition = true;
 
-    set Condition(value:any)
-    {
-        this._Condition = value;
-    }
+  set Condition(value: any) {
+    this._Condition = value;
+  }
 
-    get Condition()
-    {
-        return this.converters.boolean(this._Condition);
-    }
+  get Condition() {
+    return this.converters.boolean(this._Condition);
+  }
 }

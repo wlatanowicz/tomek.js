@@ -1,7 +1,7 @@
 interface ValidatableInterface {
-    ErrorCssClass?;
-    IsValid;
-    Value;
+  ErrorCssClass?;
+  IsValid;
+  Value;
 }
 
 export default ValidatableInterface;

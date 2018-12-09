@@ -7,42 +7,37 @@ import Exception from "@framework/Exception"
  * Switch view. Renders only one of it's [[Case]] subviews.
  * 
  **/
-export default class SwitchView extends Case
-{
-    setupVisibility()
-    {
-        this.ensureChildControls();
-        var visible_set = false;
-        var i;
-        for ( i=0; i<this._childControls.length; i++ ){
-            var c = this._childControls[i];
-            if ( !visible_set
-                    && c.Condition ){
-                visible_set = true;
-                c.Visible = true;
-            }else{
-                c.Visible = false;
-            }
-        }
+export default class SwitchView extends Case {
+  setupVisibility() {
+    this.ensureChildControls();
+    var visible_set = false;
+    var i;
+    for (i = 0; i < this._childControls.length; i++) {
+      var c = this._childControls[i];
+      if (!visible_set
+        && c.Condition) {
+        visible_set = true;
+        c.Visible = true;
+      } else {
+        c.Visible = false;
+      }
     }
+  }
 
-    addChildControl(c)
-    {
-        if ( ! c.isKindOf( Case ) ){
-            throw new Exception( 'SwitchView can accept only Case' );
-        }
-        super.addChildControl(c);
+  addChildControl(c) {
+    if (!c.isKindOf(Case)) {
+      throw new Exception('SwitchView can accept only Case');
     }
+    super.addChildControl(c);
+  }
 
-    render()
-    {
-        this.setupVisibility();
-        super.render();
-    }
+  render() {
+    this.setupVisibility();
+    super.render();
+  }
 
-    renderContentsInPlaceholder(placeholder)
-    {
-        this.setupVisibility();
-        super.renderContentsInPlaceholder(placeholder);
-    }
+  renderContentsInPlaceholder(placeholder) {
+    this.setupVisibility();
+    super.renderContentsInPlaceholder(placeholder);
+  }
 }

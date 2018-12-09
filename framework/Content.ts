@@ -7,4 +7,4 @@ import Control from "@framework/Control";
  * Should be be used as root control in templates
  * 
  **/
-export default class Content extends Control {}
+export default class Content extends Control { }

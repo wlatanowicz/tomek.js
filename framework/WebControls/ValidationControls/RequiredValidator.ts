@@ -5,11 +5,9 @@ import BaseValidator from "@framework/WebControls/ValidationControls/BaseValidat
  * 
  * 
  **/
-export default class RequiredValidator extends BaseValidator
-{
-    //@Override
-    performValidation()
-    {
-        return this.ControlToValidate.Value ? true : false;
-    }
+export default class RequiredValidator extends BaseValidator {
+  //@Override
+  performValidation() {
+    return this.ControlToValidate.Value ? true : false;
+  }
 }

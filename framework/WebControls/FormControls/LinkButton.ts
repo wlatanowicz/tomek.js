@@ -13,25 +13,26 @@ import EventResponder from "@framework/EventResponder";
  * `on:Click`
  * 
  **/
-export default class LinkButton extends Link implements EventResponderInterface{
+export default class LinkButton extends Link implements EventResponderInterface {
 
-    private _event = null;
+  //@Override
+  _triggersEvents = ['Click'];
 
-    get event():EventResponder
-    {
-        if (this._event === null) {
-            this._event = new EventResponder(this, ['Click']);
-        }
-        return this._event;
+  private _event = null;
+
+  get event(): EventResponder {
+    if (this._event === null) {
+      this._event = new EventResponder(this, this._triggersEvents);
     }
+    return this._event;
+  }
 
-    //@Override
-    createMainElement()
-    {
-        var d = super.createMainElement();
+  //@Override
+  createMainElement() {
+    var d = super.createMainElement();
 
-        this.event.registerTriggerElement( d, 'click', 'Click', true );
+    this.event.registerTriggerElement(d, 'click', 'Click', true);
 
-        return d;
-    }
+    return d;
+  }
 }

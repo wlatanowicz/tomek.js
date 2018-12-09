@@ -4,10 +4,6 @@ import TEventReposnderInterface from "@framework/EventResponderInterface";
 import EventResponder from "@framework/EventResponder";
 import WebControlProperty from "@framework/WebControls/WebControlProperty";
 
-//= require EventResponder
-//= require TValidatable
-//= require TTwoWayBinding
-
 /** section: WebControls_FormControls
  * class CheckBox < WebControl
  * includes EventResponderMixin
@@ -20,86 +16,80 @@ import WebControlProperty from "@framework/WebControls/WebControlProperty";
  * `on:Change`
  * 
  **/
-export default class CheckBox extends WebControl implements ValidatableInterface, TEventReposnderInterface
-{
+export default class CheckBox extends WebControl implements ValidatableInterface, TEventReposnderInterface {
 
-    //@Override
-    _tagName = 'input';
+  //@Override
+  _tagName = 'input';
 
-    //@Override
-    _rendersChildControls = false;
+  //@Override
+  _rendersChildControls = false;
 
-    private _event = null;
+  //@Override
+  _triggersEvents = ['Click', 'Change'];
 
-    get event():EventResponder
-    {
-        if (this._event === null) {
-            this._event = new EventResponder(this, ['Click', 'Change'])
-        }
-        return this._event;
+  private _event = null;
+
+  get event(): EventResponder {
+    if (this._event === null) {
+      this._event = new EventResponder(this, this._triggersEvents)
     }
+    return this._event;
+  }
 
-    ErrorCssClas = "error";
+  ErrorCssClas = "error";
 
-    IsValid;
+  IsValid;
 
-    get Value()
-    {
-        return this.Checked;
-    }
+  get Value() {
+    return this.Checked;
+  }
 
-    //@Override
-    getDefaultAttributes()
-    {
-        return { type: 'checkbox' };
-    }
+  //@Override
+  getDefaultAttributes() {
+    return { type: 'checkbox' };
+  }
 
-    /**
-     * CheckBox#Checked -> Boolean
-     **/
+  /**
+   * CheckBox#Checked -> Boolean
+   **/
 
-    private _Checked;
+  private _Checked;
 
-    set Checked(value: any)
-    {
-        this._Checked = value;
-        this.applyProperty(this._renderedMainElement, 'Checked');
-    }
+  set Checked(value: any) {
+    this._Checked = value;
+    this.applyProperty(this._renderedMainElement, 'Checked');
+  }
 
-    get Checked(): any
-    {
-        this.fetchProperty(this._renderedMainElement, 'Checked');
-        return this.converters.boolean(this._Checked);
-    }
+  get Checked(): any {
+    this.fetchProperty(this._renderedMainElement, 'Checked');
+    return this.converters.boolean(this._Checked);
+  }
 
-    private _Disabled;
+  private _Disabled;
 
-    set Disabled(value)
-    {
-        this._Disabled = value;
-        this.applyProperty(this._renderedMainElement, 'Disabled');
-    }
+  set Disabled(value) {
+    this._Disabled = value;
+    this.applyProperty(this._renderedMainElement, 'Disabled');
+  }
 
-    get Disabled()
-    {
-        return this.converters.boolean(this._Disabled);
-    }
+  get Disabled() {
+    return this.converters.boolean(this._Disabled);
+  }
 
-    getElementProperites()
-    {
-        var props = super.getElementProperites();
-        props['Checked'] =  new WebControlProperty("checked", "_Checked", this.converters.boolean, true);
-        props['Disabled'] =  new WebControlProperty("disabled", "_Disabled", "Disabled");
-        return props;
-    }
+  getElementProperites() {
+    var props = super.getElementProperites();
+    props['Checked'] = new WebControlProperty("checked", "_Checked", this.converters.boolean, true);
+    props['Disabled'] = new WebControlProperty("disabled", "_Disabled", "Disabled");
+    return props;
+  }
 
-    //@Override
-    createMainElement(){
-        var d = super.createMainElement();
+  //@Override
+  createMainElement() {
+    var d = super.createMainElement();
 
-        this.event.registerTriggerElement( d, 'click', 'Click' );
-        this.event.registerTriggerElement( d, 'change', 'Change' );
+    this.event.registerTriggerElement(d, 'click', 'Click');
+    this.event.registerTriggerElement(d, 'change', 'Change');
 
-        return d;
-    }
+    return d;
+  }
 }
