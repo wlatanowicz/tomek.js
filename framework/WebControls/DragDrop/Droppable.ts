@@ -15,11 +15,14 @@ export default class Droppable extends WebControl implements EventResponderInter
   //@Override
   _tagName = 'span';
 
+  //@Override
+  _triggersEvents = ['DragOver', 'DragLeave', 'DragEnter', 'Drop'];
+
   private _event = null;
 
   get event(): EventResponder {
     if (this._event === null) {
-      this._event = new EventResponder(this, ['DragOver', 'DragLeave', 'DragEnter', 'Drop']);
+      this._event = new EventResponder(this, this._triggersEvents);
     }
     return this._event;
   }

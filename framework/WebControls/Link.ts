@@ -1,9 +1,6 @@
 import WebControl from "@framework/WebControls/WebControl";
 import WebControlProperty from "@framework/WebControls/WebControlProperty";
 
-//= require WebControl
-//= require EventResponder
-
 /** section: WebControls
  * class Link <  WebControl
  * 

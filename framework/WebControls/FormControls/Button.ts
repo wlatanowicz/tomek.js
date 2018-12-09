@@ -31,7 +31,7 @@ export default class Button extends WebControl implements EventResponderInterfac
 
   get event(): EventResponder {
     if (this._event === null) {
-      this._event = new EventResponder(this, ['Click']);
+      this._event = new EventResponder(this, this._triggersEvents);
     }
     return this._event;
   }

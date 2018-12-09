@@ -4,10 +4,6 @@ import TEventReposnderInterface from "@framework/EventResponderInterface";
 import EventResponder from "@framework/EventResponder";
 import WebControlProperty from "@framework/WebControls/WebControlProperty";
 
-//= require EventResponder
-//= require TValidatable
-//= require TTwoWayBinding
-
 /** section: WebControls_FormControls
  * class CheckBox < WebControl
  * includes EventResponderMixin
@@ -28,11 +24,14 @@ export default class CheckBox extends WebControl implements ValidatableInterface
   //@Override
   _rendersChildControls = false;
 
+  //@Override
+  _triggersEvents = ['Click', 'Change'];
+
   private _event = null;
 
   get event(): EventResponder {
     if (this._event === null) {
-      this._event = new EventResponder(this, ['Click', 'Change'])
+      this._event = new EventResponder(this, this._triggersEvents)
     }
     return this._event;
   }

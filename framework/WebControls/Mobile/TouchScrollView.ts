@@ -22,11 +22,14 @@ export default class TouchScrollView extends TouchView implements EventResponder
   _willRefresh: boolean = false;
 
 
+  //@Override
+  _triggersEvents = ['Scroll', 'Refresh'];
+
   private _event = null;
 
   get event(): EventResponder {
     if (this._event === null) {
-      this._event = new TouchScrollViewEventResponder(this, ['Scroll', 'Refresh']);
+      this._event = new TouchScrollViewEventResponder(this, this._triggersEvents);
     }
     return this._event;
   }

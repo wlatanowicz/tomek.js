@@ -12,11 +12,14 @@ import RouteViewManager from "@framework/RouteViewManager";
  **/
 export default class RouteView extends Control implements EventResponderInterface {
 
+  //@Override
+  _triggersEvents = ['BecameActive', 'BecameInactive'];
+
   private _event = null;
 
   get event(): EventResponder {
     if (this._event === null) {
-      this._event = new EventResponder(this, ['BecameActive', 'BecameInactive']);
+      this._event = new EventResponder(this, this._triggersEvents);
     }
     return this._event;
   }

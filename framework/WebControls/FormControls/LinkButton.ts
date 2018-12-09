@@ -15,11 +15,14 @@ import EventResponder from "@framework/EventResponder";
  **/
 export default class LinkButton extends Link implements EventResponderInterface {
 
+  //@Override
+  _triggersEvents = ['Click'];
+
   private _event = null;
 
   get event(): EventResponder {
     if (this._event === null) {
-      this._event = new EventResponder(this, ['Click']);
+      this._event = new EventResponder(this, this._triggersEvents);
     }
     return this._event;
   }

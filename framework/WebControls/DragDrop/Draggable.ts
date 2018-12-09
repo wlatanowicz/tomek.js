@@ -15,11 +15,14 @@ export default class Draggable extends WebControl implements EventResponderInter
   //@Override
   _tagName = 'span';
 
+  //@Override
+  _triggersEvents = ['DragStart', 'DragEnd', 'Drop', 'DragEnter', 'DragLeave', 'DragOver'];
+
   private _event = null;
 
   get event(): EventResponder {
     if (this._event === null) {
-      this._event = new EventResponder(this, ['DragStart', 'DragEnd', 'Drop', 'DragEnter', 'DragLeave', 'DragOver']);
+      this._event = new EventResponder(this, this._triggersEvents);
     }
     return this._event;
   }

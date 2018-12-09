@@ -26,11 +26,14 @@ export default class DropDownList extends WebControl implements EventResponderIn
 
   public IsValid;
 
+  //@Override
+  _triggersEvents = ['Change'];
+
   private _event = null;
 
   get event(): EventResponder {
     if (this._event === null) {
-      this._event = new EventResponder(this, ['Change']);
+      this._event = new EventResponder(this, this._triggersEvents);
     }
     return this._event;
   }

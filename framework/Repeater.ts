@@ -17,11 +17,15 @@ import EventResponderInterface from "@framework/EventResponderInterface";
  *
  **/
 export default class Repeater extends Control implements EventResponderInterface {
+  
+  //@Override
+  _triggersEvents = ['ItemCreated'];
+
   private _event = null;
 
   get event(): EventResponder {
     if (this._event === null) {
-      this._event = new EventResponder(this, ['ItemCreated']);
+      this._event = new EventResponder(this, this._triggersEvents);
     }
     return this._event;
   }

@@ -14,11 +14,14 @@ import EventResponder from "@framework/EventResponder";
  * 
  **/
 export default class CustomValidator extends BaseValidator implements EventResponderInterface {
+  //@Override
+  _triggersEvents = ['Validate'];
+
   private _event = null;
 
   get event(): EventResponder {
     if (this._event === null) {
-      this._event = new EventResponder(this, ['Validate']);
+      this._event = new EventResponder(this, this._triggersEvents);
     }
     return this._event;
   }

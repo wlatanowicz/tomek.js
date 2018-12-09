@@ -31,11 +31,14 @@ export default class TextBox extends WebControl implements EventResponderInterfa
 
   public IsValid;
 
+  //@Override
+  _triggersEvents = ['Change', 'KeyUp', 'KeyDown', 'Blur', 'Focus'];
+
   private _event = null;
 
   get event(): EventResponder {
     if (this._event === null) {
-      this._event = new EventResponder(this, ['Change', 'KeyUp', 'KeyDown', 'Blur', 'Focus']);
+      this._event = new EventResponder(this, this._triggersEvents);
     }
     return this._event;
   }

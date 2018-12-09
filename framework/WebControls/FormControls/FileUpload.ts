@@ -22,11 +22,14 @@ export default class FileUpload extends WebControl implements EventResponderInte
   //@Override
   _rendersChildControls = false;
 
+  //@Override
+  _triggersEvents = ['Change'];
+
   private _event = null;
 
   get event(): EventResponder {
     if (this._event === null) {
-      this._event = new EventResponder(this, ['Change']);
+      this._event = new EventResponder(this, this._triggersEvents);
     }
     return this._event;
   }

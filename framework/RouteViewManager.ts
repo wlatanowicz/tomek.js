@@ -1,5 +1,3 @@
-//= require Object
-
 export default class RouteViewManager {
 
   _routeViews = [];
