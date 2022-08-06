@@ -3,12 +3,12 @@ Tomek.js
 
 #### Fast, lightweight modular JavaScript framework ####
 
-Tomek.js is a JavaScript framework that aims to ease development of dynamic 
+Tomek.js is a JavaScript framework that aims to ease development of dynamic
 web applications.
 
 ### Quick Start ###
 
-* Run in your console: **bash <(curl -s -L http://tomekjs.com/init.sh)**
+* Run in your console: **bash <(curl -s -L https://raw.githubusercontent.com/wlatanowicz/tomek.js/master/init.sh)**
 * Run **gulp build** to build your project
 * Open **build/index.html** in your browser
 
